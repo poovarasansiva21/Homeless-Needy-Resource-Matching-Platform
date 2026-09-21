@@ -1,0 +1,29 @@
+{
+  "label2idx": {
+    "CLOTHING": 0,
+    "EDUCATION": 1,
+    "EMERGENCY": 2,
+    "EMPLOYMENT": 3,
+    "FOOD": 4,
+    "MEDICAL": 5,
+    "SHELTER": 6
+  },
+  "idx2label": {
+    "0": "CLOTHING",
+    "1": "EDUCATION",
+    "2": "EMERGENCY",
+    "3": "EMPLOYMENT",
+    "4": "FOOD",
+    "5": "MEDICAL",
+    "6": "SHELTER"
+  },
+  "categories": [
+    "CLOTHING",
+    "EDUCATION",
+    "EMERGENCY",
+    "EMPLOYMENT",
+    "FOOD",
+    "MEDICAL",
+    "SHELTER"
+  ]
+}

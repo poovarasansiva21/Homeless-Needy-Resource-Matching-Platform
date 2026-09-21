@@ -1,0 +1,354 @@
+text,category
+I have two children and we have not had food since yesterday.,FOOD
+We are starving and have nothing to eat tonight.,FOOD
+Need urgent food rations for a family of four.,FOOD
+Looking for a community kitchen or free meals for homeless individuals.,FOOD
+My baby needs milk formula and we have run out of money.,FOOD
+Elderly person living alone with no groceries or cooked meals.,FOOD
+"Need dry rations like rice, wheat flour, and lentils for our shelter.",FOOD
+Is there any food bank nearby giving emergency food packets?,FOOD
+"We haven't eaten properly for two days, please help us with dinner.",FOOD
+Urgent requirement of baby food and drinking water for flood victims.,FOOD
+Looking for leftover cooked food for hungry daily wage workers.,FOOD
+Need breakfast and lunch supplies for children in slum area.,FOOD
+My family has skipped three meals consecutively due to poverty.,FOOD
+"Struggling to afford nutrition for pregnant mother, need dietary support.",FOOD
+Requesting cooked meal delivery for an invalid senior citizen.,FOOD
+Need daily evening meals for 15 homeless people at railway station.,FOOD
+Running out of provisions and grocery stores are not giving credit.,FOOD
+No bread or milk for my toddler this morning.,FOOD
+Can someone donate packaged snacks and fruit for needy kids?,FOOD
+"Severe food scarcity in our temporary camp, 20 people hungry.",FOOD
+Need grain packets and cooking oil to survive this week.,FOOD
+"Homeless man sleeping hungry near bus stand, needs a warm meal.",FOOD
+We need nutritious food packets for malnourished infants.,FOOD
+"Our kitchen is empty, no rice or dal left at home.",FOOD
+Requesting mid-day meals assistance for destitute widows.,FOOD
+Need emergency relief food supply for stranded migrant workers.,FOOD
+"Hungry family of 5 urgently needing bread, milk, and canned food.",FOOD
+Can any NGO provide daily free lunch boxes?,FOOD
+Mother with newborn has no food or water tonight.,FOOD
+"Community members pooling for food distribution, need raw ingredients.",FOOD
+We got evicted from our room and are sleeping on the street tonight.,SHELTER
+Homeless family with small kids needs immediate overnight shelter.,SHELTER
+"Sleeping on railway platform, cold and unsafe, need place to stay.",SHELTER
+Seeking emergency accommodation for woman fleeing domestic violence.,SHELTER
+"House roof collapsed due to rains, nowhere to sleep.",SHELTER
+"Elderly man abandoned by relatives, sitting outside in rain, needs old age home.",SHELTER
+Need temporary housing or dorm bed for destitute youth.,SHELTER
+Looking for a night shelter near the bus terminal.,SHELTER
+"Eviction notice served today, will be on the footpath by evening.",SHELTER
+"Displaced by slum demolition, 10 families sleeping in open ground.",SHELTER
+Need transitional shelter for released prisoner with no family.,SHELTER
+"Rain leaking heavily through thatched hut, family needs dry accommodation.",SHELTER
+Homeless veteran looking for safe bed and roof over head.,SHELTER
+"Unsafe living conditions on pavement, need secure shelter for girl child.",SHELTER
+Seeking temporary shelter home for runaway teenager.,SHELTER
+Looking for short-stay home for physically challenged person.,SHELTER
+"No roof tonight, temperature dropping, urgent shelter request.",SHELTER
+Need safe refuge center for abandoned mother and child.,SHELTER
+"Temporary tent destroyed by strong winds, need emergency shelter.",SHELTER
+Where can an unemployed destitute sleep safely tonight?,SHELTER
+Seeking charity hostel or shelter bed for handicapped person.,SHELTER
+"Locked out by landlord, family of three standing on road with luggage.",SHELTER
+"Living under flyover bridge, need clean shelter and sanitation.",SHELTER
+Destitute elderly woman needs admittance to care home or shelter.,SHELTER
+Urgent shelter required for migrant laborers stranded without lodging.,SHELTER
+Need warm blankets and sweaters for shivering children this winter.,CLOTHING
+"Homeless man wears torn clothes, needs pants and shirt donations.",CLOTHING
+Urgent requirement of raincoats and plastic sheets for monsoon.,CLOTHING
+Looking for school uniform and shoes for poor students.,CLOTHING
+"Newborn baby has no clothes or wraps, mother in poverty.",CLOTHING
+"Need winter jackets, thermal wear, and socks for street dwellers.",CLOTHING
+Requesting clean second-hand garments for women in temporary camp.,CLOTHING
+"Footwear needed, walking barefoot on hot asphalt.",CLOTHING
+Need dress and shoes for young boy attending job interview.,CLOTHING
+"All clothes lost in house fire, family has only what they are wearing.",CLOTHING
+"Looking for bedsheets, blankets, and towels for destitute dormitory.",CLOTHING
+Need warm shawls and woolen caps for elderly people sleeping outside.,CLOTHING
+"Children wearing rags, need casual clothes and slippers.",CLOTHING
+"Seeking baby clothes, diapers, and cotton swaddles.",CLOTHING
+Clothes distribution drive needed for 30 homeless people at flyover.,CLOTHING
+Need clean cotton sarees and nightgowns for elderly destitute women.,CLOTHING
+"No shoes or sandals, feet blistered from walking long distances.",CLOTHING
+"Please donate trousers, shirts, and sweaters of medium and large sizes.",CLOTHING
+"Baby shivering in cold night, needs warm woolens immediately.",CLOTHING
+"School kids need black shoes, socks, and navy blue uniform.",CLOTHING
+"Father is diabetic and has run out of insulin, cannot afford medicine.",MEDICAL
+"Deep wound on leg infected and bleeding, needs dressing and antiseptic.",MEDICAL
+Elderly grandmother having severe chest pain and breathlessness.,MEDICAL
+"Child suffering from high fever and vomiting, need pediatric doctor.",MEDICAL
+Need dialysis assistance for kidney patient unable to pay hospital fees.,MEDICAL
+Prescription medicines needed for hypertension and heart condition.,MEDICAL
+Disabled boy needs wheelchair or crutches to move around.,MEDICAL
+"Street dog bite on arm, needs anti-rabies vaccination immediately.",MEDICAL
+Blind person needs basic medical checkup and eye care support.,MEDICAL
+"Asthma patient gasping for air, needs inhaler and nebulizer support.",MEDICAL
+Need free medical consultation and basic lab tests for slum residents.,MEDICAL
+"Pregnant lady experiencing labor pains, needs ambulance transport to hospital.",MEDICAL
+"Child has fractured arm after falling, needs orthopedic treatment and plaster.",MEDICAL
+Need psychiatric medication and counseling for traumatized homeless person.,MEDICAL
+"Burn injury on hands, needs burn ointment and sterile bandages.",MEDICAL
+"Patient requires blood transfusion urgently, O positive donor needed.",MEDICAL
+Tuberculosis patient needs nutritional supplements and DOTS treatment.,MEDICAL
+"Severe dental infection with swelling, need dentist charity care.",MEDICAL
+Need hearing aid and audiologist assessment for elderly beggar.,MEDICAL
+Cataract surgery required for indigent senior citizen going blind.,MEDICAL
+"Flash flood water entered our hut, trapped on roof, need rescue!",EMERGENCY
+"Fire broke out in slum cluster, multiple people trapped inside!",EMERGENCY
+"Violent attacker outside door threatening life, immediate help needed!",EMERGENCY
+Severe accident victim unconscious on roadside bleeding heavily!,EMERGENCY
+"Suicidal thoughts and severe crisis, need urgent helpline and intervention!",EMERGENCY
+"Wall collapsed on sleeping family, people buried under debris!",EMERGENCY
+"Child kidnapped or missing from park, emergency alert required!",EMERGENCY
+"Gas cylinder leak with fire hazard, evacuation needed now!",EMERGENCY
+"Extreme hypothermia, unconscious homeless person unresponsive in frost!",EMERGENCY
+Electric shock hazard with fallen live wire near water puddle!,EMERGENCY
+"Critical life threat situation, need emergency dispatch immediately!",EMERGENCY
+"Severe domestic violence victim locked in room, requires rescue.",EMERGENCY
+"Boat capsized near river bank, multiple drowning people need rescue.",EMERGENCY
+"Building showing structural cracks about to collapse, urgent evacuation.",EMERGENCY
+"Snake bite victim losing consciousness, urgent antivenom and transport!",EMERGENCY
+"Armed assault in progress near market, emergency police and medical needed.",EMERGENCY
+"Massive chemical fumes spreading from dumpster, people suffocating.",EMERGENCY
+"Heatstroke victim collapsed on road with seizure, life threatening.",EMERGENCY
+"Need notebooks, pens, and textbooks for 5th grade student.",EDUCATION
+Single mother unable to pay school tuition fees for daughter.,EDUCATION
+Meritorious slum student needs second-hand laptop for online classes.,EDUCATION
+Looking for volunteer math and science tutors for orphan children.,EDUCATION
+"Need school bag, geometry box, and stationery for poor boy.",EDUCATION
+Requesting scholarship support for college engineering admission fees.,EDUCATION
+Community library needs donated children's story books and encyclopedias.,EDUCATION
+Need educational sponsorship for blind student to buy Braille books.,EDUCATION
+Girl drop-out wants to resume 10th standard board exam coaching.,EDUCATION
+Need English speaking and computer literacy classes for underprivileged youth.,EDUCATION
+"School fees due tomorrow, student facing expulsion without help.",EDUCATION
+Requesting donation of used tablet or smartphone for digital learning.,EDUCATION
+"Need uniforms, stationery, and backpacks for 20 primary school kids.",EDUCATION
+Seeking mentorship and career guidance for first-generation learners.,EDUCATION
+Exam registration fees needed for poor student wanting to take entrance test.,EDUCATION
+Daily wage construction laborer seeking work to support family.,EMPLOYMENT
+Single mother looking for domestic helper or cooking job nearby.,EMPLOYMENT
+Unemployed carpenter seeking carpentry tools to start earning livelihood.,EMPLOYMENT
+Looking for security guard or watchman vacancy for retired honest person.,EMPLOYMENT
+Need sewing machine to start home tailoring business and earn income.,EMPLOYMENT
+Trained driver with valid driving license looking for taxi or delivery work.,EMPLOYMENT
+Seeking vocational training in electrical repairs or plumbing.,EMPLOYMENT
+"Lost job due to factory closure, seeking any manual or office boy work.",EMPLOYMENT
+Need micro-loan or bicycle to sell vegetables as street vendor.,EMPLOYMENT
+Housekeeper looking for part-time cleaning jobs in apartments.,EMPLOYMENT
+Young man looking for apprentice job in auto repair workshop.,EMPLOYMENT
+Need resume assistance and job interview guidance for destitute graduate.,EMPLOYMENT
+Elderly person capable of gardening looking for garden maintenance work.,EMPLOYMENT
+Seeking tea stall or snack cart setup assistance for self-employment.,EMPLOYMENT
+Need painter or whitewashing job for daily sustenance.,EMPLOYMENT
+"Please provide food packets for my family, we are starving.",FOOD
+"Please provide cooked dinner for my family, we are starving.",FOOD
+"Please provide rice and wheat rations for my family, we are starving.",FOOD
+"Please provide baby milk formula for my family, we are starving.",FOOD
+"Please provide bread and vegetables for my family, we are starving.",FOOD
+"Please provide daily meals for my family, we are starving.",FOOD
+"Please provide grocery kit for my family, we are starving.",FOOD
+"Please provide drinking water and food for my family, we are starving.",FOOD
+We desperately need food packets tonight.,FOOD
+We desperately need cooked dinner tonight.,FOOD
+We desperately need rice and wheat rations tonight.,FOOD
+We desperately need baby milk formula tonight.,FOOD
+We desperately need bread and vegetables tonight.,FOOD
+We desperately need daily meals tonight.,FOOD
+We desperately need grocery kit tonight.,FOOD
+We desperately need drinking water and food tonight.,FOOD
+Can anyone donate food packets to our community?,FOOD
+Can anyone donate cooked dinner to our community?,FOOD
+Can anyone donate rice and wheat rations to our community?,FOOD
+Can anyone donate baby milk formula to our community?,FOOD
+Can anyone donate bread and vegetables to our community?,FOOD
+Can anyone donate daily meals to our community?,FOOD
+Can anyone donate grocery kit to our community?,FOOD
+Can anyone donate drinking water and food to our community?,FOOD
+Homeless group needs urgent food packets.,FOOD
+Homeless group needs urgent cooked dinner.,FOOD
+Homeless group needs urgent rice and wheat rations.,FOOD
+Homeless group needs urgent baby milk formula.,FOOD
+Homeless group needs urgent bread and vegetables.,FOOD
+Homeless group needs urgent daily meals.,FOOD
+Homeless group needs urgent grocery kit.,FOOD
+Homeless group needs urgent drinking water and food.,FOOD
+I am looking for food packets because we have no money for groceries.,FOOD
+I am looking for cooked dinner because we have no money for groceries.,FOOD
+I am looking for rice and wheat rations because we have no money for groceries.,FOOD
+I am looking for baby milk formula because we have no money for groceries.,FOOD
+I am looking for bread and vegetables because we have no money for groceries.,FOOD
+I am looking for daily meals because we have no money for groceries.,FOOD
+I am looking for grocery kit because we have no money for groceries.,FOOD
+I am looking for drinking water and food because we have no money for groceries.,FOOD
+"Need safe night shelter for tonight, nowhere to sleep.",SHELTER
+"Need safe roof over our heads for tonight, nowhere to sleep.",SHELTER
+"Need safe temporary housing for tonight, nowhere to sleep.",SHELTER
+"Need safe dormitory bed for tonight, nowhere to sleep.",SHELTER
+"Need safe shelter home accommodation for tonight, nowhere to sleep.",SHELTER
+"Need safe safe place to sleep for tonight, nowhere to sleep.",SHELTER
+Looking for night shelter after being evicted.,SHELTER
+Looking for roof over our heads after being evicted.,SHELTER
+Looking for temporary housing after being evicted.,SHELTER
+Looking for dormitory bed after being evicted.,SHELTER
+Looking for shelter home accommodation after being evicted.,SHELTER
+Looking for safe place to sleep after being evicted.,SHELTER
+Urgent request for night shelter for mother and children.,SHELTER
+Urgent request for roof over our heads for mother and children.,SHELTER
+Urgent request for temporary housing for mother and children.,SHELTER
+Urgent request for dormitory bed for mother and children.,SHELTER
+Urgent request for shelter home accommodation for mother and children.,SHELTER
+Urgent request for safe place to sleep for mother and children.,SHELTER
+"Sleeping outdoors, need night shelter immediately.",SHELTER
+"Sleeping outdoors, need roof over our heads immediately.",SHELTER
+"Sleeping outdoors, need temporary housing immediately.",SHELTER
+"Sleeping outdoors, need dormitory bed immediately.",SHELTER
+"Sleeping outdoors, need shelter home accommodation immediately.",SHELTER
+"Sleeping outdoors, need safe place to sleep immediately.",SHELTER
+Can an NGO provide night shelter for an abandoned senior citizen?,SHELTER
+Can an NGO provide roof over our heads for an abandoned senior citizen?,SHELTER
+Can an NGO provide temporary housing for an abandoned senior citizen?,SHELTER
+Can an NGO provide dormitory bed for an abandoned senior citizen?,SHELTER
+Can an NGO provide shelter home accommodation for an abandoned senior citizen?,SHELTER
+Can an NGO provide safe place to sleep for an abandoned senior citizen?,SHELTER
+Please donate warm blankets for poor families.,CLOTHING
+Please donate winter clothes and sweaters for poor families.,CLOTHING
+Please donate raincoats and tarpaulin for poor families.,CLOTHING
+Please donate shoes and slippers for poor families.,CLOTHING
+Please donate second-hand garments for poor families.,CLOTHING
+Please donate school uniforms for poor families.,CLOTHING
+Need warm blankets for cold weather and rain.,CLOTHING
+Need winter clothes and sweaters for cold weather and rain.,CLOTHING
+Need raincoats and tarpaulin for cold weather and rain.,CLOTHING
+Need shoes and slippers for cold weather and rain.,CLOTHING
+Need second-hand garments for cold weather and rain.,CLOTHING
+Need school uniforms for cold weather and rain.,CLOTHING
+"Children have no warm blankets, please help.",CLOTHING
+"Children have no winter clothes and sweaters, please help.",CLOTHING
+"Children have no raincoats and tarpaulin, please help.",CLOTHING
+"Children have no shoes and slippers, please help.",CLOTHING
+"Children have no second-hand garments, please help.",CLOTHING
+"Children have no school uniforms, please help.",CLOTHING
+Looking for warm blankets for street dwellers.,CLOTHING
+Looking for winter clothes and sweaters for street dwellers.,CLOTHING
+Looking for raincoats and tarpaulin for street dwellers.,CLOTHING
+Looking for shoes and slippers for street dwellers.,CLOTHING
+Looking for second-hand garments for street dwellers.,CLOTHING
+Looking for school uniforms for street dwellers.,CLOTHING
+Urgent requirement for warm blankets in slum settlement.,CLOTHING
+Urgent requirement for winter clothes and sweaters in slum settlement.,CLOTHING
+Urgent requirement for raincoats and tarpaulin in slum settlement.,CLOTHING
+Urgent requirement for shoes and slippers in slum settlement.,CLOTHING
+Urgent requirement for second-hand garments in slum settlement.,CLOTHING
+Urgent requirement for school uniforms in slum settlement.,CLOTHING
+Require urgent insulin and diabetes medications for sick family member.,MEDICAL
+Require urgent sterile bandages and dressing for sick family member.,MEDICAL
+Require urgent blood pressure tablets for sick family member.,MEDICAL
+Require urgent antibiotics and pain relief for sick family member.,MEDICAL
+Require urgent wheelchair and crutches for sick family member.,MEDICAL
+Require urgent urgent medical care for sick family member.,MEDICAL
+Need financial aid for insulin and diabetes medications at local clinic.,MEDICAL
+Need financial aid for sterile bandages and dressing at local clinic.,MEDICAL
+Need financial aid for blood pressure tablets at local clinic.,MEDICAL
+Need financial aid for antibiotics and pain relief at local clinic.,MEDICAL
+Need financial aid for wheelchair and crutches at local clinic.,MEDICAL
+Need financial aid for urgent medical care at local clinic.,MEDICAL
+"Elderly person in pain, needs insulin and diabetes medications immediately.",MEDICAL
+"Elderly person in pain, needs sterile bandages and dressing immediately.",MEDICAL
+"Elderly person in pain, needs blood pressure tablets immediately.",MEDICAL
+"Elderly person in pain, needs antibiotics and pain relief immediately.",MEDICAL
+"Elderly person in pain, needs wheelchair and crutches immediately.",MEDICAL
+"Elderly person in pain, needs urgent medical care immediately.",MEDICAL
+Seeking free doctor consultation and insulin and diabetes medications.,MEDICAL
+Seeking free doctor consultation and sterile bandages and dressing.,MEDICAL
+Seeking free doctor consultation and blood pressure tablets.,MEDICAL
+Seeking free doctor consultation and antibiotics and pain relief.,MEDICAL
+Seeking free doctor consultation and wheelchair and crutches.,MEDICAL
+Seeking free doctor consultation and urgent medical care.,MEDICAL
+Cannot afford insulin and diabetes medications prescribed by hospital.,MEDICAL
+Cannot afford sterile bandages and dressing prescribed by hospital.,MEDICAL
+Cannot afford blood pressure tablets prescribed by hospital.,MEDICAL
+Cannot afford antibiotics and pain relief prescribed by hospital.,MEDICAL
+Cannot afford wheelchair and crutches prescribed by hospital.,MEDICAL
+Cannot afford urgent medical care prescribed by hospital.,MEDICAL
+"CRITICAL: house collapse with trapped victims, immediate help required!",EMERGENCY
+"CRITICAL: violent attack in progress, immediate help required!",EMERGENCY
+"CRITICAL: severe road accident with bleeding, immediate help required!",EMERGENCY
+"CRITICAL: slum fire spreading rapidly, immediate help required!",EMERGENCY
+"CRITICAL: river flood water rising, immediate help required!",EMERGENCY
+"Life threatening: house collapse with trapped victims, please send rescue team!",EMERGENCY
+"Life threatening: violent attack in progress, please send rescue team!",EMERGENCY
+"Life threatening: severe road accident with bleeding, please send rescue team!",EMERGENCY
+"Life threatening: slum fire spreading rapidly, please send rescue team!",EMERGENCY
+"Life threatening: river flood water rising, please send rescue team!",EMERGENCY
+Emergency alert: house collapse with trapped victims happening right now!,EMERGENCY
+Emergency alert: violent attack in progress happening right now!,EMERGENCY
+Emergency alert: severe road accident with bleeding happening right now!,EMERGENCY
+Emergency alert: slum fire spreading rapidly happening right now!,EMERGENCY
+Emergency alert: river flood water rising happening right now!,EMERGENCY
+"Urgent assistance needed, house collapse with trapped victims!",EMERGENCY
+"Urgent assistance needed, violent attack in progress!",EMERGENCY
+"Urgent assistance needed, severe road accident with bleeding!",EMERGENCY
+"Urgent assistance needed, slum fire spreading rapidly!",EMERGENCY
+"Urgent assistance needed, river flood water rising!",EMERGENCY
+Help! house collapse with trapped victims and we are trapped!,EMERGENCY
+Help! violent attack in progress and we are trapped!,EMERGENCY
+Help! severe road accident with bleeding and we are trapped!,EMERGENCY
+Help! slum fire spreading rapidly and we are trapped!,EMERGENCY
+Help! river flood water rising and we are trapped!,EMERGENCY
+Need school textbooks and notebooks for poor student studying in school.,EDUCATION
+Need examination fees for poor student studying in school.,EDUCATION
+Need school bag and stationery kit for poor student studying in school.,EDUCATION
+Need laptop for engineering study for poor student studying in school.,EDUCATION
+Need tuition coaching fees for poor student studying in school.,EDUCATION
+Requesting donation of school textbooks and notebooks for underprivileged children.,EDUCATION
+Requesting donation of examination fees for underprivileged children.,EDUCATION
+Requesting donation of school bag and stationery kit for underprivileged children.,EDUCATION
+Requesting donation of laptop for engineering study for underprivileged children.,EDUCATION
+Requesting donation of tuition coaching fees for underprivileged children.,EDUCATION
+Seeking assistance to buy school textbooks and notebooks for class.,EDUCATION
+Seeking assistance to buy examination fees for class.,EDUCATION
+Seeking assistance to buy school bag and stationery kit for class.,EDUCATION
+Seeking assistance to buy laptop for engineering study for class.,EDUCATION
+Seeking assistance to buy tuition coaching fees for class.,EDUCATION
+Help our children learn by providing school textbooks and notebooks.,EDUCATION
+Help our children learn by providing examination fees.,EDUCATION
+Help our children learn by providing school bag and stationery kit.,EDUCATION
+Help our children learn by providing laptop for engineering study.,EDUCATION
+Help our children learn by providing tuition coaching fees.,EDUCATION
+Bright student needs school textbooks and notebooks to continue education.,EDUCATION
+Bright student needs examination fees to continue education.,EDUCATION
+Bright student needs school bag and stationery kit to continue education.,EDUCATION
+Bright student needs laptop for engineering study to continue education.,EDUCATION
+Bright student needs tuition coaching fees to continue education.,EDUCATION
+Looking for day labor work to earn daily wages.,EMPLOYMENT
+Looking for domestic helper job to earn daily wages.,EMPLOYMENT
+Looking for sewing machine for tailoring to earn daily wages.,EMPLOYMENT
+Looking for delivery rider job to earn daily wages.,EMPLOYMENT
+Looking for security guard employment to earn daily wages.,EMPLOYMENT
+Looking for gardening and cleaning work to earn daily wages.,EMPLOYMENT
+Need day labor work to support my dependents.,EMPLOYMENT
+Need domestic helper job to support my dependents.,EMPLOYMENT
+Need sewing machine for tailoring to support my dependents.,EMPLOYMENT
+Need delivery rider job to support my dependents.,EMPLOYMENT
+Need security guard employment to support my dependents.,EMPLOYMENT
+Need gardening and cleaning work to support my dependents.,EMPLOYMENT
+Experienced worker seeking day labor work in town.,EMPLOYMENT
+Experienced worker seeking domestic helper job in town.,EMPLOYMENT
+Experienced worker seeking sewing machine for tailoring in town.,EMPLOYMENT
+Experienced worker seeking delivery rider job in town.,EMPLOYMENT
+Experienced worker seeking security guard employment in town.,EMPLOYMENT
+Experienced worker seeking gardening and cleaning work in town.,EMPLOYMENT
+Please connect me with day labor work opportunity.,EMPLOYMENT
+Please connect me with domestic helper job opportunity.,EMPLOYMENT
+Please connect me with sewing machine for tailoring opportunity.,EMPLOYMENT
+Please connect me with delivery rider job opportunity.,EMPLOYMENT
+Please connect me with security guard employment opportunity.,EMPLOYMENT
+Please connect me with gardening and cleaning work opportunity.,EMPLOYMENT
+Seeking day labor work to become financially independent.,EMPLOYMENT
+Seeking domestic helper job to become financially independent.,EMPLOYMENT
+Seeking sewing machine for tailoring to become financially independent.,EMPLOYMENT
+Seeking delivery rider job to become financially independent.,EMPLOYMENT
+Seeking security guard employment to become financially independent.,EMPLOYMENT
+Seeking gardening and cleaning work to become financially independent.,EMPLOYMENT

@@ -1,0 +1,256 @@
+@import "leaflet/dist/leaflet.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --bg-base: #FFF9ED;
+  --bg-surface: #FFFFFF;
+  --bg-muted: #F7EBD2;
+  --text-primary: #17231E;
+  --text-secondary: rgba(23, 35, 30, 0.75);
+  --border-color: #EAE3D2;
+  --accent-green: #159B5B;
+  --accent-green-hover: #12834D;
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(234, 227, 210, 0.9);
+  --glass-shadow: 0 10px 30px -5px rgba(23, 35, 30, 0.05);
+}
+
+html {
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+html, body, button, input, textarea, select {
+  font-family: "Inter", "Noto Sans Tamil", "Noto Sans Devanagari", sans-serif;
+  touch-action: manipulation;
+}
+
+.dark {
+  --bg-base: #0C1410;
+  --bg-surface: #121C18;
+  --bg-muted: #182520;
+  --text-primary: #F7FAF8;
+  --text-secondary: rgba(247, 250, 248, 0.78);
+  --border-color: #24332D;
+  --accent-green: #19AD66;
+  --accent-green-hover: #159B5B;
+  --glass-bg: rgba(18, 28, 24, 0.78);
+  --glass-border: rgba(36, 51, 45, 0.85);
+  --glass-shadow: 0 14px 40px -8px rgba(0, 0, 0, 0.6);
+}
+
+@layer components {
+  /* Glassmorphism System */
+  .glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1.5rem;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(21, 155, 91, 0.5);
+    box-shadow: 0 18px 36px -6px rgba(21, 155, 91, 0.12);
+  }
+
+  .dark .glass-card:hover {
+    border-color: rgba(25, 173, 102, 0.6);
+    box-shadow: 0 20px 40px -6px rgba(0, 0, 0, 0.7), 0 0 24px -2px rgba(25, 173, 102, 0.25);
+  }
+
+  /* Warm Charity Cards & Surfaces */
+  .charity-card {
+    background: #FFFFFF;
+    border: 1px solid #EAE3D2;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 20px -2px rgba(23, 35, 30, 0.05);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .charity-card:hover {
+    box-shadow: 0 14px 32px -4px rgba(23, 35, 30, 0.1);
+    border-color: #D8CEB9;
+    transform: translateY(-3px);
+  }
+
+  .charity-card-cream {
+    background: #F7EBD2;
+    border: 1px solid #EFE1C3;
+    border-radius: 1.5rem;
+  }
+
+  .dark .charity-card {
+    background: #121C18;
+    border-color: #24332D;
+    box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.5);
+  }
+
+  .dark .charity-card:hover {
+    border-color: rgba(25, 173, 102, 0.5);
+    box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.7), 0 0 20px -4px rgba(25, 173, 102, 0.2);
+  }
+
+  .dark .charity-card-cream {
+    background: #182520;
+    border-color: #2A3D35;
+  }
+
+  /* Pills and Badges */
+  .charity-pill-green {
+    background: #159B5B;
+    color: #FFFFFF;
+    border-radius: 9999px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+  }
+  .charity-pill-green:hover {
+    background: #12834D;
+  }
+
+  .charity-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.1rem;
+    border-radius: 9999px;
+    border: 1px solid #EAE3D2;
+    background: #FFFFFF;
+    color: #17231E;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .charity-chip:hover {
+    border-color: #159B5B;
+    color: #159B5B;
+    background: #F1F8F2;
+  }
+  .charity-chip.active {
+    background: #159B5B;
+    color: #FFFFFF;
+    border-color: #159B5B;
+  }
+
+  .dark .charity-chip {
+    background: #121C18;
+    border-color: #24332D;
+    color: #F7FAF8;
+  }
+  .dark .charity-chip:hover {
+    border-color: #19AD66;
+    color: #19AD66;
+    background: #182520;
+  }
+  .dark .charity-chip.active {
+    background: #19AD66;
+    color: #FFFFFF;
+    border-color: #19AD66;
+  }
+
+  /* Hand-drawn cursive feel */
+  .font-script {
+    font-family: 'Caveat', cursive;
+  }
+}
+
+/* Custom modern scrollbar with warm charity tone */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #FFF9ED;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8CEB9;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #159B5B;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0C1410;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #24332D;
+  border-radius: 6px;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #19AD66;
+}
+
+/* Leaflet container and popup enhancements */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 1.5rem;
+  z-index: 10;
+  font-family: 'Manrope', sans-serif !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 1rem !important;
+  box-shadow: 0 10px 25px -3px rgba(23, 35, 30, 0.15) !important;
+  border: 1px solid #EAE3D2 !important;
+  padding: 4px !important;
+  background: #FFFFFF !important;
+}
+
+.dark .leaflet-popup-content-wrapper {
+  background: #121C18 !important;
+  border-color: #24332D !important;
+  color: #F7FAF8 !important;
+}
+
+.leaflet-popup-tip {
+  background: #FFFFFF !important;
+}
+
+.dark .leaflet-popup-tip {
+  background: #121C18 !important;
+}
+
+.custom-map-pin {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.custom-map-pin:hover {
+  transform: scale(1.15) translateY(-4px);
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
