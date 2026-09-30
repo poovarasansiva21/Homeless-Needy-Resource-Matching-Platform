@@ -192,18 +192,13 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
         
         {/* Header Bar */}
         <div className="p-4 sm:p-6 border-b border-[#E7E0D6] dark:border-white/10 bg-[#F3ECE2]/60 dark:bg-[#1E1E1E] flex items-center justify-between gap-3">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#F25C38] text-white flex items-center justify-center text-2xl shadow-md shadow-[#F25C38]/20 shrink-0">
-              🆘
-            </div>
-            <div>
-              <h2 className="text-xl sm:text-2xl font-serif font-semibold text-[#1C1917] dark:text-[#F5F5F0] tracking-tight flex items-center space-x-2">
-                <span>{t('oneTap.btnNeedHelp')}</span>
-              </h2>
-              <p className="text-xs text-[#78716C] dark:text-[#A8A29E] font-medium">
-                {t('oneTap.subtitle')}
-              </p>
-            </div>
+          <div>
+            <h2 className="text-xl sm:text-2xl font-serif font-semibold text-[#1C1917] dark:text-[#F5F5F0] tracking-tight">
+              {t('oneTap.btnNeedHelp')}
+            </h2>
+            <p className="text-xs text-[#78716C] dark:text-[#A8A29E] font-medium">
+              {t('oneTap.subtitle')}
+            </p>
           </div>
 
           <div className="flex items-center space-x-2">
