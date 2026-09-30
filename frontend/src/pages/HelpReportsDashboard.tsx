@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
   Search, 
@@ -24,7 +24,8 @@ import {
   Check,
   FileText,
   Activity,
-  HeartHandshake
+  HeartHandshake,
+  Home
 } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import L from 'leaflet';
@@ -74,6 +75,15 @@ export const HelpReportsDashboard: React.FC = () => {
   // Selected Detail Panel State
   const [selectedReport, setSelectedReport] = useState<RequestItem | null>(null);
   const [revealPreciseLocation, setRevealPreciseLocation] = useState<boolean>(false);
+  const detailsRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectReport = (report: RequestItem) => {
+    setSelectedReport(report);
+    setRevealPreciseLocation(false);
+    setTimeout(() => {
+      detailsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  };
 
   // Filters
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -332,6 +342,16 @@ export const HelpReportsDashboard: React.FC = () => {
 
           {/* Right Header Action Icons */}
           <div className="flex items-center space-x-3">
+            {/* Home Navigation Button */}
+            <Link
+              to="/"
+              title="Return to Home Page"
+              className="px-3.5 py-1.5 rounded-full bg-[#1C1917] text-white dark:bg-white dark:text-[#1C1917] text-xs font-bold flex items-center space-x-1.5 hover:opacity-90 transition-opacity cursor-pointer shadow-2xs"
+            >
+              <Home className="w-3.5 h-3.5 text-[#F25C38]" />
+              <span>Home</span>
+            </Link>
+
             <button
               onClick={fetchData}
               disabled={loading}
@@ -548,7 +568,7 @@ export const HelpReportsDashboard: React.FC = () => {
                   return (
                     <div
                       key={report.id}
-                      onClick={() => setSelectedReport(report)}
+                      onClick={() => handleSelectReport(report)}
                       className={`bg-white dark:bg-[#141414] p-5 rounded-2xl border transition-all cursor-pointer shadow-2xs hover:shadow-xs space-y-3 ${
                         isSelected
                           ? 'border-[#F25C38] ring-2 ring-[#F25C38]/20 bg-[#F25C38]/5 dark:bg-[#F25C38]/10'
@@ -596,11 +616,12 @@ export const HelpReportsDashboard: React.FC = () => {
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            setSelectedReport(report);
+                            handleSelectReport(report);
                           }}
-                          className="px-4 py-2 bg-[#1C1917] text-white dark:bg-white dark:text-[#1C1917] text-xs font-bold rounded-xl hover:opacity-90"
+                          className="px-4 py-2 bg-[#1C1917] text-white dark:bg-white dark:text-[#1C1917] text-xs font-bold rounded-xl hover:opacity-90 flex items-center space-x-1"
                         >
-                          VIEW REPORT
+                          <Eye className="w-3.5 h-3.5 text-[#F25C38]" />
+                          <span>VIEW REPORT</span>
                         </button>
                       </div>
                     </div>
@@ -613,20 +634,34 @@ export const HelpReportsDashboard: React.FC = () => {
           {/* RIGHT: REPORT DETAILS & MAP PANEL (lg:col-span-6) */}
           <div className="lg:col-span-6 space-y-4">
             {selectedReport ? (
-              <div className="bg-white dark:bg-[#141414] p-6 rounded-2xl border border-[#E7E0D6] dark:border-white/10 shadow-xs space-y-6">
+              <div ref={detailsRef} className="bg-white dark:bg-[#141414] p-6 rounded-2xl border border-[#E7E0D6] dark:border-white/10 shadow-xs space-y-6 scroll-mt-6">
                 
                 {/* Header */}
                 <div className="flex items-start justify-between border-b border-[#E7E0D6] dark:border-white/10 pb-4">
                   <div>
-                    <h2 className="text-lg font-black text-[#1C1917] dark:text-white">
-                      HELP REPORT #SAH-{selectedReport.id}
-                    </h2>
+                    <div className="flex items-center space-x-2">
+                      <h2 className="text-lg font-black text-[#1C1917] dark:text-white">
+                        HELP REPORT #SAH-{selectedReport.id}
+                      </h2>
+                      <Link to="/" title="Return Home" className="text-stone-400 hover:text-[#F25C38] transition-colors p-1">
+                        <Home className="w-4 h-4" />
+                      </Link>
+                    </div>
                     <p className="text-xs text-stone-500 font-medium">
                       Canonical UTC timestamp formatted to Asia/Kolkata (IST)
                     </p>
                   </div>
 
-                  {renderStatusChip(selectedReport.status)}
+                  <div className="flex items-center space-x-2">
+                    {renderStatusChip(selectedReport.status)}
+                    <button
+                      onClick={() => setSelectedReport(null)}
+                      title="Close Report Detail"
+                      className="p-1 rounded-full text-stone-400 hover:text-stone-700 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
 
                 {/* Left/Right Split inside Details Panel */}
@@ -740,39 +775,39 @@ export const HelpReportsDashboard: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Actions Bar for Authorized Responders */}
-                {isAuthorizedResponder && (
-                  <div className="pt-4 border-t border-[#E7E0D6] dark:border-white/10 flex flex-wrap items-center gap-2">
-                    {['REPORTED', 'REQUESTED', 'SUBMITTED', 'PENDING_VERIFICATION'].includes(selectedReport.status) && (
-                      <button
-                        onClick={() => handleAcceptReport(selectedReport.id)}
-                        disabled={isProcessingAction}
-                        className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl cursor-pointer"
-                      >
-                        ASSIGN HELP
-                      </button>
-                    )}
+                {/* Actions Bar for Authorized Responders & All Users */}
+                <div className="pt-4 border-t border-[#E7E0D6] dark:border-white/10 flex flex-wrap items-center gap-2">
+                  {isAuthorizedResponder && ['REPORTED', 'REQUESTED', 'SUBMITTED', 'PENDING_VERIFICATION'].includes(selectedReport.status) && (
+                    <button
+                      onClick={() => handleAcceptReport(selectedReport.id)}
+                      disabled={isProcessingAction}
+                      className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl cursor-pointer"
+                    >
+                      ASSIGN HELP
+                    </button>
+                  )}
 
-                    {['ACCEPTED', 'NGO_ACCEPTED', 'RESPONDER_ASSIGNED'].includes(selectedReport.status) && (
-                      <button
-                        onClick={() => handleStartAssistance(selectedReport.id)}
-                        disabled={isProcessingAction}
-                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl cursor-pointer"
-                      >
-                        UPDATE STATUS: IN PROGRESS
-                      </button>
-                    )}
+                  {isAuthorizedResponder && ['ACCEPTED', 'NGO_ACCEPTED', 'RESPONDER_ASSIGNED'].includes(selectedReport.status) && (
+                    <button
+                      onClick={() => handleStartAssistance(selectedReport.id)}
+                      disabled={isProcessingAction}
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl cursor-pointer"
+                    >
+                      UPDATE STATUS: IN PROGRESS
+                    </button>
+                  )}
 
-                    {['ASSISTANCE_STARTED', 'IN_PROGRESS', 'ON_THE_WAY'].includes(selectedReport.status) && (
-                      <button
-                        onClick={() => handleCompleteReport(selectedReport.id)}
-                        disabled={isProcessingAction}
-                        className="px-4 py-2 bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-xs rounded-xl cursor-pointer"
-                      >
-                        MARK RESOLVED
-                      </button>
-                    )}
+                  {isAuthorizedResponder && ['ASSISTANCE_STARTED', 'IN_PROGRESS', 'ON_THE_WAY'].includes(selectedReport.status) && (
+                    <button
+                      onClick={() => handleCompleteReport(selectedReport.id)}
+                      disabled={isProcessingAction}
+                      className="px-4 py-2 bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-xs rounded-xl cursor-pointer"
+                    >
+                      MARK RESOLVED
+                    </button>
+                  )}
 
+                  {isAuthorizedResponder && (
                     <button
                       onClick={() => handleVerifyReport(selectedReport.id)}
                       disabled={isProcessingAction}
@@ -780,8 +815,17 @@ export const HelpReportsDashboard: React.FC = () => {
                     >
                       VERIFY REPORT
                     </button>
-                  </div>
-                )}
+                  )}
+
+                  {/* Return Home Navigation Button */}
+                  <Link
+                    to="/"
+                    className="px-4 py-2 bg-[#1C1917] dark:bg-stone-800 hover:bg-black text-white font-bold text-xs rounded-xl cursor-pointer inline-flex items-center space-x-1.5 transition-colors"
+                  >
+                    <Home className="w-3.5 h-3.5 text-[#F25C38]" />
+                    <span>RETURN HOME</span>
+                  </Link>
+                </div>
 
               </div>
             ) : (
