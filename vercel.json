@@ -1,27 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "services": {
-    "backend": {
-      "root": "backend",
-      "framework": "flask"
-    },
-    "frontend": {
-      "root": "frontend",
-      "framework": "vite"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": {
-        "service": "backend"
-      }
+      "destination": "/api/index.py"
     },
     {
       "source": "/(.*)",
-      "destination": {
-        "service": "frontend"
-      }
+      "destination": "/frontend/$1"
     }
   ]
 }
