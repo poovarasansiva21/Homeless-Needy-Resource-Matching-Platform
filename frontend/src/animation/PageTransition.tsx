@@ -16,8 +16,8 @@ export const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
 
     gsap.fromTo(
       containerRef.current,
-      { opacity: 0, y: 16 },
-      { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', clearProps: 'transform' }
+      { opacity: 0, x: 28, y: 10 },
+      { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power3.out', clearProps: 'transform' }
     );
   }, [location.pathname]);
 
