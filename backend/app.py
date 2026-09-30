@@ -63,13 +63,16 @@ def create_app():
         except Exception:
             db_status = "degraded"
 
+        from services.classifier import is_tf_available
+        tf_status = is_tf_available()
+
         return jsonify({
             "status": "healthy" if db_status == "ok" else "degraded",
             "service": "SAHAAYAA AI Core API",
             "version": "1.0.0",
             "database": db_status,
             "real_time_socket": True,
-            "tf_model_loaded": True
+            "tf_model_loaded": tf_status
         }), 200
 
     # Serve uploads
