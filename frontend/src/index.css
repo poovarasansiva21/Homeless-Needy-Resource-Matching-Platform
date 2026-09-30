@@ -269,6 +269,69 @@ html, body, button, input, textarea, select {
   transform: scale(1.15) translateY(-4px);
 }
 
+/* Glass Card Sheen & Reflection Sweep Animation */
+.glass-card, .charity-card {
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease;
+}
+
+.glass-card::before, .charity-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+  transform: skewX(-22deg);
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  opacity: 0;
+}
+
+.dark .glass-card::before, .dark .charity-card::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(242, 92, 56, 0.12),
+    transparent
+  );
+}
+
+.glass-card:hover::before, .charity-card:hover::before {
+  opacity: 1;
+  animation: smooth-sheen-sweep 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes smooth-sheen-sweep {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+/* Smooth Chip / Button Ripple & Springs */
+.charity-chip, .btn-cinematic {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.25s ease;
+}
+
+.charity-chip:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+.charity-chip:active {
+  transform: translateY(0) scale(0.97);
+}
+
 /* Lenis Smooth Scroll CSS setup */
 html.lenis, html.lenis body {
   height: auto;
@@ -294,7 +357,6 @@ html.lenis, html.lenis body {
 }
 
 .btn-cinematic {
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, background-color 0.25s ease;
   will-change: transform;
 }
 .btn-cinematic:hover {
