@@ -219,14 +219,14 @@ export const LandingPage: React.FC = () => {
       const heroTl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 1.1 } });
       heroTl.fromTo(
         [heroTitleLine1Ref.current, heroTitleLine2Ref.current, heroTitleLine3Ref.current],
-        { y: 80, opacity: 0, rotateX: 15 },
-        { y: 0, opacity: 1, rotateX: 0, stagger: 0.15 }
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.12 }
       );
 
       if (heroImgRef.current) {
         gsap.to(heroImgRef.current, {
-          scale: 1.08,
-          y: 40,
+          scale: 1.05,
+          y: 20,
           scrollTrigger: {
             trigger: heroRef.current,
             start: 'top top',
@@ -241,15 +241,15 @@ export const LandingPage: React.FC = () => {
         const words = problemWordsRef.current.querySelectorAll('.scroll-word');
         gsap.fromTo(
           words,
-          { opacity: 0.2, color: '#3B2418' },
+          { opacity: 0.3, color: '#3B2418' },
           {
             opacity: 1,
             color: '#D97732',
-            stagger: 0.2,
+            stagger: 0.15,
             scrollTrigger: {
               trigger: problemSectionRef.current,
-              start: 'top 75%',
-              end: 'bottom 40%',
+              start: 'top 80%',
+              end: 'bottom 50%',
               scrub: true,
             },
           }
@@ -260,7 +260,7 @@ export const LandingPage: React.FC = () => {
       if (impactSectionRef.current) {
         ScrollTrigger.create({
           trigger: impactSectionRef.current,
-          start: 'top 70%',
+          start: 'top 75%',
           once: true,
           onEnter: () => {
             const animateCounter = (el: HTMLElement | null, target: number, suffix = '') => {
@@ -268,7 +268,7 @@ export const LandingPage: React.FC = () => {
               const obj = { val: 0 };
               gsap.to(obj, {
                 val: target,
-                duration: 2,
+                duration: 1.8,
                 ease: 'power2.out',
                 onUpdate: () => {
                   el.textContent = `${Math.floor(obj.val).toLocaleString()}${suffix}`;
@@ -471,49 +471,50 @@ export const LandingPage: React.FC = () => {
       />
 
       {/* ========================================================================= */}
-      {/* SECTION 01: CINEMATIC EDITORIAL HERO                                     */}
+      {/* SECTION 01: CINEMATIC EDITORIAL HERO (BALANCED FONT SIZES)               */}
       {/* ========================================================================= */}
-      <section ref={heroRef} className="relative min-h-[92vh] flex items-center justify-center pt-10 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#F7F1E8] dark:bg-[#171310]">
+      <section ref={heroRef} className="relative min-h-[85vh] flex items-center justify-center pt-8 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#F7F1E8] dark:bg-[#171310]">
         
         {/* Subtle background grain & warm blur glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#D97732]/10 dark:bg-[#D97732]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#D97732]/10 dark:bg-[#D97732]/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10">
+        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center z-10">
           
-          {/* Left Column: Line-by-line Editorial Typography */}
-          <div className="lg:col-span-7 space-y-8">
+          {/* Left Column: Well-proportioned Editorial Typography */}
+          <div className="lg:col-span-7 space-y-6">
             
-            <div className="inline-flex items-center space-x-3 text-[11px] font-black uppercase tracking-[0.25em] text-[#D97732]">
+            <div className="inline-flex items-center space-x-2.5 text-[11px] font-black uppercase tracking-[0.2em] text-[#D97732]">
               <span className="w-2.5 h-2.5 rounded-full bg-[#D97732] animate-ping" />
               <span>SAHAAYAA AI • HUMANITARIAN ROUTING PLATFORM</span>
             </div>
 
-            <h1 className="font-serif font-black tracking-tight text-[#3B2418] dark:text-[#FCFAF6] text-5xl sm:text-7xl lg:text-8xl leading-[0.92] select-none">
+            {/* Adjusted typography size for perfect fit */}
+            <h1 className="font-serif font-extrabold tracking-tight text-[#3B2418] dark:text-[#FCFAF6] text-3xl sm:text-5xl lg:text-6xl leading-tight select-none">
               <span ref={heroTitleLine1Ref} className="block overflow-hidden">
                 ONE NEED.
               </span>
-              <span ref={heroTitleLine2Ref} className="block overflow-hidden text-[#D97732] ml-4 sm:ml-10">
+              <span ref={heroTitleLine2Ref} className="block overflow-hidden text-[#D97732]">
                 ONE MATCH.
               </span>
-              <span ref={heroTitleLine3Ref} className="block overflow-hidden text-[#58745C] ml-8 sm:ml-20">
+              <span ref={heroTitleLine3Ref} className="block overflow-hidden text-[#58745C]">
                 REAL IMPACT.
               </span>
             </h1>
 
-            <p className="text-base sm:text-xl text-[#3B2418]/80 dark:text-[#F7F1E8]/80 max-w-2xl leading-relaxed font-sans font-medium">
+            <p className="text-sm sm:text-lg text-[#3B2418]/80 dark:text-[#F7F1E8]/80 max-w-xl leading-relaxed font-sans font-medium">
               {t('hero.subtitle') || "Connecting displaced individuals with verified local food centers, safe emergency shelters, and volunteer transit assistance in real time."}
             </p>
 
             {/* CTAs with Magnetic Effect */}
-            <div className="pt-4 flex flex-wrap items-center gap-4">
+            <div className="pt-2 flex flex-wrap items-center gap-3">
               <MagneticButton
                 onClick={() => setShowOneTapModal(true)}
-                className="px-8 h-14 bg-[#D97732] hover:bg-[#c46424] text-white font-extrabold text-sm uppercase tracking-wider rounded-full shadow-lg shadow-[#D97732]/30 flex items-center space-x-3 cursor-pointer transition-all hover:scale-105 active:scale-95"
+                className="px-7 h-12 bg-[#D97732] hover:bg-[#c46424] text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md shadow-[#D97732]/25 flex items-center space-x-2.5 cursor-pointer transition-all hover:scale-105 active:scale-95"
                 data-cursor="HELP"
               >
-                <Bell className="w-5 h-5 fill-current" />
+                <Bell className="w-4 h-4 fill-current" />
                 <span>{t('oneTap.btnNeedHelp')}</span>
-                <ArrowRight className="w-5 h-5 ml-1" />
+                <ArrowRight className="w-4 h-4 ml-0.5" />
               </MagneticButton>
 
               <MagneticButton
@@ -521,7 +522,7 @@ export const LandingPage: React.FC = () => {
                   const el = document.getElementById('community-map');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="px-7 h-14 bg-[#3B2418] dark:bg-[#F7F1E8] hover:bg-[#26170f] dark:hover:bg-white text-white dark:text-[#3B2418] font-bold text-xs uppercase tracking-wider rounded-full shadow-md flex items-center space-x-2 cursor-pointer transition-all hover:scale-105 active:scale-95"
+                className="px-6 h-12 bg-[#3B2418] dark:bg-[#F7F1E8] hover:bg-[#26170f] dark:hover:bg-white text-white dark:text-[#3B2418] font-bold text-xs uppercase tracking-wider rounded-full shadow-sm flex items-center space-x-2 cursor-pointer transition-all hover:scale-105 active:scale-95"
                 data-cursor="EXPLORE"
               >
                 <MapPin className="w-4 h-4 text-[#D97732]" />
@@ -535,7 +536,7 @@ export const LandingPage: React.FC = () => {
           <div className="lg:col-span-5 relative flex justify-center">
             <div 
               ref={heroImgRef}
-              className="relative w-full max-w-[480px] aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white dark:border-white/10"
+              className="relative w-full max-w-[420px] aspect-[4/4.5] rounded-[2.5rem] overflow-hidden shadow-xl border-4 border-white dark:border-white/10"
               data-cursor="VIEW"
             >
               <img 
@@ -543,9 +544,9 @@ export const LandingPage: React.FC = () => {
                 alt="Community care with Sahaayaa AI" 
                 className="w-full h-full object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#3B2418]/80 via-transparent to-transparent flex flex-col justify-end p-8 text-white">
-                <span className="text-xs font-black uppercase tracking-widest text-[#D97732]">VERIFIED NGO MATCHING</span>
-                <h3 className="font-serif text-2xl font-bold mt-1">No One Should Be Left Behind.</h3>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#3B2418]/80 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
+                <span className="text-[11px] font-black uppercase tracking-widest text-[#D97732]">VERIFIED NGO MATCHING</span>
+                <h3 className="font-serif text-xl font-bold mt-0.5">No One Should Be Left Behind.</h3>
               </div>
             </div>
           </div>
@@ -557,30 +558,30 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 02: THE PROBLEM STATEMENT                                        */}
       {/* ========================================================================= */}
-      <section ref={problemSectionRef} className="py-28 px-4 sm:px-6 lg:px-8 bg-[#3B2418] text-[#F7F1E8] relative overflow-hidden">
+      <section ref={problemSectionRef} className="py-20 px-4 sm:px-6 lg:px-8 bg-[#3B2418] text-[#F7F1E8] relative overflow-hidden">
         
-        <div className="absolute -top-12 right-10 text-[18rem] font-serif font-black text-white/5 pointer-events-none select-none">
+        <div className="absolute -top-6 right-10 text-7xl sm:text-9xl font-serif font-black text-white/5 pointer-events-none select-none">
           01
         </div>
 
-        <div className="max-w-5xl mx-auto text-center space-y-8 z-10 relative">
-          <div className="inline-flex items-center space-x-2 text-xs font-black uppercase tracking-[0.3em] text-[#D97732]">
+        <div className="max-w-4xl mx-auto text-center space-y-6 z-10 relative">
+          <div className="inline-flex items-center space-x-2 text-[11px] font-black uppercase tracking-[0.25em] text-[#D97732]">
             <span>— THE HUMANITARIAN GAP —</span>
           </div>
 
           <h2 
             ref={problemWordsRef}
-            className="font-serif font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-tight uppercase"
+            className="font-serif font-extrabold text-2xl sm:text-4xl lg:text-5xl tracking-tight leading-tight uppercase"
           >
-            <span className="scroll-word inline-block mr-3">HELP</span>
-            <span className="scroll-word inline-block mr-3">EXISTS.</span>
-            <span className="scroll-word inline-block mr-3">THE</span>
-            <span className="scroll-word inline-block mr-3">CONNECTION</span>
-            <span className="scroll-word inline-block mr-3">IS</span>
-            <span className="scroll-word inline-block mr-3">MISSING.</span>
+            <span className="scroll-word inline-block mr-2.5">HELP</span>
+            <span className="scroll-word inline-block mr-2.5">EXISTS.</span>
+            <span className="scroll-word inline-block mr-2.5">THE</span>
+            <span className="scroll-word inline-block mr-2.5">CONNECTION</span>
+            <span className="scroll-word inline-block mr-2.5">IS</span>
+            <span className="scroll-word inline-block mr-2.5">MISSING.</span>
           </h2>
 
-          <p className="text-base sm:text-xl text-[#F7F1E8]/75 max-w-2xl mx-auto font-sans font-medium leading-relaxed">
+          <p className="text-sm sm:text-base text-[#F7F1E8]/75 max-w-xl mx-auto font-sans font-medium leading-relaxed">
             Millions of resources exist across shelters, food banks, and medical centers—yet individuals in urgent need remain disconnected due to mobility, language, and route barriers. Sahaayaa AI bridges this gap instantly.
           </p>
         </div>
@@ -590,36 +591,36 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 03: HOW SAHAAYAA WORKS (STORYTELLING)                            */}
       {/* ========================================================================= */}
-      <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#F7F1E8] dark:bg-[#171310] border-t border-[#E9DDCC] dark:border-white/10">
-        <div className="max-w-7xl mx-auto space-y-16">
+      <section id="how-it-works" className="py-20 px-4 sm:px-6 lg:px-8 bg-[#F7F1E8] dark:bg-[#171310] border-t border-[#E9DDCC] dark:border-white/10">
+        <div className="max-w-7xl mx-auto space-y-12">
           
-          <div className="text-center space-y-3 max-w-3xl mx-auto">
-            <span className="text-xs font-black uppercase tracking-widest text-[#D97732]">HOW SAHAAYAA WORKS</span>
-            <h2 className="font-serif text-4xl sm:text-6xl font-bold text-[#3B2418] dark:text-[#FCFAF6]">
+          <div className="text-center space-y-2.5 max-w-2xl mx-auto">
+            <span className="text-[11px] font-black uppercase tracking-widest text-[#D97732]">HOW SAHAAYAA WORKS</span>
+            <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#3B2418] dark:text-[#FCFAF6]">
               From Request to Direct Aid
             </h2>
-            <p className="text-base text-[#3B2418]/70 dark:text-[#F7F1E8]/70">
+            <p className="text-sm text-[#3B2418]/70 dark:text-[#F7F1E8]/70">
               Three seamless steps powered by artificial intelligence and compassionate human volunteers.
             </p>
           </div>
 
           {/* Interactive 3-Stage Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
             {/* Step 1 */}
             <div 
               onClick={() => setHowItWorksStep(1)}
-              className={`p-8 rounded-[2.5rem] transition-all cursor-pointer border-2 ${
+              className={`p-6 sm:p-7 rounded-[2rem] transition-all cursor-pointer border-2 ${
                 howItWorksStep === 1 
-                  ? 'bg-white dark:bg-[#261B15] border-[#D97732] shadow-2xl scale-[1.02]' 
+                  ? 'bg-white dark:bg-[#261B15] border-[#D97732] shadow-xl scale-[1.01]' 
                   : 'bg-white/60 dark:bg-[#261B15]/40 border-transparent hover:border-[#D97732]/40'
               }`}
             >
-              <div className="w-14 h-14 rounded-2xl bg-[#D97732]/10 text-[#D97732] flex items-center justify-center font-serif text-2xl font-black mb-6">
+              <div className="w-12 h-12 rounded-xl bg-[#D97732]/10 text-[#D97732] flex items-center justify-center font-serif text-xl font-black mb-4">
                 01
               </div>
-              <h3 className="font-serif text-2xl font-bold text-[#3B2418] dark:text-[#FCFAF6] mb-3">1-Tap or Voice Request</h3>
-              <p className="text-sm text-[#3B2418]/80 dark:text-[#F7F1E8]/80 leading-relaxed">
+              <h3 className="font-serif text-xl font-bold text-[#3B2418] dark:text-[#FCFAF6] mb-2">1-Tap or Voice Request</h3>
+              <p className="text-xs text-[#3B2418]/80 dark:text-[#F7F1E8]/80 leading-relaxed">
                 Users or community members speak or tap in Tamil, Hindi, or English. AI classifies exact urgency and resource need.
               </p>
             </div>
@@ -627,17 +628,17 @@ export const LandingPage: React.FC = () => {
             {/* Step 2 */}
             <div 
               onClick={() => setHowItWorksStep(2)}
-              className={`p-8 rounded-[2.5rem] transition-all cursor-pointer border-2 ${
+              className={`p-6 sm:p-7 rounded-[2rem] transition-all cursor-pointer border-2 ${
                 howItWorksStep === 2 
-                  ? 'bg-white dark:bg-[#261B15] border-[#D97732] shadow-2xl scale-[1.02]' 
+                  ? 'bg-white dark:bg-[#261B15] border-[#D97732] shadow-xl scale-[1.01]' 
                   : 'bg-white/60 dark:bg-[#261B15]/40 border-transparent hover:border-[#D97732]/40'
               }`}
             >
-              <div className="w-14 h-14 rounded-2xl bg-[#58745C]/10 text-[#58745C] flex items-center justify-center font-serif text-2xl font-black mb-6">
+              <div className="w-12 h-12 rounded-xl bg-[#58745C]/10 text-[#58745C] flex items-center justify-center font-serif text-xl font-black mb-4">
                 02
               </div>
-              <h3 className="font-serif text-2xl font-bold text-[#3B2418] dark:text-[#FCFAF6] mb-3">Intelligent Proximity Matching</h3>
-              <p className="text-sm text-[#3B2418]/80 dark:text-[#F7F1E8]/80 leading-relaxed">
+              <h3 className="font-serif text-xl font-bold text-[#3B2418] dark:text-[#FCFAF6] mb-2">Intelligent Proximity Matching</h3>
+              <p className="text-xs text-[#3B2418]/80 dark:text-[#F7F1E8]/80 leading-relaxed">
                 The DNN algorithm evaluates live capacity across nearby shelters, food distribution hubs, and medical clinics.
               </p>
             </div>
@@ -645,17 +646,17 @@ export const LandingPage: React.FC = () => {
             {/* Step 3 */}
             <div 
               onClick={() => setHowItWorksStep(3)}
-              className={`p-8 rounded-[2.5rem] transition-all cursor-pointer border-2 ${
+              className={`p-6 sm:p-7 rounded-[2rem] transition-all cursor-pointer border-2 ${
                 howItWorksStep === 3 
-                  ? 'bg-white dark:bg-[#261B15] border-[#D97732] shadow-2xl scale-[1.02]' 
+                  ? 'bg-white dark:bg-[#261B15] border-[#D97732] shadow-xl scale-[1.01]' 
                   : 'bg-white/60 dark:bg-[#261B15]/40 border-transparent hover:border-[#D97732]/40'
               }`}
             >
-              <div className="w-14 h-14 rounded-2xl bg-[#3B2418]/10 text-[#3B2418] dark:text-[#D97732] flex items-center justify-center font-serif text-2xl font-black mb-6">
+              <div className="w-12 h-12 rounded-xl bg-[#3B2418]/10 text-[#3B2418] dark:text-[#D97732] flex items-center justify-center font-serif text-xl font-black mb-4">
                 03
               </div>
-              <h3 className="font-serif text-2xl font-bold text-[#3B2418] dark:text-[#FCFAF6] mb-3">Turn-by-Turn Direct Support</h3>
-              <p className="text-sm text-[#3B2418]/80 dark:text-[#F7F1E8]/80 leading-relaxed">
+              <h3 className="font-serif text-xl font-bold text-[#3B2418] dark:text-[#FCFAF6] mb-2">Turn-by-Turn Direct Support</h3>
+              <p className="text-xs text-[#3B2418]/80 dark:text-[#F7F1E8]/80 leading-relaxed">
                 Verified transit assistance or turn-by-turn routes guide the beneficiary safely to their matched destination.
               </p>
             </div>
@@ -668,52 +669,52 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 04: SIGNATURE RESOURCE MATCHING ANIMATION                        */}
       {/* ========================================================================= */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#3B2418] text-[#F7F1E8] overflow-hidden relative">
-        <div className="max-w-7xl mx-auto space-y-12">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#3B2418] text-[#F7F1E8] overflow-hidden relative">
+        <div className="max-w-7xl mx-auto space-y-10">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="space-y-2">
-              <span className="text-xs font-black uppercase tracking-widest text-[#D97732]">INTERACTIVE DEMO</span>
-              <h2 className="font-serif text-3xl sm:text-5xl font-bold">Signature Resource Matcher</h2>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="space-y-1.5">
+              <span className="text-[11px] font-black uppercase tracking-widest text-[#D97732]">INTERACTIVE DEMO</span>
+              <h2 className="font-serif text-2xl sm:text-4xl font-bold">Signature Resource Matcher</h2>
             </div>
             <button
               onClick={() => setIsMatched(!isMatched)}
-              className="px-6 py-3 bg-[#D97732] hover:bg-[#c46424] text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95 self-start md:self-auto"
+              className="px-5 py-2.5 bg-[#D97732] hover:bg-[#c46424] text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md transition-transform hover:scale-105 active:scale-95 self-start md:self-auto"
             >
               {isMatched ? 'RESET MATCH' : 'TRIGGER AI MATCHING ANIMATION'}
             </button>
           </div>
 
           {/* SVG Animated Connection Grid */}
-          <div className="relative bg-[#261B15] rounded-[3rem] p-8 sm:p-12 border border-white/10 shadow-2xl">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+          <div className="relative bg-[#261B15] rounded-[2.5rem] p-6 sm:p-10 border border-white/10 shadow-xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative z-10">
               
               {/* Need Cards */}
-              <div className="space-y-4">
-                <span className="text-xs font-extrabold uppercase tracking-wider text-[#D97732]">Incoming Assistance Request</span>
-                <div className={`p-6 rounded-2xl border transition-all ${isMatched ? 'bg-[#58745C]/20 border-[#58745C]' : 'bg-[#3B2418] border-white/10'}`}>
+              <div className="space-y-3">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#D97732]">Incoming Assistance Request</span>
+                <div className={`p-5 rounded-2xl border transition-all ${isMatched ? 'bg-[#58745C]/20 border-[#58745C]' : 'bg-[#3B2418] border-white/10'}`}>
                   <div className="flex justify-between items-start">
                     <div>
-                      <span className="text-xs font-extrabold px-2.5 py-1 rounded-full bg-rose-500/20 text-rose-300">HIGH URGENCY</span>
-                      <h4 className="font-serif text-xl font-bold mt-2">Family Needs Emergency Food & Shelter</h4>
-                      <p className="text-xs text-[#F7F1E8]/70 mt-1">Coimbatore Railway Station Area • 2 adults, 2 children</p>
+                      <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300">HIGH URGENCY</span>
+                      <h4 className="font-serif text-lg font-bold mt-1.5">Family Needs Emergency Food & Shelter</h4>
+                      <p className="text-xs text-[#F7F1E8]/70 mt-0.5">Coimbatore Railway Station Area • 2 adults, 2 children</p>
                     </div>
-                    {isMatched && <CheckCircle2 className="w-6 h-6 text-emerald-400 animate-bounce" />}
+                    {isMatched && <CheckCircle2 className="w-5 h-5 text-emerald-400 animate-bounce shrink-0" />}
                   </div>
                 </div>
               </div>
 
               {/* Resource Cards */}
-              <div className="space-y-4">
-                <span className="text-xs font-extrabold uppercase tracking-wider text-[#58745C]">Matched Verified Facility</span>
-                <div className={`p-6 rounded-2xl border transition-all ${isMatched ? 'bg-[#58745C]/20 border-[#58745C] scale-105' : 'bg-[#3B2418] border-white/10'}`}>
+              <div className="space-y-3">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#58745C]">Matched Verified Facility</span>
+                <div className={`p-5 rounded-2xl border transition-all ${isMatched ? 'bg-[#58745C]/20 border-[#58745C] scale-102' : 'bg-[#3B2418] border-white/10'}`}>
                   <div className="flex justify-between items-start">
                     <div>
-                      <span className="text-xs font-extrabold px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300">OPEN NOW • 1.4 KM</span>
-                      <h4 className="font-serif text-xl font-bold mt-2">Annapoorna Community Shelter</h4>
-                      <p className="text-xs text-[#F7F1E8]/70 mt-1">Gandhipuram Main Road • 18 spots available</p>
+                      <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">OPEN NOW • 1.4 KM</span>
+                      <h4 className="font-serif text-lg font-bold mt-1.5">Annapoorna Community Shelter</h4>
+                      <p className="text-xs text-[#F7F1E8]/70 mt-0.5">Gandhipuram Main Road • 18 spots available</p>
                     </div>
-                    {isMatched && <Sparkles className="w-6 h-6 text-amber-400 animate-spin" />}
+                    {isMatched && <Sparkles className="w-5 h-5 text-amber-400 animate-spin shrink-0" />}
                   </div>
                 </div>
               </div>
@@ -727,31 +728,31 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 05: CATEGORIES SHOWCASE                                          */}
       {/* ========================================================================= */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#F7F1E8] dark:bg-[#171310]">
-        <div className="max-w-7xl mx-auto space-y-12">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#F7F1E8] dark:bg-[#171310]">
+        <div className="max-w-7xl mx-auto space-y-10">
           
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div className="space-y-2">
-              <span className="text-xs font-black uppercase tracking-widest text-[#D97732]">RESOURCE SPECTRUM</span>
-              <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#3B2418] dark:text-[#FCFAF6]">
+            <div className="space-y-1.5">
+              <span className="text-[11px] font-black uppercase tracking-widest text-[#D97732]">RESOURCE SPECTRUM</span>
+              <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#3B2418] dark:text-[#FCFAF6]">
                 Comprehensive Care Categories
               </h2>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
             {categoriesList.map((cat) => (
               <div
                 key={cat.id}
                 onClick={() => handleFindNearMeForCategory(cat.id)}
-                className="bg-white dark:bg-[#261B15] p-6 rounded-[2rem] border border-[#E9DDCC] dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all cursor-pointer group"
+                className="bg-white dark:bg-[#261B15] p-5 rounded-[1.8rem] border border-[#E9DDCC] dark:border-white/10 shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer group"
                 data-cursor="SELECT"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#D97732]/10 text-[#D97732] flex items-center justify-center mb-4 group-hover:bg-[#D97732] group-hover:text-white transition-colors">
+                <div className="w-10 h-10 rounded-lg bg-[#D97732]/10 text-[#D97732] flex items-center justify-center mb-3 group-hover:bg-[#D97732] group-hover:text-white transition-colors">
                   {cat.icon}
                 </div>
-                <h3 className="font-serif text-lg font-bold text-[#3B2418] dark:text-[#FCFAF6]">{cat.label}</h3>
-                <p className="text-xs text-[#3B2418]/60 dark:text-[#F7F1E8]/60 mt-1">Verified local centers</p>
+                <h3 className="font-serif text-base font-bold text-[#3B2418] dark:text-[#FCFAF6]">{cat.label}</h3>
+                <p className="text-[11px] text-[#3B2418]/60 dark:text-[#F7F1E8]/60 mt-0.5">Verified local centers</p>
               </div>
             ))}
           </div>
@@ -762,22 +763,22 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 06: MOBILE APP SHOWCASE                                         */}
       {/* ========================================================================= */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#3B2418] text-[#F7F1E8]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#3B2418] text-[#F7F1E8]">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
-          <div className="lg:col-span-6 space-y-6">
-            <span className="text-xs font-black uppercase tracking-widest text-[#D97732]">MOBILE AID EXPERIENCE</span>
-            <h2 className="font-serif text-4xl sm:text-6xl font-bold leading-tight">
+          <div className="lg:col-span-6 space-y-5">
+            <span className="text-[11px] font-black uppercase tracking-widest text-[#D97732]">MOBILE AID EXPERIENCE</span>
+            <h2 className="font-serif text-2xl sm:text-4xl font-bold leading-tight">
               Instant Help in Your Hands
             </h2>
-            <p className="text-base text-[#F7F1E8]/80 leading-relaxed font-medium">
+            <p className="text-sm text-[#F7F1E8]/80 leading-relaxed font-medium">
               Designed for zero-barrier access. Beneficiaries can request immediate assistance with a single tap, record voice notes in native languages, or access offline map navigation.
             </p>
 
-            <div className="flex space-x-3 pt-4">
+            <div className="flex space-x-2.5 pt-2">
               <button
                 onClick={() => setMobileAppTab('voice')}
-                className={`px-5 py-2.5 rounded-full text-xs font-extrabold uppercase transition-all ${
+                className={`px-4 py-2 rounded-full text-xs font-extrabold uppercase transition-all ${
                   mobileAppTab === 'voice' ? 'bg-[#D97732] text-white' : 'bg-white/10 hover:bg-white/20'
                 }`}
               >
@@ -785,7 +786,7 @@ export const LandingPage: React.FC = () => {
               </button>
               <button
                 onClick={() => setMobileAppTab('match')}
-                className={`px-5 py-2.5 rounded-full text-xs font-extrabold uppercase transition-all ${
+                className={`px-4 py-2 rounded-full text-xs font-extrabold uppercase transition-all ${
                   mobileAppTab === 'match' ? 'bg-[#D97732] text-white' : 'bg-white/10 hover:bg-white/20'
                 }`}
               >
@@ -793,7 +794,7 @@ export const LandingPage: React.FC = () => {
               </button>
               <button
                 onClick={() => setMobileAppTab('track')}
-                className={`px-5 py-2.5 rounded-full text-xs font-extrabold uppercase transition-all ${
+                className={`px-4 py-2 rounded-full text-xs font-extrabold uppercase transition-all ${
                   mobileAppTab === 'track' ? 'bg-[#D97732] text-white' : 'bg-white/10 hover:bg-white/20'
                 }`}
               >
@@ -804,27 +805,27 @@ export const LandingPage: React.FC = () => {
 
           {/* Smartphone Frame mockup */}
           <div className="lg:col-span-6 flex justify-center">
-            <div className="w-[300px] h-[580px] bg-[#171310] rounded-[3.5rem] p-4 border-8 border-stone-800 shadow-2xl relative overflow-hidden">
-              <div className="w-32 h-5 bg-stone-800 rounded-full mx-auto mb-4" />
-              <div className="bg-[#FCFAF6] dark:bg-[#261B15] h-[490px] rounded-[2.5rem] p-5 text-[#3B2418] dark:text-[#F7F1E8] flex flex-col justify-between">
+            <div className="w-[280px] h-[520px] bg-[#171310] rounded-[3rem] p-3.5 border-6 border-stone-800 shadow-2xl relative overflow-hidden">
+              <div className="w-28 h-4 bg-stone-800 rounded-full mx-auto mb-3" />
+              <div className="bg-[#FCFAF6] dark:bg-[#261B15] h-[440px] rounded-[2rem] p-4 text-[#3B2418] dark:text-[#F7F1E8] flex flex-col justify-between">
                 <div>
-                  <div className="flex justify-between items-center text-xs font-extrabold">
+                  <div className="flex justify-between items-center text-[11px] font-extrabold">
                     <span>SAHAAYAA MOBILE</span>
                     <span className="text-[#D97732]">LIVE</span>
                   </div>
 
                   {mobileAppTab === 'voice' && (
-                    <div className="mt-8 space-y-4 text-center">
-                      <div className="w-16 h-16 rounded-full bg-rose-500 text-white flex items-center justify-center mx-auto animate-pulse">
-                        <Bell className="w-8 h-8" />
+                    <div className="mt-6 space-y-3 text-center">
+                      <div className="w-14 h-14 rounded-full bg-rose-500 text-white flex items-center justify-center mx-auto animate-pulse">
+                        <Bell className="w-7 h-7" />
                       </div>
-                      <h4 className="font-serif text-lg font-bold">Tap Microphone to Speak</h4>
-                      <p className="text-xs text-stone-500">Supports English, Tamil & Hindi</p>
+                      <h4 className="font-serif text-base font-bold">Tap Microphone to Speak</h4>
+                      <p className="text-[11px] text-stone-500">Supports English, Tamil & Hindi</p>
                     </div>
                   )}
 
                   {mobileAppTab === 'match' && (
-                    <div className="mt-8 space-y-3">
+                    <div className="mt-6 space-y-2.5">
                       <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl text-xs font-bold text-emerald-800 dark:text-emerald-300">
                         ✓ Matched with Annapoorna Shelter (0.8 km)
                       </div>
@@ -832,7 +833,7 @@ export const LandingPage: React.FC = () => {
                   )}
 
                   {mobileAppTab === 'track' && (
-                    <div className="mt-8 space-y-3">
+                    <div className="mt-6 space-y-2.5">
                       <div className="p-3 bg-amber-50 dark:bg-amber-950/40 rounded-xl text-xs font-bold text-amber-800 dark:text-amber-300">
                         🚌 Transit Volunteer En Route (ETA 6 mins)
                       </div>
@@ -842,7 +843,7 @@ export const LandingPage: React.FC = () => {
 
                 <button 
                   onClick={() => setShowOneTapModal(true)}
-                  className="w-full py-3 bg-[#D97732] text-white rounded-full text-xs font-extrabold uppercase tracking-wider"
+                  className="w-full py-2.5 bg-[#D97732] text-white rounded-full text-xs font-extrabold uppercase tracking-wider"
                 >
                   Request Emergency Aid
                 </button>
@@ -856,26 +857,26 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 07: LIVE COMMUNITY MAP                                            */}
       {/* ========================================================================= */}
-      <section id="community-map" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#F7F1E8] dark:bg-[#171310] border-t border-[#E9DDCC] dark:border-white/10">
-        <div className="max-w-7xl mx-auto space-y-8">
+      <section id="community-map" className="py-20 px-4 sm:px-6 lg:px-8 bg-[#F7F1E8] dark:bg-[#171310] border-t border-[#E9DDCC] dark:border-white/10">
+        <div className="max-w-7xl mx-auto space-y-6">
           
-          <div className="space-y-2">
-            <span className="text-xs font-black uppercase tracking-widest text-[#D97732]">REAL-TIME MAP</span>
-            <h2 className="font-serif text-4xl sm:text-6xl font-bold text-[#3B2418] dark:text-[#FCFAF6]">
+          <div className="space-y-1.5">
+            <span className="text-[11px] font-black uppercase tracking-widest text-[#D97732]">REAL-TIME MAP</span>
+            <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#3B2418] dark:text-[#FCFAF6]">
               Help is Closer Than You Think
             </h2>
           </div>
 
           {/* Location status message */}
           {locationStatus === 'idle' && (
-            <div className="p-5 rounded-3xl bg-white dark:bg-[#261B15] border border-[#E9DDCC] dark:border-white/10 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center space-x-3">
-                <MapPin className="w-6 h-6 text-[#D97732]" />
-                <span className="text-sm font-bold text-[#3B2418] dark:text-[#FCFAF6]">Detect nearby shelters & food distribution hubs</span>
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#261B15] border border-[#E9DDCC] dark:border-white/10 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="flex items-center space-x-2.5">
+                <MapPin className="w-5 h-5 text-[#D97732]" />
+                <span className="text-xs font-bold text-[#3B2418] dark:text-[#FCFAF6]">Detect nearby shelters & food distribution hubs</span>
               </div>
               <button
                 onClick={handleUseCurrentLocation}
-                className="px-6 py-3 bg-[#D97732] hover:bg-[#c46424] text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md"
+                className="px-5 py-2.5 bg-[#D97732] hover:bg-[#c46424] text-white font-extrabold text-[11px] uppercase tracking-wider rounded-full shadow-xs"
               >
                 USE MY CURRENT LOCATION
               </button>
@@ -883,7 +884,7 @@ export const LandingPage: React.FC = () => {
           )}
 
           {/* Leaflet Container */}
-          <div className="relative w-full h-[500px] rounded-[3rem] overflow-hidden border-4 border-white dark:border-white/10 shadow-2xl">
+          <div className="relative w-full h-[450px] rounded-[2.5rem] overflow-hidden border-4 border-white dark:border-white/10 shadow-xl">
             <MapContainer
               center={mapCenter}
               zoom={12}
@@ -931,53 +932,53 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 08: PEOPLE HELPING PEOPLE (STORIES & COLLAGE)                    */}
       {/* ========================================================================= */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#FCFAF6] dark:bg-[#171310]">
-        <div className="max-w-7xl mx-auto space-y-12">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#FCFAF6] dark:bg-[#171310]">
+        <div className="max-w-7xl mx-auto space-y-10">
           
-          <div className="text-center space-y-3 max-w-2xl mx-auto">
-            <span className="text-xs font-black uppercase tracking-widest text-[#D97732]">COMMUNITY STORIES</span>
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#3B2418] dark:text-[#FCFAF6]">
+          <div className="text-center space-y-2 max-w-xl mx-auto">
+            <span className="text-[11px] font-black uppercase tracking-widest text-[#D97732]">COMMUNITY STORIES</span>
+            <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#3B2418] dark:text-[#FCFAF6]">
               Real People. Real Transformations.
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <div className="bg-[#F7F1E8] dark:bg-[#261B15] p-8 rounded-[2.5rem] border border-[#E9DDCC] dark:border-white/10 space-y-4">
-              <p className="text-sm italic text-[#3B2418]/80 dark:text-[#F7F1E8]/80 leading-relaxed">
+            <div className="bg-[#F7F1E8] dark:bg-[#261B15] p-6 rounded-[2rem] border border-[#E9DDCC] dark:border-white/10 space-y-3">
+              <p className="text-xs italic text-[#3B2418]/80 dark:text-[#F7F1E8]/80 leading-relaxed">
                 "When my family lost housing after the rainstorms, Sahaayaa AI matched us to a local shelter within 15 minutes."
               </p>
-              <div className="flex items-center space-x-3 pt-4 border-t border-[#E9DDCC] dark:border-white/10">
-                <img src="/images/avatar-lakshmi.jpg" alt="Lakshmi" className="w-10 h-10 rounded-full object-cover" />
+              <div className="flex items-center space-x-2.5 pt-3 border-t border-[#E9DDCC] dark:border-white/10">
+                <img src="/images/avatar-lakshmi.jpg" alt="Lakshmi" className="w-9 h-9 rounded-full object-cover" />
                 <div>
-                  <h4 className="font-serif font-bold text-sm text-[#3B2418] dark:text-[#FCFAF6]">Lakshmi</h4>
-                  <p className="text-xs text-[#3B2418]/60 dark:text-[#F7F1E8]/60">Beneficiary • Coimbatore</p>
+                  <h4 className="font-serif font-bold text-xs text-[#3B2418] dark:text-[#FCFAF6]">Lakshmi</h4>
+                  <p className="text-[10px] text-[#3B2418]/60 dark:text-[#F7F1E8]/60">Beneficiary • Coimbatore</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#F7F1E8] dark:bg-[#261B15] p-8 rounded-[2.5rem] border border-[#E9DDCC] dark:border-white/10 space-y-4">
-              <p className="text-sm italic text-[#3B2418]/80 dark:text-[#F7F1E8]/80 leading-relaxed">
+            <div className="bg-[#F7F1E8] dark:bg-[#261B15] p-6 rounded-[2rem] border border-[#E9DDCC] dark:border-white/10 space-y-3">
+              <p className="text-xs italic text-[#3B2418]/80 dark:text-[#F7F1E8]/80 leading-relaxed">
                 "As a volunteer transit driver, I get notified when elderly individuals need safe transport to medical centers."
               </p>
-              <div className="flex items-center space-x-3 pt-4 border-t border-[#E9DDCC] dark:border-white/10">
-                <img src="/images/avatar-ramesh.jpg" alt="Ramesh" className="w-10 h-10 rounded-full object-cover" />
+              <div className="flex items-center space-x-2.5 pt-3 border-t border-[#E9DDCC] dark:border-white/10">
+                <img src="/images/avatar-ramesh.jpg" alt="Ramesh" className="w-9 h-9 rounded-full object-cover" />
                 <div>
-                  <h4 className="font-serif font-bold text-sm text-[#3B2418] dark:text-[#FCFAF6]">Ramesh</h4>
-                  <p className="text-xs text-[#3B2418]/60 dark:text-[#F7F1E8]/60">Transit Volunteer</p>
+                  <h4 className="font-serif font-bold text-xs text-[#3B2418] dark:text-[#FCFAF6]">Ramesh</h4>
+                  <p className="text-[10px] text-[#3B2418]/60 dark:text-[#F7F1E8]/60">Transit Volunteer</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#F7F1E8] dark:bg-[#261B15] p-8 rounded-[2.5rem] border border-[#E9DDCC] dark:border-white/10 space-y-4">
-              <p className="text-sm italic text-[#3B2418]/80 dark:text-[#F7F1E8]/80 leading-relaxed">
+            <div className="bg-[#F7F1E8] dark:bg-[#261B15] p-6 rounded-[2rem] border border-[#E9DDCC] dark:border-white/10 space-y-3">
+              <p className="text-xs italic text-[#3B2418]/80 dark:text-[#F7F1E8]/80 leading-relaxed">
                 "Our food bank distribution efficiency increased by 40% using Sahaayaa AI’s real-time demand forecasting."
               </p>
-              <div className="flex items-center space-x-3 pt-4 border-t border-[#E9DDCC] dark:border-white/10">
-                <img src="/images/avatar-priya.jpg" alt="Priya" className="w-10 h-10 rounded-full object-cover" />
+              <div className="flex items-center space-x-2.5 pt-3 border-t border-[#E9DDCC] dark:border-white/10">
+                <img src="/images/avatar-priya.jpg" alt="Priya" className="w-9 h-9 rounded-full object-cover" />
                 <div>
-                  <h4 className="font-serif font-bold text-sm text-[#3B2418] dark:text-[#FCFAF6]">Priya</h4>
-                  <p className="text-xs text-[#3B2418]/60 dark:text-[#F7F1E8]/60">NGO Coordinator</p>
+                  <h4 className="font-serif font-bold text-xs text-[#3B2418] dark:text-[#FCFAF6]">Priya</h4>
+                  <p className="text-[10px] text-[#3B2418]/60 dark:text-[#F7F1E8]/60">NGO Coordinator</p>
                 </div>
               </div>
             </div>
@@ -990,42 +991,42 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 09: REAL IMPACT COUNTERS                                         */}
       {/* ========================================================================= */}
-      <section ref={impactSectionRef} className="py-28 px-4 sm:px-6 lg:px-8 bg-[#3B2418] text-[#F7F1E8] overflow-hidden">
-        <div className="max-w-7xl mx-auto space-y-12">
+      <section ref={impactSectionRef} className="py-20 px-4 sm:px-6 lg:px-8 bg-[#3B2418] text-[#F7F1E8] overflow-hidden">
+        <div className="max-w-7xl mx-auto space-y-10">
           
-          <div className="text-center space-y-3 max-w-2xl mx-auto">
-            <span className="text-xs font-black uppercase tracking-widest text-[#D97732]">TRANSPARENT METRICS</span>
-            <h2 className="font-serif text-4xl sm:text-6xl font-bold">Our Verified Impact</h2>
+          <div className="text-center space-y-2 max-w-xl mx-auto">
+            <span className="text-[11px] font-black uppercase tracking-widest text-[#D97732]">TRANSPARENT METRICS</span>
+            <h2 className="font-serif text-2xl sm:text-4xl font-bold">Our Verified Impact</h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             
-            <div className="bg-[#261B15] p-8 rounded-[2.5rem] border border-white/10 space-y-2">
-              <div ref={statTotalRef} className="font-serif text-4xl sm:text-6xl font-black text-[#D97732]">
+            <div className="bg-[#261B15] p-6 rounded-[2rem] border border-white/10 space-y-1">
+              <div ref={statTotalRef} className="font-serif text-3xl sm:text-5xl font-extrabold text-[#D97732]">
                 {impact.total_requests.toLocaleString()}
               </div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#F7F1E8]/70">Total Requests Received</p>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-[#F7F1E8]/70">Total Requests Received</p>
             </div>
 
-            <div className="bg-[#261B15] p-8 rounded-[2.5rem] border border-white/10 space-y-2">
-              <div ref={statResRef} className="font-serif text-4xl sm:text-6xl font-black text-[#D97732]">
+            <div className="bg-[#261B15] p-6 rounded-[2rem] border border-white/10 space-y-1">
+              <div ref={statResRef} className="font-serif text-3xl sm:text-5xl font-extrabold text-[#D97732]">
                 {impact.resources_available.toLocaleString()}
               </div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#F7F1E8]/70">Verified Resources</p>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-[#F7F1E8]/70">Verified Resources</p>
             </div>
 
-            <div className="bg-[#261B15] p-8 rounded-[2.5rem] border border-white/10 space-y-2">
-              <div ref={statFulfillRef} className="font-serif text-4xl sm:text-6xl font-black text-[#D97732]">
+            <div className="bg-[#261B15] p-6 rounded-[2rem] border border-white/10 space-y-1">
+              <div ref={statFulfillRef} className="font-serif text-3xl sm:text-5xl font-extrabold text-[#D97732]">
                 89%
               </div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#F7F1E8]/70">Match Success Rate</p>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-[#F7F1E8]/70">Match Success Rate</p>
             </div>
 
-            <div className="bg-[#261B15] p-8 rounded-[2.5rem] border border-white/10 space-y-2">
-              <div ref={statCompRef} className="font-serif text-4xl sm:text-6xl font-black text-[#D97732]">
+            <div className="bg-[#261B15] p-6 rounded-[2rem] border border-white/10 space-y-1">
+              <div ref={statCompRef} className="font-serif text-3xl sm:text-5xl font-extrabold text-[#D97732]">
                 {impact.completed_requests.toLocaleString()}
               </div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#F7F1E8]/70">Requests Fulfilled</p>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-[#F7F1E8]/70">Requests Fulfilled</p>
             </div>
 
           </div>
@@ -1036,38 +1037,38 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 10: DONATE & VOLUNTEER SECTION                                   */}
       {/* ========================================================================= */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#F7F1E8] dark:bg-[#171310] border-t border-[#E9DDCC] dark:border-white/10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#F7F1E8] dark:bg-[#171310] border-t border-[#E9DDCC] dark:border-white/10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
           
           {/* Donate Card */}
-          <div className="bg-white dark:bg-[#261B15] p-10 rounded-[3rem] border border-[#E9DDCC] dark:border-white/10 shadow-xl space-y-6 flex flex-col justify-between">
-            <div className="space-y-4">
-              <Gift className="w-10 h-10 text-[#D97732]" />
-              <h3 className="font-serif text-3xl font-bold text-[#3B2418] dark:text-[#FCFAF6]">Support Direct Humanitarian Relief</h3>
-              <p className="text-sm text-[#3B2418]/70 dark:text-[#F7F1E8]/70 leading-relaxed">
+          <div className="bg-white dark:bg-[#261B15] p-8 rounded-[2.5rem] border border-[#E9DDCC] dark:border-white/10 shadow-lg space-y-5 flex flex-col justify-between">
+            <div className="space-y-3">
+              <Gift className="w-8 h-8 text-[#D97732]" />
+              <h3 className="font-serif text-2xl font-bold text-[#3B2418] dark:text-[#FCFAF6]">Support Direct Humanitarian Relief</h3>
+              <p className="text-xs text-[#3B2418]/70 dark:text-[#F7F1E8]/70 leading-relaxed">
                 100% of community donations fund emergency meals, transit tickets, shelter supplies, and medical kits.
               </p>
             </div>
             <Link
               to="/donor/dashboard"
-              className="inline-flex items-center justify-center px-8 py-4 bg-[#D97732] hover:bg-[#c46424] text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md transition-transform hover:scale-105"
+              className="inline-flex items-center justify-center px-7 py-3.5 bg-[#D97732] hover:bg-[#c46424] text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-xs transition-transform hover:scale-105"
             >
               MAKE A DONATION
             </Link>
           </div>
 
           {/* Volunteer Card */}
-          <div className="bg-[#3B2418] text-[#F7F1E8] p-10 rounded-[3rem] border border-white/10 shadow-xl space-y-6 flex flex-col justify-between">
-            <div className="space-y-4">
-              <Users className="w-10 h-10 text-[#58745C]" />
-              <h3 className="font-serif text-3xl font-bold">Become a Verified Volunteer</h3>
-              <p className="text-sm text-[#F7F1E8]/70 leading-relaxed">
+          <div className="bg-[#3B2418] text-[#F7F1E8] p-8 rounded-[2.5rem] border border-white/10 shadow-lg space-y-5 flex flex-col justify-between">
+            <div className="space-y-3">
+              <Users className="w-8 h-8 text-[#58745C]" />
+              <h3 className="font-serif text-2xl font-bold">Become a Verified Volunteer</h3>
+              <p className="text-xs text-[#F7F1E8]/70 leading-relaxed">
                 Join our network of transit drivers, meal distributors, and emergency responders in your city.
               </p>
             </div>
             <Link
               to="/register"
-              className="inline-flex items-center justify-center px-8 py-4 bg-[#58745C] hover:bg-[#465d49] text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md transition-transform hover:scale-105"
+              className="inline-flex items-center justify-center px-7 py-3.5 bg-[#58745C] hover:bg-[#465d49] text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-xs transition-transform hover:scale-105"
             >
               REGISTER AS VOLUNTEER
             </Link>
@@ -1079,21 +1080,21 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* SECTION 11: FINAL CINEMATIC CTA                                         */}
       {/* ========================================================================= */}
-      <section className="py-28 px-4 sm:px-6 lg:px-8 bg-[#3B2418] text-[#F7F1E8] relative overflow-hidden text-center">
-        <div className="max-w-4xl mx-auto space-y-8 z-10 relative">
-          <span className="text-xs font-black uppercase tracking-[0.25em] text-[#D97732]">TOGETHER FOR A BETTER TOMORROW</span>
-          <h2 className="font-serif text-4xl sm:text-7xl font-black tracking-tight leading-tight">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#3B2418] text-[#F7F1E8] relative overflow-hidden text-center">
+        <div className="max-w-3xl mx-auto space-y-6 z-10 relative">
+          <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#D97732]">TOGETHER FOR A BETTER TOMORROW</span>
+          <h2 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
             No One Should Be Left Behind.
           </h2>
-          <p className="text-base sm:text-xl text-[#F7F1E8]/80 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-[#F7F1E8]/80 max-w-xl mx-auto leading-relaxed">
             Whether you need urgent assistance, wish to volunteer, or want to support local shelters, Sahaayaa AI is here for you.
           </p>
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
             <MagneticButton
               onClick={() => setShowOneTapModal(true)}
-              className="px-9 h-16 bg-[#D97732] hover:bg-[#c46424] text-white font-extrabold text-sm uppercase tracking-wider rounded-full shadow-2xl flex items-center space-x-3 cursor-pointer transition-transform hover:scale-105"
+              className="px-8 h-13 bg-[#D97732] hover:bg-[#c46424] text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-xl flex items-center space-x-2.5 cursor-pointer transition-transform hover:scale-105"
             >
-              <Bell className="w-5 h-5 fill-current" />
+              <Bell className="w-4 h-4 fill-current" />
               <span>REQUEST IMMEDIATE HELP</span>
             </MagneticButton>
           </div>
