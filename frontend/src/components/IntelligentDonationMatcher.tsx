@@ -156,18 +156,18 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
   return (
     <div className="space-y-6">
       {/* 1. Natural Language Donation Matcher Input */}
-      <div className="bg-white dark:bg-[#10251E] border border-[#EAE3D2] dark:border-[#1F3F34] rounded-2xl p-6 shadow-sm relative overflow-hidden transition-colors">
+      <div className="bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10 rounded-2xl p-6 shadow-sm relative overflow-hidden transition-colors">
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#12B76A]/10 dark:bg-[#12B76A]/15 rounded-full blur-3xl pointer-events-none" />
         
         <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 bg-[#E2F5EC] dark:bg-[#16322A] border border-[#A8E5C8] dark:border-[#1F3F34] rounded-xl text-[#0B4F3A] dark:text-[#12B76A] shadow-sm">
+          <div className="p-3 bg-[#E2F5EC] dark:bg-[#262626] border border-[#A8E5C8] dark:border-white/10 rounded-xl text-[#0B4F3A] dark:text-[#12B76A] shadow-sm">
             <Sparkles className="w-6 h-6 animate-pulse" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-[#18352D] dark:text-[#FFFDF3] flex items-center gap-2">
+            <h2 className="text-xl font-bold text-[#18352D] dark:text-white flex items-center gap-2">
               Intelligent Need-Driven Donation Matcher
             </h2>
-            <p className="text-[#60756D] dark:text-[#A2B5AD] text-sm">
+            <p className="text-[#60756D] dark:text-[#A8A29E] text-sm">
               State what you wish to donate. AI parses needs and matches verified distribution hubs in real time.
             </p>
           </div>
@@ -181,13 +181,13 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
                 value={promptText}
                 onChange={(e) => setPromptText(e.target.value)}
                 placeholder='e.g. "I can donate 10 blankets" or "50 hot meals"'
-                className="w-full bg-[#FFFDF3] dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#1F3F34] focus:border-[#0B4F3A] dark:focus:border-[#12B76A] rounded-xl px-4 py-3 text-[#18352D] dark:text-[#FFFDF3] placeholder-[#8A9B93] dark:placeholder-[#60756D] text-base focus:outline-none focus:ring-2 focus:ring-[#12B76A]/20 transition-all shadow-inner"
+                className="w-full bg-[#FFFDF3] dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 focus:border-[#0B4F3A] dark:focus:border-[#12B76A] rounded-xl px-4 py-3 text-[#18352D] dark:text-white placeholder-[#8A9B93] dark:placeholder-[#60756D] text-base focus:outline-none focus:ring-2 focus:ring-[#12B76A]/20 transition-all shadow-inner"
               />
             </div>
             <button
               type="submit"
               disabled={isSearching}
-              className="bg-[#0B4F3A] hover:bg-[#083B2B] dark:bg-[#12B76A] dark:hover:bg-[#159A68] text-white dark:text-[#0B1713] px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm"
+              className="bg-[#0B4F3A] hover:bg-[#083B2B] dark:bg-[#12B76A] dark:hover:bg-[#159A68] text-white dark:text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm"
             >
               {isSearching ? <RefreshCw className="w-5 h-5 animate-spin" /> : <Search className="w-5 h-5" />}
               <span>Search Need Matches</span>
@@ -196,12 +196,12 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
 
           {/* Parsed Info Tags */}
           {parsedInfo && (
-            <div className="flex items-center gap-3 text-xs text-[#60756D] dark:text-[#A2B5AD] bg-[#F7F8ED] dark:bg-[#0B1713] p-3 rounded-xl border border-[#E2E8E4] dark:border-[#1F3F34]">
-              <span className="text-[#18352D] dark:text-[#FFFDF3] font-semibold">Parsed Donation:</span>
-              <span className="bg-[#E2F5EC] text-[#0B4F3A] dark:bg-[#16322A] dark:text-[#12B76A] border border-[#A8E5C8] dark:border-[#1F3F34] px-2.5 py-1 rounded-md font-bold">
+            <div className="flex items-center gap-3 text-xs text-[#60756D] dark:text-[#A8A29E] bg-[#F7F8ED] dark:bg-[#0D0D0D] p-3 rounded-xl border border-[#E2E8E4] dark:border-white/10">
+              <span className="text-[#18352D] dark:text-white font-semibold">Parsed Donation:</span>
+              <span className="bg-[#E2F5EC] text-[#0B4F3A] dark:bg-[#262626] dark:text-[#12B76A] border border-[#A8E5C8] dark:border-white/10 px-2.5 py-1 rounded-md font-bold">
                 Category: {parsedInfo.item_category}
               </span>
-              <span className="bg-[#EAE3D2]/60 dark:bg-[#16322A] text-[#18352D] dark:text-[#FFFDF3] px-2.5 py-1 rounded-md font-semibold">
+              <span className="bg-[#EAE3D2]/60 dark:bg-[#262626] text-[#18352D] dark:text-white px-2.5 py-1 rounded-md font-semibold">
                 Quantity: {parsedInfo.quantity} {parsedInfo.unit}
               </span>
             </div>
@@ -209,7 +209,7 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
         </form>
 
         {/* Privacy Protection Callout */}
-        <div className="mt-4 flex items-center gap-2 text-xs text-[#0B4F3A] dark:text-[#12B76A] bg-[#E2F5EC]/70 dark:bg-[#16322A]/70 border border-[#A8E5C8] dark:border-[#1F3F34] p-3 rounded-xl">
+        <div className="mt-4 flex items-center gap-2 text-xs text-[#0B4F3A] dark:text-[#12B76A] bg-[#E2F5EC]/70 dark:bg-[#262626]/70 border border-[#A8E5C8] dark:border-white/10 p-3 rounded-xl">
           <ShieldCheck className="w-4 h-4 text-[#0B4F3A] dark:text-[#12B76A] shrink-0" />
           <span>
             <strong>Strict Privacy Protection Enforced:</strong> Beneficiary names, contact numbers, and precise addresses are 100% masked. All donations are delivered via verified NGO hubs.
@@ -219,7 +219,7 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
 
       {/* Success / Error Banners */}
       {successNotice && (
-        <div className="bg-[#E2F5EC] dark:bg-[#16322A] border border-[#A8E5C8] dark:border-[#1F3F34] text-[#0B4F3A] dark:text-[#12B76A] p-4 rounded-xl flex items-center justify-between shadow-sm">
+        <div className="bg-[#E2F5EC] dark:bg-[#262626] border border-[#A8E5C8] dark:border-white/10 text-[#0B4F3A] dark:text-[#12B76A] p-4 rounded-xl flex items-center justify-between shadow-sm">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-5 h-5" />
             <span className="font-semibold">{successNotice}</span>
@@ -240,13 +240,13 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
 
       {/* 2. Algorithmic Match Results Grid */}
       <div className="space-y-4">
-        <h3 className="text-lg font-bold text-[#18352D] dark:text-[#FFFDF3] flex items-center gap-2">
+        <h3 className="text-lg font-bold text-[#18352D] dark:text-white flex items-center gap-2">
           <HeartHandshake className="w-5 h-5 text-[#0B4F3A] dark:text-[#12B76A]" />
           Matched Verified Needs ({matches.length})
         </h3>
 
         {matches.length === 0 ? (
-          <div className="bg-white dark:bg-[#10251E] border border-[#EAE3D2] dark:border-[#1F3F34] rounded-2xl p-8 text-center text-[#60756D] dark:text-[#A2B5AD] shadow-sm">
+          <div className="bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10 rounded-2xl p-8 text-center text-[#60756D] dark:text-[#A8A29E] shadow-sm">
             No active matching verified needs found for this category right now. You can pledge directly to central inventory.
           </div>
         ) : (
@@ -254,12 +254,12 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
             {matches.map((m) => (
               <div 
                 key={m.match_id}
-                className="bg-white dark:bg-[#10251E] border border-[#EAE3D2] dark:border-[#1F3F34] hover:border-[#0B4F3A]/50 dark:hover:border-[#12B76A]/50 rounded-2xl p-5 transition-all shadow-sm hover:shadow-md flex flex-col justify-between group"
+                className="bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10 hover:border-[#0B4F3A]/50 dark:hover:border-[#12B76A]/50 rounded-2xl p-5 transition-all shadow-sm hover:shadow-md flex flex-col justify-between group"
               >
                 <div className="space-y-3">
                   {/* Match Score & Urgency Header */}
                   <div className="flex items-center justify-between">
-                    <span className="bg-[#E2F5EC] dark:bg-[#16322A] border border-[#A8E5C8] dark:border-[#1F3F34] text-[#0B4F3A] dark:text-[#12B76A] px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-2xs">
+                    <span className="bg-[#E2F5EC] dark:bg-[#262626] border border-[#A8E5C8] dark:border-white/10 text-[#0B4F3A] dark:text-[#12B76A] px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-2xs">
                       <Sparkles className="w-3.5 h-3.5" />
                       {m.match_score}% Match
                     </span>
@@ -270,40 +270,40 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
                   </div>
 
                   {/* 4-Tuple Structured Match Information */}
-                  <div className="space-y-2 bg-[#FFFDF3] dark:bg-[#0B1713] p-4 rounded-xl border border-[#E2E8E4] dark:border-[#1F3F34]">
+                  <div className="space-y-2 bg-[#FFFDF3] dark:bg-[#0D0D0D] p-4 rounded-xl border border-[#E2E8E4] dark:border-white/10">
                     <div className="flex items-start gap-2">
                       <Package className="w-4 h-4 text-[#0B4F3A] dark:text-[#12B76A] mt-0.5 shrink-0" />
                       <div>
-                        <span className="text-xs text-[#60756D] dark:text-[#A2B5AD] block font-medium">DONATION</span>
-                        <span className="text-[#18352D] dark:text-[#FFFDF3] text-sm font-semibold">{m.donation.quantity} units of {m.donation.item_category}</span>
+                        <span className="text-xs text-[#60756D] dark:text-[#A8A29E] block font-medium">DONATION</span>
+                        <span className="text-[#18352D] dark:text-white text-sm font-semibold">{m.donation.quantity} units of {m.donation.item_category}</span>
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-2 pt-2 border-t border-[#E2E8E4] dark:border-[#1F3F34]">
+                    <div className="flex items-start gap-2 pt-2 border-t border-[#E2E8E4] dark:border-white/10">
                       <AlertCircle className="w-4 h-4 text-amber-500 dark:text-amber-400 mt-0.5 shrink-0" />
                       <div>
-                        <span className="text-xs text-[#60756D] dark:text-[#A2B5AD] block font-medium">CURRENT NEED</span>
-                        <span className="text-[#18352D] dark:text-[#FFFDF3] text-sm font-semibold">{m.current_need.title}</span>
+                        <span className="text-xs text-[#60756D] dark:text-[#A8A29E] block font-medium">CURRENT NEED</span>
+                        <span className="text-[#18352D] dark:text-white text-sm font-semibold">{m.current_need.title}</span>
                         {m.current_need.description && (
-                          <p className="text-xs text-[#60756D] dark:text-[#A2B5AD] mt-0.5 line-clamp-2">{m.current_need.description}</p>
+                          <p className="text-xs text-[#60756D] dark:text-[#A8A29E] mt-0.5 line-clamp-2">{m.current_need.description}</p>
                         )}
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-2 pt-2 border-t border-[#E2E8E4] dark:border-[#1F3F34]">
+                    <div className="flex items-start gap-2 pt-2 border-t border-[#E2E8E4] dark:border-white/10">
                       <Building2 className="w-4 h-4 text-teal-600 dark:text-teal-400 mt-0.5 shrink-0" />
                       <div>
-                        <span className="text-xs text-[#60756D] dark:text-[#A2B5AD] block font-medium">RESOURCE CENTER</span>
-                        <span className="text-[#18352D] dark:text-[#FFFDF3] text-sm font-semibold">{m.resource.name}</span>
-                        <span className="text-xs text-[#60756D] dark:text-[#A2B5AD] block">{m.resource.organization_type}</span>
+                        <span className="text-xs text-[#60756D] dark:text-[#A8A29E] block font-medium">RESOURCE CENTER</span>
+                        <span className="text-[#18352D] dark:text-white text-sm font-semibold">{m.resource.name}</span>
+                        <span className="text-xs text-[#60756D] dark:text-[#A8A29E] block">{m.resource.organization_type}</span>
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-2 pt-2 border-t border-[#E2E8E4] dark:border-[#1F3F34]">
+                    <div className="flex items-start gap-2 pt-2 border-t border-[#E2E8E4] dark:border-white/10">
                       <MapPin className="w-4 h-4 text-rose-500 dark:text-rose-400 mt-0.5 shrink-0" />
                       <div>
-                        <span className="text-xs text-[#60756D] dark:text-[#A2B5AD] block font-medium">LOCATION</span>
-                        <span className="text-[#18352D] dark:text-[#FFFDF3] text-xs font-medium">{m.location.locality} ({m.location.distance_km} km away)</span>
+                        <span className="text-xs text-[#60756D] dark:text-[#A8A29E] block font-medium">LOCATION</span>
+                        <span className="text-[#18352D] dark:text-white text-xs font-medium">{m.location.locality} ({m.location.distance_km} km away)</span>
                       </div>
                     </div>
                   </div>
@@ -312,7 +312,7 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
                 <div className="pt-4">
                   <button
                     onClick={() => setSelectedMatch(m)}
-                    className="w-full bg-[#0B4F3A] hover:bg-[#083B2B] dark:bg-[#12B76A] dark:hover:bg-[#159A68] text-white dark:text-[#0B1713] font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm group-hover:shadow"
+                    className="w-full bg-[#0B4F3A] hover:bg-[#083B2B] dark:bg-[#12B76A] dark:hover:bg-[#159A68] text-white dark:text-white font-bold py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm group-hover:shadow"
                   >
                     <span>Pledge This Donation</span>
                     <ChevronRight className="w-4 h-4" />
@@ -327,44 +327,44 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
       {/* 3. Pledge Confirmation Modal */}
       {selectedMatch && (
         <div className="fixed inset-0 z-[10000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#10251E] border border-[#EAE3D2] dark:border-[#1F3F34] rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative">
-            <div className="flex items-center justify-between pb-3 border-b border-[#EAE3D2] dark:border-[#1F3F34]">
-              <h3 className="text-lg font-bold text-[#18352D] dark:text-[#FFFDF3] flex items-center gap-2">
+          <div className="bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative">
+            <div className="flex items-center justify-between pb-3 border-b border-[#EAE3D2] dark:border-white/10">
+              <h3 className="text-lg font-bold text-[#18352D] dark:text-white flex items-center gap-2">
                 Confirm Donation Pledge
               </h3>
               <button 
                 onClick={() => setSelectedMatch(null)}
-                className="text-[#60756D] dark:text-[#A2B5AD] hover:text-[#18352D] dark:hover:text-white text-xl"
+                className="text-[#60756D] dark:text-[#A8A29E] hover:text-[#18352D] dark:hover:text-white text-xl"
               >
                 ✕
               </button>
             </div>
 
-            <div className="bg-[#FFFDF3] dark:bg-[#0B1713] p-4 rounded-xl border border-[#E2E8E4] dark:border-[#1F3F34] space-y-2 text-sm">
+            <div className="bg-[#FFFDF3] dark:bg-[#0D0D0D] p-4 rounded-xl border border-[#E2E8E4] dark:border-white/10 space-y-2 text-sm">
               <div>
-                <span className="text-[#60756D] dark:text-[#A2B5AD] block text-xs">Pledging Item:</span>
-                <span className="text-[#18352D] dark:text-[#FFFDF3] font-bold text-base">
+                <span className="text-[#60756D] dark:text-[#A8A29E] block text-xs">Pledging Item:</span>
+                <span className="text-[#18352D] dark:text-white font-bold text-base">
                   {selectedMatch.donation.quantity} {selectedMatch.donation.item_category}
                 </span>
               </div>
               <div>
-                <span className="text-[#60756D] dark:text-[#A2B5AD] block text-xs">Destination Need:</span>
+                <span className="text-[#60756D] dark:text-[#A8A29E] block text-xs">Destination Need:</span>
                 <span className="text-[#0B4F3A] dark:text-[#12B76A] font-semibold">{selectedMatch.current_need.title}</span>
               </div>
               <div>
-                <span className="text-[#60756D] dark:text-[#A2B5AD] block text-xs">Distribution Center:</span>
+                <span className="text-[#60756D] dark:text-[#A8A29E] block text-xs">Distribution Center:</span>
                 <span className="text-teal-700 dark:text-teal-300 font-semibold">{selectedMatch.resource.name}</span>
               </div>
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-[#18352D] dark:text-[#FFFDF3]">Delivery Notes / Pickup Instructions (Optional):</label>
+              <label className="text-xs font-semibold text-[#18352D] dark:text-white">Delivery Notes / Pickup Instructions (Optional):</label>
               <textarea
                 value={pledgeNotes}
                 onChange={(e) => setPledgeNotes(e.target.value)}
                 placeholder="e.g., I can drop this off at the shelter on Saturday morning between 10am-12pm."
                 rows={3}
-                className="w-full bg-[#FFFDF3] dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#1F3F34] focus:border-[#0B4F3A] dark:focus:border-[#12B76A] rounded-xl p-3 text-[#18352D] dark:text-[#FFFDF3] text-sm focus:outline-none focus:ring-2 focus:ring-[#12B76A]/20"
+                className="w-full bg-[#FFFDF3] dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 focus:border-[#0B4F3A] dark:focus:border-[#12B76A] rounded-xl p-3 text-[#18352D] dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#12B76A]/20"
               />
             </div>
 
@@ -372,7 +372,7 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
               <button
                 type="button"
                 onClick={() => setSelectedMatch(null)}
-                className="flex-1 bg-[#EAE3D2]/60 dark:bg-[#16322A] hover:bg-[#EAE3D2] dark:hover:bg-[#1F3F34] text-[#18352D] dark:text-[#FFFDF3] py-2.5 rounded-xl font-semibold transition-all"
+                className="flex-1 bg-[#EAE3D2]/60 dark:bg-[#262626] hover:bg-[#EAE3D2] dark:hover:bg-[#1F3F34] text-[#18352D] dark:text-white py-2.5 rounded-xl font-semibold transition-all"
               >
                 Cancel
               </button>
@@ -380,7 +380,7 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
                 type="button"
                 onClick={handleConfirmPledge}
                 disabled={isSubmitting}
-                className="flex-1 bg-[#0B4F3A] hover:bg-[#083B2B] dark:bg-[#12B76A] dark:hover:bg-[#159A68] text-white dark:text-[#0B1713] font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 disabled:opacity-50 transition-all shadow-sm"
+                className="flex-1 bg-[#0B4F3A] hover:bg-[#083B2B] dark:bg-[#12B76A] dark:hover:bg-[#159A68] text-white dark:text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 disabled:opacity-50 transition-all shadow-sm"
               >
                 {isSubmitting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                 <span>Confirm Pledge</span>
@@ -391,14 +391,14 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
       )}
 
       {/* 4. Active Pledges & Lifecycle Progress Tracker */}
-      <div className="bg-white dark:bg-[#10251E] border border-[#EAE3D2] dark:border-[#1F3F34] rounded-2xl p-6 space-y-4 shadow-sm">
-        <h3 className="text-lg font-bold text-[#18352D] dark:text-[#FFFDF3] flex items-center gap-2">
+      <div className="bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10 rounded-2xl p-6 space-y-4 shadow-sm">
+        <h3 className="text-lg font-bold text-[#18352D] dark:text-white flex items-center gap-2">
           <Clock className="w-5 h-5 text-[#0B4F3A] dark:text-[#12B76A]" />
           My Donation Pledges & Status Tracker ({myPledges.length})
         </h3>
 
         {myPledges.length === 0 ? (
-          <p className="text-[#60756D] dark:text-[#A2B5AD] text-sm">You have not registered any pledges yet.</p>
+          <p className="text-[#60756D] dark:text-[#A8A29E] text-sm">You have not registered any pledges yet.</p>
         ) : (
           <div className="space-y-4">
             {myPledges.map((p) => {
@@ -406,15 +406,15 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
               const currentIdx = statusSteps.indexOf(p.status.toUpperCase());
 
               return (
-                <div key={p.id} className="bg-[#FFFDF3] dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#1F3F34] p-4 rounded-xl space-y-3">
+                <div key={p.id} className="bg-[#FFFDF3] dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 p-4 rounded-xl space-y-3">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <div>
-                      <span className="text-[#18352D] dark:text-[#FFFDF3] font-bold text-base">{p.item_description}</span>
-                      <span className="text-xs text-[#60756D] dark:text-[#A2B5AD] block">
+                      <span className="text-[#18352D] dark:text-white font-bold text-base">{p.item_description}</span>
+                      <span className="text-xs text-[#60756D] dark:text-[#A8A29E] block">
                         Pledged to: {p.urgent_request_title || p.resource_name || 'Community Hub'}
                       </span>
                     </div>
-                    <span className="bg-[#E2F5EC] text-[#0B4F3A] border border-[#A8E5C8] dark:bg-[#16322A] dark:text-[#12B76A] dark:border-[#1F3F34] text-xs px-3 py-1 rounded-full font-bold">
+                    <span className="bg-[#E2F5EC] text-[#0B4F3A] border border-[#A8E5C8] dark:bg-[#262626] dark:text-[#12B76A] dark:border-white/10 text-xs px-3 py-1 rounded-full font-bold">
                       {p.status}
                     </span>
                   </div>
@@ -425,8 +425,8 @@ export const IntelligentDonationMatcher: React.FC<IntelligentDonationMatcherProp
                       const isPassed = idx <= currentIdx;
                       return (
                         <div key={step} className="text-center space-y-1">
-                          <div className={`h-2 rounded-full transition-all ${isPassed ? 'bg-[#0B4F3A] dark:bg-[#12B76A]' : 'bg-[#E2E8E4] dark:bg-[#1F3F34]'}`} />
-                          <span className={`text-[10px] block font-semibold ${isPassed ? 'text-[#0B4F3A] dark:text-[#12B76A]' : 'text-[#60756D] dark:text-[#A2B5AD]'}`}>
+                          <div className={`h-2 rounded-full transition-all ${isPassed ? 'bg-[#0B4F3A] dark:bg-[#12B76A]' : 'bg-[#E2E8E4] dark:bg-[#262626]'}`} />
+                          <span className={`text-[10px] block font-semibold ${isPassed ? 'text-[#0B4F3A] dark:text-[#12B76A]' : 'text-[#60756D] dark:text-[#A8A29E]'}`}>
                             {step}
                           </span>
                         </div>

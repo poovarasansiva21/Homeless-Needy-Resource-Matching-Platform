@@ -193,11 +193,11 @@ export const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+    <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* Header */}
-        <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-white/10 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <div className="inline-flex items-center space-x-1.5 bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 text-xs font-bold px-3 py-1 rounded-full border border-[#159B5B]/20 dark:border-[#159B5B]/30 mb-2">
               <ShieldCheck className="w-3.5 h-3.5" />
@@ -214,7 +214,7 @@ export const AdminDashboard: React.FC = () => {
           <div className="flex items-center space-x-2">
             <button
               onClick={fetchAdminData}
-              className="p-2.5 text-stone-500 dark:text-stone-300 hover:text-[#17231E] dark:hover:text-white bg-[#FFF9ED] dark:bg-[#1A2621] rounded-xl hover:bg-[#F7EBD2] dark:hover:bg-[#22332C] text-xs font-semibold flex items-center space-x-1.5 border border-[#EAE3D2] dark:border-[#24332D] transition-colors"
+              className="p-2.5 text-stone-500 dark:text-stone-300 hover:text-[#17231E] dark:hover:text-white bg-[#FFF9ED] dark:bg-[#262626] rounded-xl hover:bg-[#F7EBD2] dark:hover:bg-[#292929] text-xs font-semibold flex items-center space-x-1.5 border border-[#EAE3D2] dark:border-white/10 transition-colors"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
               <span>Refresh</span>
@@ -223,7 +223,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex flex-wrap gap-2 border-b border-[#EAE3D2] dark:border-[#24332D] pb-2">
+        <div className="flex flex-wrap gap-2 border-b border-[#EAE3D2] dark:border-white/10 pb-2">
           {[
             { id: 'overview', label: '📊 Overview & Charts' },
             { id: 'queue', label: `📋 Request Queue (${pendingRequests.length})` },
@@ -240,7 +240,7 @@ export const AdminDashboard: React.FC = () => {
               className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === tab.id
                   ? 'bg-[#159B5B] dark:bg-[#159B5B] text-white shadow-sm'
-                  : 'bg-white dark:bg-[#121C18] text-stone-600 dark:text-stone-300 hover:bg-[#FFF9ED] dark:hover:bg-[#1A2621] border border-[#EAE3D2] dark:border-[#24332D]'
+                  : 'bg-white dark:bg-[#161616] text-stone-600 dark:text-stone-300 hover:bg-[#FFF9ED] dark:hover:bg-[#262626] border border-[#EAE3D2] dark:border-white/10'
               }`}
             >
               {tab.label}
@@ -254,19 +254,19 @@ export const AdminDashboard: React.FC = () => {
             
             {/* Metric Summary Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-white dark:bg-[#121C18] p-5 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm">
+              <div className="bg-white dark:bg-[#161616] p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 shadow-sm">
                 <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">Total Requests</div>
                 <div className="text-3xl font-black text-[#17231E] dark:text-white mt-2">{metrics.total_requests}</div>
                 <div className="text-[11px] text-[#159B5B] dark:text-emerald-400 font-semibold mt-1">Processed through DNN</div>
               </div>
 
-              <div className="bg-white dark:bg-[#121C18] p-5 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm">
+              <div className="bg-white dark:bg-[#161616] p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 shadow-sm">
                 <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">Pending Review</div>
                 <div className="text-3xl font-black text-[#F2A33A] dark:text-amber-400 mt-2">{metrics.pending_verification}</div>
                 <div className="text-[11px] text-[#F2A33A] dark:text-amber-400 font-semibold mt-1">Awaiting admin action</div>
               </div>
 
-              <div className="bg-white dark:bg-[#121C18] p-5 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm">
+              <div className="bg-white dark:bg-[#161616] p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 shadow-sm">
                 <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">Verified Resources</div>
                 <div className="text-3xl font-black text-[#159B5B] dark:text-emerald-400 mt-2">
                   {resourcesList.filter(r => r.verified).length} / {resourcesList.length}
@@ -274,7 +274,7 @@ export const AdminDashboard: React.FC = () => {
                 <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">Badged NGO / Shelter / Food</div>
               </div>
 
-              <div className="bg-white dark:bg-[#121C18] p-5 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm">
+              <div className="bg-white dark:bg-[#161616] p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 shadow-sm">
                 <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">Trust Reports</div>
                 <div className="text-3xl font-black text-rose-600 dark:text-rose-400 mt-2">
                   {trustReportsList.filter(r => r.status === 'PENDING').length}
@@ -287,8 +287,8 @@ export const AdminDashboard: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               
               {/* Chart 1: Requests by Category */}
-              <div className="bg-white dark:bg-[#121C18] p-6 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
-                <h3 className="font-bold text-[#17231E] dark:text-[#FFF9ED] text-sm">Requests by AI Category</h3>
+              <div className="bg-white dark:bg-[#161616] p-6 rounded-3xl border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
+                <h3 className="font-bold text-[#17231E] dark:text-[#F5F5F0] text-sm">Requests by AI Category</h3>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={charts.by_category}>
@@ -303,8 +303,8 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               {/* Chart 2: Urgency Priorities */}
-              <div className="bg-white dark:bg-[#121C18] p-6 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
-                <h3 className="font-bold text-[#17231E] dark:text-[#FFF9ED] text-sm">Urgency Priority Distribution</h3>
+              <div className="bg-white dark:bg-[#161616] p-6 rounded-3xl border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
+                <h3 className="font-bold text-[#17231E] dark:text-[#F5F5F0] text-sm">Urgency Priority Distribution</h3>
                 <div className="h-64 flex items-center justify-center">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
@@ -341,9 +341,9 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Tab 2: Verification Queue */}
         {activeTab === 'queue' && (
-          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+          <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
             <div>
-              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Pending Request Verification Queue</h2>
+              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#F5F5F0]">Pending Request Verification Queue</h2>
               <p className="text-xs text-stone-500 dark:text-stone-400">Every distress request must be verified before public exposure or volunteer dispatch.</p>
             </div>
 
@@ -367,10 +367,10 @@ export const AdminDashboard: React.FC = () => {
                         </span>
                       </div>
 
-                      <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 font-medium">{req.description}</p>
+                      <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 font-medium">{req.description}</p>
                       
                       <div className="text-[11px] text-stone-500 dark:text-stone-400">
-                        Submitted by: <strong className="text-[#17231E] dark:text-[#FFF9ED]">{req.full_name}</strong> ({req.phone}) • {req.address}
+                        Submitted by: <strong className="text-[#17231E] dark:text-[#F5F5F0]">{req.full_name}</strong> ({req.phone}) • {req.address}
                       </div>
                     </div>
 
@@ -378,7 +378,7 @@ export const AdminDashboard: React.FC = () => {
                       <button
                         onClick={() => handleRejectRequest(req.id)}
                         disabled={actionLoadingId === req.id}
-                        className="px-4 py-2 border border-[#EAE3D2] dark:border-[#24332D] hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 text-[#17231E] dark:text-[#FFF9ED] font-bold rounded-xl text-xs transition-colors"
+                        className="px-4 py-2 border border-[#EAE3D2] dark:border-white/10 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 text-[#17231E] dark:text-[#F5F5F0] font-bold rounded-xl text-xs transition-colors"
                       >
                         Reject
                       </button>
@@ -399,9 +399,9 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Tab 3: Resource Verification (NGO, SHELTER, FOOD) */}
         {activeTab === 'resources' && (
-          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+          <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
             <div>
-              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Resource Verification & Badging</h2>
+              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#F5F5F0]">Resource Verification & Badging</h2>
               <p className="text-xs text-stone-500 dark:text-stone-400">
                 Grant or revoke official verification badges: ✓ VERIFIED NGO, ✓ VERIFIED SHELTER, ✓ VERIFIED FOOD RESOURCE.
               </p>
@@ -409,10 +409,10 @@ export const AdminDashboard: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {resourcesList.map((res) => (
-                <div key={res.id} className="p-4 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-[#FFFDF3] dark:bg-[#0B1713] space-y-2">
+                <div key={res.id} className="p-4 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-[#FFFDF3] dark:bg-[#0D0D0D] space-y-2">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h4 className="font-extrabold text-sm text-[#18352D] dark:text-[#FFFDF3]">{res.name}</h4>
+                      <h4 className="font-extrabold text-sm text-[#18352D] dark:text-white">{res.name}</h4>
                       <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold">{res.organization_type} • {res.category}</span>
                     </div>
                     <span
@@ -457,9 +457,9 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Tab 4: Transport Trust */}
         {activeTab === 'transport' && (
-          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+          <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
             <div>
-              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Transport Mobility Trust Verification</h2>
+              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#F5F5F0]">Transport Mobility Trust Verification</h2>
               <p className="text-xs text-stone-500 dark:text-stone-400">
                 Manage verification status of municipal and volunteer transit routes: VERIFIED, NEEDS VERIFICATION, REPORTED.
               </p>
@@ -467,10 +467,10 @@ export const AdminDashboard: React.FC = () => {
 
             <div className="space-y-3">
               {transportsList.map((t) => (
-                <div key={t.id} className="p-4 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-[#FFFDF3] dark:bg-[#0B1713] flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+                <div key={t.id} className="p-4 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-[#FFFDF3] dark:bg-[#0D0D0D] flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
                   <div className="space-y-1">
                     <div className="flex items-center space-x-2">
-                      <span className="font-extrabold text-sm text-[#18352D] dark:text-[#FFFDF3]">{t.provider}</span>
+                      <span className="font-extrabold text-sm text-[#18352D] dark:text-white">{t.provider}</span>
                       <span
                         className={`text-[10px] font-black px-2.5 py-0.5 rounded-full ${
                           t.status === 'VERIFIED'
@@ -496,7 +496,7 @@ export const AdminDashboard: React.FC = () => {
                         className={`px-3 py-1.5 rounded-xl font-black text-[10px] transition-all ${
                           t.status === st
                             ? 'bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-900 cursor-default'
-                            : 'bg-white dark:bg-[#121C18] border border-[#EAE3D2] dark:border-[#24332D] hover:bg-stone-100 text-stone-700 dark:text-stone-300'
+                            : 'bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10 hover:bg-stone-100 text-stone-700 dark:text-stone-300'
                         }`}
                       >
                         {st}
@@ -511,9 +511,9 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Tab 5: Trust Reports Management */}
         {activeTab === 'reports' && (
-          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+          <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
             <div>
-              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Filed Trust & Safety Reports</h2>
+              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#F5F5F0]">Filed Trust & Safety Reports</h2>
               <p className="text-xs text-stone-500 dark:text-stone-400">Reports filed by community users or anonymous reporters regarding resources, transport, or requests.</p>
             </div>
 
@@ -545,7 +545,7 @@ export const AdminDashboard: React.FC = () => {
                       </span>
                     </div>
 
-                    <div className="p-3 bg-white dark:bg-[#121C18] rounded-xl border border-rose-200 dark:border-rose-900/40 text-stone-800 dark:text-stone-200 font-medium">
+                    <div className="p-3 bg-white dark:bg-[#161616] rounded-xl border border-rose-200 dark:border-rose-900/40 text-stone-800 dark:text-stone-200 font-medium">
                       <strong>Reason:</strong> {rep.reason}<br />
                       <strong>Details:</strong> {rep.details || 'No additional text provided.'}
                     </div>
@@ -562,7 +562,7 @@ export const AdminDashboard: React.FC = () => {
                           key={st}
                           onClick={() => handleResolveTrustReport(rep.id, st)}
                           disabled={rep.status === st || actionLoadingId === `report-${rep.id}`}
-                          className="px-3 py-1.5 rounded-xl font-bold text-[10px] bg-white dark:bg-[#121C18] border border-[#EAE3D2] dark:border-[#24332D] hover:bg-stone-100 text-stone-800 dark:text-stone-200 shadow-sm"
+                          className="px-3 py-1.5 rounded-xl font-bold text-[10px] bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10 hover:bg-stone-100 text-stone-800 dark:text-stone-200 shadow-sm"
                         >
                           Mark {st}
                         </button>
@@ -577,9 +577,9 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Tab 6: Duplicate Alerts */}
         {activeTab === 'duplicates' && (
-          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+          <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
             <div>
-              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Duplicate Request Alerts</h2>
+              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#F5F5F0]">Duplicate Request Alerts</h2>
               <p className="text-xs text-stone-500 dark:text-stone-400">Flagged by heuristic analysis. Not auto-rejected.</p>
             </div>
 
@@ -590,7 +590,7 @@ export const AdminDashboard: React.FC = () => {
                 {duplicateRequests.map((d) => (
                   <div key={d.id} className="p-4 rounded-2xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/50 dark:bg-amber-950/20 space-y-2">
                     <div className="flex justify-between items-start">
-                      <div className="font-bold text-[#17231E] dark:text-[#FFF9ED] text-xs">
+                      <div className="font-bold text-[#17231E] dark:text-[#F5F5F0] text-xs">
                         Request #{d.id} • {d.full_name} ({d.phone})
                       </div>
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-200">
@@ -598,9 +598,9 @@ export const AdminDashboard: React.FC = () => {
                       </span>
                     </div>
 
-                    <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80">{d.description}</p>
+                    <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80">{d.description}</p>
                     
-                    <div className="p-3 bg-white dark:bg-[#121C18] rounded-xl border border-amber-200 dark:border-amber-800 text-[11px] text-amber-900 dark:text-amber-300 font-medium">
+                    <div className="p-3 bg-white dark:bg-[#161616] rounded-xl border border-amber-200 dark:border-amber-800 text-[11px] text-amber-900 dark:text-amber-300 font-medium">
                       ⚠️ Duplicate Detector Flag: {d.duplicate_notes || 'Identical contact or similar text detected.'}
                     </div>
 
@@ -627,15 +627,15 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Tab 7: Audit Logs */}
         {activeTab === 'audit' && (
-          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+          <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
             <div>
-              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">System Security & Action Audit Trail</h2>
+              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#F5F5F0]">System Security & Action Audit Trail</h2>
               <p className="text-xs text-stone-500 dark:text-stone-400">Immutable chronological record of logins, status transitions, verifications, and trust reports.</p>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-xs text-left">
-                <thead className="text-[10px] font-bold text-stone-400 uppercase bg-[#FFF9ED] dark:bg-[#0C1410] border-b border-[#EAE3D2] dark:border-[#24332D]">
+                <thead className="text-[10px] font-bold text-stone-400 uppercase bg-[#FFF9ED] dark:bg-[#0D0D0D] border-b border-[#EAE3D2] dark:border-white/10">
                   <tr>
                     <th className="p-3">Timestamp</th>
                     <th className="p-3">User</th>
@@ -646,9 +646,9 @@ export const AdminDashboard: React.FC = () => {
                 </thead>
                 <tbody className="divide-y divide-[#EAE3D2] dark:divide-[#24332D]">
                   {auditLogs.map((log, idx) => (
-                    <tr key={idx} className="hover:bg-[#FFF9ED]/50 dark:hover:bg-[#1A2621]/50">
+                    <tr key={idx} className="hover:bg-[#FFF9ED]/50 dark:hover:bg-[#262626]/50">
                       <td className="p-3 text-stone-500 dark:text-stone-400 font-mono text-[11px]">{formatReportDateTime(log.timestamp)}</td>
-                      <td className="p-3 font-semibold text-[#17231E] dark:text-[#FFF9ED]">{log.user}</td>
+                      <td className="p-3 font-semibold text-[#17231E] dark:text-[#F5F5F0]">{log.user}</td>
                       <td className="p-3">
                         <span className="px-2 py-0.5 rounded-full font-mono font-bold text-[10px] bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 border border-[#159B5B]/30">
                           {log.action}
@@ -666,15 +666,15 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Tab 8: Registered Users Directory */}
         {activeTab === 'users' && (
-          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+          <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
             <div>
-              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Platform User Directory</h2>
+              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#F5F5F0]">Platform User Directory</h2>
               <p className="text-xs text-stone-500 dark:text-stone-400">All registered Requesters, Donors, Volunteers, NGOs, and Staff members.</p>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-xs text-left">
-                <thead className="text-[10px] font-bold text-stone-400 uppercase bg-[#FFF9ED] dark:bg-[#0C1410] border-b border-[#EAE3D2] dark:border-[#24332D]">
+                <thead className="text-[10px] font-bold text-stone-400 uppercase bg-[#FFF9ED] dark:bg-[#0D0D0D] border-b border-[#EAE3D2] dark:border-white/10">
                   <tr>
                     <th className="p-3">ID</th>
                     <th className="p-3">Name</th>
@@ -686,16 +686,16 @@ export const AdminDashboard: React.FC = () => {
                 </thead>
                 <tbody className="divide-y divide-[#EAE3D2] dark:divide-[#24332D]">
                   {usersList.map((u) => (
-                    <tr key={u.id} className="hover:bg-[#FFF9ED]/50 dark:hover:bg-[#1A2621]/50">
+                    <tr key={u.id} className="hover:bg-[#FFF9ED]/50 dark:hover:bg-[#262626]/50">
                       <td className="p-3 text-stone-400">#{u.id}</td>
                       <td className="p-3 font-bold text-[#17231E] dark:text-white">{u.full_name}</td>
                       <td className="p-3 text-stone-600 dark:text-stone-300">{u.email}</td>
                       <td className="p-3">
                         <span className={`px-2.5 py-0.5 rounded-full font-bold uppercase text-[10px] ${
-                          u.role === 'admin' ? 'bg-[#17231E] text-white dark:bg-[#24332D] dark:text-white' :
+                          u.role === 'admin' ? 'bg-[#17231E] text-white dark:bg-[#262626] dark:text-white' :
                           u.role === 'ngo' ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 border border-[#159B5B]/30' :
                           u.role === 'volunteer' ? 'bg-cyan-100 dark:bg-cyan-950/60 text-cyan-800 dark:text-cyan-300 border border-cyan-300' :
-                          u.role === 'donor' ? 'bg-rose-50 dark:bg-rose-950/70 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800' : 'bg-[#FFF9ED] dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] border border-[#EAE3D2] dark:border-[#24332D]'
+                          u.role === 'donor' ? 'bg-rose-50 dark:bg-rose-950/70 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800' : 'bg-[#FFF9ED] dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] border border-[#EAE3D2] dark:border-white/10'
                         }`}>
                           {u.role}
                         </span>

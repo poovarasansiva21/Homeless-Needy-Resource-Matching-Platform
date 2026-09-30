@@ -459,7 +459,7 @@ export const Navbar: React.FC = () => {
               <Link
                 to="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-3 px-4 bg-white dark:bg-[#162721] border-2 border-[#075C4F] text-[#075C4F] dark:text-[#12B76A] font-bold rounded-2xl text-center text-sm block min-h-[48px]"
+                className="w-full py-3 px-4 bg-white dark:bg-[#262626] border-2 border-[#075C4F] text-[#075C4F] dark:text-[#12B76A] font-bold rounded-2xl text-center text-sm block min-h-[48px]"
               >
                 {t('nav.signIn')}
               </Link>
@@ -481,7 +481,7 @@ export const Navbar: React.FC = () => {
 
               <button
                 onClick={toggleTheme}
-                className="px-3.5 py-1.5 rounded-xl bg-stone-100 dark:bg-[#162721] text-xs font-bold text-[#075C4F] dark:text-[#F2A33A] flex items-center space-x-1.5 cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl bg-stone-100 dark:bg-[#262626] text-xs font-bold text-[#075C4F] dark:text-[#F2A33A] flex items-center space-x-1.5 cursor-pointer"
               >
                 {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
                 <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
@@ -489,7 +489,7 @@ export const Navbar: React.FC = () => {
 
               <button
                 onClick={() => { setMobileMenuOpen(false); setShowSettingsModal(true); }}
-                className="px-3.5 py-1.5 rounded-xl bg-stone-100 dark:bg-[#162721] text-xs font-bold text-[#075C4F] dark:text-[#12B76A] flex items-center space-x-1.5 cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl bg-stone-100 dark:bg-[#262626] text-xs font-bold text-[#075C4F] dark:text-[#12B76A] flex items-center space-x-1.5 cursor-pointer"
               >
                 <Settings className="w-4 h-4 text-[#075C4F] dark:text-[#12B76A]" />
                 <span>Settings</span>

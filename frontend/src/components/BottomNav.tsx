@@ -75,7 +75,7 @@ export const BottomNav: React.FC = () => {
 
       <nav 
         aria-label="Mobile Bottom Navigation"
-        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-[#FFFDF7]/95 dark:bg-[#12231F]/95 backdrop-blur-xl border-t border-[#E2DAD0] dark:border-white/10 shadow-[0_-4px_20px_rgba(7,20,18,0.06)] pb-[env(safe-area-inset-bottom)] transition-colors duration-300 select-none"
+        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-[#FFFDF7]/95 dark:bg-[#161616]/95 backdrop-blur-xl border-t border-[#E2DAD0] dark:border-white/10 shadow-[0_-4px_20px_rgba(7,20,18,0.06)] pb-[env(safe-area-inset-bottom)] transition-colors duration-300 select-none"
       >
         <div className="grid grid-cols-5 h-14 items-center max-w-lg mx-auto px-1">
           {navItems.map((item) => {
@@ -88,7 +88,7 @@ export const BottomNav: React.FC = () => {
                 className={`flex flex-col items-center justify-center h-full py-1 px-1 rounded-xl transition-all duration-200 relative cursor-pointer active:scale-95 ${
                   active 
                     ? 'text-[#B88A52] dark:text-[#C5A66A] font-extrabold' 
-                    : 'text-[#5F655F] dark:text-[#B9B5A9] font-semibold hover:text-[#17211E] dark:hover:text-[#F5F0E5]'
+                    : 'text-[#5F655F] dark:text-[#A8A29E] font-semibold hover:text-[#17211E] dark:hover:text-[#F5F0E5]'
                 }`}
               >
                 {active && (

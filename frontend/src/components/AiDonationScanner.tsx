@@ -228,10 +228,10 @@ export const AiDonationScanner: React.FC<AiDonationScannerProps> = ({
   };
 
   return (
-    <div className={`bg-white dark:bg-[#121C18] rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-xl overflow-hidden transition-all duration-300 ${compact ? 'p-4 sm:p-6' : 'p-6 sm:p-8'}`}>
+    <div className={`bg-white dark:bg-[#161616] rounded-3xl border border-[#EAE3D2] dark:border-white/10 shadow-xl overflow-hidden transition-all duration-300 ${compact ? 'p-4 sm:p-6' : 'p-6 sm:p-8'}`}>
       
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#EAE3D2] dark:border-[#24332D]">
+      <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#EAE3D2] dark:border-white/10">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 rounded-2xl bg-[#E8F3E9] dark:bg-[#159B5B]/20 border border-[#159B5B]/30 flex items-center justify-center text-[#159B5B] dark:text-emerald-400">
             <Zap className="w-5 h-5" />
@@ -243,7 +243,7 @@ export const AiDonationScanner: React.FC<AiDonationScannerProps> = ({
                 MobileNetV2
               </span>
             </h2>
-            <p className="text-xs text-[#17231E]/70 dark:text-[#FFF9ED]/70 font-medium">
+            <p className="text-xs text-[#17231E]/70 dark:text-[#F5F5F0]/70 font-medium">
               {t('donationScanner.subtitle') || 'MobileNetV2 Vision AI for automated item recognition'}
             </p>
           </div>
@@ -372,7 +372,7 @@ export const AiDonationScanner: React.FC<AiDonationScannerProps> = ({
 
         {/* AI Results Display */}
         {result && (
-          <div className="space-y-4 pt-4 border-t border-[#EAE3D2] dark:border-[#24332D]">
+          <div className="space-y-4 pt-4 border-t border-[#EAE3D2] dark:border-white/10">
             
             {/* Low Confidence Alert Banner */}
             {result.low_confidence && (
@@ -390,11 +390,11 @@ export const AiDonationScanner: React.FC<AiDonationScannerProps> = ({
             )}
 
             {/* Classification Summary Card */}
-            <div className="bg-[#FFF9ED] dark:bg-[#0C1410] rounded-2xl p-4 sm:p-5 border border-[#EAE3D2] dark:border-[#24332D] space-y-4">
+            <div className="bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl p-4 sm:p-5 border border-[#EAE3D2] dark:border-white/10 space-y-4">
               
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-[#EAE3D2]/60 dark:border-[#24332D]">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-[#EAE3D2]/60 dark:border-white/10">
                 <div>
-                  <span className="text-[11px] uppercase tracking-wider font-bold text-[#17231E]/60 dark:text-[#FFF9ED]/60">
+                  <span className="text-[11px] uppercase tracking-wider font-bold text-[#17231E]/60 dark:text-[#F5F5F0]/60">
                     {t('donationScanner.detectedItem') || 'Detected Item'}
                   </span>
                   <div className="text-xl font-black text-[#17231E] dark:text-white capitalize flex items-center space-x-2 mt-0.5">
@@ -404,7 +404,7 @@ export const AiDonationScanner: React.FC<AiDonationScannerProps> = ({
                 </div>
 
                 <div className="text-right sm:text-right">
-                  <span className="text-[11px] uppercase tracking-wider font-bold text-[#17231E]/60 dark:text-[#FFF9ED]/60">
+                  <span className="text-[11px] uppercase tracking-wider font-bold text-[#17231E]/60 dark:text-[#F5F5F0]/60">
                     {t('donationScanner.confidence') || 'Confidence'}
                   </span>
                   <div className="text-xl font-black text-[#159B5B] dark:text-emerald-400">
@@ -415,7 +415,7 @@ export const AiDonationScanner: React.FC<AiDonationScannerProps> = ({
 
               {/* Class Probabilities Progress Bars */}
               <div className="space-y-2.5">
-                <span className="text-xs font-bold text-[#17231E]/70 dark:text-[#FFF9ED]/70 uppercase tracking-wider">
+                <span className="text-xs font-bold text-[#17231E]/70 dark:text-[#F5F5F0]/70 uppercase tracking-wider">
                   {t('donationScanner.topPredictions') || 'Top Predictions'}
                 </span>
 
@@ -434,7 +434,7 @@ export const AiDonationScanner: React.FC<AiDonationScannerProps> = ({
                           {percentage}%
                         </span>
                       </div>
-                      <div className="w-full h-2 rounded-full bg-[#EAE3D2] dark:bg-[#24332D] overflow-hidden">
+                      <div className="w-full h-2 rounded-full bg-[#EAE3D2] dark:bg-[#262626] overflow-hidden">
                         <div 
                           className={`h-full rounded-full transition-all duration-500 ${isTop ? 'bg-[#159B5B] dark:bg-emerald-500' : 'bg-slate-400 dark:bg-slate-600'}`}
                           style={{ width: `${percentage}%` }}
@@ -446,7 +446,7 @@ export const AiDonationScanner: React.FC<AiDonationScannerProps> = ({
               </div>
 
               {/* Category Override Selection */}
-              <div className="pt-3 border-t border-[#EAE3D2]/60 dark:border-[#24332D]">
+              <div className="pt-3 border-t border-[#EAE3D2]/60 dark:border-white/10">
                 <label className="block text-xs font-bold text-[#17231E]/80 dark:text-white/80 mb-2">
                   {t('donationScanner.editCategory') || 'Confirm or Edit Category'}:
                 </label>
@@ -461,7 +461,7 @@ export const AiDonationScanner: React.FC<AiDonationScannerProps> = ({
                         className={`py-2 px-3 rounded-xl text-xs font-bold capitalize flex items-center justify-center space-x-1.5 transition-all border ${
                           isSelected 
                             ? 'bg-[#159B5B] text-white border-[#159B5B] shadow-sm' 
-                            : 'bg-white dark:bg-[#121C18] text-[#17231E] dark:text-white border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B]/50'
+                            : 'bg-white dark:bg-[#161616] text-[#17231E] dark:text-white border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B]/50'
                         }`}
                       >
                         {isSelected && <Check className="w-3.5 h-3.5" />}

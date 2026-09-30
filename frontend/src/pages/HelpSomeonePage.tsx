@@ -367,11 +367,11 @@ export const HelpSomeonePage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] py-8 sm:py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+    <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] py-8 sm:py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
       <div className="max-w-4xl mx-auto space-y-8">
 
         {/* Page Header */}
-        <div className="space-y-2 border-b border-[#EAE3D2] dark:border-[#24332D] pb-6">
+        <div className="space-y-2 border-b border-[#EAE3D2] dark:border-white/10 pb-6">
           <div className="inline-flex items-center space-x-2 text-[11px] font-black uppercase tracking-widest text-[#E11D48]">
             <span className="w-2 h-2 rounded-full bg-[#E11D48] animate-ping" />
             <span>Emergency Reporting Workflow</span>
@@ -380,7 +380,7 @@ export const HelpSomeonePage: React.FC = () => {
             <span>Help Someone Nearby</span>
             <span className="text-2xl">🆘</span>
           </h1>
-          <p className="text-sm sm:text-base text-[#17231E]/75 dark:text-[#FFF9ED]/80 font-medium">
+          <p className="text-sm sm:text-base text-[#17231E]/75 dark:text-[#F5F5F0]/80 font-medium">
             Report a person who may need immediate food, shelter, medical assistance or urgent care.
           </p>
         </div>
@@ -388,9 +388,9 @@ export const HelpSomeonePage: React.FC = () => {
         {/* IF SUBMITTED: Live Status Tracking Screen */}
         {submittedReport ? (
           <div className="space-y-6 animate-fadeIn">
-            <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 sm:p-8 border border-emerald-500/40 shadow-xl space-y-6">
+            <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-8 border border-emerald-500/40 shadow-xl space-y-6">
               
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[#EAE3D2] dark:border-[#24332D]">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[#EAE3D2] dark:border-white/10">
                 <div className="flex items-center space-x-3.5">
                   <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-300">
                     <CheckCircle2 className="w-7 h-7" />
@@ -399,7 +399,7 @@ export const HelpSomeonePage: React.FC = () => {
                     <h2 className="text-xl sm:text-2xl font-black text-[#17231E] dark:text-white">
                       Help Request Submitted! ✅
                     </h2>
-                    <p className="text-xs text-[#17231E]/70 dark:text-[#FFF9ED]/70 font-medium">
+                    <p className="text-xs text-[#17231E]/70 dark:text-[#F5F5F0]/70 font-medium">
                       Report #{submittedReport.id} is live and actively matched to local responders.
                     </p>
                   </div>
@@ -437,7 +437,7 @@ export const HelpSomeonePage: React.FC = () => {
                             ? 'bg-[#159B5B] text-white border-[#159B5B] shadow-md scale-105'
                             : isPassed
                             ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-300'
-                            : 'bg-stone-100 dark:bg-[#1A2621] text-stone-400 border-stone-200 dark:border-[#24332D]'
+                            : 'bg-stone-100 dark:bg-[#262626] text-stone-400 border-stone-200 dark:border-white/10'
                         }`}
                       >
                         <div className="text-base">{step.icon}</div>
@@ -449,7 +449,7 @@ export const HelpSomeonePage: React.FC = () => {
               </div>
 
               {/* Report Breakdown Summary */}
-              <div className="bg-[#FFF9ED] dark:bg-[#0C1410] rounded-2xl p-5 border border-[#EAE3D2] dark:border-[#24332D] space-y-3">
+              <div className="bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl p-5 border border-[#EAE3D2] dark:border-white/10 space-y-3">
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
                   <div>
                     <span className="text-[10px] uppercase font-bold text-[#17231E]/60 dark:text-white/60">Category</span>
@@ -469,7 +469,7 @@ export const HelpSomeonePage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="pt-2 border-t border-[#EAE3D2] dark:border-white/10">
                   <span className="text-[10px] uppercase font-bold text-[#17231E]/60 dark:text-white/60">Situation Description</span>
                   <p className="text-xs font-medium italic text-[#17231E]/80 dark:text-white/80 mt-0.5">
                     "{submittedReport.description}"
@@ -485,7 +485,7 @@ export const HelpSomeonePage: React.FC = () => {
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {matchedResources.map((res) => (
-                      <div key={res.resource_id} className="p-4 rounded-2xl bg-white dark:bg-[#1A2621] border border-[#EAE3D2] dark:border-[#24332D] space-y-1.5 shadow-sm">
+                      <div key={res.resource_id} className="p-4 rounded-2xl bg-white dark:bg-[#262626] border border-[#EAE3D2] dark:border-white/10 space-y-1.5 shadow-sm">
                         <div className="flex items-center justify-between">
                           <span className="font-black text-xs text-[#17231E] dark:text-white">{res.resource_name}</span>
                           <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700">
@@ -503,7 +503,7 @@ export const HelpSomeonePage: React.FC = () => {
               )}
 
               {/* Reset Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-[#EAE3D2] dark:border-[#24332D]">
+              <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-[#EAE3D2] dark:border-white/10">
                 <button
                   type="button"
                   onClick={() => setSubmittedReport(null)}
@@ -513,7 +513,7 @@ export const HelpSomeonePage: React.FC = () => {
                 </button>
                 <Link
                   to="/"
-                  className="py-3 px-6 rounded-2xl bg-[#17231E] dark:bg-[#1A2822] hover:bg-black text-white text-xs font-black uppercase tracking-wider text-center transition-all"
+                  className="py-3 px-6 rounded-2xl bg-[#17231E] dark:bg-[#262626] hover:bg-black text-white text-xs font-black uppercase tracking-wider text-center transition-all"
                 >
                   Return to Home
                 </Link>
@@ -535,14 +535,14 @@ export const HelpSomeonePage: React.FC = () => {
             )}
 
             {/* SECTION 1 — PHOTO (OPTIONAL) */}
-            <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-6">
+            <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-6">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-xl font-black text-[#17231E] dark:text-white flex items-center gap-2">
                     <Camera className="w-5 h-5 text-[#159B5B]" />
                     <span>SECTION 1 — Add a Photo (Optional)</span>
                   </h2>
-                  <p className="text-xs text-[#17231E]/70 dark:text-[#FFF9ED]/70 font-medium">
+                  <p className="text-xs text-[#17231E]/70 dark:text-[#F5F5F0]/70 font-medium">
                     Take or upload a photo to provide visual context for NGO field responders.
                   </p>
                 </div>
@@ -630,7 +630,7 @@ export const HelpSomeonePage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => startCamera()}
-                    className="py-3 px-4 rounded-2xl bg-[#17231E] dark:bg-[#1A2822] hover:bg-black text-white text-xs font-bold flex items-center justify-center space-x-2 border border-[#24332D]"
+                    className="py-3 px-4 rounded-2xl bg-[#17231E] dark:bg-[#262626] hover:bg-black text-white text-xs font-bold flex items-center justify-center space-x-2 border border-[#24332D]"
                   >
                     <Camera className="w-4 h-4 text-[#159B5B]" />
                     <span>Take Photo</span>
@@ -671,7 +671,7 @@ export const HelpSomeonePage: React.FC = () => {
                     setPhotoPreview(null);
                     setPhotoBlob(null);
                   }}
-                  className="py-3 px-4 rounded-2xl bg-stone-100 dark:bg-[#1A2621] text-stone-600 dark:text-stone-300 hover:bg-stone-200 text-xs font-bold flex items-center justify-center space-x-2 border border-stone-200 dark:border-[#24332D]"
+                  className="py-3 px-4 rounded-2xl bg-stone-100 dark:bg-[#262626] text-stone-600 dark:text-stone-300 hover:bg-stone-200 text-xs font-bold flex items-center justify-center space-x-2 border border-stone-200 dark:border-white/10"
                 >
                   <X className="w-4 h-4" />
                   <span>Skip / Remove Photo</span>
@@ -693,14 +693,14 @@ export const HelpSomeonePage: React.FC = () => {
 
 
             {/* SECTION 2 — CURRENT LOCATION */}
-            <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-6">
+            <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div>
                   <h2 className="text-xl font-black text-[#17231E] dark:text-white flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-[#159B5B]" />
                     <span>SECTION 2 — Current Location</span>
                   </h2>
-                  <p className="text-xs text-[#17231E]/70 dark:text-[#FFF9ED]/70 font-medium">
+                  <p className="text-xs text-[#17231E]/70 dark:text-[#F5F5F0]/70 font-medium">
                     Acquire exact coordinates so nearby responders can locate the person immediately.
                   </p>
                 </div>
@@ -725,7 +725,7 @@ export const HelpSomeonePage: React.FC = () => {
               {/* Map Preview */}
               {userLocation && (
                 <div className="space-y-3">
-                  <div className="h-[220px] rounded-2xl overflow-hidden border border-[#EAE3D2] dark:border-[#24332D] shadow-inner relative z-0">
+                  <div className="h-[220px] rounded-2xl overflow-hidden border border-[#EAE3D2] dark:border-white/10 shadow-inner relative z-0">
                     <MapContainer
                       center={[userLocation.lat, userLocation.lng]}
                       zoom={14}
@@ -744,7 +744,7 @@ export const HelpSomeonePage: React.FC = () => {
                     </MapContainer>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 p-3 bg-[#FFF9ED] dark:bg-[#0C1410] rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] text-xs">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 p-3 bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl border border-[#EAE3D2] dark:border-white/10 text-xs">
                     <div className="font-bold text-[#17231E] dark:text-white flex items-center space-x-2">
                       <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
                       <span>📍 Detected Location: {locationAddress}</span>
@@ -759,13 +759,13 @@ export const HelpSomeonePage: React.FC = () => {
 
 
             {/* SECTION 3 — DESCRIPTION & MULTILINGUAL */}
-            <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-6">
+            <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-6">
               <div>
                 <h2 className="text-xl font-black text-[#17231E] dark:text-white flex items-center gap-2">
                   <FileText className="w-5 h-5 text-[#159B5B]" />
                   <span>SECTION 3 — Describe the Situation</span>
                 </h2>
-                <p className="text-xs text-[#17231E]/70 dark:text-[#FFF9ED]/70 font-medium">
+                <p className="text-xs text-[#17231E]/70 dark:text-[#F5F5F0]/70 font-medium">
                   Type or speak in English, Tamil, or Hindi. The SAHAAYAA AI DNN classifier will analyze the text in real-time.
                 </p>
               </div>
@@ -786,7 +786,7 @@ export const HelpSomeonePage: React.FC = () => {
                         setDescription(preset);
                         triggerAiAnalysis(preset, peopleCount, userLocation?.lat, userLocation?.lng);
                       }}
-                      className="py-1.5 px-3 rounded-xl bg-stone-100 dark:bg-[#1A2621] hover:bg-[#E8F3E9] text-stone-700 dark:text-stone-300 text-[11px] font-medium border border-stone-200 dark:border-[#24332D] transition-colors"
+                      className="py-1.5 px-3 rounded-xl bg-stone-100 dark:bg-[#262626] hover:bg-[#E8F3E9] text-stone-700 dark:text-stone-300 text-[11px] font-medium border border-stone-200 dark:border-white/10 transition-colors"
                     >
                       Preset #{idx+1}
                     </button>
@@ -801,7 +801,7 @@ export const HelpSomeonePage: React.FC = () => {
                   value={description}
                   onChange={handleDescriptionChange}
                   placeholder="Example: An elderly person is sitting near the bus stand and needs food."
-                  className="w-full p-4 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-stone-50/50 dark:bg-[#0C1410] text-[#17231E] dark:text-white text-sm font-medium focus:outline-none focus:border-[#159B5B] transition-colors"
+                  className="w-full p-4 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-stone-50/50 dark:bg-[#0D0D0D] text-[#17231E] dark:text-white text-sm font-medium focus:outline-none focus:border-[#159B5B] transition-colors"
                 />
                 <div className="flex justify-between items-center text-[11px] text-stone-400">
                   <span>Supports English | தமிழ் | हिन्दी</span>
@@ -810,7 +810,7 @@ export const HelpSomeonePage: React.FC = () => {
               </div>
 
               {/* SECTION 4 — VOICE INPUT */}
-              <div className="pt-4 border-t border-[#EAE3D2] dark:border-[#24332D] space-y-4">
+              <div className="pt-4 border-t border-[#EAE3D2] dark:border-white/10 space-y-4">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div className="flex items-center space-x-2">
                     <Mic className="w-5 h-5 text-[#159B5B]" />
@@ -821,7 +821,7 @@ export const HelpSomeonePage: React.FC = () => {
                   </div>
 
                   {/* Language Selector */}
-                  <div className="flex items-center space-x-1.5 bg-stone-100 dark:bg-[#1A2621] p-1 rounded-xl border border-stone-200 dark:border-[#24332D]">
+                  <div className="flex items-center space-x-1.5 bg-stone-100 dark:bg-[#262626] p-1 rounded-xl border border-stone-200 dark:border-white/10">
                     {[
                       { code: 'en-IN', label: 'English' },
                       { code: 'ta-IN', label: 'தமிழ்' },
@@ -876,7 +876,7 @@ export const HelpSomeonePage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
               {/* Number of People */}
-              <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+              <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
                 <h3 className="text-sm font-black text-[#17231E] dark:text-white flex items-center gap-2">
                   <Users className="w-4 h-4 text-[#159B5B]" />
                   <span>👥 How many people need help?</span>
@@ -894,7 +894,7 @@ export const HelpSomeonePage: React.FC = () => {
                       className={`py-3 rounded-2xl text-xs font-black transition-all border ${
                         peopleCount === num
                           ? 'bg-[#159B5B] text-white border-[#159B5B] shadow-sm scale-105'
-                          : 'bg-stone-50 dark:bg-[#0C1410] border-stone-200 dark:border-[#24332D] text-[#17231E] dark:text-white'
+                          : 'bg-stone-50 dark:bg-[#0D0D0D] border-stone-200 dark:border-white/10 text-[#17231E] dark:text-white'
                       }`}
                     >
                       {num === 5 ? '5+' : num}
@@ -904,7 +904,7 @@ export const HelpSomeonePage: React.FC = () => {
               </div>
 
               {/* Quick Category Override */}
-              <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+              <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
                 <h3 className="text-sm font-black text-[#17231E] dark:text-white flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-[#159B5B]" />
                   <span>Optionally Select Category Hint</span>
@@ -918,8 +918,8 @@ export const HelpSomeonePage: React.FC = () => {
                       onClick={() => setSelectedCategory(cat === selectedCategory ? '' : cat)}
                       className={`py-1.5 px-3 rounded-xl text-[11px] font-black tracking-wider transition-all border ${
                         selectedCategory === cat
-                          ? 'bg-[#17231E] dark:bg-white text-white dark:text-[#17231E] border-[#17231E]'
-                          : 'bg-stone-50 dark:bg-[#0C1410] border-stone-200 dark:border-[#24332D] text-stone-600 dark:text-stone-300'
+                          ? 'bg-[#17231E] dark:bg-white text-white dark:text-white border-[#17231E]'
+                          : 'bg-stone-50 dark:bg-[#0D0D0D] border-stone-200 dark:border-white/10 text-stone-600 dark:text-stone-300'
                       }`}
                     >
                       {cat}
@@ -954,12 +954,12 @@ export const HelpSomeonePage: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="p-4 rounded-2xl bg-white dark:bg-[#121C18] border border-[#EAE3D2] dark:border-[#24332D]">
+                  <div className="p-4 rounded-2xl bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10">
                     <span className="text-[10px] font-black uppercase text-stone-400">Predicted Need Category</span>
                     <div className="text-xl font-black text-[#159B5B] mt-0.5">{aiResult.category}</div>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-[#121C18] border border-[#EAE3D2] dark:border-[#24332D]">
+                  <div className="p-4 rounded-2xl bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10">
                     <span className="text-[10px] font-black uppercase text-stone-400">Urgency Level</span>
                     <div className={`text-xl font-black mt-0.5 ${
                       aiResult.urgency === 'CRITICAL' ? 'text-rose-600' : 'text-amber-600'
@@ -968,7 +968,7 @@ export const HelpSomeonePage: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white dark:bg-[#121C18] border border-[#EAE3D2] dark:border-[#24332D]">
+                  <div className="p-4 rounded-2xl bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10">
                     <span className="text-[10px] font-black uppercase text-stone-400">Urgency Score</span>
                     <div className="text-xl font-black text-[#17231E] dark:text-white mt-0.5">{aiResult.urgency_score} / 100</div>
                   </div>
@@ -992,7 +992,7 @@ export const HelpSomeonePage: React.FC = () => {
 
             {/* NEARBY MATCHED ORGANIZATIONS PREVIEW */}
             {matchedResources.length > 0 && (
-              <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+              <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
                 <h3 className="text-base font-black text-[#17231E] dark:text-white flex items-center gap-2">
                   <Building className="w-5 h-5 text-[#159B5B]" />
                   <span>Nearby Suitable Responders ({matchedResources.length})</span>
@@ -1000,7 +1000,7 @@ export const HelpSomeonePage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {matchedResources.map((res) => (
-                    <div key={res.resource_id} className="p-4 rounded-2xl bg-stone-50 dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D] space-y-2">
+                    <div key={res.resource_id} className="p-4 rounded-2xl bg-stone-50 dark:bg-[#0D0D0D] border border-[#EAE3D2] dark:border-white/10 space-y-2">
                       <div className="flex items-center justify-between">
                         <span className="font-black text-xs text-[#17231E] dark:text-white">{res.resource_name}</span>
                         <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700">

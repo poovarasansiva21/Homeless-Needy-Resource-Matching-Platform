@@ -251,7 +251,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                 
                 {/* Card 1: CATEGORY */}
-                <div className="bg-white dark:bg-[#121C18] p-4 rounded-2xl border-2 border-[#159B5B]/30 shadow-sm flex items-center space-x-3">
+                <div className="bg-white dark:bg-[#161616] p-4 rounded-2xl border-2 border-[#159B5B]/30 shadow-sm flex items-center space-x-3">
                   <div className="text-3xl shrink-0">
                     {getCategoryIcon(result.ai_analysis.dnn_category)}
                   </div>
@@ -266,7 +266,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                 </div>
 
                 {/* Card 2: URGENCY */}
-                <div className="bg-white dark:bg-[#121C18] p-4 rounded-2xl border-2 border-[#F2A33A]/40 shadow-sm flex items-center space-x-3">
+                <div className="bg-white dark:bg-[#161616] p-4 rounded-2xl border-2 border-[#F2A33A]/40 shadow-sm flex items-center space-x-3">
                   <div className="text-3xl shrink-0">
                     {getUrgencyIcon(result.ai_analysis.urgency_level)}
                   </div>
@@ -281,7 +281,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                 </div>
 
                 {/* Card 3: PEOPLE AFFECTED */}
-                <div className="bg-white dark:bg-[#121C18] p-4 rounded-2xl border-2 border-indigo-500/30 shadow-sm flex items-center space-x-3">
+                <div className="bg-white dark:bg-[#161616] p-4 rounded-2xl border-2 border-indigo-500/30 shadow-sm flex items-center space-x-3">
                   <div className="text-3xl shrink-0">👨‍👩‍👧</div>
                   <div>
                     <span className="text-[10px] font-black uppercase tracking-wider text-stone-400 dark:text-stone-500 block">
@@ -296,8 +296,8 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
               </div>
 
               {/* Card 4: NEARBY HELP FOUND LIST */}
-              <div className="bg-white dark:bg-[#121C18] rounded-2xl p-4 sm:p-5 border-2 border-[#159B5B]/30 shadow-md space-y-3">
-                <div className="flex items-center justify-between pb-2 border-b border-[#EAE3D2] dark:border-[#24332D]">
+              <div className="bg-white dark:bg-[#161616] rounded-2xl p-4 sm:p-5 border-2 border-[#159B5B]/30 shadow-md space-y-3">
+                <div className="flex items-center justify-between pb-2 border-b border-[#EAE3D2] dark:border-white/10">
                   <div className="flex items-center space-x-2 text-xs sm:text-sm font-black text-[#17231E] dark:text-white uppercase tracking-wider">
                     <span className="text-lg">📍</span>
                     <span>{t('oneTap.nearbyHelpFound')} ({result.matched_resources?.length || 0})</span>
@@ -311,7 +311,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                   {result.matched_resources?.map((res: any, idx: number) => (
                     <div 
                       key={res.resource_id || idx}
-                      className="p-3.5 rounded-xl border border-[#EAE3D2] dark:border-[#24332D] bg-[#FFF9ED]/50 dark:bg-[#17231E]/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+                      className="p-3.5 rounded-xl border border-[#EAE3D2] dark:border-white/10 bg-[#FFF9ED]/50 dark:bg-[#1C1917]/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
                     >
                       <div className="space-y-1">
                         <div className="font-extrabold text-[#17231E] dark:text-white text-sm flex items-center space-x-2">
@@ -344,7 +344,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                           href={`https://www.google.com/maps/dir/?api=1&destination=${res.address || 'Coimbatore'}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="px-3 py-2 bg-stone-100 dark:bg-[#24332D] hover:bg-stone-200 dark:hover:bg-[#2d4039] text-[#17231E] dark:text-white font-bold text-xs rounded-xl flex items-center space-x-1 border border-stone-300 dark:border-stone-700"
+                          className="px-3 py-2 bg-stone-100 dark:bg-[#262626] hover:bg-stone-200 dark:hover:bg-[#333333] text-[#17231E] dark:text-white font-bold text-xs rounded-xl flex items-center space-x-1 border border-stone-300 dark:border-stone-700"
                         >
                           <Navigation className="w-3.5 h-3.5 text-[#159B5B]" />
                           <span>Map</span>
@@ -375,7 +375,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                     setResult(null);
                     setDescription('');
                   }}
-                  className="w-full sm:w-auto px-7 py-3.5 bg-stone-200 dark:bg-[#24332D] hover:bg-stone-300 dark:hover:bg-[#2d4039] text-[#17231E] dark:text-white font-bold text-xs uppercase tracking-wider rounded-full"
+                  className="w-full sm:w-auto px-7 py-3.5 bg-stone-200 dark:bg-[#262626] hover:bg-stone-300 dark:hover:bg-[#333333] text-[#17231E] dark:text-white font-bold text-xs uppercase tracking-wider rounded-full"
                 >
                   New Request
                 </button>
@@ -394,7 +394,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
               )}
 
               {/* Language Selection Bar (1-Tap for Needy users) */}
-              <div className="p-3 bg-white dark:bg-[#121C18] rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] flex items-center justify-between gap-2">
+              <div className="p-3 bg-white dark:bg-[#161616] rounded-2xl border border-[#EAE3D2] dark:border-white/10 flex items-center justify-between gap-2">
                 <span className="text-xs font-bold text-stone-600 dark:text-stone-300 flex items-center space-x-1">
                   <Globe className="w-4 h-4 text-[#159B5B]" />
                   <span>{t('oneTap.speechLangLabel')}</span>
@@ -408,7 +408,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                       className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
                         language === l.id
                           ? 'bg-[#159B5B] text-white shadow-sm'
-                          : 'bg-stone-100 dark:bg-[#1A2621] text-stone-700 dark:text-stone-300 hover:bg-stone-200'
+                          : 'bg-stone-100 dark:bg-[#262626] text-stone-700 dark:text-stone-300 hover:bg-stone-200'
                       }`}
                     >
                       <span>{l.flag}</span>
@@ -427,7 +427,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                   <button
                     type="button"
                     onClick={() => handleApplyPreset('I need food and water for tonight', 'FOOD')}
-                    className="p-3 rounded-2xl bg-white dark:bg-[#121C18] hover:bg-amber-50 dark:hover:bg-amber-950/30 border border-[#EAE3D2] dark:border-[#24332D] text-left text-xs font-extrabold text-[#17231E] dark:text-white flex items-center space-x-2 transition-all"
+                    className="p-3 rounded-2xl bg-white dark:bg-[#161616] hover:bg-amber-50 dark:hover:bg-amber-950/30 border border-[#EAE3D2] dark:border-white/10 text-left text-xs font-extrabold text-[#17231E] dark:text-white flex items-center space-x-2 transition-all"
                   >
                     <span className="text-xl">🍱</span>
                     <span className="line-clamp-1">{t('oneTap.presetFood')}</span>
@@ -435,7 +435,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                   <button
                     type="button"
                     onClick={() => handleApplyPreset('Need a safe shelter to stay tonight', 'SHELTER')}
-                    className="p-3 rounded-2xl bg-white dark:bg-[#121C18] hover:bg-emerald-50 dark:hover:bg-emerald-950/30 border border-[#EAE3D2] dark:border-[#24332D] text-left text-xs font-extrabold text-[#17231E] dark:text-white flex items-center space-x-2 transition-all"
+                    className="p-3 rounded-2xl bg-white dark:bg-[#161616] hover:bg-emerald-50 dark:hover:bg-emerald-950/30 border border-[#EAE3D2] dark:border-white/10 text-left text-xs font-extrabold text-[#17231E] dark:text-white flex items-center space-x-2 transition-all"
                   >
                     <span className="text-xl">⛺</span>
                     <span className="line-clamp-1">{t('oneTap.presetShelter')}</span>
@@ -443,7 +443,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                   <button
                     type="button"
                     onClick={() => handleApplyPreset('Need urgent medical clinic & medicine', 'MEDICAL')}
-                    className="p-3 rounded-2xl bg-white dark:bg-[#121C18] hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-[#EAE3D2] dark:border-[#24332D] text-left text-xs font-extrabold text-[#17231E] dark:text-white flex items-center space-x-2 transition-all"
+                    className="p-3 rounded-2xl bg-white dark:bg-[#161616] hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-[#EAE3D2] dark:border-white/10 text-left text-xs font-extrabold text-[#17231E] dark:text-white flex items-center space-x-2 transition-all"
                   >
                     <span className="text-xl">🚑</span>
                     <span className="line-clamp-1">{t('oneTap.presetMedical')}</span>
@@ -451,7 +451,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                   <button
                     type="button"
                     onClick={() => handleApplyPreset('Need warm clothing and blankets', 'CLOTHING')}
-                    className="p-3 rounded-2xl bg-white dark:bg-[#121C18] hover:bg-indigo-50 dark:hover:bg-indigo-950/30 border border-[#EAE3D2] dark:border-[#24332D] text-left text-xs font-extrabold text-[#17231E] dark:text-white flex items-center space-x-2 transition-all"
+                    className="p-3 rounded-2xl bg-white dark:bg-[#161616] hover:bg-indigo-50 dark:hover:bg-indigo-950/30 border border-[#EAE3D2] dark:border-white/10 text-left text-xs font-extrabold text-[#17231E] dark:text-white flex items-center space-x-2 transition-all"
                   >
                     <span className="text-xl">👕</span>
                     <span className="line-clamp-1">{t('oneTap.presetClothing')}</span>
@@ -469,7 +469,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Tap microphone below to speak, or type here..."
-                  className="w-full rounded-2xl border-2 border-[#EAE3D2] dark:border-[#24332D] bg-white dark:bg-[#0C1410] p-4 text-[#17231E] dark:text-white placeholder-stone-400 text-sm outline-none focus:border-[#159B5B]"
+                  className="w-full rounded-2xl border-2 border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-4 text-[#17231E] dark:text-white placeholder-stone-400 text-sm outline-none focus:border-[#159B5B]"
                 />
 
                 {/* REAL Voice Recognition Integration */}
@@ -481,7 +481,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                   />
                   
                   {/* Optional Image Picker */}
-                  <label className="cursor-pointer px-3.5 py-2 rounded-2xl bg-stone-100 hover:bg-stone-200 dark:bg-[#1A2621] dark:hover:bg-[#22332C] text-stone-700 dark:text-stone-300 text-xs font-bold flex items-center space-x-1.5 border border-stone-300 dark:border-stone-700">
+                  <label className="cursor-pointer px-3.5 py-2 rounded-2xl bg-stone-100 hover:bg-stone-200 dark:bg-[#262626] dark:hover:bg-[#292929] text-stone-700 dark:text-stone-300 text-xs font-bold flex items-center space-x-1.5 border border-stone-300 dark:border-stone-700">
                     <Camera className="w-4 h-4 text-[#159B5B]" />
                     <span>{photo ? t('oneTap.photoSelected') : t('oneTap.optionalPhoto')}</span>
                     <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
@@ -516,7 +516,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                       className={`h-12 rounded-2xl font-black text-sm flex items-center justify-center space-x-1 transition-all cursor-pointer border ${
                         peopleCount === count
                           ? 'bg-[#159B5B] text-white border-[#159B5B] shadow-md scale-105'
-                          : 'bg-white dark:bg-[#121C18] text-[#17231E] dark:text-white border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B]'
+                          : 'bg-white dark:bg-[#161616] text-[#17231E] dark:text-white border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B]'
                       }`}
                     >
                       <span>{count === 5 ? '👨‍👩‍👧‍👦 5+' : count === 1 ? '👤 1' : count === 2 ? '👫 2' : count === 3 ? '👨‍👩‍👧 3' : '👨‍👩‍👧‍👦 4'}</span>
@@ -526,7 +526,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
               </div>
 
               {/* LOCATION SECTION — "📍 USE MY CURRENT LOCATION" */}
-              <div className="p-4 rounded-2xl bg-white dark:bg-[#121C18] border-2 border-[#EAE3D2] dark:border-[#24332D] space-y-3">
+              <div className="p-4 rounded-2xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
                     <span className="text-xs font-black uppercase tracking-wider text-[#17231E] dark:text-white block">

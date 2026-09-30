@@ -178,7 +178,7 @@ export const NgoDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+    <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* Real-time Socket.IO Toast Banner */}
@@ -193,7 +193,7 @@ export const NgoDashboard: React.FC = () => {
         )}
 
         {/* NGO Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#EAE3D2] dark:border-[#24332D]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#EAE3D2] dark:border-white/10">
           <div>
             <div className="flex items-center space-x-2 text-xs font-black uppercase tracking-wider text-[#159B5B]">
               <Building2 className="w-4 h-4" />
@@ -239,15 +239,15 @@ export const NgoDashboard: React.FC = () => {
               onClick={() => setActiveTab(tab.id as any)}
               className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
                 activeTab === tab.id
-                  ? 'bg-white dark:bg-[#121C18] border-[#159B5B] shadow-md scale-105'
-                  : 'bg-white/60 dark:bg-[#121C18]/60 border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B]'
+                  ? 'bg-white dark:bg-[#161616] border-[#159B5B] shadow-md scale-105'
+                  : 'bg-white/60 dark:bg-[#161616]/60 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B]'
               }`}
             >
               <div className="flex items-center justify-between">
                 <span className="text-lg">{tab.icon}</span>
                 <span className={`text-xl font-black ${tab.color.split(' ')[1]}`}>{tab.count}</span>
               </div>
-              <div className="text-[11px] font-bold text-[#17231E] dark:text-[#FFF9ED] mt-2 line-clamp-1">{tab.label}</div>
+              <div className="text-[11px] font-bold text-[#17231E] dark:text-[#F5F5F0] mt-2 line-clamp-1">{tab.label}</div>
             </button>
           ))}
         </div>
@@ -256,8 +256,8 @@ export const NgoDashboard: React.FC = () => {
           <DonationInventoryPanel />
         ) : (
           /* TAB LIST CONTENT */
-          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-6">
-            <div className="flex items-center justify-between pb-4 border-b border-[#EAE3D2] dark:border-[#24332D]">
+          <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-6">
+            <div className="flex items-center justify-between pb-4 border-b border-[#EAE3D2] dark:border-white/10">
               <div>
                 <h3 className="font-black text-xl text-[#17231E] dark:text-white uppercase tracking-tight">
                   {activeTab.replace('_', ' ')} CASE DIRECTORY
@@ -280,7 +280,7 @@ export const NgoDashboard: React.FC = () => {
               {getActiveTabList().map((req) => (
                 <div 
                   key={req.id}
-                  className="p-5 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-[#FFF9ED]/30 dark:bg-[#0C1410]/40 space-y-4 hover:border-[#159B5B] transition-all"
+                  className="p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-[#FFF9ED]/30 dark:bg-[#0D0D0D]/40 space-y-4 hover:border-[#159B5B] transition-all"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
@@ -330,7 +330,7 @@ export const NgoDashboard: React.FC = () => {
                   </div>
 
                   {/* State Progression Action Buttons */}
-                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#EAE3D2] dark:border-[#24332D]">
+                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#EAE3D2] dark:border-white/10">
                     {req.status !== 'NGO_ACCEPTED' && req.status !== 'COMPLETED' && (
                       <button
                         onClick={() => handleAcceptRequest(req.id)}

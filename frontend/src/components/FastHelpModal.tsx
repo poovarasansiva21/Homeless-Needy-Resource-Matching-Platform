@@ -81,16 +81,16 @@ export const FastHelpModal: React.FC<FastHelpModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-[#17231E]/75 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-[#121C18] w-full max-w-2xl rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
+      <div className="bg-white dark:bg-[#161616] w-full max-w-2xl rounded-3xl border border-[#EAE3D2] dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
         
         {/* Header */}
-        <div className="p-6 border-b border-[#EAE3D2] dark:border-[#24332D] flex items-start justify-between bg-[#FFF9ED] dark:bg-[#17231E]/60">
+        <div className="p-6 border-b border-[#EAE3D2] dark:border-white/10 flex items-start justify-between bg-[#FFF9ED] dark:bg-[#1C1917]/60">
           <div className="space-y-1">
             <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-rose-100 dark:bg-rose-950/70 text-rose-700 dark:text-rose-400 text-[11px] font-black uppercase tracking-wider border border-rose-200 dark:border-rose-900/60">
               <Flame className="w-3.5 h-3.5 text-rose-600" />
               <span>⚡ {t('modal.fastHelp')}</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black text-[#17231E] dark:text-[#FFF9ED]">
+            <h2 className="text-xl sm:text-2xl font-black text-[#17231E] dark:text-[#F5F5F0]">
               {t('modal.closest')}
             </h2>
             <p className="text-xs text-stone-500 dark:text-stone-400">
@@ -107,7 +107,7 @@ export const FastHelpModal: React.FC<FastHelpModalProps> = ({
         </div>
 
         {/* Category Switcher Tabs */}
-        <div className="p-4 border-b border-[#EAE3D2]/70 dark:border-[#24332D] bg-[#FFF9ED]/40 dark:bg-[#121C18]">
+        <div className="p-4 border-b border-[#EAE3D2]/70 dark:border-white/10 bg-[#FFF9ED]/40 dark:bg-[#161616]">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {categoryOptions.map((opt) => (
               <button
@@ -116,7 +116,7 @@ export const FastHelpModal: React.FC<FastHelpModalProps> = ({
                 className={`p-2.5 rounded-2xl text-xs font-bold flex items-center justify-center space-x-2 border transition-all ${
                   category === opt.id
                     ? 'bg-[#159B5B] text-white border-[#159B5B] shadow-md shadow-[#159B5B]/20'
-                    : 'bg-white dark:bg-[#17231E] text-[#17231E] dark:text-[#FFF9ED] border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B]'
+                    : 'bg-white dark:bg-[#1C1917] text-[#17231E] dark:text-[#F5F5F0] border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B]'
                 }`}
               >
                 <span>{opt.icon}</span>
@@ -131,7 +131,7 @@ export const FastHelpModal: React.FC<FastHelpModalProps> = ({
           {isLoading ? (
             <div className="py-12 flex flex-col items-center justify-center space-y-3 text-center">
               <div className="w-10 h-10 border-3 border-[#159B5B] border-t-transparent rounded-full animate-spin" />
-              <p className="text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider">
+              <p className="text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider">
                 {t('modal.finding')}
               </p>
               <span className="text-[11px] text-stone-500">{t('modal.capacity')}</span>
@@ -154,11 +154,11 @@ export const FastHelpModal: React.FC<FastHelpModalProps> = ({
               {matches.map((res: any, idx: number) => (
                 <div
                   key={res.resource_id || idx}
-                  className="p-4 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-[#FFF9ED]/30 dark:bg-[#17231E]/50 hover:border-[#159B5B] transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  className="p-4 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-[#FFF9ED]/30 dark:bg-[#1C1917]/50 hover:border-[#159B5B] transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                 >
                   <div className="space-y-1 flex-1">
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm font-black text-[#17231E] dark:text-[#FFF9ED]">
+                      <span className="text-sm font-black text-[#17231E] dark:text-[#F5F5F0]">
                         {res.resource_name}
                       </span>
                       <span className="px-2 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/25 text-[#159B5B] dark:text-emerald-300 text-[10px] font-black">
@@ -188,7 +188,7 @@ export const FastHelpModal: React.FC<FastHelpModalProps> = ({
                     {res.contact_phone && (
                       <a
                         href={`tel:${res.contact_phone}`}
-                        className="px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-[#17231E] dark:text-[#FFF9ED] text-xs font-bold flex items-center space-x-1.5 transition-colors"
+                        className="px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold flex items-center space-x-1.5 transition-colors"
                       >
                         <Phone className="w-3.5 h-3.5 text-[#159B5B]" />
                         <span>{t('common.call')}</span>
@@ -225,7 +225,7 @@ export const FastHelpModal: React.FC<FastHelpModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-[#EAE3D2] dark:border-[#24332D] bg-[#FFF9ED] dark:bg-[#17231E]/60 flex items-center justify-between">
+        <div className="p-4 border-t border-[#EAE3D2] dark:border-white/10 bg-[#FFF9ED] dark:bg-[#1C1917]/60 flex items-center justify-between">
           <button
             onClick={() => {
               onClose();

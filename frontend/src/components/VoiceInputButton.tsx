@@ -83,7 +83,7 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
 
       {/* Interim Transcript Feedback Banner */}
       {isListening && interimTranscript && (
-        <div className="p-3 bg-stone-100 dark:bg-[#0C1410] border border-[#159B5B]/30 rounded-xl text-xs text-stone-700 dark:text-stone-300 flex items-center space-x-2 animate-in fade-in">
+        <div className="p-3 bg-stone-100 dark:bg-[#0D0D0D] border border-[#159B5B]/30 rounded-xl text-xs text-stone-700 dark:text-stone-300 flex items-center space-x-2 animate-in fade-in">
           <Sparkles className="w-4 h-4 text-[#159B5B] animate-spin flex-shrink-0" />
           <span className="italic font-medium font-mono">"{interimTranscript}"</span>
         </div>

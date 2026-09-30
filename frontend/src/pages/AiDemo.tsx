@@ -83,17 +83,17 @@ export const AiDemo: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-300">
+    <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-300">
       <div className="max-w-5xl mx-auto space-y-8">
         
         {/* AI Capability Mode Switcher */}
-        <div className="flex rounded-2xl bg-stone-200 dark:bg-[#1A2621] p-1.5 border border-[#EAE3D2] dark:border-[#24332D]">
+        <div className="flex rounded-2xl bg-stone-200 dark:bg-[#262626] p-1.5 border border-[#EAE3D2] dark:border-white/10">
           <button
             onClick={() => setAiMode('text')}
             className={`flex-1 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-2 transition-all ${
               aiMode === 'text'
-                ? 'bg-white dark:bg-[#121C18] text-[#159B5B] shadow-sm border border-[#159B5B]/30'
-                : 'text-[#17231E]/70 dark:text-[#FFF9ED]/70 hover:text-[#17231E] dark:hover:text-white'
+                ? 'bg-white dark:bg-[#161616] text-[#159B5B] shadow-sm border border-[#159B5B]/30'
+                : 'text-[#17231E]/70 dark:text-[#F5F5F0]/70 hover:text-[#17231E] dark:hover:text-white'
             }`}
           >
             <FileText className="w-4 h-4" />
@@ -104,8 +104,8 @@ export const AiDemo: React.FC = () => {
             onClick={() => setAiMode('vision')}
             className={`flex-1 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-2 transition-all ${
               aiMode === 'vision'
-                ? 'bg-white dark:bg-[#121C18] text-[#159B5B] shadow-sm border border-[#159B5B]/30'
-                : 'text-[#17231E]/70 dark:text-[#FFF9ED]/70 hover:text-[#17231E] dark:hover:text-white'
+                ? 'bg-white dark:bg-[#161616] text-[#159B5B] shadow-sm border border-[#159B5B]/30'
+                : 'text-[#17231E]/70 dark:text-[#F5F5F0]/70 hover:text-[#17231E] dark:hover:text-white'
             }`}
           >
             <Camera className="w-4 h-4" />
@@ -124,7 +124,7 @@ export const AiDemo: React.FC = () => {
         {aiMode === 'text' && (
           <div className="space-y-8">
             {/* Header Banner */}
-            <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 sm:p-10 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm">
+            <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-10 border border-[#EAE3D2] dark:border-white/10 shadow-sm">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                   <div className="inline-flex items-center space-x-2 bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 text-xs font-black px-3.5 py-1.5 rounded-full border border-[#159B5B]/20 dark:border-[#159B5B]/30 mb-2.5">
@@ -134,7 +134,7 @@ export const AiDemo: React.FC = () => {
                   <h1 className="text-3xl sm:text-4xl font-black text-[#17231E] dark:text-white tracking-tight">
                     Live AI Classifier & Smart Matching
                   </h1>
-                  <p className="text-xs sm:text-sm text-[#17231E]/70 dark:text-[#FFF9ED]/70 mt-1 max-w-xl font-medium">
+                  <p className="text-xs sm:text-sm text-[#17231E]/70 dark:text-[#F5F5F0]/70 mt-1 max-w-xl font-medium">
                     Enter any unstructured text description. The trained neural network computes probabilistic categories and executes Haversine geo-matching.
                   </p>
                 </div>
@@ -150,7 +150,7 @@ export const AiDemo: React.FC = () => {
               </div>
 
           {/* Quick Presets */}
-          <div className="mt-8 pt-5 border-t border-[#EAE3D2] dark:border-[#24332D]">
+          <div className="mt-8 pt-5 border-t border-[#EAE3D2] dark:border-white/10">
             <span className="text-[11px] font-black text-stone-500 dark:text-stone-400 uppercase tracking-wider block mb-2.5">
               Select Pre-Configured Test Scenarios:
             </span>
@@ -159,7 +159,7 @@ export const AiDemo: React.FC = () => {
                 <button
                   key={idx}
                   onClick={() => setInputText(p.text)}
-                  className="px-3.5 py-2 bg-[#FFF9ED] dark:bg-[#1A2621] hover:bg-white dark:hover:bg-[#22332C] border border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B] dark:hover:border-[#159B5B] rounded-full text-xs font-bold text-[#17231E] dark:text-[#FFF9ED] shadow-sm transition-all"
+                  className="px-3.5 py-2 bg-[#FFF9ED] dark:bg-[#262626] hover:bg-white dark:hover:bg-[#292929] border border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#159B5B] rounded-full text-xs font-bold text-[#17231E] dark:text-[#F5F5F0] shadow-sm transition-all"
                 >
                   <span>{p.label}</span>
                 </button>
@@ -170,7 +170,7 @@ export const AiDemo: React.FC = () => {
           {/* Input Form */}
           <div className="mt-6 space-y-4">
             <div>
-              <label className="block text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1.5">
                 Request Description (Natural Language)
               </label>
               <textarea
@@ -178,13 +178,13 @@ export const AiDemo: React.FC = () => {
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 placeholder="Describe your immediate need in plain words..."
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-white dark:bg-[#0C1410] p-4 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 text-sm font-medium focus:border-[#159B5B] dark:focus:border-[#159B5B] outline-none shadow-sm transition-all"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-4 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm font-medium focus:border-[#159B5B] dark:focus:border-[#159B5B] outline-none shadow-sm transition-all"
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1.5">
                   People Affected / Dependents
                 </label>
                 <input
@@ -193,11 +193,11 @@ export const AiDemo: React.FC = () => {
                   max={50}
                   value={peopleCount}
                   onChange={(e) => setPeopleCount(Number(e.target.value))}
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-white dark:bg-[#0C1410] p-3 text-[#17231E] dark:text-[#FFF9ED] text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-3 text-[#17231E] dark:text-[#F5F5F0] text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
                 />
               </div>
               <div>
-                <label className="block text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1.5">
                   Current Situation / Location Context
                 </label>
                 <input
@@ -205,7 +205,7 @@ export const AiDemo: React.FC = () => {
                   value={situation}
                   onChange={(e) => setSituation(e.target.value)}
                   placeholder="e.g. Living near Gandhipuram railway pavement."
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-white dark:bg-[#0C1410] p-3 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 text-sm font-medium outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-3 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm font-medium outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
                 />
               </div>
             </div>
@@ -234,25 +234,25 @@ export const AiDemo: React.FC = () => {
 
         {/* Live Step Progress Pipeline */}
         {isLoading && (
-          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm animate-in fade-in">
-            <h3 className="text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-4 flex items-center space-x-2">
+          <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm animate-in fade-in">
+            <h3 className="text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-4 flex items-center space-x-2">
               <Activity className="w-4 h-4 text-[#159B5B] animate-pulse" />
               <span>Real-Time Inference Pipeline</span>
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 1 ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/40 text-[#159B5B] dark:text-emerald-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0C1410]/50 border-[#EAE3D2] dark:border-[#24332D] text-stone-400 dark:text-stone-500'}`}>
+              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 1 ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/40 text-[#159B5B] dark:text-emerald-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10 text-stone-400 dark:text-stone-500'}`}>
                 <div className="text-xs font-black">1. Vectorization</div>
                 <div className="text-[11px] mt-1">Tokenizing input sequence</div>
               </div>
-              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 2 ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/40 text-[#159B5B] dark:text-emerald-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0C1410]/50 border-[#EAE3D2] dark:border-[#24332D] text-stone-400 dark:text-stone-500'}`}>
+              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 2 ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/40 text-[#159B5B] dark:text-emerald-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10 text-stone-400 dark:text-stone-500'}`}>
                 <div className="text-xs font-black">2. DNN Forward Pass</div>
                 <div className="text-[11px] mt-1">Embedding & Dense Layers</div>
               </div>
-              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 3 ? 'bg-[#FEF6EA] dark:bg-amber-950/40 border-[#F2A33A]/40 dark:border-amber-900/40 text-[#F2A33A] dark:text-amber-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0C1410]/50 border-[#EAE3D2] dark:border-[#24332D] text-stone-400 dark:text-stone-500'}`}>
+              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 3 ? 'bg-[#FEF6EA] dark:bg-amber-950/40 border-[#F2A33A]/40 dark:border-amber-900/40 text-[#F2A33A] dark:text-amber-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10 text-stone-400 dark:text-stone-500'}`}>
                 <div className="text-xs font-black">3. Urgency Scoring</div>
                 <div className="text-[11px] mt-1">Detecting trauma flags</div>
               </div>
-              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 4 ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/40 text-[#159B5B] dark:text-emerald-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0C1410]/50 border-[#EAE3D2] dark:border-[#24332D] text-stone-400 dark:text-stone-500'}`}>
+              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 4 ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/40 text-[#159B5B] dark:text-emerald-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10 text-stone-400 dark:text-stone-500'}`}>
                 <div className="text-xs font-black">4. Geo-Matcher</div>
                 <div className="text-[11px] mt-1">Haversine distance ranking</div>
               </div>
@@ -273,9 +273,9 @@ export const AiDemo: React.FC = () => {
           <div className="space-y-6 animate-in fade-in duration-300">
             
             {/* Phase 2 Advanced Humanitarian Pipeline Result Card */}
-            <div className="bg-white dark:bg-[#121C18] rounded-3xl p-7 border-2 border-[#159B5B]/30 shadow-md space-y-6">
+            <div className="bg-white dark:bg-[#161616] rounded-3xl p-7 border-2 border-[#159B5B]/30 shadow-md space-y-6">
               
-              <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#EAE3D2] dark:border-[#24332D]">
+              <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#EAE3D2] dark:border-white/10">
                 <div className="flex items-center space-x-4">
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#159B5B] to-[#12834D] text-white flex items-center justify-center font-bold text-2xl shadow-md">
                     ⚡
@@ -309,31 +309,31 @@ export const AiDemo: React.FC = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 
                 {/* 1. Category */}
-                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0D0D0D] border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">1. CATEGORY</span>
                   <span className="text-sm font-black text-[#159B5B] dark:text-emerald-400 mt-0.5 block">{result.category}</span>
                 </div>
 
                 {/* 2. Urgency */}
-                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0D0D0D] border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">2. URGENCY</span>
                   <span className="text-sm font-black text-rose-600 dark:text-rose-400 mt-0.5 block">{result.urgency}</span>
                 </div>
 
                 {/* 3. People Affected */}
-                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0D0D0D] border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">3. PEOPLE AFFECTED</span>
                   <span className="text-sm font-black text-indigo-600 dark:text-indigo-400 mt-0.5 block">{result.people || result.people_count || 1} PEOPLE</span>
                 </div>
 
                 {/* 4. Intent */}
-                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0D0D0D] border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">4. INTENT</span>
                   <span className="text-xs font-bold text-[#17231E] dark:text-stone-200 mt-0.5 block truncate">{result.intent || 'SEEK_IMMEDIATE_AID'}</span>
                 </div>
 
                 {/* 5. Transport Barrier */}
-                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0D0D0D] border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">5. TRANSPORT BARRIER</span>
                   <span className="text-sm font-black text-[#17231E] dark:text-stone-200 mt-0.5 block">
                     {result.transport_barrier ? `TRUE (${result.transport_reason || 'COST'})` : 'FALSE'}
@@ -341,19 +341,19 @@ export const AiDemo: React.FC = () => {
                 </div>
 
                 {/* 6. Duration of Need */}
-                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0D0D0D] border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">6. DURATION</span>
                   <span className="text-sm font-black text-amber-600 dark:text-amber-400 mt-0.5 block">{result.duration || '1 DAY'}</span>
                 </div>
 
                 {/* 7. Action Decision */}
-                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0D0D0D] border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">7. ACTION</span>
                   <span className="text-xs font-black text-emerald-600 dark:text-emerald-400 mt-0.5 block">{result.confidence_action || 'CONTINUE'}</span>
                 </div>
 
                 {/* 8. Confidence */}
-                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0D0D0D] border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">8. CONFIDENCE</span>
                   <span className="text-sm font-black text-[#159B5B] dark:text-emerald-400 mt-0.5 block">{result.confidence_percentage}%</span>
                 </div>
@@ -376,7 +376,7 @@ export const AiDemo: React.FC = () => {
               )}
 
               {/* Full Probability Distribution */}
-              <div className="pt-4 border-t border-[#EAE3D2] dark:border-[#24332D]">
+              <div className="pt-4 border-t border-[#EAE3D2] dark:border-white/10">
                 <span className="text-xs font-black text-stone-400 dark:text-stone-500 uppercase tracking-wider block mb-3">
                   Softmax Probability Vector Across All 7 Classes
                 </span>
@@ -390,10 +390,10 @@ export const AiDemo: React.FC = () => {
                         className={`p-2.5 rounded-xl border text-center transition-all ${
                           isTop 
                             ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/50 shadow-sm font-bold' 
-                            : 'bg-[#FFF9ED]/50 dark:bg-[#0C1410]/50 border-[#EAE3D2] dark:border-[#24332D]'
+                            : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10'
                         }`}
                       >
-                        <div className="text-[10px] font-black text-[#17231E] dark:text-[#FFF9ED] truncate">{cat}</div>
+                        <div className="text-[10px] font-black text-[#17231E] dark:text-[#F5F5F0] truncate">{cat}</div>
                         <div className={`text-xs font-black mt-0.5 ${isTop ? 'text-[#159B5B] dark:text-emerald-400' : 'text-stone-400'}`}>
                           {pct}%
                         </div>
@@ -406,11 +406,11 @@ export const AiDemo: React.FC = () => {
             </div>
 
             {/* Matched Resources Cards */}
-            <div className="bg-white dark:bg-[#121C18] rounded-3xl p-7 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+            <div className="bg-white dark:bg-[#161616] rounded-3xl p-7 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-black text-[#17231E] dark:text-[#FFF9ED] text-xl tracking-tight">Matched Nearby Community Resources</h3>
-                  <p className="text-xs text-[#17231E]/60 dark:text-[#FFF9ED]/60">Ranked using spherical distance (Haversine), category compatibility, and live capacity.</p>
+                  <h3 className="font-black text-[#17231E] dark:text-[#F5F5F0] text-xl tracking-tight">Matched Nearby Community Resources</h3>
+                  <p className="text-xs text-[#17231E]/60 dark:text-[#F5F5F0]/60">Ranked using spherical distance (Haversine), category compatibility, and live capacity.</p>
                 </div>
                 <span className="text-xs font-bold bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 px-3.5 py-1 rounded-full border border-[#159B5B]/20 dark:border-[#159B5B]/30">
                   {result.matched_resources.length} Candidates Found
@@ -422,7 +422,7 @@ export const AiDemo: React.FC = () => {
 
                   <div 
                     key={res.resource_id}
-                    className="p-5 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-[#FFF9ED]/30 dark:bg-[#0C1410]/40 hover:border-[#159B5B] dark:hover:border-[#159B5B] transition-all"
+                    className="p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-[#FFF9ED]/30 dark:bg-[#0D0D0D]/40 hover:border-[#159B5B] dark:hover:border-[#159B5B] transition-all"
                   >
                     <div className="flex justify-between items-start">
                       <div>
@@ -440,8 +440,8 @@ export const AiDemo: React.FC = () => {
                             </span>
                           )}
                         </div>
-                        <h4 className="font-black text-[#17231E] dark:text-[#FFF9ED] text-base mt-2">{res.resource_name}</h4>
-                        <div className="flex items-center text-xs text-[#17231E]/60 dark:text-[#FFF9ED]/60 mt-1">
+                        <h4 className="font-black text-[#17231E] dark:text-[#F5F5F0] text-base mt-2">{res.resource_name}</h4>
+                        <div className="flex items-center text-xs text-[#17231E]/60 dark:text-[#F5F5F0]/60 mt-1">
                           <MapPin className="w-3.5 h-3.5 mr-1 text-stone-400" />
                           <span>{res.address}</span>
                         </div>
@@ -471,7 +471,7 @@ export const AiDemo: React.FC = () => {
 
                     {/* 9 Barrier-Aware Criteria Breakdown Matrix */}
                     {res.barrier_aware_breakdown && (
-                      <div className="mt-3 pt-3 border-t border-[#EAE3D2] dark:border-[#24332D] space-y-1">
+                      <div className="mt-3 pt-3 border-t border-[#EAE3D2] dark:border-white/10 space-y-1">
                         <span className="text-[10px] font-black uppercase tracking-wider text-stone-400 dark:text-stone-500 block">
                           9 Barrier-Aware Humanitarian Criteria
                         </span>
@@ -485,10 +485,10 @@ export const AiDemo: React.FC = () => {
                       </div>
                     )}
 
-                    <div className="mt-4 pt-3 border-t border-[#EAE3D2] dark:border-[#24332D] grid grid-cols-2 gap-2 text-xs">
+                    <div className="mt-4 pt-3 border-t border-[#EAE3D2] dark:border-white/10 grid grid-cols-2 gap-2 text-xs">
                       <div>
                         <span className="text-stone-400 dark:text-stone-500 text-[10px] uppercase font-bold block">Distance</span>
-                        <span className="font-bold text-[#17231E] dark:text-[#FFF9ED]">{res.distance_km} km away</span>
+                        <span className="font-bold text-[#17231E] dark:text-[#F5F5F0]">{res.distance_km} km away</span>
                       </div>
                       <div>
                         <span className="text-stone-400 dark:text-stone-500 text-[10px] uppercase font-bold block">Availability</span>
@@ -498,11 +498,11 @@ export const AiDemo: React.FC = () => {
 
                     <div className="mt-2 text-xs">
                       <span className="text-stone-400 dark:text-stone-500 text-[10px] uppercase font-bold block">Capacity</span>
-                      <span className="font-semibold text-[#17231E]/80 dark:text-[#FFF9ED]/80">{res.breakdown.capacity}</span>
+                      <span className="font-semibold text-[#17231E]/80 dark:text-[#F5F5F0]/80">{res.breakdown.capacity}</span>
                     </div>
 
-                    <div className="mt-4 flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-[#EAE3D2] dark:border-[#24332D] text-xs">
-                      <span className="flex items-center text-[#17231E] dark:text-[#FFF9ED] font-semibold">
+                    <div className="mt-4 flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-[#EAE3D2] dark:border-white/10 text-xs">
+                      <span className="flex items-center text-[#17231E] dark:text-[#F5F5F0] font-semibold">
                         <Phone className="w-3.5 h-3.5 mr-1.5 text-[#159B5B]" />
                         {res.phone}
                       </span>

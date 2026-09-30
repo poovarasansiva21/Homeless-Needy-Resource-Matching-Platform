@@ -70,11 +70,11 @@ export const VolunteerDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+    <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#EAE3D2] dark:border-[#24332D]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#EAE3D2] dark:border-white/10">
           <div>
             <div className="flex items-center space-x-2 text-xs font-black uppercase tracking-wider text-emerald-500">
               <ShieldCheck className="w-4 h-4" />
@@ -98,7 +98,7 @@ export const VolunteerDashboard: React.FC = () => {
 
         {/* Metrics Overview */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="p-5 rounded-2xl bg-white dark:bg-[#121C18] border border-amber-500/30 flex items-center justify-between">
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#161616] border border-amber-500/30 flex items-center justify-between">
             <div>
               <span className="text-xs font-bold text-stone-400 block">Authorized Field Tasks</span>
               <span className="text-3xl font-black text-amber-500">{metrics.authorized_tasks_count || authorizedTasks.length}</span>
@@ -106,7 +106,7 @@ export const VolunteerDashboard: React.FC = () => {
             <UserCheck className="w-10 h-10 text-amber-400/80" />
           </div>
 
-          <div className="p-5 rounded-2xl bg-white dark:bg-[#121C18] border border-emerald-500/30 flex items-center justify-between">
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#161616] border border-emerald-500/30 flex items-center justify-between">
             <div>
               <span className="text-xs font-bold text-stone-400 block">Completed Relief Dispatches</span>
               <span className="text-3xl font-black text-emerald-500">{metrics.completed_tasks_count || completedTasks.length}</span>
@@ -116,8 +116,8 @@ export const VolunteerDashboard: React.FC = () => {
         </div>
 
         {/* Authorized Field Tasks Section */}
-        <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-5">
-          <div className="flex items-center justify-between pb-3 border-b border-[#EAE3D2] dark:border-[#24332D]">
+        <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-5">
+          <div className="flex items-center justify-between pb-3 border-b border-[#EAE3D2] dark:border-white/10">
             <h3 className="font-black text-lg text-[#17231E] dark:text-white uppercase tracking-tight">
               🛡️ Authorized Active Field Tasks
             </h3>
@@ -135,7 +135,7 @@ export const VolunteerDashboard: React.FC = () => {
               {authorizedTasks.map((task) => (
                 <div 
                   key={task.id}
-                  className="p-5 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-[#FFF9ED]/30 dark:bg-[#0C1410]/40 space-y-4"
+                  className="p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-[#FFF9ED]/30 dark:bg-[#0D0D0D]/40 space-y-4"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -174,7 +174,7 @@ export const VolunteerDashboard: React.FC = () => {
                   </div>
 
                   {/* Volunteer Field Progression Controls */}
-                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#EAE3D2] dark:border-[#24332D]">
+                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#EAE3D2] dark:border-white/10">
                     {task.status !== 'ON_THE_WAY' && task.status !== 'ASSISTANCE_PROVIDED' && task.status !== 'COMPLETED' && (
                       <button
                         onClick={() => handleUpdateStatus(task.id, 'ON_THE_WAY', 'Volunteer departed to location')}

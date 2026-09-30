@@ -156,7 +156,7 @@ export const HumanitarianIntelligence: React.FC = () => {
           <BrainCircuit className="w-8 h-8" />
         </div>
         <div className="space-y-1">
-          <h2 className="text-xl font-black text-[#17231E] dark:text-[#FFF9ED]">Loading Real Database Data</h2>
+          <h2 className="text-xl font-black text-[#17231E] dark:text-[#F5F5F0]">Loading Real Database Data</h2>
           <p className="text-xs text-stone-500 dark:text-stone-400">Computing spatial heatmaps, demand trends, time analysis, and NGO decision-support...</p>
         </div>
       </div>
@@ -169,7 +169,7 @@ export const HumanitarianIntelligence: React.FC = () => {
         <div className="w-16 h-16 rounded-2xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 flex items-center justify-center">
           <AlertTriangle className="w-8 h-8" />
         </div>
-        <h2 className="text-2xl font-black text-[#17231E] dark:text-[#FFF9ED]">{error || 'Data Unavailable'}</h2>
+        <h2 className="text-2xl font-black text-[#17231E] dark:text-[#F5F5F0]">{error || 'Data Unavailable'}</h2>
         <button
           onClick={fetchOverview}
           className="px-6 py-2.5 bg-[#159B5B] hover:bg-[#12834D] text-white font-bold rounded-xl text-xs flex items-center space-x-2 transition-all shadow"
@@ -194,7 +194,7 @@ export const HumanitarianIntelligence: React.FC = () => {
   } = data;
 
   return (
-    <div className="min-h-screen bg-[#FFFDF3] dark:bg-[#0B1713] text-[#18352D] dark:text-[#FFFDF3] pb-16 transition-colors duration-300">
+    <div className="min-h-screen bg-[#FFFDF3] dark:bg-[#0D0D0D] text-[#18352D] dark:text-white pb-16 transition-colors duration-300">
       
       {/* Top Banner & Header */}
       <div className="bg-gradient-to-r from-[#0B4F3A] via-[#159B5B] to-[#0D6247] text-white pt-8 pb-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden shadow-md">
@@ -257,7 +257,7 @@ export const HumanitarianIntelligence: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         
         {/* Navigation Tabs Bar */}
-        <div className="flex items-center space-x-2 overflow-x-auto pb-2 mb-6 border-b border-[#E2E8E4] dark:border-[#1F3F34] scrollbar-none">
+        <div className="flex items-center space-x-2 overflow-x-auto pb-2 mb-6 border-b border-[#E2E8E4] dark:border-white/10 scrollbar-none">
           {[
             { id: 'maps', label: '1-3. Spatial Heatmaps & Gaps', icon: Flame },
             { id: 'trends', label: '4. 7-Category Demand Trends', icon: TrendingUp },
@@ -276,7 +276,7 @@ export const HumanitarianIntelligence: React.FC = () => {
                 className={`py-2.5 px-4 rounded-2xl text-xs font-black uppercase tracking-wider flex items-center space-x-2 transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                   isActive
                     ? 'bg-[#0B4F3A] dark:bg-[#12B76A] text-white shadow-md'
-                    : 'bg-white dark:bg-[#121C18] text-stone-600 dark:text-stone-300 hover:bg-[#E8F3E9] dark:hover:bg-[#1A2621] border border-[#E2E8E4] dark:border-[#1F3F34]'
+                    : 'bg-white dark:bg-[#161616] text-stone-600 dark:text-stone-300 hover:bg-[#E8F3E9] dark:hover:bg-[#262626] border border-[#E2E8E4] dark:border-white/10'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -291,12 +291,12 @@ export const HumanitarianIntelligence: React.FC = () => {
           <div className="space-y-6">
             
             {/* Map Layer Selector Bar */}
-            <div className="p-4 bg-white dark:bg-[#121C18] rounded-3xl border border-[#E2E8E4] dark:border-[#1F3F34] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="p-4 bg-white dark:bg-[#161616] rounded-3xl border border-[#E2E8E4] dark:border-white/10 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center space-x-2">
                 <Layers className="w-5 h-5 text-[#0B4F3A] dark:text-[#12B76A]" />
-                <h3 className="font-extrabold text-sm text-[#18352D] dark:text-[#FFFDF3]">Interactive Layer Selection</h3>
+                <h3 className="font-extrabold text-sm text-[#18352D] dark:text-white">Interactive Layer Selection</h3>
               </div>
-              <div className="flex items-center space-x-1.5 bg-[#FFFDF3] dark:bg-[#0B1713] p-1 rounded-2xl border border-[#E2E8E4] dark:border-[#1F3F34]">
+              <div className="flex items-center space-x-1.5 bg-[#FFFDF3] dark:bg-[#0D0D0D] p-1 rounded-2xl border border-[#E2E8E4] dark:border-white/10">
                 {[
                   { id: 'ALL', label: 'All Layers Overlay' },
                   { id: 'NEED', label: '🔥 Need Heatmap' },
@@ -319,7 +319,7 @@ export const HumanitarianIntelligence: React.FC = () => {
             </div>
 
             {/* Map Container */}
-            <div className="w-full h-[520px] rounded-3xl overflow-hidden border border-[#E2E8E4] dark:border-[#1F3F34] shadow-lg relative bg-white">
+            <div className="w-full h-[520px] rounded-3xl overflow-hidden border border-[#E2E8E4] dark:border-white/10 shadow-lg relative bg-white">
               <MapContainer
                 center={defaultCenter}
                 zoom={12}
@@ -395,7 +395,7 @@ export const HumanitarianIntelligence: React.FC = () => {
 
             {/* Gap Analysis Area Cards Grid */}
             <div className="space-y-3">
-              <h3 className="font-black text-base text-[#18352D] dark:text-[#FFFDF3] flex items-center space-x-2">
+              <h3 className="font-black text-base text-[#18352D] dark:text-white flex items-center space-x-2">
                 <AlertTriangle className="w-5 h-5 text-purple-600" />
                 <span>3. Resource Gap Analysis by Area Zone</span>
               </h3>
@@ -408,12 +408,12 @@ export const HumanitarianIntelligence: React.FC = () => {
                         ? 'bg-purple-50/80 dark:bg-purple-950/30 border-purple-300 dark:border-purple-800/50'
                         : gap.gap_level === 'MODERATE_GAP'
                         ? 'bg-amber-50/80 dark:bg-amber-950/30 border-amber-300 dark:border-amber-800/50'
-                        : 'bg-white dark:bg-[#121C18] border-[#E2E8E4] dark:border-[#1F3F34]'
+                        : 'bg-white dark:bg-[#161616] border-[#E2E8E4] dark:border-white/10'
                     }`}
                   >
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="font-extrabold text-sm text-[#18352D] dark:text-[#FFFDF3]">{gap.area_name}</h4>
+                        <h4 className="font-extrabold text-sm text-[#18352D] dark:text-white">{gap.area_name}</h4>
                         <span className="text-[10px] text-stone-500 dark:text-stone-400 font-semibold">{gap.unfulfilled_requests} unfulfilled cases</span>
                       </div>
                       <span
@@ -468,9 +468,9 @@ export const HumanitarianIntelligence: React.FC = () => {
         {/* TAB 2: DEMAND TREND (Item 4) */}
         {activeTab === 'trends' && (
           <div className="space-y-6">
-            <div className="p-6 bg-white dark:bg-[#121C18] rounded-3xl border border-[#E2E8E4] dark:border-[#1F3F34] shadow-sm space-y-4">
+            <div className="p-6 bg-white dark:bg-[#161616] rounded-3xl border border-[#E2E8E4] dark:border-white/10 shadow-sm space-y-4">
               <div>
-                <h3 className="text-lg font-black text-[#18352D] dark:text-[#FFFDF3] flex items-center space-x-2">
+                <h3 className="text-lg font-black text-[#18352D] dark:text-white flex items-center space-x-2">
                   <TrendingUp className="w-5 h-5 text-[#0B4F3A] dark:text-[#12B76A]" />
                   <span>4. 7-Category Demand Trend Tracking</span>
                 </h3>
@@ -502,7 +502,7 @@ export const HumanitarianIntelligence: React.FC = () => {
                 {demand_trend.trends.map((trend) => (
                   <div
                     key={trend.category}
-                    className="p-4 rounded-3xl bg-[#FFFDF3] dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#1F3F34] space-y-2"
+                    className="p-4 rounded-3xl bg-[#FFFDF3] dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 space-y-2"
                   >
                     <div className="flex justify-between items-center">
                       <span className="font-black text-xs uppercase tracking-wider" style={{ color: CATEGORY_COLORS[trend.category] || '#159B5B' }}>
@@ -514,7 +514,7 @@ export const HumanitarianIntelligence: React.FC = () => {
                     </div>
 
                     <div className="flex justify-between items-baseline pt-1">
-                      <span className="text-2xl font-black text-[#18352D] dark:text-[#FFFDF3]">{trend.request_count}</span>
+                      <span className="text-2xl font-black text-[#18352D] dark:text-white">{trend.request_count}</span>
                       <span className="text-xs font-extrabold text-stone-500">{trend.people_impacted} people</span>
                     </div>
 
@@ -539,10 +539,10 @@ export const HumanitarianIntelligence: React.FC = () => {
         {/* TAB 3: TIME ANALYSIS (Item 5) */}
         {activeTab === 'time' && (
           <div className="space-y-6">
-            <div className="p-6 bg-white dark:bg-[#121C18] rounded-3xl border border-[#E2E8E4] dark:border-[#1F3F34] shadow-sm space-y-6">
+            <div className="p-6 bg-white dark:bg-[#161616] rounded-3xl border border-[#E2E8E4] dark:border-white/10 shadow-sm space-y-6">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-lg font-black text-[#18352D] dark:text-[#FFFDF3] flex items-center space-x-2">
+                  <h3 className="text-lg font-black text-[#18352D] dark:text-white flex items-center space-x-2">
                     <Clock className="w-5 h-5 text-[#0B4F3A] dark:text-[#12B76A]" />
                     <span>5. Time Analysis & Peak Demand Patterns</span>
                   </h3>
@@ -571,7 +571,7 @@ export const HumanitarianIntelligence: React.FC = () => {
               </div>
 
               {/* Day of Week Bar Chart */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[#E2E8E4] dark:border-[#1F3F34]">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[#E2E8E4] dark:border-white/10">
                 <div>
                   <h4 className="font-extrabold text-xs text-stone-500 uppercase tracking-wider mb-2">Demand by Day of Week</h4>
                   <div className="h-52 w-full">
@@ -590,8 +590,8 @@ export const HumanitarianIntelligence: React.FC = () => {
                   <h4 className="font-extrabold text-xs text-stone-500 uppercase tracking-wider mb-2">Weekly Trend Progression</h4>
                   <div className="space-y-2 max-h-52 overflow-y-auto pr-1">
                     {time_analysis.by_week.map((w, i) => (
-                      <div key={i} className="p-3 rounded-2xl bg-[#FFFDF3] dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#1F3F34] flex justify-between items-center text-xs">
-                        <span className="font-bold text-[#18352D] dark:text-[#FFFDF3]">{w.week}</span>
+                      <div key={i} className="p-3 rounded-2xl bg-[#FFFDF3] dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 flex justify-between items-center text-xs">
+                        <span className="font-bold text-[#18352D] dark:text-white">{w.week}</span>
                         <span className="font-black text-[#159B5B] px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20">
                           {w.requests} requests
                         </span>
@@ -608,9 +608,9 @@ export const HumanitarianIntelligence: React.FC = () => {
         {/* TAB 4: AREA ANALYSIS (Item 6) */}
         {activeTab === 'areas' && (
           <div className="space-y-6">
-            <div className="p-6 bg-white dark:bg-[#121C18] rounded-3xl border border-[#E2E8E4] dark:border-[#1F3F34] shadow-sm space-y-4">
+            <div className="p-6 bg-white dark:bg-[#161616] rounded-3xl border border-[#E2E8E4] dark:border-white/10 shadow-sm space-y-4">
               <div>
-                <h3 className="text-lg font-black text-[#18352D] dark:text-[#FFFDF3] flex items-center space-x-2">
+                <h3 className="text-lg font-black text-[#18352D] dark:text-white flex items-center space-x-2">
                   <MapPin className="w-5 h-5 text-rose-600" />
                   <span>6. Underserved Area Analysis</span>
                 </h3>
@@ -621,7 +621,7 @@ export const HumanitarianIntelligence: React.FC = () => {
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-[#FFFDF3] dark:bg-[#0B1713] text-stone-500 uppercase font-black tracking-wider border-b border-[#E2E8E4] dark:border-[#1F3F34]">
+                  <thead className="bg-[#FFFDF3] dark:bg-[#0D0D0D] text-stone-500 uppercase font-black tracking-wider border-b border-[#E2E8E4] dark:border-white/10">
                     <tr>
                       <th className="py-3 px-4">Area Locality</th>
                       <th className="py-3 px-4">Demand (Req / People)</th>
@@ -633,8 +633,8 @@ export const HumanitarianIntelligence: React.FC = () => {
                   </thead>
                   <tbody className="divide-y divide-[#E2E8E4] dark:divide-[#1F3F34]">
                     {area_analysis.underserved_areas.map((area, i) => (
-                      <tr key={i} className="hover:bg-[#FFFDF3]/60 dark:hover:bg-[#1A2621]/60 transition-colors">
-                        <td className="py-3.5 px-4 font-black text-[#18352D] dark:text-[#FFFDF3]">
+                      <tr key={i} className="hover:bg-[#FFFDF3]/60 dark:hover:bg-[#262626]/60 transition-colors">
+                        <td className="py-3.5 px-4 font-black text-[#18352D] dark:text-white">
                           {area.area_name}
                           <span className="block text-[10px] font-normal text-stone-500">Dominant: {area.dominant_category}</span>
                         </td>
@@ -675,9 +675,9 @@ export const HumanitarianIntelligence: React.FC = () => {
         {/* TAB 5: RESOURCE SHORTAGE ALERTS (Item 7) */}
         {activeTab === 'alerts' && (
           <div className="space-y-6">
-            <div className="p-6 bg-white dark:bg-[#121C18] rounded-3xl border border-[#E2E8E4] dark:border-[#1F3F34] shadow-sm space-y-4">
+            <div className="p-6 bg-white dark:bg-[#161616] rounded-3xl border border-[#E2E8E4] dark:border-white/10 shadow-sm space-y-4">
               <div>
-                <h3 className="text-lg font-black text-[#18352D] dark:text-[#FFFDF3] flex items-center space-x-2">
+                <h3 className="text-lg font-black text-[#18352D] dark:text-white flex items-center space-x-2">
                   <ShieldAlert className="w-5 h-5 text-rose-600" />
                   <span>7. Dynamic Resource Shortage Alerts</span>
                 </h3>
@@ -713,7 +713,7 @@ export const HumanitarianIntelligence: React.FC = () => {
                           <span className="font-extrabold text-xs text-stone-700 dark:text-stone-300">{alt.area_name} • {alt.category}</span>
                         </div>
                         {/* Requirement format match */}
-                        <p className="font-black text-sm text-[#18352D] dark:text-[#FFFDF3]">
+                        <p className="font-black text-sm text-[#18352D] dark:text-white">
                           "{alt.message}"
                         </p>
                       </div>
@@ -739,12 +739,12 @@ export const HumanitarianIntelligence: React.FC = () => {
         {/* TAB 6: DEMAND FORECASTING (Item 8) */}
         {activeTab === 'forecast' && (
           <div className="space-y-6">
-            <div className="p-6 bg-white dark:bg-[#121C18] rounded-3xl border border-[#E2E8E4] dark:border-[#1F3F34] shadow-sm space-y-6">
+            <div className="p-6 bg-white dark:bg-[#161616] rounded-3xl border border-[#E2E8E4] dark:border-white/10 shadow-sm space-y-6">
               
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
                   <Compass className="w-5 h-5 text-indigo-600" />
-                  <h3 className="text-lg font-black text-[#18352D] dark:text-[#FFFDF3]">
+                  <h3 className="text-lg font-black text-[#18352D] dark:text-white">
                     8. Predictive Demand Forecasting Engine
                   </h3>
                 </div>
@@ -799,12 +799,12 @@ export const HumanitarianIntelligence: React.FC = () => {
                 <h4 className="font-extrabold text-xs text-stone-500 uppercase tracking-wider">7-Category Estimated Demand Forecasts</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   {demand_forecast.category_forecasts.map((cf) => (
-                    <div key={cf.category} className="p-3.5 rounded-2xl bg-[#FFFDF3] dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#1F3F34] space-y-1 text-xs">
+                    <div key={cf.category} className="p-3.5 rounded-2xl bg-[#FFFDF3] dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 space-y-1 text-xs">
                       <div className="flex justify-between items-center">
                         <span className="font-black" style={{ color: CATEGORY_COLORS[cf.category] || '#159B5B' }}>{cf.category}</span>
                         <span className="text-[10px] font-bold text-stone-500">Hist: {cf.historical_count}</span>
                       </div>
-                      <div className="text-lg font-black text-[#18352D] dark:text-[#FFFDF3]">
+                      <div className="text-lg font-black text-[#18352D] dark:text-white">
                         Est. Demand: {cf.estimated_demand_7d}
                       </div>
                       <div className="text-[10px] font-semibold text-stone-500">
@@ -825,12 +825,12 @@ export const HumanitarianIntelligence: React.FC = () => {
         {/* TAB 7: NGO PLANNING (Item 9) */}
         {activeTab === 'ngo_planning' && (
           <div className="space-y-6">
-            <div className="p-6 bg-white dark:bg-[#121C18] rounded-3xl border border-[#E2E8E4] dark:border-[#1F3F34] shadow-sm space-y-6">
+            <div className="p-6 bg-white dark:bg-[#161616] rounded-3xl border border-[#E2E8E4] dark:border-white/10 shadow-sm space-y-6">
               
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
                   <Truck className="w-5 h-5 text-[#0B4F3A] dark:text-[#12B76A]" />
-                  <h3 className="text-lg font-black text-[#18352D] dark:text-[#FFFDF3]">
+                  <h3 className="text-lg font-black text-[#18352D] dark:text-white">
                     9. NGO Strategic Planning & Decision-Support Panel
                   </h3>
                 </div>
@@ -844,16 +844,16 @@ export const HumanitarianIntelligence: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 {/* High Need Areas */}
-                <div className="p-4 rounded-3xl bg-[#FFFDF3] dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#1F3F34] space-y-3">
+                <div className="p-4 rounded-3xl bg-[#FFFDF3] dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 space-y-3">
                   <h4 className="font-black text-xs uppercase tracking-wider text-rose-600 flex items-center space-x-1.5">
                     <Flame className="w-4 h-4" />
                     <span>High Need Areas</span>
                   </h4>
                   <div className="space-y-2">
                     {ngo_planning.high_need_areas.map((h, idx) => (
-                      <div key={idx} className="p-3 rounded-2xl bg-white dark:bg-[#121C18] border border-[#E2E8E4] dark:border-[#1F3F34] text-xs flex justify-between items-center">
+                      <div key={idx} className="p-3 rounded-2xl bg-white dark:bg-[#161616] border border-[#E2E8E4] dark:border-white/10 text-xs flex justify-between items-center">
                         <div>
-                          <span className="font-black text-[#18352D] dark:text-[#FFFDF3]">{h.area_name}</span>
+                          <span className="font-black text-[#18352D] dark:text-white">{h.area_name}</span>
                           <span className="block text-[10px] text-stone-500">Dominant Need: {h.dominant_category}</span>
                         </div>
                         <span className="font-extrabold text-rose-600 px-2 py-1 bg-rose-50 dark:bg-rose-950/40 rounded-xl">
@@ -865,16 +865,16 @@ export const HumanitarianIntelligence: React.FC = () => {
                 </div>
 
                 {/* Low Resource Areas */}
-                <div className="p-4 rounded-3xl bg-[#FFFDF3] dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#1F3F34] space-y-3">
+                <div className="p-4 rounded-3xl bg-[#FFFDF3] dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 space-y-3">
                   <h4 className="font-black text-xs uppercase tracking-wider text-amber-600 flex items-center space-x-1.5">
                     <Building2 className="w-4 h-4" />
                     <span>Low Resource Areas</span>
                   </h4>
                   <div className="space-y-2">
                     {ngo_planning.low_resource_areas.map((l, idx) => (
-                      <div key={idx} className="p-3 rounded-2xl bg-white dark:bg-[#121C18] border border-[#E2E8E4] dark:border-[#1F3F34] text-xs flex justify-between items-center">
+                      <div key={idx} className="p-3 rounded-2xl bg-white dark:bg-[#161616] border border-[#E2E8E4] dark:border-white/10 text-xs flex justify-between items-center">
                         <div>
-                          <span className="font-black text-[#18352D] dark:text-[#FFFDF3]">{l.area_name}</span>
+                          <span className="font-black text-[#18352D] dark:text-white">{l.area_name}</span>
                           <span className="block text-[10px] text-stone-500">{l.resource_count} active centers</span>
                         </div>
                         <span className="font-extrabold text-amber-600 px-2 py-1 bg-amber-50 dark:bg-amber-950/40 rounded-xl">
@@ -886,15 +886,15 @@ export const HumanitarianIntelligence: React.FC = () => {
                 </div>
 
                 {/* Transport Barriers */}
-                <div className="p-4 rounded-3xl bg-[#FFFDF3] dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#1F3F34] space-y-3">
+                <div className="p-4 rounded-3xl bg-[#FFFDF3] dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 space-y-3">
                   <h4 className="font-black text-xs uppercase tracking-wider text-purple-600 flex items-center space-x-1.5">
                     <Truck className="w-4 h-4" />
                     <span>Transport Barriers</span>
                   </h4>
                   <div className="space-y-2">
                     {ngo_planning.transport_barriers.map((tb, idx) => (
-                      <div key={idx} className="p-3 rounded-2xl bg-white dark:bg-[#121C18] border border-[#E2E8E4] dark:border-[#1F3F34] text-xs space-y-1">
-                        <div className="flex justify-between font-extrabold text-[#18352D] dark:text-[#FFFDF3]">
+                      <div key={idx} className="p-3 rounded-2xl bg-white dark:bg-[#161616] border border-[#E2E8E4] dark:border-white/10 text-xs space-y-1">
+                        <div className="flex justify-between font-extrabold text-[#18352D] dark:text-white">
                           <span>{tb.area}</span>
                           <span className="text-purple-600">{tb.barrier_reason}</span>
                         </div>
@@ -905,15 +905,15 @@ export const HumanitarianIntelligence: React.FC = () => {
                 </div>
 
                 {/* Pending Critical Cases */}
-                <div className="p-4 rounded-3xl bg-[#FFFDF3] dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#1F3F34] space-y-3">
+                <div className="p-4 rounded-3xl bg-[#FFFDF3] dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 space-y-3">
                   <h4 className="font-black text-xs uppercase tracking-wider text-rose-600 flex items-center space-x-1.5">
                     <ShieldAlert className="w-4 h-4" />
                     <span>Pending Critical Cases</span>
                   </h4>
                   <div className="space-y-2">
                     {ngo_planning.pending_critical_cases.map((pc) => (
-                      <div key={pc.id} className="p-3 rounded-2xl bg-white dark:bg-[#121C18] border border-[#E2E8E4] dark:border-[#1F3F34] text-xs space-y-1">
-                        <div className="flex justify-between font-extrabold text-[#18352D] dark:text-[#FFFDF3]">
+                      <div key={pc.id} className="p-3 rounded-2xl bg-white dark:bg-[#161616] border border-[#E2E8E4] dark:border-white/10 text-xs space-y-1">
+                        <div className="flex justify-between font-extrabold text-[#18352D] dark:text-white">
                           <span>{pc.category} Need #{pc.id} ({pc.area})</span>
                           <span className="text-rose-600 font-black">{pc.urgency_level}</span>
                         </div>

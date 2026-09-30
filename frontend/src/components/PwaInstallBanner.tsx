@@ -40,7 +40,7 @@ export const PwaInstallBanner: React.FC = () => {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed top-16 sm:top-20 inset-x-3 sm:inset-x-auto sm:right-6 max-w-sm z-50 bg-[#121C18]/95 dark:bg-[#17231E]/95 text-white backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-3.5 shadow-2xl animate-in slide-in-from-top-4">
+    <div className="fixed top-16 sm:top-20 inset-x-3 sm:inset-x-auto sm:right-6 max-w-sm z-50 bg-[#121C18]/95 dark:bg-[#1C1917]/95 text-white backdrop-blur-xl border border-emerald-500/30 rounded-2xl p-3.5 shadow-2xl animate-in slide-in-from-top-4">
       <div className="flex items-start justify-between space-x-3">
         <div className="flex items-start space-x-3">
           <div className="w-9 h-9 rounded-xl bg-[#159B5B] flex items-center justify-center shrink-0 shadow-md shadow-emerald-500/20 mt-0.5">

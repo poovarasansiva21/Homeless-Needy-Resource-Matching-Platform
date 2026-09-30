@@ -368,11 +368,11 @@ export const LiveMap: React.FC = () => {
     });
 
   return (
-    <div className="min-h-[calc(100vh-60px)] lg:min-h-[calc(100vh-80px)] flex flex-col lg:flex-row bg-[#FFF9ED] dark:bg-[#0C1410] relative transition-colors duration-300">
+    <div className="min-h-[calc(100vh-60px)] lg:min-h-[calc(100vh-80px)] flex flex-col lg:flex-row bg-[#FFF9ED] dark:bg-[#0D0D0D] relative transition-colors duration-300">
       
       {/* Mobile View Segmented Control (Map View vs List View) */}
-      <div className="lg:hidden flex items-center justify-between p-2.5 bg-white dark:bg-[#121C18] border-b border-[#EAE3D2] dark:border-[#24332D] sticky top-14 z-30 shadow-sm">
-        <div className="flex items-center space-x-1 w-full bg-[#FFF9ED] dark:bg-[#0C1410] p-1 rounded-xl border border-[#EAE3D2] dark:border-[#24332D]">
+      <div className="lg:hidden flex items-center justify-between p-2.5 bg-white dark:bg-[#161616] border-b border-[#EAE3D2] dark:border-white/10 sticky top-14 z-30 shadow-sm">
+        <div className="flex items-center space-x-1 w-full bg-[#FFF9ED] dark:bg-[#0D0D0D] p-1 rounded-xl border border-[#EAE3D2] dark:border-white/10">
           <button
             onClick={() => setMobileTab('map')}
             className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-1.5 transition-all cursor-pointer ${
@@ -401,25 +401,25 @@ export const LiveMap: React.FC = () => {
       {/* ========================================================================= */}
       {/* Left Sidebar / Filter & Discovery Panel                                    */}
       {/* ========================================================================= */}
-      <div className={`w-full lg:w-[400px] shrink-0 bg-white dark:bg-[#121C18] border-r border-[#EAE3D2] dark:border-[#24332D] flex-col z-20 shadow-sm lg:h-[calc(100vh-80px)] overflow-hidden ${
+      <div className={`w-full lg:w-[400px] shrink-0 bg-white dark:bg-[#161616] border-r border-[#EAE3D2] dark:border-white/10 flex-col z-20 shadow-sm lg:h-[calc(100vh-80px)] overflow-hidden ${
         mobileTab === 'list' ? 'flex' : 'hidden lg:flex'
       }`}>
         
         {/* Panel Header */}
-        <div className="p-4 border-b border-[#EAE3D2] dark:border-[#24332D] space-y-3 shrink-0">
+        <div className="p-4 border-b border-[#EAE3D2] dark:border-white/10 space-y-3 shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20 flex items-center justify-center text-[#159B5B] dark:text-emerald-400">
                 <MapPin className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="font-extrabold text-sm text-[#17231E] dark:text-[#FFF9ED] leading-none">{t('map.title')}</h2>
+                <h2 className="font-extrabold text-sm text-[#17231E] dark:text-[#F5F5F0] leading-none">{t('map.title')}</h2>
                 <span className="text-[10px] text-stone-500 dark:text-stone-400 font-medium">{t('map.subtitle')}</span>
               </div>
             </div>
             <button 
               onClick={fetchData}
-              className="p-1.5 text-stone-400 hover:text-[#17231E] dark:hover:text-[#FFF9ED] rounded-full hover:bg-[#FFF9ED] dark:hover:bg-[#1A2621] transition-colors"
+              className="p-1.5 text-stone-400 hover:text-[#17231E] dark:hover:text-[#FFF9ED] rounded-full hover:bg-[#FFF9ED] dark:hover:bg-[#262626] transition-colors"
               title={t('map.refresh')}
             >
               <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
@@ -470,7 +470,7 @@ export const LiveMap: React.FC = () => {
                       className={`px-2 py-0.5 rounded-full text-[10px] font-black transition-all ${
                         radiusKm === r
                           ? 'bg-[#159B5B] text-white'
-                          : 'bg-white dark:bg-[#121C18] border border-[#EAE3D2] dark:border-[#24332D] text-stone-600 dark:text-stone-300'
+                          : 'bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10 text-stone-600 dark:text-stone-300'
                       }`}
                     >
                       {r}k
@@ -502,7 +502,7 @@ export const LiveMap: React.FC = () => {
               <select 
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="w-full p-2 border border-[#EAE3D2] dark:border-[#24332D] rounded-xl text-xs outline-none bg-white dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] font-semibold focus:border-[#159B5B] dark:focus:border-[#159B5B]"
+                className="w-full p-2 border border-[#EAE3D2] dark:border-white/10 rounded-xl text-xs outline-none bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] font-semibold focus:border-[#159B5B] dark:focus:border-[#159B5B]"
               >
                 <option value="ALL">{t('map.allCategories')}</option>
                 <option value="FOOD">{t('categories.food')}</option>
@@ -520,7 +520,7 @@ export const LiveMap: React.FC = () => {
               <select 
                 value={urgencyFilter}
                 onChange={(e) => setUrgencyFilter(e.target.value)}
-                className="w-full p-2 border border-[#EAE3D2] dark:border-[#24332D] rounded-xl text-xs outline-none bg-white dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] font-semibold focus:border-[#159B5B] dark:focus:border-[#159B5B]"
+                className="w-full p-2 border border-[#EAE3D2] dark:border-white/10 rounded-xl text-xs outline-none bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] font-semibold focus:border-[#159B5B] dark:focus:border-[#159B5B]"
               >
                 <option value="ALL">{t('map.allUrgency')}</option>
                 <option value="CRITICAL">🔴 {t('urgency.critical')}</option>
@@ -532,7 +532,7 @@ export const LiveMap: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-between text-xs">
-            <label className="flex items-center space-x-2 cursor-pointer text-[#17231E] dark:text-[#FFF9ED] font-semibold text-[11px]">
+            <label className="flex items-center space-x-2 cursor-pointer text-[#17231E] dark:text-[#F5F5F0] font-semibold text-[11px]">
               <input 
                 type="checkbox" 
                 checked={showResources} 
@@ -559,7 +559,7 @@ export const LiveMap: React.FC = () => {
               className={`p-3.5 rounded-2xl border cursor-pointer transition-all ${
                 selectedRequest?.id === req.id 
                   ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B] shadow-sm' 
-                  : 'bg-white dark:bg-[#121C18] border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B] dark:hover:border-[#159B5B]'
+                  : 'bg-white dark:bg-[#161616] border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#159B5B]'
               }`}
             >
               <div className="flex justify-between items-start">
@@ -582,14 +582,14 @@ export const LiveMap: React.FC = () => {
                 )}
               </div>
 
-              <h4 className="font-extrabold text-xs text-[#17231E] dark:text-[#FFF9ED] mt-2">
+              <h4 className="font-extrabold text-xs text-[#17231E] dark:text-[#F5F5F0] mt-2">
                 {req.dnn_category || req.category} Support Required
               </h4>
               <p className="text-[11px] text-stone-600 dark:text-stone-400 mt-1 line-clamp-2 leading-relaxed">
                 {req.description}
               </p>
 
-              <div className="mt-2.5 pt-2 border-t border-[#EAE3D2]/60 dark:border-[#24332D] flex items-center justify-between text-[10px] text-stone-500 dark:text-stone-400">
+              <div className="mt-2.5 pt-2 border-t border-[#EAE3D2]/60 dark:border-white/10 flex items-center justify-between text-[10px] text-stone-500 dark:text-stone-400">
                 <span>{req.people_count} people</span>
                 <span className="capitalize font-semibold text-[#159B5B] dark:text-emerald-400">{req.status.replace('_', ' ')}</span>
               </div>
@@ -616,7 +616,7 @@ export const LiveMap: React.FC = () => {
       {/* Center Interactive Map Container with Rounded Glass Framing               */}
       {/* ========================================================================= */}
       <div className={`flex-1 h-[calc(100vh-145px)] min-h-[400px] lg:h-[calc(100vh-80px)] relative p-2 md:p-3 overflow-hidden ${mobileTab === 'map' ? 'block' : 'hidden lg:block'}`}>
-        <div className="w-full h-full rounded-2xl md:rounded-3xl overflow-hidden border border-[#EAE3D2] dark:border-[#24332D] shadow-lg relative bg-white">
+        <div className="w-full h-full rounded-2xl md:rounded-3xl overflow-hidden border border-[#EAE3D2] dark:border-white/10 shadow-lg relative bg-white">
           
           <MapContainer
             center={defaultCenter}
@@ -736,7 +736,7 @@ export const LiveMap: React.FC = () => {
                 setFlyCoords(defaultCenter);
               }
             }}
-            className="absolute bottom-5 right-5 z-[400] px-3.5 py-2 bg-white dark:bg-[#121C18] hover:bg-[#FFF9ED] dark:hover:bg-[#1A2621] text-[#17231E] dark:text-[#FFF9ED] rounded-full shadow-lg border border-[#EAE3D2] dark:border-[#24332D] font-bold text-xs flex items-center space-x-1.5 transition-transform hover:scale-105"
+            className="absolute bottom-5 right-5 z-[400] px-3.5 py-2 bg-white dark:bg-[#161616] hover:bg-[#FFF9ED] dark:hover:bg-[#262626] text-[#17231E] dark:text-[#F5F5F0] rounded-full shadow-lg border border-[#EAE3D2] dark:border-white/10 font-bold text-xs flex items-center space-x-1.5 transition-transform hover:scale-105"
             title="Recenter Map View"
           >
             <Navigation className="w-3.5 h-3.5 text-[#159B5B]" />
@@ -750,14 +750,14 @@ export const LiveMap: React.FC = () => {
       {/* Right Details Slide-Over Inspector                                       */}
       {/* ========================================================================= */}
       {(selectedRequest || selectedResource) && (
-        <div className="w-full lg:w-96 shrink-0 bg-white dark:bg-[#121C18] border-t lg:border-t-0 lg:border-l border-[#EAE3D2] dark:border-[#24332D] p-5 sm:p-6 overflow-y-auto z-50 shadow-2xl fixed inset-x-0 bottom-0 lg:relative lg:inset-auto max-h-[80vh] lg:max-h-none lg:h-[calc(100vh-80px)] rounded-t-3xl lg:rounded-none transition-all">
+        <div className="w-full lg:w-96 shrink-0 bg-white dark:bg-[#161616] border-t lg:border-t-0 lg:border-l border-[#EAE3D2] dark:border-white/10 p-5 sm:p-6 overflow-y-auto z-50 shadow-2xl fixed inset-x-0 bottom-0 lg:relative lg:inset-auto max-h-[80vh] lg:max-h-none lg:h-[calc(100vh-80px)] rounded-t-3xl lg:rounded-none transition-all">
           <div className="w-12 h-1 bg-stone-300 dark:bg-stone-700 rounded-full mx-auto mb-3 lg:hidden" />
-          <div className="flex justify-between items-start pb-3 border-b border-[#EAE3D2] dark:border-[#24332D]">
+          <div className="flex justify-between items-start pb-3 border-b border-[#EAE3D2] dark:border-white/10">
             <div>
               <span className="text-[10px] font-black uppercase tracking-wider text-stone-400 dark:text-stone-500">
                 {selectedRequest ? 'Request Details' : 'Resource Center'}
               </span>
-              <h3 className="font-black text-base text-[#17231E] dark:text-[#FFF9ED]">
+              <h3 className="font-black text-base text-[#17231E] dark:text-[#F5F5F0]">
                 {selectedRequest ? `${selectedRequest.dnn_category || selectedRequest.category} Need #${selectedRequest.id}` : selectedResource?.name}
               </h3>
             </div>
@@ -766,7 +766,7 @@ export const LiveMap: React.FC = () => {
                 setSelectedRequest(null);
                 setSelectedResource(null);
               }}
-              className="p-1 text-stone-400 hover:text-[#17231E] dark:hover:text-[#FFF9ED] rounded-full hover:bg-[#FFF9ED] dark:hover:bg-[#1A2621] transition-colors"
+              className="p-1 text-stone-400 hover:text-[#17231E] dark:hover:text-[#FFF9ED] rounded-full hover:bg-[#FFF9ED] dark:hover:bg-[#262626] transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -793,17 +793,17 @@ export const LiveMap: React.FC = () => {
 
               <div>
                 <span className="text-stone-500 dark:text-stone-400 block font-semibold mb-1">Description</span>
-                <p className="p-3 bg-[#FFF9ED] dark:bg-[#0C1410] rounded-2xl text-[#17231E] dark:text-[#FFF9ED] leading-relaxed border border-[#EAE3D2] dark:border-[#24332D]">
+                <p className="p-3 bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl text-[#17231E] dark:text-[#F5F5F0] leading-relaxed border border-[#EAE3D2] dark:border-white/10">
                   {selectedRequest.description}
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-2">
-                <div className="p-3 bg-[#FFF9ED] dark:bg-[#0C1410] rounded-2xl border border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="p-3 bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-stone-400 dark:text-stone-500 text-[10px] uppercase font-black block">People Affected</span>
-                  <span className="font-bold text-[#17231E] dark:text-[#FFF9ED] text-sm">{selectedRequest.people_count} individuals</span>
+                  <span className="font-bold text-[#17231E] dark:text-[#F5F5F0] text-sm">{selectedRequest.people_count} individuals</span>
                 </div>
-                <div className="p-3 bg-[#FFF9ED] dark:bg-[#0C1410] rounded-2xl border border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="p-3 bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-stone-400 dark:text-stone-500 text-[10px] uppercase font-black block">Status</span>
                   <span className="font-bold text-[#159B5B] dark:text-emerald-400 text-sm">{selectedRequest.status.replace('_', ' ')}</span>
                 </div>
@@ -811,10 +811,10 @@ export const LiveMap: React.FC = () => {
 
               <div>
                 <span className="text-stone-500 dark:text-stone-400 block font-semibold">Location (Approximate)</span>
-                <p className="text-[#17231E] dark:text-[#FFF9ED] mt-0.5 font-medium">{selectedRequest.address}</p>
+                <p className="text-[#17231E] dark:text-[#F5F5F0] mt-0.5 font-medium">{selectedRequest.address}</p>
               </div>
 
-              <div className="pt-3 border-t border-[#EAE3D2] dark:border-[#24332D] space-y-2">
+              <div className="pt-3 border-t border-[#EAE3D2] dark:border-white/10 space-y-2">
                 <a
                   href={`/donor/dashboard`}
                   className="w-full block py-3 bg-[#159B5B] hover:bg-[#12834D] text-white font-black text-xs uppercase tracking-wider rounded-full text-center shadow-sm transition-all"
@@ -823,7 +823,7 @@ export const LiveMap: React.FC = () => {
                 </a>
                 <a
                   href={`/ngo/dashboard`}
-                  className="w-full block py-3 bg-[#17231E] hover:bg-stone-800 dark:bg-[#1A2621] dark:hover:bg-[#22332C] dark:border dark:border-[#24332D] text-white font-black text-xs uppercase tracking-wider rounded-full text-center transition-all"
+                  className="w-full block py-3 bg-[#17231E] hover:bg-stone-800 dark:bg-[#262626] dark:hover:bg-[#292929] dark:border dark:border-white/10 text-white font-black text-xs uppercase tracking-wider rounded-full text-center transition-all"
                 >
                   NGO Dispatch Center
                 </a>
@@ -840,31 +840,31 @@ export const LiveMap: React.FC = () => {
                 )}
               </div>
 
-              <p className="text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed font-medium">{selectedResource.description}</p>
+              <p className="text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed font-medium">{selectedResource.description}</p>
 
               <div className="grid grid-cols-2 gap-2">
-                <div className="p-3 bg-[#FFF9ED] dark:bg-[#0C1410] rounded-2xl border border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="p-3 bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-stone-400 dark:text-stone-500 text-[10px] uppercase font-black block">Available Capacity</span>
                   <span className="font-bold text-[#159B5B] dark:text-emerald-400 text-sm">{selectedResource.capacity_available} / {selectedResource.capacity_total}</span>
                 </div>
-                <div className="p-3 bg-[#FFF9ED] dark:bg-[#0C1410] rounded-2xl border border-[#EAE3D2] dark:border-[#24332D]">
+                <div className="p-3 bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-stone-400 dark:text-stone-500 text-[10px] uppercase font-black block">Status</span>
-                  <span className="font-bold text-[#17231E] dark:text-[#FFF9ED] text-sm">{selectedResource.availability_status}</span>
+                  <span className="font-bold text-[#17231E] dark:text-[#F5F5F0] text-sm">{selectedResource.availability_status}</span>
                 </div>
               </div>
 
               <div>
                 <span className="text-stone-500 dark:text-stone-400 block font-semibold">Address</span>
-                <p className="text-[#17231E] dark:text-[#FFF9ED] mt-0.5 font-medium">{selectedResource.address}</p>
+                <p className="text-[#17231E] dark:text-[#F5F5F0] mt-0.5 font-medium">{selectedResource.address}</p>
               </div>
 
-              <div className="flex items-center text-[#17231E] dark:text-[#FFF9ED] font-semibold">
+              <div className="flex items-center text-[#17231E] dark:text-[#F5F5F0] font-semibold">
                 <Phone className="w-3.5 h-3.5 mr-1.5 text-[#159B5B] dark:text-emerald-400" />
                 <a href={`tel:${selectedResource.phone}`} className="hover:underline">{selectedResource.phone}</a>
               </div>
 
               {/* Turn-by-Turn Navigation Action & Mobility Check */}
-              <div className="pt-2 border-t border-[#EAE3D2] dark:border-[#24332D] space-y-2">
+              <div className="pt-2 border-t border-[#EAE3D2] dark:border-white/10 space-y-2">
                 <a
                   href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation ? `${userLocation.lat},${userLocation.lng}` : ''}&destination=${selectedResource.latitude},${selectedResource.longitude}`}
                   target="_blank"

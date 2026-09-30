@@ -40,7 +40,7 @@ export const SimpleModeView: React.FC = () => {
   };
 
   return (
-    <div className="w-full bg-[#FFFDF3] dark:bg-[#0B1713] p-4 sm:p-6 lg:p-8 space-y-6">
+    <div className="w-full bg-[#FFFDF3] dark:bg-[#0D0D0D] p-4 sm:p-6 lg:p-8 space-y-6">
       
       {/* Simple Mode Header Banner */}
       <div className="bg-[#0B4F3A] dark:bg-[#12B76A] text-white p-5 sm:p-6 rounded-3xl shadow-lg space-y-4">
@@ -204,37 +204,37 @@ export const SimpleModeView: React.FC = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <button
             onClick={() => handleOpenNeedHelp('FOOD')}
-            className="p-4 rounded-3xl bg-white dark:bg-[#121C18] border-2 border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B] text-center space-y-2 transition-all cursor-pointer group"
+            className="p-4 rounded-3xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] text-center space-y-2 transition-all cursor-pointer group"
           >
             <div className="text-4xl group-hover:scale-110 transition-transform">🍱</div>
-            <div className="font-black text-sm text-[#18352D] dark:text-[#FFFDF3]">FOOD</div>
+            <div className="font-black text-sm text-[#18352D] dark:text-white">FOOD</div>
             <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">✓ Verified Food Banks</div>
           </button>
 
           <button
             onClick={() => handleOpenNeedHelp('SHELTER')}
-            className="p-4 rounded-3xl bg-white dark:bg-[#121C18] border-2 border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B] text-center space-y-2 transition-all cursor-pointer group"
+            className="p-4 rounded-3xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] text-center space-y-2 transition-all cursor-pointer group"
           >
             <div className="text-4xl group-hover:scale-110 transition-transform">⛺</div>
-            <div className="font-black text-sm text-[#18352D] dark:text-[#FFFDF3]">SHELTER</div>
+            <div className="font-black text-sm text-[#18352D] dark:text-white">SHELTER</div>
             <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">✓ Verified Night Lodging</div>
           </button>
 
           <button
             onClick={() => handleOpenNeedHelp('MEDICAL')}
-            className="p-4 rounded-3xl bg-white dark:bg-[#121C18] border-2 border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B] text-center space-y-2 transition-all cursor-pointer group"
+            className="p-4 rounded-3xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] text-center space-y-2 transition-all cursor-pointer group"
           >
             <div className="text-4xl group-hover:scale-110 transition-transform">🚑</div>
-            <div className="font-black text-sm text-[#18352D] dark:text-[#FFFDF3]">MEDICAL</div>
+            <div className="font-black text-sm text-[#18352D] dark:text-white">MEDICAL</div>
             <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">✓ Free Dispensaries</div>
           </button>
 
           <button
             onClick={() => handleOpenNeedHelp('CLOTHING')}
-            className="p-4 rounded-3xl bg-white dark:bg-[#121C18] border-2 border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B] text-center space-y-2 transition-all cursor-pointer group"
+            className="p-4 rounded-3xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] text-center space-y-2 transition-all cursor-pointer group"
           >
             <div className="text-4xl group-hover:scale-110 transition-transform">👕</div>
-            <div className="font-black text-sm text-[#18352D] dark:text-[#FFFDF3]">CLOTHES</div>
+            <div className="font-black text-sm text-[#18352D] dark:text-white">CLOTHES</div>
             <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">✓ Warm Blankets</div>
           </button>
         </div>

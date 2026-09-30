@@ -94,7 +94,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-lg bg-white dark:bg-[#121C18] rounded-3xl border border-[#E2E8E4] dark:border-[#24332D] shadow-2xl overflow-hidden text-[#18352D] dark:text-[#FFFDF3] transition-all">
+      <div className="w-full max-w-lg bg-white dark:bg-[#161616] rounded-3xl border border-[#E2E8E4] dark:border-white/10 shadow-2xl overflow-hidden text-[#18352D] dark:text-white transition-all">
         
         {/* Modal Header */}
         <div className="p-5 sm:p-6 bg-gradient-to-r from-[#0B4F3A] to-[#159B5B] text-white flex justify-between items-center">
@@ -121,9 +121,9 @@ export const ReportModal: React.FC<ReportModalProps> = ({
         <form onSubmit={handleSubmit} className="p-5 sm:p-6 space-y-4">
           
           {targetTitle && (
-            <div className="p-3 rounded-2xl bg-[#FFFDF3] dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#24332D] text-xs font-semibold">
+            <div className="p-3 rounded-2xl bg-[#FFFDF3] dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 text-xs font-semibold">
               <span className="text-stone-400 block text-[10px] uppercase font-bold">Reporting Item:</span>
-              <span className="text-[#18352D] dark:text-[#FFFDF3] font-bold">{targetTitle}</span>
+              <span className="text-[#18352D] dark:text-white font-bold">{targetTitle}</span>
             </div>
           )}
 
@@ -154,7 +154,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                       className={`flex items-center space-x-2.5 p-2.5 rounded-xl border text-xs font-bold cursor-pointer transition-all ${
                         reason === r.id
                           ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B] text-[#0B4F3A] dark:text-emerald-300'
-                          : 'bg-white dark:bg-[#0B1713] border-[#E2E8E4] dark:border-[#24332D] hover:bg-stone-50 dark:hover:bg-stone-800/50'
+                          : 'bg-white dark:bg-[#0D0D0D] border-[#E2E8E4] dark:border-white/10 hover:bg-stone-50 dark:hover:bg-stone-800/50'
                       }`}
                     >
                       <input
@@ -181,12 +181,12 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                   onChange={(e) => setDetails(e.target.value)}
                   placeholder="Provide any relevant context to assist our safety officers..."
                   rows={3}
-                  className="w-full p-3 bg-white dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#24332D] rounded-2xl text-xs text-[#18352D] dark:text-[#FFFDF3] outline-none focus:border-[#159B5B]"
+                  className="w-full p-3 bg-white dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 rounded-2xl text-xs text-[#18352D] dark:text-white outline-none focus:border-[#159B5B]"
                 />
               </div>
 
               {/* Privacy Control: Anonymous Reporting Toggle */}
-              <div className="p-3 rounded-2xl bg-stone-50 dark:bg-[#0B1713] border border-[#E2E8E4] dark:border-[#24332D]">
+              <div className="p-3 rounded-2xl bg-stone-50 dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10">
                 <label className="flex items-center space-x-2.5 cursor-pointer">
                   <input
                     type="checkbox"
@@ -195,7 +195,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                     className="rounded accent-[#159B5B] w-4 h-4"
                   />
                   <div className="text-xs">
-                    <span className="font-extrabold text-[#18352D] dark:text-[#FFFDF3] flex items-center space-x-1">
+                    <span className="font-extrabold text-[#18352D] dark:text-white flex items-center space-x-1">
                       <Lock className="w-3.5 h-3.5 text-[#159B5B]" />
                       <span>Anonymous Reporting Protection</span>
                     </span>

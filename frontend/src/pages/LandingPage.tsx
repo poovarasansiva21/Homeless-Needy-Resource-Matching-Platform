@@ -478,7 +478,7 @@ export const LandingPage: React.FC = () => {
   ];
 
   return (
-    <div className="sahaayaa-organic-bg text-[#17231E] dark:text-[#FFF9ED] font-sans selection:bg-[#159B5B] selection:text-white transition-colors duration-300 relative min-h-screen overflow-x-hidden">
+    <div className="sahaayaa-organic-bg text-[#17231E] dark:text-[#F5F5F0] font-sans selection:bg-[#159B5B] selection:text-white transition-colors duration-300 relative min-h-screen overflow-x-hidden">
       
       {/* Background Botanical Vector Overlays Matching Reference Image */}
       <div className="absolute top-10 left-0 w-80 h-80 opacity-15 dark:opacity-10 pointer-events-none -translate-x-24 z-0">
@@ -716,7 +716,7 @@ export const LandingPage: React.FC = () => {
         </div>
 
         {/* Organic soft curved divider transition to next section */}
-        <div className="w-full overflow-hidden leading-none -mb-1 pt-12 text-[#FFF9ED] dark:text-[#0C1410]">
+        <div className="w-full overflow-hidden leading-none -mb-1 pt-12 text-[#FFF9ED] dark:text-white">
           <svg 
             viewBox="0 0 1200 120" 
             preserveAspectRatio="none" 
@@ -730,7 +730,7 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* 2. RESOURCE FINDER SECTION (SEARCH + INTERACTIVE MAP)                     */}
       {/* ========================================================================= */}
-      <section id="resources" className="py-16 md:py-20 bg-[#FFF9ED] dark:bg-[#0C1410] border-t border-[#EAE3D2]/50 dark:border-[#24332D]">
+      <section id="resources" className="py-16 md:py-20 bg-[#FFF9ED] dark:bg-[#0D0D0D] border-t border-[#EAE3D2]/50 dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           
           <div className="space-y-1">
@@ -747,13 +747,13 @@ export const LandingPage: React.FC = () => {
           {/* CURRENT LOCATION DETECTION & PERMISSION UX BANNER                          */}
           {/* ========================================================================= */}
           {locationStatus === 'idle' && (
-            <div className="p-4 sm:p-5 rounded-3xl bg-white dark:bg-[#121C18] border border-[#EAE3D2] dark:border-[#24332D] shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="p-4 sm:p-5 rounded-3xl bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center space-x-3.5">
                 <div className="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-[#159B5B] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm border border-[#159B5B]/20">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-[#17231E] dark:text-[#FFF9ED] flex items-center space-x-1.5">
+                  <h3 className="text-sm font-black text-[#17231E] dark:text-[#F5F5F0] flex items-center space-x-1.5">
                     <span>{t('location.idleTitle')}</span>
                     <span className="w-2 h-2 rounded-full bg-[#159B5B] animate-pulse inline-block" />
                   </h3>
@@ -810,7 +810,7 @@ export const LandingPage: React.FC = () => {
                     className={`px-3 py-1.5 rounded-full text-xs font-black transition-all ${
                       radiusKm === r
                         ? 'bg-[#159B5B] text-white shadow-sm scale-105'
-                        : 'bg-white dark:bg-[#121C18] border border-[#EAE3D2] dark:border-[#24332D] text-[#17231E] dark:text-[#FFF9ED] hover:border-[#159B5B]'
+                        : 'bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10 text-[#17231E] dark:text-[#F5F5F0] hover:border-[#159B5B]'
                     }`}
                   >
                     {r} km
@@ -819,7 +819,7 @@ export const LandingPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleUseCurrentLocation}
-                  className="p-1.5 text-stone-400 hover:text-emerald-600 rounded-full hover:bg-white dark:hover:bg-[#1A2621] transition-colors ml-1"
+                  className="p-1.5 text-stone-400 hover:text-emerald-600 rounded-full hover:bg-white dark:hover:bg-[#262626] transition-colors ml-1"
                   title="Refresh Location"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
@@ -882,7 +882,7 @@ export const LandingPage: React.FC = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t('resources.searchPlaceholder')}
-                  className="w-full py-3.5 pl-12 pr-14 bg-white dark:bg-[#121C18] rounded-full border border-[#EAE3D2] dark:border-[#24332D] text-xs font-semibold text-[#17231E] dark:text-[#FFF9ED] placeholder:text-[#17231E]/40 dark:placeholder:text-stone-500 focus:outline-none focus:border-[#159B5B] dark:focus:border-[#19AD66] shadow-sm transition-all"
+                  className="w-full py-3.5 pl-12 pr-14 bg-white dark:bg-[#161616] rounded-full border border-[#EAE3D2] dark:border-white/10 text-xs font-semibold text-[#17231E] dark:text-[#F5F5F0] placeholder:text-[#17231E]/40 dark:placeholder:text-stone-500 focus:outline-none focus:border-[#159B5B] dark:focus:border-[#19AD66] shadow-sm transition-all"
                 />
                 <Search className="w-4 h-4 text-[#17231E]/40 dark:text-stone-500 absolute left-4.5 top-1/2 -translate-y-1/2" />
                 <button 
@@ -895,7 +895,7 @@ export const LandingPage: React.FC = () => {
 
               {/* Category Chips */}
               <div className="space-y-2">
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#17231E]/50 dark:text-[#FFF9ED]/50 block">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#17231E]/50 dark:text-[#F5F5F0]/50 block">
                   {t('common.category')}:
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -919,13 +919,13 @@ export const LandingPage: React.FC = () => {
               </div>
 
               {/* Filter Dropdowns */}
-              <div className="pt-2 flex flex-wrap items-center gap-2.5 text-xs font-bold text-[#17231E] dark:text-[#FFF9ED]">
+              <div className="pt-2 flex flex-wrap items-center gap-2.5 text-xs font-bold text-[#17231E] dark:text-[#F5F5F0]">
                 
                 <div className="relative">
                   <select 
                     value={distanceFilter}
                     onChange={(e) => setDistanceFilter(e.target.value)}
-                    className="px-4 py-2 bg-white dark:bg-[#121C18] rounded-full border border-[#EAE3D2] dark:border-[#24332D] text-xs font-bold appearance-none pr-8 cursor-pointer focus:outline-none focus:border-[#159B5B] dark:focus:border-[#19AD66]"
+                    className="px-4 py-2 bg-white dark:bg-[#161616] rounded-full border border-[#EAE3D2] dark:border-white/10 text-xs font-bold appearance-none pr-8 cursor-pointer focus:outline-none focus:border-[#159B5B] dark:focus:border-[#19AD66]"
                   >
                     <option value="5km">Within 5 km</option>
                     <option value="10km">Within 10 km</option>
@@ -938,7 +938,7 @@ export const LandingPage: React.FC = () => {
                   <select 
                     value={availabilityFilter}
                     onChange={(e) => setAvailabilityFilter(e.target.value)}
-                    className="px-4 py-2 bg-white dark:bg-[#121C18] rounded-full border border-[#EAE3D2] dark:border-[#24332D] text-xs font-bold appearance-none pr-8 cursor-pointer focus:outline-none focus:border-[#159B5B] dark:focus:border-[#19AD66]"
+                    className="px-4 py-2 bg-white dark:bg-[#161616] rounded-full border border-[#EAE3D2] dark:border-white/10 text-xs font-bold appearance-none pr-8 cursor-pointer focus:outline-none focus:border-[#159B5B] dark:focus:border-[#19AD66]"
                   >
                     <option value="all">Availability: All</option>
                     <option value="open">Open Now</option>
@@ -949,7 +949,7 @@ export const LandingPage: React.FC = () => {
 
                 <div className="relative">
                   <select 
-                    className="px-4 py-2 bg-white dark:bg-[#121C18] rounded-full border border-[#EAE3D2] dark:border-[#24332D] text-xs font-bold appearance-none pr-8 cursor-pointer focus:outline-none focus:border-[#159B5B] dark:focus:border-[#19AD66]"
+                    className="px-4 py-2 bg-white dark:bg-[#161616] rounded-full border border-[#EAE3D2] dark:border-white/10 text-xs font-bold appearance-none pr-8 cursor-pointer focus:outline-none focus:border-[#159B5B] dark:focus:border-[#19AD66]"
                   >
                     <option>Sort by: Nearest</option>
                     <option>Sort by: Capacity</option>
@@ -961,7 +961,7 @@ export const LandingPage: React.FC = () => {
               </div>
 
               {/* Active Results Summary count */}
-              <div className="pt-2 flex items-center justify-between text-xs text-[#17231E]/60 dark:text-[#FFF9ED]/60 border-t border-[#EAE3D2] dark:border-[#24332D]">
+              <div className="pt-2 flex items-center justify-between text-xs text-[#17231E]/60 dark:text-[#F5F5F0]/60 border-t border-[#EAE3D2] dark:border-white/10">
                 <span>Showing {filteredResources.length} verified facilities</span>
                 <Link to="/map" className="text-[#159B5B] dark:text-[#19AD66] font-bold hover:underline flex items-center space-x-1">
                   <span>Open Full Screen Map</span>
@@ -973,19 +973,19 @@ export const LandingPage: React.FC = () => {
 
             {/* Right: Embedded Interactive Map Container */}
             <div className="lg:col-span-7">
-              <div className="relative w-full h-[440px] rounded-3xl overflow-hidden border border-[#EAE3D2] dark:border-[#24332D] shadow-lg bg-[#F7EBD2]/30 dark:bg-[#121C18]/60">
+              <div className="relative w-full h-[440px] rounded-3xl overflow-hidden border border-[#EAE3D2] dark:border-white/10 shadow-lg bg-[#F7EBD2]/30 dark:bg-[#161616]/60">
                 
                 {/* Map / List View Toggle in Top-Right of Map Container */}
-                <div className="absolute top-4 right-4 z-[400] flex bg-white/95 dark:bg-[#121C18]/95 backdrop-blur-md rounded-full p-1 border border-[#EAE3D2] dark:border-[#24332D] shadow-md text-xs font-bold">
+                <div className="absolute top-4 right-4 z-[400] flex bg-white/95 dark:bg-[#161616]/95 backdrop-blur-md rounded-full p-1 border border-[#EAE3D2] dark:border-white/10 shadow-md text-xs font-bold">
                   <button
                     onClick={() => setMapViewMode('map')}
-                    className={`px-3 py-1 rounded-full transition-all ${mapViewMode === 'map' ? 'bg-[#159B5B] text-white shadow-sm' : 'text-[#17231E] dark:text-[#FFF9ED] hover:text-[#159B5B]'}`}
+                    className={`px-3 py-1 rounded-full transition-all ${mapViewMode === 'map' ? 'bg-[#159B5B] text-white shadow-sm' : 'text-[#17231E] dark:text-[#F5F5F0] hover:text-[#159B5B]'}`}
                   >
                     Map
                   </button>
                   <button
                     onClick={() => setMapViewMode('list')}
-                    className={`px-3 py-1 rounded-full transition-all ${mapViewMode === 'list' ? 'bg-[#159B5B] text-white shadow-sm' : 'text-[#17231E] dark:text-[#FFF9ED] hover:text-[#159B5B]'}`}
+                    className={`px-3 py-1 rounded-full transition-all ${mapViewMode === 'list' ? 'bg-[#159B5B] text-white shadow-sm' : 'text-[#17231E] dark:text-[#F5F5F0] hover:text-[#159B5B]'}`}
                   >
                     List
                   </button>
@@ -1450,7 +1450,7 @@ export const LandingPage: React.FC = () => {
 
             <Link 
               to="/map" 
-              className="text-xs font-black text-[#17231E] dark:text-[#FFF9ED] hover:text-[#159B5B] flex items-center space-x-1.5 group uppercase tracking-wider"
+              className="text-xs font-black text-[#17231E] dark:text-[#F5F5F0] hover:text-[#159B5B] flex items-center space-x-1.5 group uppercase tracking-wider"
             >
               <span>{t('resources.viewAllResources')}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1480,15 +1480,15 @@ export const LandingPage: React.FC = () => {
                   )}
                 </div>
                 <div className="p-5 space-y-2.5">
-                  <div className="flex items-center space-x-1.5 text-xs font-black text-[#17231E] dark:text-[#FFF9ED]">
+                  <div className="flex items-center space-x-1.5 text-xs font-black text-[#17231E] dark:text-[#F5F5F0]">
                     <Utensils className="w-4 h-4 text-[#159B5B]" />
                     <span>{t('resources.foodBankTitle')}</span>
                   </div>
-                  <div className="text-[11px] text-[#17231E]/60 dark:text-[#FFF9ED]/60 font-medium flex items-center space-x-1">
+                  <div className="text-[11px] text-[#17231E]/60 dark:text-[#F5F5F0]/60 font-medium flex items-center space-x-1">
                     <Clock className="w-3 h-3 text-[#159B5B] dark:text-emerald-400 shrink-0" />
                     <span>{getCategoryDistance('FOOD', '2.1 km')} • 9 AM – 6 PM</span>
                   </div>
-                  <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed line-clamp-2">
+                  <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed line-clamp-2">
                     {t('resources.foodBankDesc')}
                   </p>
                   <div className="pt-1 flex items-center space-x-2 text-[10px] font-bold">
@@ -1513,7 +1513,7 @@ export const LandingPage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => handleNavigateToCategory('Food')}
-                  className="w-full py-2.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-[#1A2621] dark:hover:bg-[#22332C] text-[#17231E] dark:text-[#FFF9ED] border border-[#EAE3D2] dark:border-[#24332D] rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 transition-all hover:scale-[1.02] cursor-pointer"
+                  className="w-full py-2.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-[#262626] dark:hover:bg-[#292929] text-[#17231E] dark:text-[#F5F5F0] border border-[#EAE3D2] dark:border-white/10 rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 transition-all hover:scale-[1.02] cursor-pointer"
                   title="Navigate / Get directions to nearest Food Bank"
                 >
                   <Navigation className="w-3.5 h-3.5 text-[#159B5B]" />
@@ -1542,15 +1542,15 @@ export const LandingPage: React.FC = () => {
                   )}
                 </div>
                 <div className="p-5 space-y-2.5">
-                  <div className="flex items-center space-x-1.5 text-xs font-black text-[#17231E] dark:text-[#FFF9ED]">
+                  <div className="flex items-center space-x-1.5 text-xs font-black text-[#17231E] dark:text-[#F5F5F0]">
                     <HomeIcon className="w-4 h-4 text-[#159B5B]" />
                     <span>{t('resources.shelterHomeTitle')}</span>
                   </div>
-                  <div className="text-[11px] text-[#17231E]/60 dark:text-[#FFF9ED]/60 font-medium flex items-center space-x-1">
+                  <div className="text-[11px] text-[#17231E]/60 dark:text-[#F5F5F0]/60 font-medium flex items-center space-x-1">
                     <Clock className="w-3 h-3 text-[#159B5B] dark:text-emerald-400 shrink-0" />
                     <span>{getCategoryDistance('SHELTER', '3.6 km')} • 24/7</span>
                   </div>
-                  <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed line-clamp-2">
+                  <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed line-clamp-2">
                     {t('resources.shelterHomeDesc')}
                   </p>
                   <div className="pt-1 flex items-center space-x-2 text-[10px] font-bold">
@@ -1575,7 +1575,7 @@ export const LandingPage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => handleNavigateToCategory('Shelter')}
-                  className="w-full py-2.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-[#1A2621] dark:hover:bg-[#22332C] text-[#17231E] dark:text-[#FFF9ED] border border-[#EAE3D2] dark:border-[#24332D] rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 transition-all hover:scale-[1.02] cursor-pointer"
+                  className="w-full py-2.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-[#262626] dark:hover:bg-[#292929] text-[#17231E] dark:text-[#F5F5F0] border border-[#EAE3D2] dark:border-white/10 rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 transition-all hover:scale-[1.02] cursor-pointer"
                   title="Navigate / Get directions to nearest Shelter"
                 >
                   <Navigation className="w-3.5 h-3.5 text-[#159B5B]" />
@@ -1604,15 +1604,15 @@ export const LandingPage: React.FC = () => {
                   )}
                 </div>
                 <div className="p-5 space-y-2.5">
-                  <div className="flex items-center space-x-1.5 text-xs font-black text-[#17231E] dark:text-[#FFF9ED]">
+                  <div className="flex items-center space-x-1.5 text-xs font-black text-[#17231E] dark:text-[#F5F5F0]">
                     <Cross className="w-4 h-4 text-[#159B5B]" />
                     <span>{t('resources.medicalClinicTitle')}</span>
                   </div>
-                  <div className="text-[11px] text-[#17231E]/60 dark:text-[#FFF9ED]/60 font-medium flex items-center space-x-1">
+                  <div className="text-[11px] text-[#17231E]/60 dark:text-[#F5F5F0]/60 font-medium flex items-center space-x-1">
                     <Clock className="w-3 h-3 text-[#159B5B] dark:text-emerald-400 shrink-0" />
                     <span>{getCategoryDistance('MEDICAL', '4.2 km')} • 8 AM – 8 PM</span>
                   </div>
-                  <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed line-clamp-2">
+                  <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed line-clamp-2">
                     {t('resources.medicalClinicDesc')}
                   </p>
                   <div className="pt-1 flex items-center space-x-2 text-[10px] font-bold">
@@ -1637,7 +1637,7 @@ export const LandingPage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => handleNavigateToCategory('Medical')}
-                  className="w-full py-2.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-[#1A2621] dark:hover:bg-[#22332C] text-[#17231E] dark:text-[#FFF9ED] border border-[#EAE3D2] dark:border-[#24332D] rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 transition-all hover:scale-[1.02] cursor-pointer"
+                  className="w-full py-2.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-[#262626] dark:hover:bg-[#292929] text-[#17231E] dark:text-[#F5F5F0] border border-[#EAE3D2] dark:border-white/10 rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 transition-all hover:scale-[1.02] cursor-pointer"
                   title="Navigate / Get directions to nearest Medical Clinic"
                 >
                   <Navigation className="w-3.5 h-3.5 text-[#159B5B]" />
@@ -1666,15 +1666,15 @@ export const LandingPage: React.FC = () => {
                   )}
                 </div>
                 <div className="p-5 space-y-2.5">
-                  <div className="flex items-center space-x-1.5 text-xs font-black text-[#17231E] dark:text-[#FFF9ED]">
+                  <div className="flex items-center space-x-1.5 text-xs font-black text-[#17231E] dark:text-[#F5F5F0]">
                     <Shirt className="w-4 h-4 text-[#159B5B]" />
                     <span>{t('resources.clothingCenterTitle')}</span>
                   </div>
-                  <div className="text-[11px] text-[#17231E]/60 dark:text-[#FFF9ED]/60 font-medium flex items-center space-x-1">
+                  <div className="text-[11px] text-[#17231E]/60 dark:text-[#F5F5F0]/60 font-medium flex items-center space-x-1">
                     <Clock className="w-3 h-3 text-[#159B5B] dark:text-emerald-400 shrink-0" />
                     <span>{getCategoryDistance('CLOTHING', '5.6 km')} • 10 AM – 4 PM</span>
                   </div>
-                  <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed line-clamp-2">
+                  <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed line-clamp-2">
                     {t('resources.clothingCenterDesc')}
                   </p>
                   <div className="pt-1 flex items-center space-x-2 text-[10px] font-bold">
@@ -1699,7 +1699,7 @@ export const LandingPage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => handleNavigateToCategory('Clothing')}
-                  className="w-full py-2.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-[#1A2621] dark:hover:bg-[#22332C] text-[#17231E] dark:text-[#FFF9ED] border border-[#EAE3D2] dark:border-[#24332D] rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 transition-all hover:scale-[1.02] cursor-pointer"
+                  className="w-full py-2.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-[#262626] dark:hover:bg-[#292929] text-[#17231E] dark:text-[#F5F5F0] border border-[#EAE3D2] dark:border-white/10 rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 transition-all hover:scale-[1.02] cursor-pointer"
                   title="Navigate / Get directions to nearest Clothing Center"
                 >
                   <Navigation className="w-3.5 h-3.5 text-[#159B5B]" />
@@ -1716,7 +1716,7 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* 6. AI-POWERED MATCHING SECTION (WITH LIVE CALL TO REAL BACKEND DNN)       */}
       {/* ========================================================================= */}
-      <section id="ai-matching" className="py-20 bg-[#FFF9ED] dark:bg-[#0C1410] border-t border-[#EAE3D2] dark:border-[#24332D]">
+      <section id="ai-matching" className="py-20 bg-[#FFF9ED] dark:bg-[#0D0D0D] border-t border-[#EAE3D2] dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -1730,7 +1730,7 @@ export const LandingPage: React.FC = () => {
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#17231E] dark:text-white tracking-tight">
                 {t('aiMatching.title')}
               </h2>
-              <p className="text-sm text-[#17231E]/75 dark:text-[#FFF9ED]/75 leading-relaxed font-medium">
+              <p className="text-sm text-[#17231E]/75 dark:text-[#F5F5F0]/75 leading-relaxed font-medium">
                 {t('aiMatching.subtitle')}
               </p>
 
@@ -1749,7 +1749,7 @@ export const LandingPage: React.FC = () => {
                     setFastHelpCat('FOOD');
                     setShowFastHelp(true);
                   }}
-                  className="inline-flex items-center space-x-2 px-6 py-3 bg-[#17231E] hover:bg-[#24332D] dark:bg-white dark:hover:bg-stone-100 text-white dark:text-[#17231E] text-xs font-black tracking-wider uppercase rounded-full shadow-sm hover:shadow-md transition-all hover:scale-105"
+                  className="inline-flex items-center space-x-2 px-6 py-3 bg-[#17231E] hover:bg-[#24332D] dark:bg-white dark:hover:bg-stone-100 text-white dark:text-white text-xs font-black tracking-wider uppercase rounded-full shadow-sm hover:shadow-md transition-all hover:scale-105"
                 >
                   <Flame className="w-3.5 h-3.5 text-[#F2A33A]" />
                   <span>{t('aiMatching.instantDispatch')}</span>
@@ -1759,13 +1759,13 @@ export const LandingPage: React.FC = () => {
 
             {/* Right: Interactive AI Interface Card */}
             <div className="lg:col-span-7">
-              <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-[#24332D] shadow-xl space-y-6">
+              <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-white/10 shadow-xl space-y-6">
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
                   
                   {/* Left sub-box: Example Request Input */}
-                  <div className="p-5 rounded-2xl bg-[#FFF9ED] dark:bg-[#182520] border border-[#EAE3D2] dark:border-[#24332D] space-y-4">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-[#17231E]/50 dark:text-[#FFF9ED]/50 block">
+                  <div className="p-5 rounded-2xl bg-[#FFF9ED] dark:bg-[#262626] border border-[#EAE3D2] dark:border-white/10 space-y-4">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-[#17231E]/50 dark:text-[#F5F5F0]/50 block">
                       {t('aiMatching.inputLabel')}
                     </span>
                     <textarea
@@ -1773,7 +1773,7 @@ export const LandingPage: React.FC = () => {
                       value={aiInputText}
                       onChange={(e) => setAiInputText(e.target.value)}
                       placeholder={t('aiMatching.inputPlaceholder')}
-                      className="w-full bg-white dark:bg-[#121C18] p-3 rounded-xl border border-[#EAE3D2] dark:border-[#24332D] text-xs font-semibold text-[#17231E] dark:text-[#FFF9ED] focus:outline-none focus:border-[#159B5B]"
+                      className="w-full bg-white dark:bg-[#161616] p-3 rounded-xl border border-[#EAE3D2] dark:border-white/10 text-xs font-semibold text-[#17231E] dark:text-[#F5F5F0] focus:outline-none focus:border-[#159B5B]"
                     />
                     
                     {aiError && (
@@ -1792,9 +1792,9 @@ export const LandingPage: React.FC = () => {
                   </div>
 
                   {/* Right sub-box: Real AI Analysis Result */}
-                  <div className="p-5 rounded-2xl bg-white dark:bg-[#182520] border border-[#EAE3D2] dark:border-[#24332D] space-y-4 shadow-sm">
-                    <div className="flex justify-between items-center pb-2 border-b border-[#EAE3D2] dark:border-[#24332D]">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-[#17231E]/60 dark:text-[#FFF9ED]/60">
+                  <div className="p-5 rounded-2xl bg-white dark:bg-[#262626] border border-[#EAE3D2] dark:border-white/10 space-y-4 shadow-sm">
+                    <div className="flex justify-between items-center pb-2 border-b border-[#EAE3D2] dark:border-white/10">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-[#17231E]/60 dark:text-[#F5F5F0]/60">
                         {t('aiMatching.resultsTitle')}
                       </span>
                       <span className="text-[10px] font-bold text-[#159B5B] dark:text-emerald-400">
@@ -1803,22 +1803,22 @@ export const LandingPage: React.FC = () => {
                     </div>
 
                     <div className="grid grid-cols-3 gap-2 text-center">
-                      <div className="p-2 bg-[#FFF9ED] dark:bg-[#121C18] rounded-xl">
-                        <span className="text-[10px] font-bold text-[#17231E]/50 dark:text-[#FFF9ED]/50 block">{t('common.category')}</span>
+                      <div className="p-2 bg-[#FFF9ED] dark:bg-[#161616] rounded-xl">
+                        <span className="text-[10px] font-bold text-[#17231E]/50 dark:text-[#F5F5F0]/50 block">{t('common.category')}</span>
                         <div className="text-xs font-black text-[#159B5B] dark:text-emerald-400 mt-0.5">
                           {aiResult ? aiResult.category : 'FOOD'}
                         </div>
                       </div>
-                      <div className="p-2 bg-[#FFF9ED] dark:bg-[#121C18] rounded-xl">
-                        <span className="text-[10px] font-bold text-[#17231E]/50 dark:text-[#FFF9ED]/50 block">{t('common.urgency')}</span>
+                      <div className="p-2 bg-[#FFF9ED] dark:bg-[#161616] rounded-xl">
+                        <span className="text-[10px] font-bold text-[#17231E]/50 dark:text-[#F5F5F0]/50 block">{t('common.urgency')}</span>
                         <div className="text-xs font-black text-[#F2A33A] mt-0.5 flex items-center justify-center space-x-1">
                           <Flame className="w-3 h-3 text-[#F2A33A]" />
                           <span>{aiResult ? aiResult.urgency : 'HIGH'}</span>
                         </div>
                       </div>
-                      <div className="p-2 bg-[#FFF9ED] dark:bg-[#121C18] rounded-xl">
-                        <span className="text-[10px] font-bold text-[#17231E]/50 dark:text-[#FFF9ED]/50 block">{t('aiMatching.confidenceScore')}</span>
-                        <div className="text-xs font-black text-[#17231E] dark:text-[#FFF9ED] mt-0.5">
+                      <div className="p-2 bg-[#FFF9ED] dark:bg-[#161616] rounded-xl">
+                        <span className="text-[10px] font-bold text-[#17231E]/50 dark:text-[#F5F5F0]/50 block">{t('aiMatching.confidenceScore')}</span>
+                        <div className="text-xs font-black text-[#17231E] dark:text-[#F5F5F0] mt-0.5">
                           {aiResult ? `${aiResult.confidence_percentage}%` : '92%'}
                         </div>
                       </div>
@@ -1826,28 +1826,28 @@ export const LandingPage: React.FC = () => {
 
                     {/* Matched Resource Preview */}
                     <div className="pt-2">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-[#17231E]/50 dark:text-[#FFF9ED]/50 block mb-2">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-[#17231E]/50 dark:text-[#F5F5F0]/50 block mb-2">
                         {t('aiMatching.recommendedFacility')}
                       </span>
-                      <div className="p-2.5 bg-[#FFF9ED] dark:bg-[#121C18] rounded-xl border border-[#EAE3D2] dark:border-[#24332D] flex items-center justify-between">
+                      <div className="p-2.5 bg-[#FFF9ED] dark:bg-[#161616] rounded-xl border border-[#EAE3D2] dark:border-white/10 flex items-center justify-between">
                         <div className="flex items-center space-x-2.5">
                           <img 
                             src="/images/food-bank.jpg" 
                             alt="Matched center" 
-                            className="w-10 h-10 rounded-lg object-cover border border-[#EAE3D2] dark:border-[#24332D]"
+                            className="w-10 h-10 rounded-lg object-cover border border-[#EAE3D2] dark:border-white/10"
                           />
                           <div>
-                            <div className="font-extrabold text-xs text-[#17231E] dark:text-[#FFF9ED]">
+                            <div className="font-extrabold text-xs text-[#17231E] dark:text-[#F5F5F0]">
                               {aiResult?.matched_resources?.[0]?.resource_name || 'Community Kitchen'}
                             </div>
-                            <div className="text-[10px] text-[#17231E]/60 dark:text-[#FFF9ED]/60">
+                            <div className="text-[10px] text-[#17231E]/60 dark:text-[#F5F5F0]/60">
                               {aiResult?.matched_resources?.[0]?.distance_km || '2.4'} km • {t('common.available')}
                             </div>
                           </div>
                         </div>
                         <Link 
                           to="/ai-demo" 
-                          className="px-3 py-1 bg-white dark:bg-[#182520] hover:bg-[#159B5B] hover:text-white dark:hover:bg-[#159B5B] border border-[#EAE3D2] dark:border-[#24332D] rounded-full text-[10px] font-black text-[#17231E] dark:text-[#FFF9ED] transition-colors"
+                          className="px-3 py-1 bg-white dark:bg-[#262626] hover:bg-[#159B5B] hover:text-white dark:hover:bg-[#159B5B] border border-[#EAE3D2] dark:border-white/10 rounded-full text-[10px] font-black text-[#17231E] dark:text-[#F5F5F0] transition-colors"
                         >
                           {t('common.viewAll')}
                         </Link>
@@ -1869,7 +1869,7 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* 7. STORIES / TESTIMONIAL SECTION                                         */}
       {/* ========================================================================= */}
-      <section className="py-20 bg-[#F7EBD2]/30 dark:bg-[#121C18]/30 border-t border-[#EAE3D2] dark:border-[#24332D]">
+      <section className="py-20 bg-[#F7EBD2]/30 dark:bg-[#161616]/30 border-t border-[#EAE3D2] dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -1885,7 +1885,7 @@ export const LandingPage: React.FC = () => {
 
             <button 
               onClick={() => navigate('/request-help')}
-              className="text-xs font-black text-[#17231E] dark:text-[#FFF9ED] hover:text-[#159B5B] flex items-center space-x-1.5 group uppercase tracking-wider"
+              className="text-xs font-black text-[#17231E] dark:text-[#F5F5F0] hover:text-[#159B5B] flex items-center space-x-1.5 group uppercase tracking-wider"
             >
               <span>{t('common.viewAll')}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1896,73 +1896,73 @@ export const LandingPage: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             
             {/* Story 1: Lakshmi */}
-            <div className="bg-white dark:bg-[#121C18] p-6 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm flex flex-col justify-between space-y-4">
-              <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed italic">
+            <div className="bg-white dark:bg-[#161616] p-6 rounded-3xl border border-[#EAE3D2] dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4">
+              <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed italic">
                 "{t('stories.lakshmiQuote')}"
               </p>
-              <div className="flex items-center space-x-3 pt-2 border-t border-[#EAE3D2] dark:border-[#24332D]">
+              <div className="flex items-center space-x-3 pt-2 border-t border-[#EAE3D2] dark:border-white/10">
                 <img 
                   src="/images/avatar-lakshmi.jpg" 
                   alt="Lakshmi" 
                   className="w-10 h-10 rounded-full object-cover border border-[#159B5B]/30"
                 />
                 <div>
-                  <h4 className="font-extrabold text-xs text-[#17231E] dark:text-[#FFF9ED]">Lakshmi</h4>
-                  <p className="text-[10px] text-[#17231E]/60 dark:text-[#FFF9ED]/60 font-semibold">{t('nav.requesterRole')}</p>
+                  <h4 className="font-extrabold text-xs text-[#17231E] dark:text-[#F5F5F0]">Lakshmi</h4>
+                  <p className="text-[10px] text-[#17231E]/60 dark:text-[#F5F5F0]/60 font-semibold">{t('nav.requesterRole')}</p>
                 </div>
               </div>
             </div>
 
             {/* Story 2: Ramesh */}
-            <div className="bg-white dark:bg-[#121C18] p-6 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm flex flex-col justify-between space-y-4">
-              <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed italic">
+            <div className="bg-white dark:bg-[#161616] p-6 rounded-3xl border border-[#EAE3D2] dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4">
+              <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed italic">
                 "{t('stories.rameshQuote')}"
               </p>
-              <div className="flex items-center space-x-3 pt-2 border-t border-[#EAE3D2] dark:border-[#24332D]">
+              <div className="flex items-center space-x-3 pt-2 border-t border-[#EAE3D2] dark:border-white/10">
                 <img 
                   src="/images/avatar-ramesh.jpg" 
                   alt="Ramesh" 
                   className="w-10 h-10 rounded-full object-cover border border-[#159B5B]/30"
                 />
                 <div>
-                  <h4 className="font-extrabold text-xs text-[#17231E] dark:text-[#FFF9ED]">Ramesh</h4>
-                  <p className="text-[10px] text-[#17231E]/60 dark:text-[#FFF9ED]/60 font-semibold">{t('auth.roleVolunteer')}</p>
+                  <h4 className="font-extrabold text-xs text-[#17231E] dark:text-[#F5F5F0]">Ramesh</h4>
+                  <p className="text-[10px] text-[#17231E]/60 dark:text-[#F5F5F0]/60 font-semibold">{t('auth.roleVolunteer')}</p>
                 </div>
               </div>
             </div>
 
             {/* Story 3: Priya */}
-            <div className="bg-white dark:bg-[#121C18] p-6 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm flex flex-col justify-between space-y-4">
-              <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed italic">
+            <div className="bg-white dark:bg-[#161616] p-6 rounded-3xl border border-[#EAE3D2] dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4">
+              <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed italic">
                 "{t('stories.priyaQuote')}"
               </p>
-              <div className="flex items-center space-x-3 pt-2 border-t border-[#EAE3D2] dark:border-[#24332D]">
+              <div className="flex items-center space-x-3 pt-2 border-t border-[#EAE3D2] dark:border-white/10">
                 <img 
                   src="/images/avatar-priya.jpg" 
                   alt="Priya" 
                   className="w-10 h-10 rounded-full object-cover border border-[#159B5B]/30"
                 />
                 <div>
-                  <h4 className="font-extrabold text-xs text-[#17231E] dark:text-[#FFF9ED]">Priya</h4>
-                  <p className="text-[10px] text-[#17231E]/60 dark:text-[#FFF9ED]/60 font-semibold">{t('nav.ngoRole')}</p>
+                  <h4 className="font-extrabold text-xs text-[#17231E] dark:text-[#F5F5F0]">Priya</h4>
+                  <p className="text-[10px] text-[#17231E]/60 dark:text-[#F5F5F0]/60 font-semibold">{t('nav.ngoRole')}</p>
                 </div>
               </div>
             </div>
 
             {/* Story 4: Arjun */}
-            <div className="bg-white dark:bg-[#121C18] p-6 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm flex flex-col justify-between space-y-4">
-              <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed italic">
+            <div className="bg-white dark:bg-[#161616] p-6 rounded-3xl border border-[#EAE3D2] dark:border-white/10 shadow-sm flex flex-col justify-between space-y-4">
+              <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed italic">
                 "{t('stories.arjunQuote')}"
               </p>
-              <div className="flex items-center space-x-3 pt-2 border-t border-[#EAE3D2] dark:border-[#24332D]">
+              <div className="flex items-center space-x-3 pt-2 border-t border-[#EAE3D2] dark:border-white/10">
                 <img 
                   src="/images/avatar-arjun.jpg" 
                   alt="Arjun" 
                   className="w-10 h-10 rounded-full object-cover border border-[#159B5B]/30"
                 />
                 <div>
-                  <h4 className="font-extrabold text-xs text-[#17231E] dark:text-[#FFF9ED]">Arjun</h4>
-                  <p className="text-[10px] text-[#17231E]/60 dark:text-[#FFF9ED]/60 font-semibold">{t('nav.donorRole')}</p>
+                  <h4 className="font-extrabold text-xs text-[#17231E] dark:text-[#F5F5F0]">Arjun</h4>
+                  <p className="text-[10px] text-[#17231E]/60 dark:text-[#F5F5F0]/60 font-semibold">{t('nav.donorRole')}</p>
                 </div>
               </div>
             </div>
@@ -1975,13 +1975,13 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* 8. GET INVOLVED SECTION                                                  */}
       {/* ========================================================================= */}
-      <section id="get-involved" className="py-20 bg-[#FFF9ED] dark:bg-[#0C1410] border-t border-[#EAE3D2] dark:border-[#24332D]">
+      <section id="get-involved" className="py-20 bg-[#FFF9ED] dark:bg-[#0D0D0D] border-t border-[#EAE3D2] dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
             {/* Left Column: Hands Caring Humanitarian Image */}
             <div className="lg:col-span-4">
-              <div className="relative overflow-hidden rounded-[32px] border-4 border-white dark:border-[#24332D] shadow-xl aspect-[16/11]">
+              <div className="relative overflow-hidden rounded-[32px] border-4 border-white dark:border-white/10 shadow-xl aspect-[16/11]">
                 <img 
                   src="/images/hands-care.jpg" 
                   alt="Hands holding in solidarity and community care" 
@@ -1999,7 +1999,7 @@ export const LandingPage: React.FC = () => {
               <h2 className="text-3xl sm:text-4xl font-black text-[#17231E] dark:text-white tracking-tight">
                 {t('getInvolved.title')}
               </h2>
-              <p className="text-xs text-[#17231E]/75 dark:text-[#FFF9ED]/75 leading-relaxed font-medium">
+              <p className="text-xs text-[#17231E]/75 dark:text-[#F5F5F0]/75 leading-relaxed font-medium">
                 {t('getInvolved.subtitle')}
               </p>
               <div className="pt-3 flex flex-wrap gap-2.5">
@@ -2011,7 +2011,7 @@ export const LandingPage: React.FC = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="px-5 py-2.5 bg-stone-100 hover:bg-stone-200 dark:bg-[#1A2621] dark:hover:bg-[#22332C] text-[#17231E] dark:text-[#FFF9ED] text-xs font-black tracking-wider uppercase rounded-full border border-[#EAE3D2] dark:border-[#24332D] transition-all"
+                  className="px-5 py-2.5 bg-stone-100 hover:bg-stone-200 dark:bg-[#262626] dark:hover:bg-[#292929] text-[#17231E] dark:text-[#F5F5F0] text-xs font-black tracking-wider uppercase rounded-full border border-[#EAE3D2] dark:border-white/10 transition-all"
                 >
                   {t('getInvolved.volunteerBtn')}
                 </Link>
@@ -2023,44 +2023,44 @@ export const LandingPage: React.FC = () => {
               
               <Link
                 to="/donor/dashboard"
-                className="p-4 bg-white dark:bg-[#121C18] hover:bg-[#E8F3E9] dark:hover:bg-[#182520] rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B] dark:hover:border-[#19AD66] shadow-sm flex items-center justify-between transition-all group"
+                className="p-4 bg-white dark:bg-[#161616] hover:bg-[#E8F3E9] dark:hover:bg-[#182520] rounded-2xl border border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#19AD66] shadow-sm flex items-center justify-between transition-all group"
               >
                 <div className="flex items-center space-x-2.5">
                   <Heart className="w-4 h-4 text-[#F2A33A]" />
-                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#FFF9ED]">{t('nav.donate')}</span>
+                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#F5F5F0]">{t('nav.donate')}</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-[#17231E]/40 dark:text-stone-500 group-hover:text-[#159B5B] transition-colors" />
               </Link>
 
               <Link
                 to="/register"
-                className="p-4 bg-white dark:bg-[#121C18] hover:bg-[#E8F3E9] dark:hover:bg-[#182520] rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B] dark:hover:border-[#19AD66] shadow-sm flex items-center justify-between transition-all group"
+                className="p-4 bg-white dark:bg-[#161616] hover:bg-[#E8F3E9] dark:hover:bg-[#182520] rounded-2xl border border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#19AD66] shadow-sm flex items-center justify-between transition-all group"
               >
                 <div className="flex items-center space-x-2.5">
                   <User className="w-4 h-4 text-[#159B5B]" />
-                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#FFF9ED]">{t('auth.roleVolunteer')}</span>
+                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#F5F5F0]">{t('auth.roleVolunteer')}</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-[#17231E]/40 dark:text-stone-500 group-hover:text-[#159B5B] transition-colors" />
               </Link>
 
               <Link
                 to="/register"
-                className="p-4 bg-white dark:bg-[#121C18] hover:bg-[#E8F3E9] dark:hover:bg-[#182520] rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B] dark:hover:border-[#19AD66] shadow-sm flex items-center justify-between transition-all group"
+                className="p-4 bg-white dark:bg-[#161616] hover:bg-[#E8F3E9] dark:hover:bg-[#182520] rounded-2xl border border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#19AD66] shadow-sm flex items-center justify-between transition-all group"
               >
                 <div className="flex items-center space-x-2.5">
                   <Building className="w-4 h-4 text-[#159B5B]" />
-                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#FFF9ED]">{t('getInvolved.partnerBtn')}</span>
+                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#F5F5F0]">{t('getInvolved.partnerBtn')}</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-[#17231E]/40 dark:text-stone-500 group-hover:text-[#159B5B] transition-colors" />
               </Link>
 
               <button
                 onClick={handleShare}
-                className="p-4 bg-white dark:bg-[#121C18] hover:bg-[#E8F3E9] dark:hover:bg-[#182520] rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] hover:border-[#159B5B] dark:hover:border-[#19AD66] shadow-sm flex items-center justify-between transition-all group text-left"
+                className="p-4 bg-white dark:bg-[#161616] hover:bg-[#E8F3E9] dark:hover:bg-[#182520] rounded-2xl border border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#19AD66] shadow-sm flex items-center justify-between transition-all group text-left"
               >
                 <div className="flex items-center space-x-2.5">
                   <Share2 className="w-4 h-4 text-[#159B5B]" />
-                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#FFF9ED]">
+                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#F5F5F0]">
                     {copiedLink ? t('common.copied') : t('getInvolved.spreadAwareness')}
                   </span>
                 </div>

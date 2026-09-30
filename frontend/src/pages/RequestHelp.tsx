@@ -94,7 +94,7 @@ export const RequestHelp: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] py-12 md:py-16 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+    <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] py-12 md:py-16 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
       <div className="max-w-3xl mx-auto space-y-8">
         
         {/* Editorial Charity Header */}
@@ -106,14 +106,14 @@ export const RequestHelp: React.FC = () => {
           <h1 className="text-3xl sm:text-5xl font-black text-[#17231E] dark:text-white tracking-tight">
             {t('request.title')}
           </h1>
-          <p className="text-[#17231E]/75 dark:text-[#FFF9ED]/75 text-sm sm:text-base max-w-xl mx-auto leading-relaxed font-medium">
+          <p className="text-[#17231E]/75 dark:text-[#F5F5F0]/75 text-sm sm:text-base max-w-xl mx-auto leading-relaxed font-medium">
             {t('request.subtitle')}
           </p>
         </div>
 
         {/* Successful Submission State */}
         {submissionResult ? (
-          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-8 sm:p-10 border border-[#EAE3D2] dark:border-[#24332D] shadow-lg space-y-6 animate-in zoom-in-95 duration-300">
+          <div className="bg-white dark:bg-[#161616] rounded-3xl p-8 sm:p-10 border border-[#EAE3D2] dark:border-white/10 shadow-lg space-y-6 animate-in zoom-in-95 duration-300">
             <div className="w-16 h-16 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-9 h-9" />
             </div>
@@ -131,7 +131,7 @@ export const RequestHelp: React.FC = () => {
             </div>
 
             {/* AI Analysis Summary Box */}
-            <div className="bg-[#FFF9ED] dark:bg-[#0C1410] rounded-2xl p-5 border border-[#EAE3D2] dark:border-[#24332D] grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
+            <div className="bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl p-5 border border-[#EAE3D2] dark:border-white/10 grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
               <div>
                 <span className="text-[10px] font-black text-stone-400 dark:text-stone-500 uppercase tracking-wider">AI Category</span>
                 <div className="text-lg font-black text-[#159B5B] dark:text-emerald-400 mt-0.5">
@@ -146,7 +146,7 @@ export const RequestHelp: React.FC = () => {
               </div>
               <div className="col-span-2 sm:col-span-1">
                 <span className="text-[10px] font-black text-stone-400 dark:text-stone-500 uppercase tracking-wider">DNN Confidence</span>
-                <div className="text-lg font-black text-[#17231E] dark:text-[#FFF9ED] mt-0.5">
+                <div className="text-lg font-black text-[#17231E] dark:text-[#F5F5F0] mt-0.5">
                   {(submissionResult.ai_analysis.dnn_confidence * 100).toFixed(1)}%
                 </div>
               </div>
@@ -161,14 +161,14 @@ export const RequestHelp: React.FC = () => {
 
             {/* Matched Resources Preview */}
             <div>
-              <h4 className="text-xs font-black uppercase tracking-wider text-[#17231E]/70 dark:text-[#FFF9ED]/70 mb-3">
+              <h4 className="text-xs font-black uppercase tracking-wider text-[#17231E]/70 dark:text-[#F5F5F0]/70 mb-3">
                 Matched Nearby Resources ({submissionResult.matched_resources?.length || 0})
               </h4>
               <div className="space-y-2">
                 {submissionResult.matched_resources?.map((res: any) => (
-                  <div key={res.resource_id} className="p-3.5 bg-[#FFF9ED]/60 dark:bg-[#0C1410]/60 border border-[#EAE3D2] dark:border-[#24332D] rounded-2xl flex items-center justify-between text-xs">
+                  <div key={res.resource_id} className="p-3.5 bg-[#FFF9ED]/60 dark:bg-[#0D0D0D]/60 border border-[#EAE3D2] dark:border-white/10 rounded-2xl flex items-center justify-between text-xs">
                     <div>
-                      <div className="font-extrabold text-[#17231E] dark:text-[#FFF9ED]">{res.resource_name}</div>
+                      <div className="font-extrabold text-[#17231E] dark:text-[#F5F5F0]">{res.resource_name}</div>
                       <div className="text-stone-500 dark:text-stone-400 text-[11px] mt-0.5">{res.organization_type} • {res.distance_km} km away</div>
                     </div>
                     <div className="text-right">
@@ -181,7 +181,7 @@ export const RequestHelp: React.FC = () => {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-[#EAE3D2] dark:border-[#24332D] flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="pt-4 border-t border-[#EAE3D2] dark:border-white/10 flex flex-col sm:flex-row items-center justify-center gap-3">
               <button
                 onClick={() => navigate('/map')}
                 className="w-full sm:w-auto px-7 py-3 bg-[#159B5B] hover:bg-[#12834D] text-white font-black rounded-full text-xs uppercase tracking-wider transition-all hover:scale-105"
@@ -193,7 +193,7 @@ export const RequestHelp: React.FC = () => {
                   setSubmissionResult(null);
                   setDescription('');
                 }}
-                className="w-full sm:w-auto px-7 py-3 bg-[#F7EBD2]/60 dark:bg-[#1A2621] hover:bg-[#F7EBD2] dark:hover:bg-[#22332C] text-[#17231E] dark:text-[#FFF9ED] font-bold rounded-full text-xs uppercase tracking-wider transition-all"
+                className="w-full sm:w-auto px-7 py-3 bg-[#F7EBD2]/60 dark:bg-[#262626] hover:bg-[#F7EBD2] dark:hover:bg-[#292929] text-[#17231E] dark:text-[#F5F5F0] font-bold rounded-full text-xs uppercase tracking-wider transition-all"
               >
                 Submit Another Request
               </button>
@@ -202,7 +202,7 @@ export const RequestHelp: React.FC = () => {
           </div>
         ) : (
           /* Welcoming, Simple Submission Form */
-          <form onSubmit={handleSubmit} className="bg-white dark:bg-[#121C18] rounded-3xl p-6 sm:p-10 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-6">
+          <form onSubmit={handleSubmit} className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-10 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-6">
             
             {error && (
               <div className="p-4 bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900/60 text-xs text-rose-800 dark:text-rose-200 rounded-2xl flex items-center space-x-2">
@@ -213,7 +213,7 @@ export const RequestHelp: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label className="block text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1.5">
                   {t('request.fullName')}
                 </label>
                 <input
@@ -222,12 +222,12 @@ export const RequestHelp: React.FC = () => {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="e.g. Murugan S."
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-white dark:bg-[#0C1410] p-3.5 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] transition-all"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-3.5 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1.5">
                   {t('request.phone')}
                 </label>
                 <input
@@ -236,7 +236,7 @@ export const RequestHelp: React.FC = () => {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="e.g. +91 91234 44004"
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-white dark:bg-[#0C1410] p-3.5 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] transition-all"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-3.5 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] transition-all"
                 />
                 <span className="text-[10px] text-stone-400 dark:text-stone-500 mt-1 block">{t('request.privateContact')}</span>
               </div>
@@ -244,7 +244,7 @@ export const RequestHelp: React.FC = () => {
 
             <div>
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                <label className="block text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider">
+                <label className="block text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider">
                   {t('request.description')}
                 </label>
                 <div className="flex items-center space-x-3">
@@ -266,7 +266,7 @@ export const RequestHelp: React.FC = () => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Be as detailed as possible. e.g.: 'I have two children and we have not had food since yesterday. Stranded near railway track with no money.'"
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-white dark:bg-[#0C1410] p-4 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] transition-all"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-4 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] transition-all"
               />
 
               {/* Multilingual Voice Input Integration */}
@@ -286,9 +286,9 @@ export const RequestHelp: React.FC = () => {
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>AI Neural Preview:</span>
                 </div>
-                <div className="flex flex-wrap gap-4 text-[#17231E]/80 dark:text-[#FFF9ED]/80 pt-0.5 font-medium">
-                  <span>Classified Category: <strong className="text-[#17231E] dark:text-[#FFF9ED]">{previewData.category}</strong></span>
-                  <span>Confidence: <strong className="text-[#17231E] dark:text-[#FFF9ED]">{previewData.confidence_percentage}%</strong></span>
+                <div className="flex flex-wrap gap-4 text-[#17231E]/80 dark:text-[#F5F5F0]/80 pt-0.5 font-medium">
+                  <span>Classified Category: <strong className="text-[#17231E] dark:text-[#F5F5F0]">{previewData.category}</strong></span>
+                  <span>Confidence: <strong className="text-[#17231E] dark:text-[#F5F5F0]">{previewData.confidence_percentage}%</strong></span>
                   <span>Estimated Urgency: <strong className="text-[#F2A33A] dark:text-amber-400">{previewData.urgency}</strong></span>
                 </div>
               </div>
@@ -296,13 +296,13 @@ export const RequestHelp: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1.5">
                   {t('request.category')}
                 </label>
                 <select
                   value={statedCategory}
                   onChange={(e) => setStatedCategory(e.target.value)}
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] p-3 text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] bg-white dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 p-3 text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0]"
                 >
                   {categories.map((c) => (
                     <option key={c} value={c}>{c}</option>
@@ -311,7 +311,7 @@ export const RequestHelp: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1.5">
                   {t('request.people')}
                 </label>
                 <input
@@ -320,18 +320,18 @@ export const RequestHelp: React.FC = () => {
                   max={50}
                   value={peopleCount}
                   onChange={(e) => setPeopleCount(Number(e.target.value))}
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-white dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] p-3 text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] p-3 text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1.5">
                   {t('request.contactMethod')}
                 </label>
                 <select
                   value={contactMethod}
                   onChange={(e) => setContactMethod(e.target.value)}
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] p-3 text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] bg-white dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 p-3 text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0]"
                 >
                   <option value="Phone">Phone Call</option>
                   <option value="SMS">SMS / WhatsApp</option>
@@ -342,7 +342,7 @@ export const RequestHelp: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1.5">
                   {t('request.address')}
                 </label>
                 <input
@@ -350,12 +350,12 @@ export const RequestHelp: React.FC = () => {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="e.g. Gandhipuram, Coimbatore"
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-white dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 p-3.5 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 p-3.5 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1.5">
                   {t('request.situation')}
                 </label>
                 <input
@@ -363,13 +363,13 @@ export const RequestHelp: React.FC = () => {
                   value={situation}
                   onChange={(e) => setSituation(e.target.value)}
                   placeholder="e.g. Homeless on street, rain leaking"
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-white dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 p-3.5 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 p-3.5 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
                 />
               </div>
             </div>
 
             {/* Privacy notice banner */}
-            <div className="p-4 bg-[#FFF9ED] dark:bg-[#0C1410]/60 border border-[#EAE3D2] dark:border-[#24332D] rounded-2xl text-[11px] text-stone-500 dark:text-stone-400 flex items-start space-x-2.5">
+            <div className="p-4 bg-[#FFF9ED] dark:bg-[#0D0D0D]/60 border border-[#EAE3D2] dark:border-white/10 rounded-2xl text-[11px] text-stone-500 dark:text-stone-400 flex items-start space-x-2.5">
               <ShieldCheck className="w-4 h-4 text-[#159B5B] dark:text-emerald-400 flex-shrink-0 mt-0.5" />
               <span>Public and donor views only display approximate generalized coordinates to protect vulnerable individuals. Exact address is restricted to verified NGOs and Admins.</span>
             </div>

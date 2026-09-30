@@ -40,7 +40,7 @@ const AuthSceneLayout: React.FC<{
 }> = ({ children, title, subtitle, badgeText = "AI RESOURCE MATCHING PLATFORM" }) => {
   const { t } = useLanguage();
   return (
-    <div className="min-h-screen relative flex items-center justify-center p-4 sm:p-6 lg:p-8 overflow-hidden bg-[#FFF9ED] dark:bg-[#07120F] text-[#17231E] dark:text-[#FFF9ED] transition-colors duration-500 selection:bg-emerald-600 selection:text-white">
+    <div className="min-h-screen relative flex items-center justify-center p-4 sm:p-6 lg:p-8 overflow-hidden bg-[#FFF9ED] dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] transition-colors duration-500 selection:bg-emerald-600 selection:text-white">
       
       {/* ========================================================================= */}
       {/* 1. CINEMATIC TOPIC-SPECIFIC BACKGROUND IMAGE & ATMOSPHERIC LIGHTING      */}
@@ -137,7 +137,7 @@ const AuthSceneLayout: React.FC<{
 
         {/* Subtle AR Resource Telemetry Badges in screen perimeter (desktop) */}
         {/* Top-Left: Food Supply Node */}
-        <div className="hidden lg:flex items-center space-x-2.5 absolute top-20 left-10 xl:left-24 px-4 py-2 rounded-2xl bg-white/80 dark:bg-[#091C16]/85 backdrop-blur-md border border-emerald-500/30 dark:border-emerald-500/40 shadow-lg text-[11px] font-bold text-[#17231E] dark:text-[#FFF9ED] animate-float">
+        <div className="hidden lg:flex items-center space-x-2.5 absolute top-20 left-10 xl:left-24 px-4 py-2 rounded-2xl bg-white/80 dark:bg-[#0D0D0D]/85 backdrop-blur-md border border-emerald-500/30 dark:border-emerald-500/40 shadow-lg text-[11px] font-bold text-[#17231E] dark:text-[#F5F5F0] animate-float">
           <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
             <Utensils className="w-3 h-3" />
           </div>
@@ -151,7 +151,7 @@ const AuthSceneLayout: React.FC<{
         </div>
 
         {/* Bottom-Left: Haven Shelter Node */}
-        <div className="hidden lg:flex items-center space-x-2.5 absolute bottom-24 left-8 xl:left-20 px-4 py-2 rounded-2xl bg-white/80 dark:bg-[#091C16]/85 backdrop-blur-md border border-cyan-500/30 dark:border-cyan-500/40 shadow-lg text-[11px] font-bold text-[#17231E] dark:text-[#FFF9ED] animate-float-slow">
+        <div className="hidden lg:flex items-center space-x-2.5 absolute bottom-24 left-8 xl:left-20 px-4 py-2 rounded-2xl bg-white/80 dark:bg-[#0D0D0D]/85 backdrop-blur-md border border-cyan-500/30 dark:border-cyan-500/40 shadow-lg text-[11px] font-bold text-[#17231E] dark:text-[#F5F5F0] animate-float-slow">
           <div className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
             <Home className="w-3 h-3" />
           </div>
@@ -165,7 +165,7 @@ const AuthSceneLayout: React.FC<{
         </div>
 
         {/* Top-Right: Mobile Clinic Node */}
-        <div className="hidden lg:flex items-center space-x-2.5 absolute top-24 right-10 xl:right-24 px-4 py-2 rounded-2xl bg-white/80 dark:bg-[#091C16]/85 backdrop-blur-md border border-rose-500/30 dark:border-rose-500/40 shadow-lg text-[11px] font-bold text-[#17231E] dark:text-[#FFF9ED] animate-float-slow">
+        <div className="hidden lg:flex items-center space-x-2.5 absolute top-24 right-10 xl:right-24 px-4 py-2 rounded-2xl bg-white/80 dark:bg-[#0D0D0D]/85 backdrop-blur-md border border-rose-500/30 dark:border-rose-500/40 shadow-lg text-[11px] font-bold text-[#17231E] dark:text-[#F5F5F0] animate-float-slow">
           <div className="w-6 h-6 rounded-full bg-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center">
             <Cross className="w-3 h-3" />
           </div>
@@ -179,7 +179,7 @@ const AuthSceneLayout: React.FC<{
         </div>
 
         {/* Bottom-Right: Relief Essentials Node */}
-        <div className="hidden lg:flex items-center space-x-2.5 absolute bottom-20 right-8 xl:right-20 px-4 py-2 rounded-2xl bg-white/80 dark:bg-[#091C16]/85 backdrop-blur-md border border-amber-500/30 dark:border-amber-500/40 shadow-lg text-[11px] font-bold text-[#17231E] dark:text-[#FFF9ED] animate-float">
+        <div className="hidden lg:flex items-center space-x-2.5 absolute bottom-20 right-8 xl:right-20 px-4 py-2 rounded-2xl bg-white/80 dark:bg-[#0D0D0D]/85 backdrop-blur-md border border-amber-500/30 dark:border-amber-500/40 shadow-lg text-[11px] font-bold text-[#17231E] dark:text-[#F5F5F0] animate-float">
           <div className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center">
             <Shirt className="w-3 h-3" />
           </div>
@@ -214,7 +214,7 @@ const AuthSceneLayout: React.FC<{
         {/* The Frosted Glass Card with Backdrop Blur & Specular Glow */}
         <div 
           className="
-            bg-white/90 dark:bg-[#0B1A15]/90 
+            bg-white/90 dark:bg-[#0D0D0D]/90 
             backdrop-blur-md sm:backdrop-blur-xl
             rounded-[2rem] sm:rounded-[2.25rem] 
             border border-white/80 dark:border-emerald-500/25 
@@ -331,7 +331,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleQuickLogin('admin')}
-              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-[#1E362D] bg-white/70 dark:bg-[#071712]/70 hover:bg-emerald-50/80 dark:hover:bg-[#0F261F] hover:border-emerald-500/40 text-[#17231E] dark:text-[#FFF9ED] text-xs font-bold text-left transition-all shadow-sm group"
+              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/70 dark:bg-[#0D0D0D]/70 hover:bg-emerald-50/80 dark:hover:bg-[#0F261F] hover:border-emerald-500/40 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold text-left transition-all shadow-sm group"
             >
               <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-emerald-300 font-extrabold group-hover:text-emerald-600 transition-colors">
                 <span>👑</span>
@@ -345,7 +345,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleQuickLogin('ngo')}
-              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-[#1E362D] bg-white/70 dark:bg-[#071712]/70 hover:bg-emerald-50/80 dark:hover:bg-[#0F261F] hover:border-emerald-500/40 text-[#17231E] dark:text-[#FFF9ED] text-xs font-bold text-left transition-all shadow-sm group"
+              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/70 dark:bg-[#0D0D0D]/70 hover:bg-emerald-50/80 dark:hover:bg-[#0F261F] hover:border-emerald-500/40 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold text-left transition-all shadow-sm group"
             >
               <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-emerald-300 font-extrabold group-hover:text-emerald-600 transition-colors">
                 <span>🏛️</span>
@@ -359,7 +359,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleQuickLogin('donor')}
-              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-[#1E362D] bg-white/70 dark:bg-[#071712]/70 hover:bg-emerald-50/80 dark:hover:bg-[#0F261F] hover:border-emerald-500/40 text-[#17231E] dark:text-[#FFF9ED] text-xs font-bold text-left transition-all shadow-sm group"
+              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/70 dark:bg-[#0D0D0D]/70 hover:bg-emerald-50/80 dark:hover:bg-[#0F261F] hover:border-emerald-500/40 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold text-left transition-all shadow-sm group"
             >
               <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-emerald-300 font-extrabold group-hover:text-emerald-600 transition-colors">
                 <span>❤️</span>
@@ -373,7 +373,7 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleQuickLogin('requester')}
-              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-[#1E362D] bg-white/70 dark:bg-[#071712]/70 hover:bg-emerald-50/80 dark:hover:bg-[#0F261F] hover:border-emerald-500/40 text-[#17231E] dark:text-[#FFF9ED] text-xs font-bold text-left transition-all shadow-sm group"
+              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/70 dark:bg-[#0D0D0D]/70 hover:bg-emerald-50/80 dark:hover:bg-[#0F261F] hover:border-emerald-500/40 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold text-left transition-all shadow-sm group"
             >
               <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-emerald-300 font-extrabold group-hover:text-emerald-600 transition-colors">
                 <span>👤</span>
@@ -388,17 +388,17 @@ export const LoginPage: React.FC = () => {
 
         {/* Divider */}
         <div className="relative flex py-1 items-center">
-          <div className="flex-grow border-t border-[#EAE3D2] dark:border-[#1E362D]"></div>
+          <div className="flex-grow border-t border-[#EAE3D2] dark:border-white/10"></div>
           <span className="flex-shrink mx-3 text-stone-400 dark:text-stone-500 text-[11px] uppercase font-bold tracking-wider">
             Or sign in with email
           </span>
-          <div className="flex-grow border-t border-[#EAE3D2] dark:border-[#1E362D]"></div>
+          <div className="flex-grow border-t border-[#EAE3D2] dark:border-white/10"></div>
         </div>
 
         {/* Standard Email & Password Form */}
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <div>
-            <label className="block font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1.5">
+            <label className="block font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1.5">
               Email Address
             </label>
             <div className="relative">
@@ -408,14 +408,14 @@ export const LoginPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="e.g. admin@sahaayaa.org"
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#1E362D] bg-white/80 dark:bg-[#071712]/80 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 py-3 pl-11 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-3 pl-11 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
               />
               <Mail className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-4 top-1/2 -translate-y-1/2" />
             </div>
           </div>
 
           <div>
-            <label className="block font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1.5">
+            <label className="block font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1.5">
               Password
             </label>
             <div className="relative">
@@ -425,7 +425,7 @@ export const LoginPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#1E362D] bg-white/80 dark:bg-[#071712]/80 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 py-3 pl-11 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-3 pl-11 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
               />
               <Lock className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-4 top-1/2 -translate-y-1/2" />
             </div>
@@ -514,7 +514,7 @@ export const RegisterPage: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-3.5 text-xs">
           <div>
-            <label className="block font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1">
+            <label className="block font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1">
               Full Name *
             </label>
             <div className="relative">
@@ -524,14 +524,14 @@ export const RegisterPage: React.FC = () => {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="e.g. Ramesh Kumar"
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#1E362D] bg-white/80 dark:bg-[#071712]/80 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
               />
               <User className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
             </div>
           </div>
 
           <div>
-            <label className="block font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1">
+            <label className="block font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1">
               Email Address *
             </label>
             <div className="relative">
@@ -541,14 +541,14 @@ export const RegisterPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="e.g. ramesh@gmail.com"
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#1E362D] bg-white/80 dark:bg-[#071712]/80 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
               />
               <Mail className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
             </div>
           </div>
 
           <div>
-            <label className="block font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1">
+            <label className="block font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1">
               Password *
             </label>
             <div className="relative">
@@ -558,7 +558,7 @@ export const RegisterPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#1E362D] bg-white/80 dark:bg-[#071712]/80 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
               />
               <Lock className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
             </div>
@@ -566,13 +566,13 @@ export const RegisterPage: React.FC = () => {
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1">
+              <label className="block font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1">
                 Role *
               </label>
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value as UserRole)}
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#1E362D] bg-white/80 dark:bg-[#071712]/80 text-[#17231E] dark:text-[#FFF9ED] py-2.5 px-3 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 font-semibold"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] py-2.5 px-3 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 font-semibold"
               >
                 <option value="requester">Needy Requester</option>
                 <option value="donor">Donor / Volunteer</option>
@@ -581,7 +581,7 @@ export const RegisterPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="block font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1">
+              <label className="block font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1">
                 Phone
               </label>
               <div className="relative">
@@ -590,7 +590,7 @@ export const RegisterPage: React.FC = () => {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+91 94444 11223"
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#1E362D] bg-white/80 dark:bg-[#071712]/80 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-9 pr-3 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 font-medium"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-9 pr-3 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 font-medium"
                 />
                 <Phone className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
               </div>
@@ -599,7 +599,7 @@ export const RegisterPage: React.FC = () => {
 
           {role === 'ngo' && (
             <div>
-              <label className="block font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider mb-1">
+              <label className="block font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-1">
                 Organization Name *
               </label>
               <div className="relative">
@@ -609,7 +609,7 @@ export const RegisterPage: React.FC = () => {
                   value={orgName}
                   onChange={(e) => setOrgName(e.target.value)}
                   placeholder="e.g. Coimbatore Seva Trust"
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#1E362D] bg-white/80 dark:bg-[#071712]/80 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 font-medium"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 font-medium"
                 />
                 <Building className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
               </div>
