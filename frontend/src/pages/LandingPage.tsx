@@ -48,7 +48,7 @@ import OneTapHelpModal from '../components/OneTapHelpModal';
 import { MobilityLayerModal } from '../components/MobilityLayerModal';
 import MagneticButton from '../components/MagneticButton';
 import { useLanguage } from '../i18n';
-
+import { useAuth } from '../context/AuthContext';
 
 // Custom Leaflet marker icons matching the charity aesthetic
 
@@ -126,6 +126,14 @@ const MapPanController: React.FC<{ center: [number, number] | null }> = ({ cente
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const { t, language } = useLanguage();
+  const { user } = useAuth();
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 17) return 'Good afternoon';
+    return 'Good evening';
+  };
 
   // Impact stats from real backend API
   const [impact, setImpact] = useState({
@@ -516,6 +524,108 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       <section id="hero" ref={heroRef} className="relative pt-8 md:pt-14 pb-20 md:pb-28 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* ========================================================================= */}
+          {/* MOBILE / APP TOP HEADER & QUICK CATEGORY SELECTOR                        */}
+          {/* ========================================================================= */}
+          <div className="space-y-4 mb-8">
+            {/* Dynamic Time-Based Greeting Bar */}
+            <div className="flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-[#161616] border border-[#E7E0D6] dark:border-white/10 shadow-sm">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full bg-[#F25C38] text-white flex items-center justify-center font-black text-sm shadow-sm shrink-0">
+                  {user ? user.full_name.charAt(0).toUpperCase() : '👋'}
+                </div>
+                <div>
+                  <div className="text-[11px] text-[#78716C] dark:text-[#A8A29E] font-semibold">{getGreeting()}</div>
+                  <div className="text-sm font-extrabold text-[#1C1917] dark:text-[#F5F5F0]">
+                    {user ? user.full_name : 'Welcome to SAHAAYAA AI'}
+                  </div>
+                </div>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setShowOneTapModal(true)}
+                className="px-3.5 py-1.5 rounded-full bg-[#F25C38]/10 hover:bg-[#F25C38]/20 text-[#F25C38] font-bold text-xs flex items-center space-x-1.5 transition-colors cursor-pointer shrink-0"
+              >
+                <Bell className="w-3.5 h-3.5 fill-current animate-pulse" />
+                <span>1-Tap Help</span>
+              </button>
+            </div>
+
+            {/* Integrated Quick Search Bar */}
+            <div className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search help, food, shelter, clinic, emergency..."
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    const el = document.getElementById('resources');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="w-full py-3.5 pl-11 pr-12 rounded-2xl bg-white dark:bg-[#161616] border border-[#E7E0D6] dark:border-white/10 text-xs font-semibold text-[#1C1917] dark:text-[#F5F5F0] placeholder:text-[#78716C]/60 dark:placeholder:text-stone-500 shadow-sm focus:outline-none focus:border-[#F25C38]"
+              />
+              <Search className="w-4 h-4 text-[#78716C] dark:text-stone-400 absolute left-4 top-1/2 -translate-y-1/2" />
+              <button
+                type="button"
+                onClick={() => {
+                  const el = document.getElementById('resources');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="w-8 h-8 rounded-xl bg-[#F25C38] hover:bg-[#E04925] text-white flex items-center justify-center absolute right-2 top-1/2 -translate-y-1/2 shadow-xs cursor-pointer"
+                title="Search"
+              >
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* 8 Category Touch Cards (Horizontal Scrollable Carousel on Mobile) */}
+            <div className="space-y-2 pt-1">
+              <div className="flex items-center justify-between px-1">
+                <span className="text-[11px] font-black uppercase tracking-wider text-[#78716C] dark:text-[#A8A29E]">Explore Categories</span>
+                <span className="text-[11px] font-bold text-[#F25C38] flex items-center space-x-0.5">
+                  <span>Scroll for all</span>
+                  <ChevronRight className="w-3 h-3" />
+                </span>
+              </div>
+              <div className="flex items-center space-x-3 overflow-x-auto pb-2 scrollbar-none snap-x touch-pan-x">
+                {[
+                  { id: 'Food', label: 'Food & Water', icon: '🍚', count: 'Verified Centers' },
+                  { id: 'Shelter', label: 'Shelter Home', icon: '🏠', count: 'Emergency Beds' },
+                  { id: 'Medical', label: 'Medical Clinic', icon: '🩺', count: 'Doctors & Meds' },
+                  { id: 'Clothing', label: 'Clothing', icon: '👕', count: 'Warm Wear' },
+                  { id: 'Transport', label: 'Transport Aid', icon: '🚌', count: 'Transit Help' },
+                  { id: 'Mental Health', label: 'Mental Care', icon: '🧠', count: '24/7 Helpline' },
+                  { id: 'Employment', label: 'Jobs & Skills', icon: '💼', count: 'Work & Support' },
+                  { id: 'Emergency', label: 'Other Needs', icon: '🤝', count: 'Community Care' },
+                ].map((cat) => (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategory(cat.id);
+                      const el = document.getElementById('resources');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className={`snap-start shrink-0 min-w-[125px] p-3.5 rounded-2xl border text-left transition-all duration-200 cursor-pointer min-h-[44px] ${
+                      selectedCategory.toUpperCase() === cat.id.toUpperCase()
+                        ? 'bg-[#F25C38] border-[#F25C38] text-white shadow-md scale-[1.02]'
+                        : 'bg-white dark:bg-[#161616] border-[#E7E0D6] dark:border-white/10 text-[#1C1917] dark:text-[#F5F5F0] hover:border-[#F25C38]/50'
+                    }`}
+                  >
+                    <span className="text-2xl block mb-1">{cat.icon}</span>
+                    <span className="font-extrabold text-xs block leading-tight">{cat.label}</span>
+                    <span className={`text-[10px] block mt-0.5 font-medium ${selectedCategory.toUpperCase() === cat.id.toUpperCase() ? 'text-white/80' : 'text-[#78716C] dark:text-stone-400'}`}>
+                      {cat.count}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
             
             {/* Left Column: Typography & CTAs */}
@@ -711,6 +821,132 @@ export const LandingPage: React.FC = () => {
               </div>
             </div>
 
+          </div>
+
+          {/* ========================================================================= */}
+          {/* COMMUNITY NEEDS FEED (HORIZONTAL CAROUSEL OF REAL LIVE HELP REQUESTS)     */}
+          {/* ========================================================================= */}
+          {requests && requests.length > 0 && (
+            <div className="mt-14 space-y-4">
+              <div className="flex items-center justify-between px-1">
+                <div className="flex items-center space-x-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#F25C38] animate-ping" />
+                  <span className="text-xs font-black uppercase tracking-wider text-[#1C1917] dark:text-[#F5F5F0]">Live Community Needs Feed</span>
+                </div>
+                <Link to="/help-reports" className="text-xs font-bold text-[#F25C38] hover:underline flex items-center space-x-1">
+                  <span>View All ({requests.length})</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+
+              <div className="flex items-stretch space-x-4 overflow-x-auto pb-3 scrollbar-none snap-x touch-pan-x">
+                {requests.slice(0, 8).map((req) => (
+                  <div 
+                    key={req.id} 
+                    className="snap-start shrink-0 w-[270px] sm:w-[300px] p-4 sm:p-5 rounded-3xl bg-white dark:bg-[#161616] border border-[#E7E0D6] dark:border-white/10 shadow-sm flex flex-col justify-between space-y-3 hover:shadow-md transition-shadow"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#F25C38]/10 text-[#F25C38] font-black text-[10px] uppercase tracking-wider">
+                          {req.category}
+                        </span>
+                        {req.is_verified && (
+                          <span className="text-[10px] font-extrabold text-[#F25C38] flex items-center space-x-0.5">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#F25C38]" />
+                            <span>✓ VERIFIED</span>
+                          </span>
+                        )}
+                      </div>
+                      <h4 className="font-extrabold text-xs sm:text-sm text-[#1C1917] dark:text-[#F5F5F0] line-clamp-1">{req.current_situation || `${req.category} Assistance Needed`}</h4>
+                      <p className="text-[11px] text-[#78716C] dark:text-[#A8A29E] line-clamp-2 leading-relaxed">{req.description}</p>
+                    </div>
+
+                    <div className="pt-2 border-t border-[#E7E0D6]/60 dark:border-white/5 flex items-center justify-between">
+                      <span className="text-[10px] text-[#78716C] dark:text-[#A8A29E] flex items-center font-medium truncate max-w-[150px]">
+                        <MapPin className="w-3 h-3 mr-0.5 text-[#F25C38] shrink-0" />
+                        <span className="truncate">{req.address || 'Coimbatore'}</span>
+                      </span>
+                      <Link
+                        to={`/help-reports/${req.id}`}
+                        className="px-3.5 py-1.5 bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-[10px] rounded-full uppercase tracking-wider transition-colors shadow-xs"
+                      >
+                        Respond →
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================================= */}
+          {/* PROMOTIONAL ACTION BANNER: MAKE A DIFFERENCE TODAY                        */}
+          {/* ========================================================================= */}
+          <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#1C1917] via-[#262626] to-[#1C1917] text-white shadow-xl relative overflow-hidden border border-white/10">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[#F25C38]/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="relative z-10 space-y-3">
+              <span className="text-[10px] font-black uppercase tracking-widest text-[#F25C38]">Community Impact Banner</span>
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">MAKE A DIFFERENCE TODAY</h3>
+              <p className="text-xs sm:text-sm text-[#A8A29E] max-w-xl leading-relaxed">
+                Report someone experiencing homelessness or transit barriers so SAHAAYAA AI can connect them with verified shelters, food centers, and volunteer support.
+              </p>
+              <div className="pt-2 flex flex-wrap items-center gap-3">
+                <Link
+                  to="/request-help"
+                  className="px-6 py-3 bg-[#F25C38] hover:bg-[#E04925] text-white font-black text-xs uppercase tracking-wider rounded-full shadow-md transition-all flex items-center space-x-2"
+                >
+                  <span>REPORT A NEED</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  to="/help-someone"
+                  className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-black text-xs uppercase tracking-wider rounded-full border border-white/20 transition-all flex items-center space-x-2"
+                >
+                  <span>HELP SOMEONE</span>
+                  <Users className="w-4 h-4 text-[#F25C38]" />
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* ========================================================================= */}
+          {/* MENTAL HEALTH SUPPORT SECTION                                             */}
+          {/* ========================================================================= */}
+          <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-[#F25C38]/10 dark:bg-[#F25C38]/15 border border-[#F25C38]/20 shadow-sm">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="space-y-2">
+                <div className="inline-flex items-center space-x-2 text-[10px] font-black uppercase tracking-wider text-[#F25C38]">
+                  <Brain className="w-4 h-4" />
+                  <span>MENTAL HEALTH & TRAUMA SUPPORT</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-black text-[#1C1917] dark:text-[#F5F5F0]">
+                  You Are Not Alone. Free Confidential Support 24/7.
+                </h3>
+                <p className="text-xs text-[#57534E] dark:text-[#A8A29E] max-w-xl leading-relaxed font-medium">
+                  Immediate 24/7 free emotional counselling, crisis relief, and mental health support services for anyone experiencing severe distress or homelessness.
+                </p>
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-3 shrink-0">
+                <a
+                  href="tel:18005990019"
+                  className="px-5 py-3 rounded-full bg-[#F25C38] hover:bg-[#E04925] text-white font-black text-xs uppercase tracking-wider shadow-md flex items-center space-x-2 transition-all hover:scale-105"
+                >
+                  <Phone className="w-4 h-4 animate-bounce" />
+                  <span>24/7 HELPLINE (1800-599-0019)</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFastHelpCat('MEDICAL');
+                    setShowFastHelp(true);
+                  }}
+                  className="px-5 py-3 rounded-full bg-white dark:bg-[#161616] text-[#1C1917] dark:text-[#F5F5F0] border border-[#E7E0D6] dark:border-white/10 font-bold text-xs uppercase tracking-wider hover:bg-stone-50 dark:hover:bg-[#222222] transition-all cursor-pointer"
+                >
+                  <span>Connect AI Agent</span>
+                </button>
+              </div>
+            </div>
           </div>
 
         </div>

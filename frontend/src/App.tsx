@@ -19,6 +19,7 @@ import NgoDashboard from './pages/NgoDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import HumanitarianIntelligence from './pages/HumanitarianIntelligence';
 import HelpReportsDashboard from './pages/HelpReportsDashboard';
+import ProfilePage from './pages/ProfilePage';
 import { LoginPage, RegisterPage } from './pages/AuthPages';
 import { AlertTriangle, Home } from 'lucide-react';
 
@@ -70,6 +71,7 @@ const MainLayout: React.FC = () => {
           <Route path="/donor/dashboard" element={<DonorDashboard />} />
           <Route path="/ngo/dashboard" element={<NgoDashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<NotFound />} />

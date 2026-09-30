@@ -449,17 +449,26 @@ export const Navbar: React.FC = () => {
 
             {/* Sign In button */}
             {user ? (
-              <button
-                onClick={() => { logout(); setMobileMenuOpen(false); }}
-                className="w-full py-3 px-4 bg-rose-50 text-rose-600 font-bold rounded-2xl text-center text-sm min-h-[48px]"
-              >
-                {t('nav.signOut')} ({user.full_name})
-              </button>
+              <div className="flex space-x-2">
+                <Link
+                  to="/profile"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex-1 py-3 px-4 bg-[#F25C38]/10 text-[#F25C38] font-bold rounded-2xl text-center text-sm block min-h-[48px] border border-[#F25C38]/30"
+                >
+                  My Profile ({user.full_name.split(' ')[0]})
+                </Link>
+                <button
+                  onClick={() => { logout(); setMobileMenuOpen(false); }}
+                  className="py-3 px-4 bg-rose-50 text-rose-600 font-bold rounded-2xl text-center text-sm min-h-[48px]"
+                >
+                  {t('nav.signOut')}
+                </button>
+              </div>
             ) : (
               <Link
                 to="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-3 px-4 bg-white dark:bg-[#262626] border-2 border-[#075C4F] text-[#075C4F] dark:text-[#12B76A] font-bold rounded-2xl text-center text-sm block min-h-[48px]"
+                className="w-full py-3 px-4 bg-white dark:bg-[#262626] border-2 border-[#F25C38] text-[#F25C38] font-bold rounded-2xl text-center text-sm block min-h-[48px]"
               >
                 {t('nav.signIn')}
               </Link>
@@ -472,7 +481,7 @@ export const Navbar: React.FC = () => {
                   <button
                     key={l.id}
                     onClick={() => setLanguage(l.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold ${language === l.id ? 'bg-[#075C4F] text-white' : 'bg-stone-100 text-stone-700'}`}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold ${language === l.id ? 'bg-[#F25C38] text-white' : 'bg-stone-100 dark:bg-[#262626] text-stone-700 dark:text-stone-300'}`}
                   >
                     {l.flag} {l.id.toUpperCase()}
                   </button>
@@ -481,17 +490,17 @@ export const Navbar: React.FC = () => {
 
               <button
                 onClick={toggleTheme}
-                className="px-3.5 py-1.5 rounded-xl bg-stone-100 dark:bg-[#262626] text-xs font-bold text-[#075C4F] dark:text-[#F2A33A] flex items-center space-x-1.5 cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl bg-stone-100 dark:bg-[#262626] text-xs font-bold text-[#F25C38] flex items-center space-x-1.5 cursor-pointer"
               >
                 {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
-                <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
+                <span>{isDark ? 'Light' : 'Dark'}</span>
               </button>
 
               <button
                 onClick={() => { setMobileMenuOpen(false); setShowSettingsModal(true); }}
-                className="px-3.5 py-1.5 rounded-xl bg-stone-100 dark:bg-[#262626] text-xs font-bold text-[#075C4F] dark:text-[#12B76A] flex items-center space-x-1.5 cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl bg-stone-100 dark:bg-[#262626] text-xs font-bold text-[#F25C38] flex items-center space-x-1.5 cursor-pointer"
               >
-                <Settings className="w-4 h-4 text-[#075C4F] dark:text-[#12B76A]" />
+                <Settings className="w-4 h-4 text-[#F25C38]" />
                 <span>Settings</span>
               </button>
             </div>
