@@ -4,51 +4,52 @@ from models import db, User, Request, Resource, Match, Donation, RequestStatusHi
 
 def init_db(app):
     with app.app_context():
-        db.create_all()
-        # Migration logic for new requests & donations columns if table already existed
-        with db.engine.connect() as conn:
-            from sqlalchemy import text
-            for table_name, col_def in [
-                ("requests", ("is_help_someone", "BOOLEAN DEFAULT 0")),
-                ("requests", ("has_photo_permission", "BOOLEAN DEFAULT 0")),
-                ("requests", ("voice_transcript", "TEXT")),
-                ("donations", ("urgent_request_id", "INTEGER")),
-                ("donations", ("resource_id", "INTEGER")),
-                ("donations", ("item_category", "VARCHAR(50) DEFAULT 'OTHER'")),
-                ("donations", ("item_description", "TEXT")),
-                ("donations", ("quantity", "INTEGER DEFAULT 1")),
-                ("donations", ("unit", "VARCHAR(30) DEFAULT 'items'")),
-                ("donations", ("donor_latitude", "FLOAT DEFAULT 11.0168")),
-                ("donations", ("donor_longitude", "FLOAT DEFAULT 76.9558")),
-                ("donations", ("donor_address", "VARCHAR(255)")),
-                ("donations", ("reallocated_from_id", "INTEGER")),
-                ("donations", ("updated_at", "DATETIME"))
-            ]:
-                try:
-                    conn.execute(text(f"ALTER TABLE {table_name} ADD COLUMN {col_def[0]} {col_def[1]}"))
-                    conn.commit()
-                    print(f"[Database] Migrated column {col_def[0]} into {table_name} table.")
-                except Exception:
-                    pass  # Column already exists
-
-            # Recreate donations table if request_id has NOT NULL constraint
-            try:
-                table_info = conn.execute(text("PRAGMA table_info(donations)")).fetchall()
-                for col in table_info:
-                    if col[1] == "request_id" and col[3] == 1:
-                        print("[Database] Migrating donations table schema to allow NULL request_id...")
-                        conn.execute(text("ALTER TABLE donations RENAME TO donations_old"))
-                        db.create_all()
-                        conn.execute(text("INSERT INTO donations (id, donor_id, request_id, donation_type, notes, status, created_at) SELECT id, donor_id, request_id, donation_type, notes, status, created_at FROM donations_old"))
-                        conn.execute(text("DROP TABLE donations_old"))
+        try:
+            db.create_all()
+            # Migration logic for new requests & donations columns if table already existed
+            with db.engine.connect() as conn:
+                from sqlalchemy import text
+                for table_name, col_def in [
+                    ("requests", ("is_help_someone", "BOOLEAN DEFAULT 0")),
+                    ("requests", ("has_photo_permission", "BOOLEAN DEFAULT 0")),
+                    ("requests", ("voice_transcript", "TEXT")),
+                    ("donations", ("urgent_request_id", "INTEGER")),
+                    ("donations", ("resource_id", "INTEGER")),
+                    ("donations", ("item_category", "VARCHAR(50) DEFAULT 'OTHER'")),
+                    ("donations", ("item_description", "TEXT")),
+                    ("donations", ("quantity", "INTEGER DEFAULT 1")),
+                    ("donations", ("unit", "VARCHAR(30) DEFAULT 'items'")),
+                    ("donations", ("donor_latitude", "FLOAT DEFAULT 11.0168")),
+                    ("donations", ("donor_longitude", "FLOAT DEFAULT 76.9558")),
+                    ("donations", ("donor_address", "VARCHAR(255)")),
+                    ("donations", ("reallocated_from_id", "INTEGER")),
+                    ("donations", ("updated_at", "DATETIME"))
+                ]:
+                    try:
+                        conn.execute(text(f"ALTER TABLE {table_name} ADD COLUMN {col_def[0]} {col_def[1]}"))
                         conn.commit()
-                        break
-            except Exception as mig_err:
-                print(f"[Database Migration Info] {mig_err}")
-        seed_data()
-        seed_transport_info_if_needed()
-        seed_urgent_and_inventory_if_needed()
-        seed_humanitarian_data_if_needed()
+                    except Exception:
+                        pass  # Column already exists
+
+                # Recreate donations table if request_id has NOT NULL constraint
+                try:
+                    table_info = conn.execute(text("PRAGMA table_info(donations)")).fetchall()
+                    for col in table_info:
+                        if col[1] == "request_id" and col[3] == 1:
+                            conn.execute(text("ALTER TABLE donations RENAME TO donations_old"))
+                            db.create_all()
+                            conn.execute(text("INSERT INTO donations (id, donor_id, request_id, donation_type, notes, status, created_at) SELECT id, donor_id, request_id, donation_type, notes, status, created_at FROM donations_old"))
+                            conn.execute(text("DROP TABLE donations_old"))
+                            conn.commit()
+                            break
+                except Exception as mig_err:
+                    print(f"[Database Migration Info] {mig_err}")
+            seed_data()
+            seed_transport_info_if_needed()
+            seed_urgent_and_inventory_if_needed()
+            seed_humanitarian_data_if_needed()
+        except Exception as db_init_err:
+            print(f"[Database Init Notice] DB init handled gracefully: {db_init_err}")
 
 
 

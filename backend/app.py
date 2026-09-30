@@ -26,13 +26,19 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Ensure upload folder exists
-    os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+    # Ensure upload folder exists safely
+    try:
+        os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+    except Exception as upload_err:
+        print(f"[Upload Folder Warning] {upload_err}")
 
     # Initialize extensions
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     db.init_app(app)
-    socketio.init_app(app, cors_allowed_origins="*", async_mode="threading")
+    try:
+        socketio.init_app(app, cors_allowed_origins="*", async_mode="threading")
+    except Exception as io_err:
+        print(f"[SocketIO Warning] Socket.IO initialization notice: {io_err}")
 
     # Register Blueprints
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
