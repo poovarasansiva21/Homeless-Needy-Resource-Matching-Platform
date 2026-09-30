@@ -310,7 +310,7 @@ export const Navbar: React.FC = () => {
 
           {/* Action 3: Theme Toggle Button */}
           <button
-            onClick={toggleTheme}
+            onClick={(e) => toggleTheme(e)}
             aria-label="Toggle Theme"
             title={isDark ? "Switch to Warm Light Mode" : "Switch to Dark Mode"}
             className="h-10 w-10 rounded-full bg-[#FAF7F2] dark:bg-[#161616] text-[#1C1917] dark:text-[#F25C38] border border-[#E7E0D6] dark:border-white/10 flex items-center justify-center transition-colors cursor-pointer shrink-0 min-h-[40px]"
@@ -480,7 +480,7 @@ export const Navbar: React.FC = () => {
               </div>
 
               <button
-                onClick={toggleTheme}
+                onClick={(e) => toggleTheme(e)}
                 className="px-3.5 py-1.5 rounded-xl bg-stone-100 dark:bg-[#262626] text-xs font-bold text-[#075C4F] dark:text-[#F2A33A] flex items-center space-x-1.5 cursor-pointer"
               >
                 {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
