@@ -59,7 +59,7 @@ export const en = {
     badge: "AI FOR COMMUNITY CARE",
     subBadge: "REAL-TIME CRISIS MATCHING",
     title: "",
-    subtitle: "AI-powered matching platform uniting verified shelters, food banks, medical clinics, and donors with people in urgent need across Coimbatore.",
+    subtitle: "AI-powered matching platform uniting verified shelters, food banks, medical clinics, and donors with destitute individuals in urgent need across Coimbatore.",
     requestHelp: "Request Immediate Help",
     offerHelp: "Offer Help / Donate",
     exploreMap: "Explore Nearby Map",
