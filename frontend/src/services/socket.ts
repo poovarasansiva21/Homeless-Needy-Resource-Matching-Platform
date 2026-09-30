@@ -1,6 +1,6 @@
 import { io, Socket } from 'socket.io-client';
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://127.0.0.1:5000';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || (import.meta.env.PROD ? (typeof window !== 'undefined' ? window.location.origin : '') : 'http://127.0.0.1:5000');
 
 class SocketService {
   private socket: Socket | null = null;
