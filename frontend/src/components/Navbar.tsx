@@ -158,7 +158,7 @@ export const Navbar: React.FC = () => {
         {/* ========================================================================= */}
         {/* 2. CENTER MAIN NAVIGATION                                                */}
         {/* ========================================================================= */}
-        <div className="hidden xl:flex items-center justify-center space-x-4 lg:space-x-6 2xl:space-x-8 text-sm lg:text-[15px] font-semibold text-[#1C1917] dark:text-[#F5F5F0]/90 mx-3 shrink-0">
+        <div className="hidden lg:flex items-center justify-center space-x-3 lg:space-x-5 xl:space-x-7 text-sm lg:text-[14px] xl:text-[15px] font-semibold text-[#1C1917] dark:text-[#F5F5F0]/90 mx-2 shrink-0">
           
           {/* HOME */}
           <button
@@ -255,14 +255,14 @@ export const Navbar: React.FC = () => {
         {/* ========================================================================= */}
         {/* 3. RIGHT ACTION CONTROLS                                                */}
         {/* ========================================================================= */}
-        <div className="hidden xl:flex items-center space-x-2.5 shrink-0">
+        <div className="hidden lg:flex items-center space-x-2 shrink-0">
           
           {/* Action 1: [🆘 I NEED HELP] Coral Pill Button */}
           <button
             type="button"
             onClick={() => setShowOneTapModal(true)}
             aria-label="I need help"
-            className="h-10 px-4 rounded-full bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-2 transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shrink-0 min-h-[40px]"
+            className="h-10 px-3.5 sm:px-4 rounded-full bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-1.5 transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shrink-0 min-h-[40px]"
             title="Emergency Request Help"
           >
             <Bell className="w-3.5 h-3.5 fill-current shrink-0" />
@@ -360,7 +360,7 @@ export const Navbar: React.FC = () => {
         {/* ========================================================================= */}
         {/* MOBILE HEADER CONTROLS                                                   */}
         {/* ========================================================================= */}
-        <div className="flex xl:hidden items-center space-x-2 shrink-0">
+        <div className="flex lg:hidden items-center space-x-2 shrink-0">
           
           {/* Mobile Emergency Button */}
           <button
@@ -391,7 +391,7 @@ export const Navbar: React.FC = () => {
       {/* MOBILE MENU DROPDOWN                                                     */}
       {/* ========================================================================= */}
       {mobileMenuOpen && (
-        <div className="xl:hidden bg-[#FAF7F2] dark:bg-[#161616] border-b border-[#E7E0D6] dark:border-white/10 px-5 pt-3 pb-8 space-y-4 rounded-b-3xl shadow-2xl animate-in slide-in-from-top-2 duration-200 z-[1020] pointer-events-auto max-h-[calc(100vh-80px)] overflow-y-auto">
+        <div className="lg:hidden bg-[#FAF7F2] dark:bg-[#161616] border-b border-[#E7E0D6] dark:border-white/10 px-5 pt-3 pb-8 space-y-4 rounded-b-3xl shadow-2xl animate-in slide-in-from-top-2 duration-200 z-[1020] pointer-events-auto max-h-[calc(100vh-80px)] overflow-y-auto">
           
           <div className="space-y-1 text-base font-bold text-[#1C1917] dark:text-[#F5F5F0]">
             <button
@@ -429,7 +429,7 @@ export const Navbar: React.FC = () => {
           <div className="pt-3 border-t border-[#E7E0D6] dark:border-white/10 space-y-3">
             {/* Full Width Coral I NEED HELP Button */}
             <button
-              onClick={() => { setMobileMenuOpen(false); navigate('/request-help'); }}
+              onClick={() => { setMobileMenuOpen(false); setShowOneTapModal(true); }}
               className="w-full py-3.5 px-4 bg-[#F25C38] hover:bg-[#E04925] text-white font-black text-sm uppercase tracking-wider rounded-2xl flex items-center justify-center space-x-2 shadow-sm cursor-pointer min-h-[48px]"
             >
               <Bell className="w-5 h-5 fill-current" />
