@@ -354,21 +354,6 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                           <Navigation className="w-3.5 h-3.5 text-[#159B5B]" />
                           <span>Map</span>
                         </a>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedMobilityResource({
-                              id: res.resource_id,
-                              name: res.resource_name,
-                              address: res.address
-                            });
-                            setIsMobilityModalOpen(true);
-                          }}
-                          className="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-xs rounded-xl flex items-center space-x-1.5 border border-amber-500/30 transition-all cursor-pointer"
-                        >
-                          <Bus className="w-3.5 h-3.5" />
-                          <span>I CAN'T REACH IT</span>
-                        </button>
                       </div>
 
                     </div>
@@ -620,15 +605,6 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
           )}
 
         </div>
-
-        <MobilityLayerModal
-          isOpen={isMobilityModalOpen}
-          onClose={() => setIsMobilityModalOpen(false)}
-          resourceId={selectedMobilityResource?.id}
-          resourceName={selectedMobilityResource?.name}
-          resourceAddress={selectedMobilityResource?.address}
-        />
-
       </div>
     </div>
   );

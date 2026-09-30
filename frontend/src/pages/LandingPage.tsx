@@ -632,21 +632,7 @@ export const LandingPage: React.FC = () => {
                   >
                     <Gift className="w-4 h-4 text-[#F25C38]" />
                     <span>{t('oneTap.btnDonate')}</span>
-                    <ArrowRight className="w-4 h-4 text-white opacity-80" />
                   </Link>
-
-                  {/* Secondary 4: I CAN'T REACH IT */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedMobilityResource(null);
-                      setIsMobilityModalOpen(true);
-                    }}
-                    className="h-12 px-5 bg-[#D97706]/10 hover:bg-[#D97706]/20 text-[#D97706] dark:text-amber-400 text-xs font-bold tracking-wider uppercase rounded-full border border-[#D97706]/30 shadow-xs transition-all hover:scale-[1.02] active:scale-95 flex items-center space-x-2 cursor-pointer min-h-[44px]"
-                  >
-                    <Bus className="w-4 h-4 text-[#D97706]" />
-                    <span>{t('hero.cantReachIt')}</span>
-                  </button>
 
                 </div>
 
@@ -1147,21 +1133,6 @@ export const LandingPage: React.FC = () => {
                             Verified ✓
                           </span>
                           <div className="flex flex-wrap items-center gap-1.5">
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setSelectedMobilityResource({
-                                  id: selectedPinResource.id,
-                                  name: selectedPinResource.name,
-                                  address: selectedPinResource.address
-                                });
-                                setIsMobilityModalOpen(true);
-                              }}
-                              className="px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 font-bold text-[10px] rounded-full border border-amber-500/30 transition-colors flex items-center space-x-1 cursor-pointer"
-                            >
-                              <Bus className="w-2.5 h-2.5 text-amber-500" />
-                              <span>I Can't Reach It</span>
-                            </button>
                             <a
                               href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation ? `${userLocation.lat},${userLocation.lng}` : ''}&destination=${selectedPinResource.latitude},${selectedPinResource.longitude}`}
                               target="_blank"

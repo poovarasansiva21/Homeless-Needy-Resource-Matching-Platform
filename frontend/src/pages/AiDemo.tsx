@@ -14,13 +14,11 @@ import {
   Flame,
   ArrowRight,
   Camera,
-  FileText,
-  Bus
+  FileText
 } from 'lucide-react';
 import { aiApi } from '../services/api';
 import { AiClassificationResponse, HumanitarianPipelineResponse } from '../types';
 import { AiDonationScanner } from '../components/AiDonationScanner';
-import { MobilityLayerModal } from '../components/MobilityLayerModal';
 
 
 export const AiDemo: React.FC = () => {
@@ -33,10 +31,6 @@ export const AiDemo: React.FC = () => {
   const [result, setResult] = useState<HumanitarianPipelineResponse | any | null>(null);
 
   const [error, setError] = useState<string | null>(null);
-
-  // Mobility Layer State (Phase 3)
-  const [isMobilityModalOpen, setIsMobilityModalOpen] = useState(false);
-  const [selectedMobilityResource, setSelectedMobilityResource] = useState<{ id?: number; name?: string; address?: string } | null>(null);
 
 
   const presets = [
@@ -513,21 +507,6 @@ export const AiDemo: React.FC = () => {
                         {res.phone}
                       </span>
                       <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedMobilityResource({
-                              id: res.resource_id,
-                              name: res.resource_name,
-                              address: res.address
-                            });
-                            setIsMobilityModalOpen(true);
-                          }}
-                          className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-xs rounded-xl flex items-center space-x-1 border border-amber-500/30 transition-all cursor-pointer"
-                        >
-                          <Bus className="w-3.5 h-3.5" />
-                          <span>I CAN'T REACH IT</span>
-                        </button>
                         <span className="text-[#159B5B] dark:text-emerald-400 font-black hover:underline cursor-pointer flex items-center space-x-1">
                           <span>Dispatch</span>
                           <ExternalLink className="w-3.5 h-3.5" />
@@ -540,15 +519,6 @@ export const AiDemo: React.FC = () => {
             </div>
           </div>
         )}
-
-        {/* Mobility & Trust Route Modal */}
-        <MobilityLayerModal
-          isOpen={isMobilityModalOpen}
-          onClose={() => setIsMobilityModalOpen(false)}
-          resourceId={selectedMobilityResource?.id}
-          resourceName={selectedMobilityResource?.name}
-          resourceAddress={selectedMobilityResource?.address}
-        />
 
         </div>
         )}

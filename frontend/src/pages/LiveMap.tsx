@@ -874,37 +874,12 @@ export const LiveMap: React.FC = () => {
                   <Navigation className="w-4 h-4" />
                   <span>Start Turn-by-Turn Navigation</span>
                 </a>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedMobilityResource({
-                      id: selectedResource.id,
-                      name: selectedResource.name,
-                      address: selectedResource.address
-                    });
-                    setIsMobilityModalOpen(true);
-                  }}
-                  className="w-full flex items-center justify-center space-x-2 py-3 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-black text-xs uppercase tracking-wider rounded-xl text-center border border-amber-500/30 transition-all hover:scale-[1.02] cursor-pointer"
-                >
-                  <Bus className="w-4 h-4 text-amber-500" />
-                  <span>I CAN'T REACH IT</span>
-                </button>
               </div>
             </div>
           )}
 
         </div>
       )}
-
-      {/* Mobility & Trust-Route Modal */}
-      <MobilityLayerModal
-        isOpen={isMobilityModalOpen}
-        onClose={() => setIsMobilityModalOpen(false)}
-        resourceId={selectedMobilityResource?.id}
-        resourceName={selectedMobilityResource?.name}
-        resourceAddress={selectedMobilityResource?.address}
-      />
 
     </div>
   );
