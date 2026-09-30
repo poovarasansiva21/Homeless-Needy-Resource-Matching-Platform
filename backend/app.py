@@ -13,6 +13,12 @@ from routes.resources import resources_bp
 from routes.matching import matching_bp
 from routes.admin import admin_bp
 from routes.dashboard import dashboard_bp
+from routes.donation_vision import donation_vision_bp
+from routes.help_reports import help_reports_bp
+from routes.mobility import mobility_bp
+from routes.donations import donations_bp
+from routes.intelligence import intelligence_bp
+from routes.trust import trust_bp
 
 socketio = SocketIO()
 
@@ -34,16 +40,34 @@ def create_app():
     app.register_blueprint(resources_bp, url_prefix="/api/resources")
     app.register_blueprint(matching_bp, url_prefix="/api/matching")
     app.register_blueprint(matching_bp, url_prefix="/api/ai", name="ai_demo")  # For /api/ai/classify
+    app.register_blueprint(donation_vision_bp, url_prefix="/api/donation")
     app.register_blueprint(admin_bp, url_prefix="/api/admin")
     app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
+    app.register_blueprint(help_reports_bp, url_prefix="/api/help-reports")
+    app.register_blueprint(mobility_bp, url_prefix="/api/mobility")
+    app.register_blueprint(donations_bp, url_prefix="/api/donations")
+    app.register_blueprint(intelligence_bp, url_prefix="/api/intelligence")
+    app.register_blueprint(trust_bp, url_prefix="/api/trust")
+
+
+
 
     # Health Check
     @app.route("/api/health", methods=["GET"])
+    @app.route("/health", methods=["GET"])
     def health_check():
+        db_status = "ok"
+        try:
+            from sqlalchemy import text
+            db.session.execute(text("SELECT 1"))
+        except Exception:
+            db_status = "degraded"
+
         return jsonify({
-            "status": "healthy",
+            "status": "healthy" if db_status == "ok" else "degraded",
             "service": "SAHAAYAA AI Core API",
             "version": "1.0.0",
+            "database": db_status,
             "real_time_socket": True,
             "tf_model_loaded": True
         }), 200
@@ -56,15 +80,15 @@ def create_app():
     # Global Clean Error Handlers
     @app.errorhandler(404)
     def not_found(e):
-        return jsonify({"error": "Requested resource was not found."}), 404
+        return jsonify({"success": False, "error": "Requested resource was not found."}), 404
 
     @app.errorhandler(400)
     def bad_request(e):
-        return jsonify({"error": "Bad request format or missing required fields."}), 400
+        return jsonify({"success": False, "error": "Bad request format or missing required fields."}), 400
 
     @app.errorhandler(500)
     def internal_error(e):
-        return jsonify({"error": "An internal server error occurred. Please try again later."}), 500
+        return jsonify({"success": False, "error": "An internal server error occurred. Please try again later."}), 500
 
     # Initialize Database & Demo Seeds
     init_db(app)
@@ -96,4 +120,4 @@ if __name__ == "__main__":
     print("  AI-Powered Homeless & Needy Resource Matching Platform")
     print("  URL: http://127.0.0.1:5000")
     print("="*60 + "\n")
-    socketio.run(app, host="127.0.0.1", port=5000, debug=False, allow_unsafe_werkzeug=True)
+    socketio.run(app, host="127.0.0.1", port=5000, debug=True, allow_unsafe_werkzeug=True)

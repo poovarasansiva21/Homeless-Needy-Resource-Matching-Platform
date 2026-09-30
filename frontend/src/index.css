@@ -9,17 +9,20 @@
   --sab: env(safe-area-inset-bottom, 0px);
   --sal: env(safe-area-inset-left, 0px);
   --sar: env(safe-area-inset-right, 0px);
-  --bg-base: #FFF9ED;
-  --bg-surface: #FFFFFF;
-  --bg-muted: #F7EBD2;
-  --text-primary: #17231E;
-  --text-secondary: rgba(23, 35, 30, 0.75);
-  --border-color: #EAE3D2;
-  --accent-green: #159B5B;
-  --accent-green-hover: #12834D;
-  --glass-bg: rgba(255, 255, 255, 0.88);
-  --glass-border: rgba(234, 227, 210, 0.9);
-  --glass-shadow: 0 10px 30px -5px rgba(23, 35, 30, 0.05);
+  --bg-base: #F9F6F0;
+  --bg-surface: #FAF7F2;
+  --bg-muted: #F3ECE2;
+  --text-primary: #1C1917;
+  --text-secondary: #57534E;
+  --border-color: #E7E0D6;
+  --accent-green: #F25C38;
+  --accent-green-hover: #E04925;
+  --urgent-red: #F25C38;
+  --warm-coral: #F25C38;
+  --accent-orange: #F25C38;
+  --glass-bg: rgba(250, 247, 242, 0.94);
+  --glass-border: rgba(231, 224, 214, 0.8);
+  --glass-shadow: 0 10px 30px -5px rgba(28, 25, 23, 0.05);
 }
 
 html {
@@ -34,22 +37,43 @@ body {
   box-sizing: border-box;
 }
 
+.sahaayaa-organic-bg {
+  background-color: #F9F6F0;
+  background-image: 
+    radial-gradient(circle at 8% 12%, rgba(242, 92, 56, 0.04) 0%, transparent 35%),
+    radial-gradient(circle at 92% 18%, rgba(242, 92, 56, 0.05) 0%, transparent 32%),
+    radial-gradient(circle at 80% 55%, rgba(217, 119, 6, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 12% 85%, rgba(242, 92, 56, 0.04) 0%, transparent 45%);
+}
+
+.dark .sahaayaa-organic-bg {
+  background-color: #0D0D0D;
+  background-image: 
+    radial-gradient(circle at 8% 12%, rgba(242, 92, 56, 0.06) 0%, transparent 35%),
+    radial-gradient(circle at 92% 18%, rgba(242, 92, 56, 0.07) 0%, transparent 32%),
+    radial-gradient(circle at 80% 55%, rgba(217, 119, 6, 0.05) 0%, transparent 40%);
+}
+
 html, body, button, input, textarea, select {
-  font-family: "Inter", "Noto Sans Tamil", "Noto Sans Devanagari", sans-serif;
+  font-family: "Plus Jakarta Sans", "Manrope", "Noto Sans Tamil", "Noto Sans Devanagari", sans-serif;
   touch-action: manipulation;
 }
 
+.font-serif {
+  font-family: "Playfair Display", "Cormorant Garamond", "Georgia", serif;
+}
+
 .dark {
-  --bg-base: #0C1410;
-  --bg-surface: #121C18;
-  --bg-muted: #182520;
-  --text-primary: #F7FAF8;
-  --text-secondary: rgba(247, 250, 248, 0.78);
-  --border-color: #24332D;
-  --accent-green: #19AD66;
-  --accent-green-hover: #159B5B;
-  --glass-bg: rgba(18, 28, 24, 0.78);
-  --glass-border: rgba(36, 51, 45, 0.85);
+  --bg-base: #0D0D0D;
+  --bg-surface: #161616;
+  --bg-muted: #1E1E1E;
+  --text-primary: #F5F5F0;
+  --text-secondary: #A8A29E;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --accent-green: #F25C38;
+  --accent-green-hover: #E04925;
+  --glass-bg: rgba(22, 22, 22, 0.92);
+  --glass-border: rgba(255, 255, 255, 0.08);
   --glass-shadow: 0 14px 40px -8px rgba(0, 0, 0, 0.6);
 }
 
@@ -75,62 +99,62 @@ html, body, button, input, textarea, select {
 
   .glass-card:hover {
     transform: translateY(-4px);
-    border-color: rgba(21, 155, 91, 0.5);
-    box-shadow: 0 18px 36px -6px rgba(21, 155, 91, 0.12);
+    border-color: rgba(242, 92, 56, 0.4);
+    box-shadow: 0 18px 36px -6px rgba(242, 92, 56, 0.1);
   }
 
   .dark .glass-card:hover {
-    border-color: rgba(25, 173, 102, 0.6);
-    box-shadow: 0 20px 40px -6px rgba(0, 0, 0, 0.7), 0 0 24px -2px rgba(25, 173, 102, 0.25);
+    border-color: rgba(242, 92, 56, 0.5);
+    box-shadow: 0 20px 40px -6px rgba(0, 0, 0, 0.7), 0 0 24px -2px rgba(242, 92, 56, 0.2);
   }
 
-  /* Warm Charity Cards & Surfaces */
+  /* Warm Humanitarian Cards & Surfaces */
   .charity-card {
-    background: #FFFFFF;
-    border: 1px solid #EAE3D2;
+    background: #FAF7F2;
+    border: 1px solid #E7E0D6;
     border-radius: 1.5rem;
-    box-shadow: 0 4px 20px -2px rgba(23, 35, 30, 0.05);
+    box-shadow: 0 4px 20px -2px rgba(28, 25, 23, 0.04);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .charity-card:hover {
-    box-shadow: 0 14px 32px -4px rgba(23, 35, 30, 0.1);
-    border-color: #D8CEB9;
+    box-shadow: 0 14px 32px -4px rgba(28, 25, 23, 0.08);
+    border-color: #D6CBC0;
     transform: translateY(-3px);
   }
 
   .charity-card-cream {
-    background: #F7EBD2;
-    border: 1px solid #EFE1C3;
+    background: #F3ECE2;
+    border: 1px solid #E7E0D6;
     border-radius: 1.5rem;
   }
 
   .dark .charity-card {
-    background: #121C18;
-    border-color: #24332D;
+    background: #161616;
+    border-color: rgba(255, 255, 255, 0.08);
     box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.5);
   }
 
   .dark .charity-card:hover {
-    border-color: rgba(25, 173, 102, 0.5);
-    box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.7), 0 0 20px -4px rgba(25, 173, 102, 0.2);
+    border-color: rgba(242, 92, 56, 0.4);
+    box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.7), 0 0 20px -4px rgba(242, 92, 56, 0.15);
   }
 
   .dark .charity-card-cream {
-    background: #182520;
-    border-color: #2A3D35;
+    background: #1E1E1E;
+    border-color: rgba(255, 255, 255, 0.08);
   }
 
   /* Pills and Badges */
   .charity-pill-green {
-    background: #159B5B;
+    background: #F25C38;
     color: #FFFFFF;
     border-radius: 9999px;
     font-weight: 700;
     transition: all 0.2s ease;
   }
   .charity-pill-green:hover {
-    background: #12834D;
+    background: #E04925;
   }
 
   .charity-chip {
@@ -138,9 +162,9 @@ html, body, button, input, textarea, select {
     align-items: center;
     padding: 0.5rem 1.1rem;
     border-radius: 9999px;
-    border: 1px solid #EAE3D2;
-    background: #FFFFFF;
-    color: #17231E;
+    border: 1px solid #E7E0D6;
+    background: #FAF7F2;
+    color: #1C1917;
     font-size: 0.8125rem;
     font-weight: 700;
     transition: all 0.2s ease;
@@ -148,30 +172,30 @@ html, body, button, input, textarea, select {
     white-space: nowrap;
   }
   .charity-chip:hover {
-    border-color: #159B5B;
-    color: #159B5B;
-    background: #F1F8F2;
+    border-color: #F25C38;
+    color: #F25C38;
+    background: #FFF8F5;
   }
   .charity-chip.active {
-    background: #159B5B;
+    background: #F25C38;
     color: #FFFFFF;
-    border-color: #159B5B;
+    border-color: #F25C38;
   }
 
   .dark .charity-chip {
-    background: #121C18;
-    border-color: #24332D;
-    color: #F7FAF8;
+    background: #161616;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #F5F5F0;
   }
   .dark .charity-chip:hover {
-    border-color: #19AD66;
-    color: #19AD66;
-    background: #182520;
+    border-color: #F25C38;
+    color: #F25C38;
+    background: #221815;
   }
   .dark .charity-chip.active {
-    background: #19AD66;
+    background: #F25C38;
     color: #FFFFFF;
-    border-color: #19AD66;
+    border-color: #F25C38;
   }
 
   /* Hand-drawn cursive feel */

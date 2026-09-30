@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import Blueprint, request, jsonify
-from models import db, Request, Resource, User, Verification, RequestStatusHistory, AuditLog, Notification
+from models import db, Request, Resource, User, Verification, RequestStatusHistory, AuditLog, Notification, TrustReport, TransportInfo
 from services.auth_helper import token_required, role_required
 
 admin_bp = Blueprint("admin", __name__)
@@ -151,3 +151,117 @@ def list_users(current_user):
         "users": [u.to_dict() for u in users],
         "count": len(users)
     }), 200
+
+# RESOURCE VERIFICATION ADMIN ENDPOINTS
+@admin_bp.route("/resources/<int:res_id>/verify", methods=["POST"])
+@token_required
+@role_required("admin")
+def verify_resource(current_user, res_id):
+    res_obj = Resource.query.get_or_404(res_id)
+    res_obj.verified = True
+    
+    audit = AuditLog(
+        user_id=current_user.id,
+        action="RESOURCE_VERIFIED",
+        details=f"Resource #{res_id} ({res_obj.name}) verified with badge '{res_obj.get_verification_badge()}'",
+        ip_address=request.remote_addr
+    )
+    db.session.add(audit)
+    db.session.commit()
+
+    return jsonify({
+        "message": f"Resource '{res_obj.name}' verified successfully",
+        "resource": res_obj.to_dict()
+    }), 200
+
+@admin_bp.route("/resources/<int:res_id>/unverify", methods=["POST"])
+@token_required
+@role_required("admin")
+def unverify_resource(current_user, res_id):
+    res_obj = Resource.query.get_or_404(res_id)
+    res_obj.verified = False
+
+    audit = AuditLog(
+        user_id=current_user.id,
+        action="RESOURCE_UNVERIFIED",
+        details=f"Resource #{res_id} ({res_obj.name}) verification status revoked",
+        ip_address=request.remote_addr
+    )
+    db.session.add(audit)
+    db.session.commit()
+
+    return jsonify({
+        "message": f"Resource '{res_obj.name}' verification status revoked",
+        "resource": res_obj.to_dict()
+    }), 200
+
+# TRANSPORT TRUST VERIFICATION ADMIN ENDPOINTS
+@admin_bp.route("/transport/<int:t_id>/status", methods=["POST"])
+@token_required
+@role_required("admin")
+def update_transport_trust_status(current_user, t_id):
+    t_obj = TransportInfo.query.get_or_404(t_id)
+    data = request.get_json() or {}
+    new_status = data.get("status", "VERIFIED").upper().strip()
+
+    if new_status not in ["VERIFIED", "NEEDS VERIFICATION", "NEEDS_VERIFICATION", "REPORTED"]:
+        return jsonify({"error": "Invalid transport trust status."}), 400
+
+    if new_status == "NEEDS_VERIFICATION":
+        new_status = "NEEDS VERIFICATION"
+
+    prev = t_obj.status
+    t_obj.status = new_status
+    t_obj.last_verified = datetime.utcnow()
+
+    audit = AuditLog(
+        user_id=current_user.id,
+        action="TRANSPORT_TRUST_STATUS_UPDATED",
+        details=f"Transport #{t_id} ({t_obj.provider}) status changed from '{prev}' to '{new_status}'",
+        ip_address=request.remote_addr
+    )
+    db.session.add(audit)
+    db.session.commit()
+
+    return jsonify({
+        "message": f"Transport route status updated to {new_status}",
+        "transport": t_obj.to_dict()
+    }), 200
+
+# TRUST REPORTS MANAGEMENT ENDPOINTS
+@admin_bp.route("/reports", methods=["GET"])
+@token_required
+@role_required("admin")
+def list_trust_reports(current_user):
+    reports = TrustReport.query.order_by(TrustReport.created_at.desc()).all()
+    return jsonify({
+        "trust_reports": [r.to_dict() for r in reports],
+        "count": len(reports)
+    }), 200
+
+@admin_bp.route("/reports/<int:report_id>/status", methods=["PUT"])
+@token_required
+@role_required("admin")
+def update_trust_report_status(current_user, report_id):
+    report = TrustReport.query.get_or_404(report_id)
+    data = request.get_json() or {}
+    new_status = data.get("status", "RESOLVED").upper().strip()
+    notes = data.get("notes", "Investigated and resolved by safety officer.").strip()
+
+    report.status = new_status
+    report.resolution_notes = notes
+
+    audit = AuditLog(
+        user_id=current_user.id,
+        action="TRUST_REPORT_RESOLVED",
+        details=f"Trust Report #{report_id} marked as {new_status}: {notes}",
+        ip_address=request.remote_addr
+    )
+    db.session.add(audit)
+    db.session.commit()
+
+    return jsonify({
+        "message": f"Trust report #{report_id} updated to {new_status}",
+        "report": report.to_dict()
+    }), 200
+

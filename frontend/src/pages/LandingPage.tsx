@@ -33,7 +33,10 @@ import {
   AlertTriangle,
   Navigation,
   RefreshCw,
-  AlertCircle
+  AlertCircle,
+  Bus,
+  Bell,
+  Gift
 } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
@@ -41,8 +44,11 @@ import { dashboardApi, requestsApi, resourcesApi, aiApi, matchingApi } from '../
 import { RequestItem, Resource, AiClassificationResponse } from '../types';
 import MouseSpotlight from '../components/MouseSpotlight';
 import FastHelpModal from '../components/FastHelpModal';
+import OneTapHelpModal from '../components/OneTapHelpModal';
+import { MobilityLayerModal } from '../components/MobilityLayerModal';
 import MagneticButton from '../components/MagneticButton';
 import { useLanguage } from '../i18n';
+
 
 // Custom Leaflet marker icons matching the charity aesthetic
 
@@ -119,7 +125,7 @@ const MapPanController: React.FC<{ center: [number, number] | null }> = ({ cente
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   // Impact stats from real backend API
   const [impact, setImpact] = useState({
@@ -149,12 +155,19 @@ export const LandingPage: React.FC = () => {
   // AI Interactive Demo Box state (calls REAL backend DNN!)
   const [aiInputText, setAiInputText] = useState('I have two children and we have no food for tonight.');
   const [isAiLoading, setIsAiLoading] = useState(false);
-  const [aiResult, setAiResult] = useState<AiClassificationResponse | null>(null);
+  const [aiResult, setAiResult] = useState<any | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
+
 
   // Fast Help / Urgent Matching state
   const [showFastHelp, setShowFastHelp] = useState(false);
   const [fastHelpCat, setFastHelpCat] = useState<'MEDICAL' | 'FOOD' | 'SHELTER' | 'CLOTHING'>('MEDICAL');
+  const [showOneTapModal, setShowOneTapModal] = useState(false);
+
+  // Mobility Layer state (Phase 3)
+  const [isMobilityModalOpen, setIsMobilityModalOpen] = useState(false);
+  const [selectedMobilityResource, setSelectedMobilityResource] = useState<{ id?: number; name?: string; address?: string } | null>(null);
+
 
   // Awareness share toast state
   const [copiedLink, setCopiedLink] = useState(false);
@@ -465,9 +478,23 @@ export const LandingPage: React.FC = () => {
   ];
 
   return (
-    <div className="bg-[#FFF9ED] dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] font-sans selection:bg-[#159B5B] selection:text-white transition-colors duration-300 relative min-h-screen">
+    <div className="sahaayaa-organic-bg text-[#17231E] dark:text-[#FFF9ED] font-sans selection:bg-[#159B5B] selection:text-white transition-colors duration-300 relative min-h-screen overflow-x-hidden">
       
-      {/* Subtle Mouse-Following Ambient Spotlight (disabled on touch & prefers-reduced-motion) */}
+      {/* Background Botanical Vector Overlays Matching Reference Image */}
+      <div className="absolute top-10 left-0 w-80 h-80 opacity-15 dark:opacity-10 pointer-events-none -translate-x-24 z-0">
+        <svg viewBox="0 0 200 200" fill="#0B4F3A">
+          <path d="M40 160C40 160 30 100 80 60C130 20 180 30 180 30C180 30 170 90 120 130C70 170 40 160 40 160Z"/>
+          <path d="M20 180C20 180 50 140 100 130C150 120 190 150 190 150C190 150 160 190 110 200C60 210 20 180 20 180Z"/>
+        </svg>
+      </div>
+
+      <div className="absolute top-1/4 right-0 w-96 h-96 opacity-15 dark:opacity-10 pointer-events-none translate-x-28 z-0">
+        <svg viewBox="0 0 200 200" fill="#0B4F3A">
+          <path d="M100 20C100 20 160 30 170 90C180 150 130 180 130 180C130 180 70 170 60 110C50 50 100 20 100 20Z"/>
+        </svg>
+      </div>
+
+      {/* Subtle Mouse-Following Ambient Spotlight */}
       <MouseSpotlight />
 
       {/* Fast Help Emergency Geo-Matching Modal */}
@@ -476,6 +503,12 @@ export const LandingPage: React.FC = () => {
         onClose={() => setShowFastHelp(false)}
         defaultCategory={fastHelpCat}
         centerCoords={mapCenter}
+      />
+
+      {/* One-Tap Emergency Aid Modal */}
+      <OneTapHelpModal
+        isOpen={showOneTapModal}
+        onClose={() => setShowOneTapModal(false)}
       />
 
       {/* ========================================================================= */}
@@ -490,79 +523,226 @@ export const LandingPage: React.FC = () => {
               
               <div 
                 ref={heroBadgeRef}
-                className="inline-flex items-center space-x-2 text-[11px] font-black uppercase tracking-widest text-[#159B5B] dark:text-[#19AD66]"
+                className="inline-flex items-center space-x-3 text-[11px] font-extrabold uppercase tracking-widest text-[#F25C38]"
               >
-                <span className="w-1.5 h-3.5 bg-[#159B5B] dark:bg-[#19AD66] rounded-full inline-block" />
-                <span>{t('hero.badge')}</span>
+                <span className="flex items-center space-x-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#F25C38]" />
+                  <span>AI FOR COMMUNITY CARE</span>
+                </span>
+                <span className="w-12 h-[1.5px] bg-[#F25C38]/40 inline-block" />
               </div>
 
+              {/* Unique Staggered Editorial Display Headline */}
               <h1 
                 ref={heroTitleRef}
-                className="text-4xl sm:text-6xl lg:text-[68px] font-black tracking-tight text-[#17231E] dark:text-white leading-[1.08]"
+                className="flex flex-col space-y-1 sm:space-y-2 font-serif font-black tracking-tight text-[#1C1917] dark:text-[#F5F5F0] leading-[0.95] select-none my-2"
               >
-                {t('auth.missionHeader')}
+                {language.toLowerCase() === 'ta' ? (
+                  <>
+                    <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight block">
+                      ஒரு தேவை.
+                    </span>
+                    <span className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight block ml-3 sm:ml-8 lg:ml-12 text-[#1C1917] dark:text-[#F5F5F0]">
+                      ஒரு இணைப்பு.
+                    </span>
+                    <span className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight block ml-6 sm:ml-16 lg:ml-24 text-[#F25C38]">
+                      உண்மையான மாற்றம்.
+                    </span>
+                  </>
+                ) : language.toLowerCase() === 'hi' ? (
+                  <>
+                    <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight block">
+                      एक ज़रूरत।
+                    </span>
+                    <span className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight block ml-3 sm:ml-8 lg:ml-12 text-[#1C1917] dark:text-[#F5F5F0]">
+                      एक जुड़ाव।
+                    </span>
+                    <span className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight block ml-6 sm:ml-16 lg:ml-24 text-[#F25C38]">
+                      वास्तविक प्रभाव।
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight block">
+                      ONE NEED.
+                    </span>
+                    <span className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight block ml-4 sm:ml-10 lg:ml-16 text-[#1C1917] dark:text-[#F5F5F0]">
+                      ONE CONNECTION.
+                    </span>
+                    <span className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight block ml-8 sm:ml-20 lg:ml-32 text-[#F25C38]">
+                      REAL IMPACT.
+                    </span>
+                  </>
+                )}
               </h1>
 
               <p 
                 ref={heroTextRef}
-                className="text-base sm:text-lg text-[#17231E]/75 dark:text-[#FFF9ED]/80 max-w-xl leading-relaxed font-medium"
+                className="text-base sm:text-lg text-[#57534E] dark:text-[#A8A29E] max-w-xl leading-relaxed font-sans font-medium"
               >
-                {t('hero.subtitle')}
+                {t('hero.subtitle') || "AI-powered matching platform connecting people in need with verified food banks, shelters, medical services, clothing resources and community support."}
               </p>
 
-              {/* Action Buttons */}
-              <div ref={heroCtasRef} className="flex flex-wrap items-center gap-3 pt-2">
-                <Link
-                  to="/request-help"
-                  className="px-7 py-3.5 bg-[#159B5B] hover:bg-[#12834D] text-white text-xs font-black tracking-wider uppercase rounded-full shadow-md shadow-[#159B5B]/25 hover:shadow-lg transition-all hover:scale-105 active:scale-95 flex items-center space-x-2"
-                >
-                  <span>{t('hero.requestHelp')}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-
-                <Link
-                  to="/donor/dashboard"
-                  className="px-7 py-3.5 bg-transparent hover:bg-[#F7EBD2] dark:hover:bg-[#182520] text-[#17231E] dark:text-[#FFF9ED] text-xs font-black tracking-wider uppercase rounded-full border border-[#EAE3D2] dark:border-[#24332D] hover:border-[#17231E] dark:hover:border-[#19AD66] transition-all hover:scale-105 active:scale-95"
-                >
-                  <span>{t('hero.offerHelp')}</span>
-                </Link>
-
+              {/* PROMINENT PRIMARY HOMEPAGE ACTION & SECONDARY ACTIONS */}
+              <div ref={heroCtasRef} className="space-y-4 pt-2">
+                
+                {/* PRIMARY ACTION: 🆘 I NEED HELP */}
                 <button
                   type="button"
-                  onClick={() => {
-                    setFastHelpCat('MEDICAL');
-                    setShowFastHelp(true);
-                  }}
-                  className="px-6 py-3.5 bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-900/60 hover:bg-rose-600 hover:text-white dark:hover:bg-rose-600 dark:hover:text-white text-xs font-black tracking-wider uppercase rounded-full shadow-sm transition-all hover:scale-105 active:scale-95 flex items-center space-x-2 group"
+                  onClick={() => setShowOneTapModal(true)}
+                  className="w-full sm:w-auto px-8 h-[54px] sm:h-[58px] bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-base sm:text-lg tracking-wide uppercase rounded-full shadow-lg shadow-[#F25C38]/25 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center space-x-3 cursor-pointer shrink-0 min-h-[44px]"
                 >
-                  <Flame className="w-3.5 h-3.5 text-rose-600 group-hover:text-white transition-colors" />
-                  <span>⚡ {t('modal.fastHelp')}</span>
+                  <Bell className="w-5 h-5 fill-current shrink-0" />
+                  <span>{t('oneTap.btnNeedHelp')}</span>
+                  <span className="text-[11px] bg-white/20 px-2.5 py-0.5 rounded-full font-bold lowercase tracking-normal">1-tap / voice</span>
+                  <ArrowRight className="w-5 h-5 ml-1 shrink-0" />
                 </button>
+
+                {/* SECONDARY ACTIONS GRID: FIND HELP | HELP SOMEONE | DONATE | I CAN'T REACH IT */}
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  
+                  {/* Secondary 1: 📍 FIND HELP */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const el = document.getElementById('resources');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="h-12 px-5 bg-[#FAF7F2] dark:bg-[#161616] hover:bg-[#F3ECE2] dark:hover:bg-[#222222] text-[#1C1917] dark:text-[#F5F5F0] text-xs font-bold tracking-wider uppercase rounded-full border border-[#E7E0D6] dark:border-white/10 shadow-xs transition-all hover:scale-[1.02] active:scale-95 flex items-center space-x-2 cursor-pointer min-h-[44px]"
+                  >
+                    <span>📍</span>
+                    <span>{t('oneTap.btnFindHelp')}</span>
+                    <ArrowRight className="w-4 h-4 text-[#F25C38] opacity-80" />
+                  </button>
+
+                  {/* Secondary 2: 👥 HELP SOMEONE */}
+                  <Link
+                    to="/help-someone"
+                    className="h-12 px-5 bg-[#FAF7F2] dark:bg-[#161616] hover:bg-[#F3ECE2] dark:hover:bg-[#222222] text-[#1C1917] dark:text-[#F5F5F0] text-xs font-bold tracking-wider uppercase rounded-full border border-[#E7E0D6] dark:border-white/10 shadow-xs transition-all hover:scale-[1.02] active:scale-95 flex items-center space-x-2 min-h-[44px]"
+                  >
+                    <span>👥</span>
+                    <span>{t('oneTap.btnHelpSomeone')}</span>
+                    <ArrowRight className="w-4 h-4 text-[#F25C38] opacity-80" />
+                  </Link>
+
+                  {/* Secondary 3: 💝 DONATE */}
+                  <Link
+                    to="/donor/dashboard"
+                    className="h-12 px-5 bg-[#1C1917] dark:bg-[#262626] hover:bg-[#292524] text-white text-xs font-bold tracking-wider uppercase rounded-full shadow-sm hover:shadow-md transition-all hover:scale-[1.02] active:scale-95 flex items-center space-x-2 min-h-[44px]"
+                  >
+                    <Gift className="w-4 h-4 text-[#F25C38]" />
+                    <span>{t('oneTap.btnDonate')}</span>
+                    <ArrowRight className="w-4 h-4 text-white opacity-80" />
+                  </Link>
+
+                  {/* Secondary 4: I CAN'T REACH IT */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedMobilityResource(null);
+                      setIsMobilityModalOpen(true);
+                    }}
+                    className="h-12 px-5 bg-[#D97706]/10 hover:bg-[#D97706]/20 text-[#D97706] dark:text-amber-400 text-xs font-bold tracking-wider uppercase rounded-full border border-[#D97706]/30 shadow-xs transition-all hover:scale-[1.02] active:scale-95 flex items-center space-x-2 cursor-pointer min-h-[44px]"
+                  >
+                    <Bus className="w-4 h-4 text-[#D97706]" />
+                    <span>{t('hero.cantReachIt')}</span>
+                  </button>
+
+                </div>
+
               </div>
 
             </div>
 
-            {/* Right Column: Authentic Humanitarian Photography with Organic Curved Mask */}
-            <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
-              <div ref={heroImageRef} className="relative w-full max-w-[480px]">
+            {/* SVG Global Definitions for Organic Hero Image Masks */}
+            <svg className="absolute w-0 h-0 pointer-events-none overflow-hidden" aria-hidden="true">
+              <defs>
+                <clipPath id="organic-continent-hero-mask" clipPathUnits="objectBoundingBox">
+                  <path d="
+                    M 0.28, 0.14
+                    C 0.22, 0.14  0.16, 0.20  0.14, 0.26
+                    C 0.12, 0.32  0.15, 0.38  0.10, 0.44
+                    C 0.05, 0.50  0.01, 0.54  0.02, 0.60
+                    C 0.03, 0.66  0.09, 0.71  0.16, 0.74
+                    C 0.23, 0.77  0.28, 0.72  0.33, 0.75
+                    C 0.38, 0.78  0.39, 0.85  0.42, 0.90
+                    C 0.45, 0.95  0.50, 0.99  0.56, 0.98
+                    C 0.62, 0.97  0.66, 0.91  0.71, 0.87
+                    C 0.76, 0.83  0.82, 0.83  0.88, 0.79
+                    C 0.94, 0.75  0.99, 0.68  0.99, 0.60
+                    C 0.99, 0.52  0.96, 0.44  0.95, 0.36
+                    C 0.94, 0.28  0.93, 0.20  0.87, 0.14
+                    C 0.81, 0.08  0.73, 0.05  0.65, 0.03
+                    C 0.57, 0.01  0.49, 0.04  0.42, 0.08
+                    C 0.35, 0.12  0.33, 0.14  0.28, 0.14 Z
+                  " />
+                </clipPath>
+              </defs>
+            </svg>
+
+            {/* Right Column: Authentic Humanitarian Photography with Organic Fluid Continent Mask */}
+            <div className="lg:col-span-5 relative flex justify-center lg:justify-end items-center">
+              <div ref={heroImageRef} className="relative w-full max-w-[540px] aspect-[4/3.5] flex items-center justify-center p-2">
                 
-                {/* Organic curved image container */}
-                <div className="relative overflow-hidden rounded-[40px] shadow-2xl border-4 border-white dark:border-[#24332D] aspect-[4/4.5] sm:aspect-[4/4.2]">
-                  <img 
-                    src="/images/hero-child.jpg" 
-                    alt="Smiling community child supported by SAHAAYAA AI" 
-                    className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                  {/* Subtle warm sunlight gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#17231E]/40 via-transparent to-transparent pointer-events-none" />
+                {/* Background Dotted Matrix Grid Texture (matching reference image) */}
+                <div className="absolute inset-0 opacity-25 dark:opacity-35 pointer-events-none flex items-center justify-center">
+                  <svg className="w-full h-full text-[#1C1917] dark:text-[#F9F6F0]" fill="currentColor">
+                    <pattern id="hero-dots-pattern" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+                      <circle cx="2" cy="2" r="1.5" className="fill-current opacity-40" />
+                      <circle cx="14" cy="14" r="1.2" className="fill-current opacity-30" />
+                    </pattern>
+                    <rect width="100%" height="100%" fill="url(#hero-dots-pattern)" />
+                  </svg>
                 </div>
 
-                {/* Hand-drawn cursive badge overlay */}
-                <div className="absolute -bottom-4 right-4 sm:-bottom-6 sm:right-6 bg-white/95 dark:bg-[#17231E]/95 backdrop-blur-md px-5 py-3 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] shadow-xl">
-                  <p className="font-script text-2xl text-[#17231E] dark:text-[#FFF9ED] leading-none font-bold">
-                    Real People. <br />
-                    Real Needs. <br />
-                    Real Help. ♡
+                {/* Floating Accent Dots matching reference image */}
+                {/* 1. Coral Top Right Dot */}
+                <div className="absolute top-2 right-6 sm:right-10 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#F25C38] shadow-md z-20 animate-pulse" />
+                {/* 2. Coral Mid Left Dot */}
+                <div className="absolute top-1/2 -left-2 sm:left-2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#F25C38] shadow-md z-20" />
+                {/* 3. Dark Graphite Bottom Center Dot */}
+                <div className="absolute bottom-6 left-1/3 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#1C1917] dark:bg-stone-300 shadow-xs z-20" />
+                {/* 4. Muted Charcoal Bottom Right Dot */}
+                <div className="absolute bottom-10 right-4 sm:right-8 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#57534E] dark:bg-stone-400 shadow-xs z-20" />
+
+                {/* Main Organic Fluid Image Mask */}
+                <div 
+                  className="relative w-full h-full shadow-2xl transition-all duration-700 hover:scale-[1.01]"
+                  style={{
+                    clipPath: 'url(#organic-continent-hero-mask)',
+                    WebkitClipPath: 'url(#organic-continent-hero-mask)'
+                  }}
+                >
+                  <img 
+                    src="/images/hero-child.jpg" 
+                    alt="Smiling community children supported by SAHAAYAA AI" 
+                    className="w-full h-full object-cover object-center transform scale-105 hover:scale-110 transition-transform duration-1000 ease-out"
+                  />
+                  {/* Subtle warm lighting gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#0D0D0D]/40 via-transparent to-[#F25C38]/10 pointer-events-none" />
+
+                  {/* Handwriting overlay top left */}
+                  <div className="absolute top-6 left-8 text-white font-script text-xl sm:text-2xl drop-shadow-lg leading-tight pointer-events-none z-10">
+                    {language.toLowerCase() === 'ta' ? (
+                      <>சிறிய ♡ <br />செயல்கள் <br />உருவாக்கும் ♡ <br />பெரிய மாற்றம்</>
+                    ) : language.toLowerCase() === 'hi' ? (
+                      <>छोटे ♡ <br />प्रयास <br />लाते हैं ♡ <br />बड़ा बदलाव</>
+                    ) : (
+                      <>Small ♡ <br />Actions <br />Create ♡ <br />Big Changes</>
+                    )}
+                  </div>
+                </div>
+
+                {/* Cursive badge overlay bottom right */}
+                <div className="absolute -bottom-2 right-2 sm:bottom-0 sm:right-4 bg-[#F9F6F0]/95 dark:bg-[#1C1917]/95 backdrop-blur-md px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl border border-[#E7E0D6] dark:border-[#292524] shadow-xl transform rotate-[-2deg] z-30">
+                  <p className="font-script text-lg sm:text-xl text-[#1C1917] dark:text-[#F9F6F0] leading-snug font-bold">
+                    {language.toLowerCase() === 'ta' ? (
+                      <>♡ நிஜ மனிதர்கள். <br />&nbsp;&nbsp;&nbsp;நிஜத் தேவைகள். <br />&nbsp;&nbsp;&nbsp;நிஜ உதவி. ♡</>
+                    ) : language.toLowerCase() === 'hi' ? (
+                      <>♡ वास्तविक लोग। <br />&nbsp;&nbsp;&nbsp;वास्तविक ज़रूरतें। <br />&nbsp;&nbsp;&nbsp;वास्तविक मदद। ♡</>
+                    ) : (
+                      <>♡ Real People. <br />&nbsp;&nbsp;&nbsp;Real Needs. <br />&nbsp;&nbsp;&nbsp;Real Help. ♡</>
+                    )}
                   </p>
                 </div>
 
@@ -570,6 +750,9 @@ export const LandingPage: React.FC = () => {
             </div>
 
           </div>
+
+
+
         </div>
 
         {/* Organic soft curved divider transition to next section */}
@@ -963,7 +1146,22 @@ export const LandingPage: React.FC = () => {
                           <span className="text-[10px] font-extrabold text-[#159B5B] bg-[#E8F3E9] px-2 py-0.5 rounded-full">
                             Verified ✓
                           </span>
-                          <div className="flex items-center space-x-1.5">
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSelectedMobilityResource({
+                                  id: selectedPinResource.id,
+                                  name: selectedPinResource.name,
+                                  address: selectedPinResource.address
+                                });
+                                setIsMobilityModalOpen(true);
+                              }}
+                              className="px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 font-bold text-[10px] rounded-full border border-amber-500/30 transition-colors flex items-center space-x-1 cursor-pointer"
+                            >
+                              <Bus className="w-2.5 h-2.5 text-amber-500" />
+                              <span>I Can't Reach It</span>
+                            </button>
                             <a
                               href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation ? `${userLocation.lat},${userLocation.lng}` : ''}&destination=${selectedPinResource.latitude},${selectedPinResource.longitude}`}
                               target="_blank"
@@ -981,6 +1179,7 @@ export const LandingPage: React.FC = () => {
                               Live Map
                             </Link>
                           </div>
+
                         </div>
                       </div>
                     )}
@@ -1050,81 +1249,75 @@ export const LandingPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* 3. HOW IT WORKS SECTION                                                  */}
       {/* ========================================================================= */}
-      <section id="how-it-works" className="py-20 bg-[#F7EBD2]/40 dark:bg-[#121C18]/40 border-t border-[#EAE3D2] dark:border-[#24332D]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ========================================================================= */}
+      {/* 3. HOW IT WORKS / MAKE A DIFFERENCE SECTION                             */}
+      {/* ========================================================================= */}
+      <section id="how-it-works" className="py-20 bg-[#F3ECE2]/50 dark:bg-[#161616]/60 border-t border-[#E7E0D6] dark:border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
-            <div className="space-y-1">
-              <div className="inline-flex items-center space-x-2 text-[11px] font-black uppercase tracking-widest text-[#159B5B] dark:text-[#19AD66]">
-                <span className="w-1.5 h-3.5 bg-[#159B5B] dark:bg-[#19AD66] rounded-full inline-block" />
-                <span>{t('howItWorks.badge')}</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#17231E] dark:text-white tracking-tight">
-                {t('howItWorks.title')}
-              </h2>
+          <div className="max-w-3xl mx-auto space-y-3 mb-16">
+            <div className="inline-flex items-center space-x-2 text-[11px] font-extrabold uppercase tracking-widest text-[#F25C38]">
+              <span>— HOW IT WORKS —</span>
             </div>
-
-            {/* Cursive quote badge */}
-            <div className="font-script text-2xl text-[#17231E] dark:text-[#FFF9ED] font-bold">
-              {t('howItWorks.subtitle')}
-            </div>
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-medium text-[#1C1917] dark:text-[#F5F5F0] tracking-tight">
+              Make a Difference
+            </h2>
+            <p className="text-sm sm:text-base text-[#78716C] dark:text-[#A8A29E] leading-relaxed font-sans max-w-xl mx-auto">
+              Technology empowers hope and provides real-time support to those in need, creating a stronger, kinder community.
+            </p>
           </div>
 
-          {/* 4 Connected Process Steps */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+          {/* 4 Clean Feature Cards Inspired by Reference Screenshot */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
             
-            {/* Step 1 */}
-            <div className="bg-white dark:bg-[#121C18] p-7 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm hover:shadow-md transition-all space-y-4 relative group">
-              <div className="w-12 h-12 rounded-2xl bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 flex items-center justify-center">
-                <User className="w-6 h-6" />
+            {/* Card 1: Find People */}
+            <div className="bg-[#FAF7F2] dark:bg-[#1E1E1E] p-8 rounded-3xl border border-[#E7E0D6] dark:border-white/10 shadow-xs hover:shadow-md transition-all space-y-5 group hover:-translate-y-1">
+              <div className="w-14 h-14 rounded-full bg-[#F25C38]/10 text-[#F25C38] flex items-center justify-center border border-[#F25C38]/20 group-hover:scale-110 transition-transform">
+                <Search className="w-6 h-6" />
               </div>
-              <div>
-                <span className="text-2xl font-black text-[#17231E] dark:text-[#FFF9ED] block mb-1">01</span>
-                <h3 className="text-base font-extrabold text-[#17231E] dark:text-[#FFF9ED] mb-2">{t('howItWorks.step1Title')}</h3>
-                <p className="text-xs text-[#17231E]/70 dark:text-[#FFF9ED]/70 leading-relaxed font-medium">
-                  {t('howItWorks.step1Desc')}
+              <div className="space-y-2">
+                <h3 className="text-xl font-serif font-semibold text-[#1C1917] dark:text-[#F5F5F0]">Find People</h3>
+                <p className="text-xs sm:text-sm text-[#78716C] dark:text-[#A8A29E] leading-relaxed font-sans">
+                  A local & global platform to find people in distress and connect them with urgent support.
                 </p>
               </div>
             </div>
 
-            {/* Step 2 */}
-            <div className="bg-white dark:bg-[#121C18] p-7 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm hover:shadow-md transition-all space-y-4 relative group">
-              <div className="w-12 h-12 rounded-2xl bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 flex items-center justify-center">
-                <Brain className="w-6 h-6" />
-              </div>
-              <div>
-                <span className="text-2xl font-black text-[#17231E] dark:text-[#FFF9ED] block mb-1">02</span>
-                <h3 className="text-base font-extrabold text-[#17231E] dark:text-[#FFF9ED] mb-2">{t('howItWorks.step2Title')}</h3>
-                <p className="text-xs text-[#17231E]/70 dark:text-[#FFF9ED]/70 leading-relaxed font-medium">
-                  {t('howItWorks.step2Desc')}
-                </p>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="bg-white dark:bg-[#121C18] p-7 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm hover:shadow-md transition-all space-y-4 relative group">
-              <div className="w-12 h-12 rounded-2xl bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 flex items-center justify-center">
+            {/* Card 2: Local Resources */}
+            <div className="bg-[#FAF7F2] dark:bg-[#1E1E1E] p-8 rounded-3xl border border-[#E7E0D6] dark:border-white/10 shadow-xs hover:shadow-md transition-all space-y-5 group hover:-translate-y-1">
+              <div className="w-14 h-14 rounded-full bg-[#F25C38]/10 text-[#F25C38] flex items-center justify-center border border-[#F25C38]/20 group-hover:scale-110 transition-transform">
                 <MapPin className="w-6 h-6" />
               </div>
-              <div>
-                <span className="text-2xl font-black text-[#17231E] dark:text-[#FFF9ED] block mb-1">03</span>
-                <h3 className="text-base font-extrabold text-[#17231E] dark:text-[#FFF9ED] mb-2">{t('howItWorks.step3Title')}</h3>
-                <p className="text-xs text-[#17231E]/70 dark:text-[#FFF9ED]/70 leading-relaxed font-medium">
-                  {t('howItWorks.step3Desc')}
+              <div className="space-y-2">
+                <h3 className="text-xl font-serif font-semibold text-[#1C1917] dark:text-[#F5F5F0]">Local Resources</h3>
+                <p className="text-xs sm:text-sm text-[#78716C] dark:text-[#A8A29E] leading-relaxed font-sans">
+                  Discover nearby verified shelters, food banks, medical centers and community support.
                 </p>
               </div>
             </div>
 
-            {/* Step 4 */}
-            <div className="bg-white dark:bg-[#121C18] p-7 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm hover:shadow-md transition-all space-y-4 relative group">
-              <div className="w-12 h-12 rounded-2xl bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 flex items-center justify-center">
+            {/* Card 3: Real Impact */}
+            <div className="bg-[#FAF7F2] dark:bg-[#1E1E1E] p-8 rounded-3xl border border-[#E7E0D6] dark:border-white/10 shadow-xs hover:shadow-md transition-all space-y-5 group hover:-translate-y-1">
+              <div className="w-14 h-14 rounded-full bg-[#F25C38]/10 text-[#F25C38] flex items-center justify-center border border-[#F25C38]/20 group-hover:scale-110 transition-transform">
                 <Handshake className="w-6 h-6" />
               </div>
-              <div>
-                <span className="text-2xl font-black text-[#17231E] dark:text-[#FFF9ED] block mb-1">04</span>
-                <h3 className="text-base font-extrabold text-[#17231E] dark:text-[#FFF9ED] mb-2">{t('howItWorks.step4Title')}</h3>
-                <p className="text-xs text-[#17231E]/70 dark:text-[#FFF9ED]/70 leading-relaxed font-medium">
-                  {t('howItWorks.step4Desc')}
+              <div className="space-y-2">
+                <h3 className="text-xl font-serif font-semibold text-[#1C1917] dark:text-[#F5F5F0]">Real Impact</h3>
+                <p className="text-xs sm:text-sm text-[#78716C] dark:text-[#A8A29E] leading-relaxed font-sans">
+                  Direct help to verified NGOs and trusted partners making a tangible difference.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 4: Safety First */}
+            <div className="bg-[#FAF7F2] dark:bg-[#1E1E1E] p-8 rounded-3xl border border-[#E7E0D6] dark:border-white/10 shadow-xs hover:shadow-md transition-all space-y-5 group hover:-translate-y-1">
+              <div className="w-14 h-14 rounded-full bg-[#F25C38]/10 text-[#F25C38] flex items-center justify-center border border-[#F25C38]/20 group-hover:scale-110 transition-transform">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-serif font-semibold text-[#1C1917] dark:text-[#F5F5F0]">Safety First</h3>
+                <p className="text-xs sm:text-sm text-[#78716C] dark:text-[#A8A29E] leading-relaxed font-sans">
+                  Verified resources, trusted humanitarian partners and secure support networks.
                 </p>
               </div>
             </div>
@@ -1135,65 +1328,156 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* ========================================================================= */}
-      {/* 4. OUR IMPACT SECTION (REAL BACKEND METRICS WITH BIG TYPOGRAPHY)          */}
+      {/* ABOUT US / CHANGING LIVES WITH KNOWLEDGE SECTION                           */}
       {/* ========================================================================= */}
-      <section id="impact" ref={statsSectionRef} className="py-16 md:py-24 bg-[#FFF9ED] dark:bg-[#0C1410] border-t border-[#EAE3D2] dark:border-[#24332D]">
+      <section id="about" className="py-20 bg-[#FAF7F2] dark:bg-[#0D0D0D] border-t border-[#E7E0D6] dark:border-white/10 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* Left Column: Overlapping Circular Portrait Photography Collage */}
+            <div className="lg:col-span-6 relative flex items-center justify-center">
+              <div className="relative w-full max-w-[460px] aspect-square flex items-center justify-center">
+                
+                {/* Background decorative ring */}
+                <div className="absolute inset-0 rounded-full border border-[#F25C38]/20 animate-spin-slow pointer-events-none" />
+                <div className="absolute inset-6 rounded-full border border-dashed border-[#78716C]/20 pointer-events-none" />
+                
+                {/* Main Large Center Circular Image */}
+                <div className="relative z-10 w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] rounded-full overflow-hidden border-4 border-[#FAF7F2] dark:border-[#161616] shadow-2xl">
+                  <img 
+                    src="/images/hero-child.jpg" 
+                    alt="Community child receiving aid" 
+                    className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+
+                {/* Overlapping Top-Right Circular Image */}
+                <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-20 w-[130px] h-[130px] sm:w-[150px] sm:h-[150px] rounded-full overflow-hidden border-4 border-[#FAF7F2] dark:border-[#161616] shadow-xl">
+                  <img 
+                    src="/images/avatar-priya.jpg" 
+                    alt="Community volunteer Priya" 
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+
+                {/* Overlapping Bottom-Left Circular Image */}
+                <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4 z-20 w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] rounded-full overflow-hidden border-4 border-[#FAF7F2] dark:border-[#161616] shadow-xl">
+                  <img 
+                    src="/images/avatar-lakshmi.jpg" 
+                    alt="Beneficiary Lakshmi" 
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+
+                {/* Small Coral Decorative Dot */}
+                <div className="absolute bottom-8 right-8 w-4 h-4 rounded-full bg-[#F25C38] z-30 shadow-md" />
+              </div>
+            </div>
+
+            {/* Right Column: Mission Content & CTAs */}
+            <div className="lg:col-span-6 space-y-6">
+              
+              <div className="inline-flex items-center space-x-2 text-[11px] font-extrabold uppercase tracking-widest text-[#F25C38]">
+                <span>ABOUT US</span>
+                <span className="w-8 h-[1px] bg-[#F25C38]/40" />
+              </div>
+
+              <h2 className="text-3xl sm:text-5xl font-serif font-medium text-[#1C1917] dark:text-[#F5F5F0] tracking-tight leading-tight">
+                Changing Lives with Knowledge & Technology
+              </h2>
+
+              <p className="text-sm sm:text-base text-[#57534E] dark:text-[#A8A29E] leading-relaxed font-sans font-medium">
+                Our mission is to empower vulnerable communities through technology, education, and real-time crisis matching. We connect individuals in need with verified resources, shelters, food banks, and healthcare facilities—creating opportunities for a better, safer tomorrow.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const el = document.getElementById('how-it-works');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="px-7 py-3.5 bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-md transition-all hover:scale-105 active:scale-95 flex items-center space-x-2 cursor-pointer min-h-[44px]"
+                >
+                  <span>Learn More</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowOneTapModal(true)}
+                  className="px-7 py-3.5 bg-[#FAF7F2] dark:bg-[#161616] hover:bg-[#F3ECE2] dark:hover:bg-[#222222] text-[#1C1917] dark:text-[#F5F5F0] font-bold text-xs uppercase tracking-wider rounded-full border border-[#E7E0D6] dark:border-white/10 shadow-xs transition-all hover:scale-105 active:scale-95 flex items-center space-x-2 cursor-pointer min-h-[44px]"
+                >
+                  <span>How It Works</span>
+                  <ChevronRight className="w-4 h-4 text-[#F25C38]" />
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 4. OUR IMPACT SECTION                                                     */}
+      {/* ========================================================================= */}
+      <section id="impact" ref={statsSectionRef} className="py-16 md:py-24 bg-[#F3ECE2]/40 dark:bg-[#161616]/40 border-t border-[#E7E0D6] dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
             {/* Left Headline */}
             <div className="lg:col-span-4 space-y-2">
-              <div className="inline-flex items-center space-x-2 text-[11px] font-black uppercase tracking-widest text-[#159B5B] dark:text-[#19AD66]">
-                <span className="w-1.5 h-3.5 bg-[#159B5B] dark:bg-[#19AD66] rounded-full inline-block" />
-                <span>{t('impact.badge')}</span>
+              <div className="inline-flex items-center space-x-2 text-[11px] font-extrabold uppercase tracking-widest text-[#F25C38]">
+                <span>— OUR IMPACT —</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#17231E] dark:text-white tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-medium text-[#1C1917] dark:text-[#F5F5F0] tracking-tight">
                 {t('impact.title')}
               </h2>
             </div>
 
-            {/* Right: 4 Real dynamic backend numbers */}
+            {/* Right: 4 Real dynamic backend metrics */}
             <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-left">
               
-              <div className="space-y-1">
+              <div className="space-y-1 bg-[#FAF7F2] dark:bg-[#1E1E1E] p-5 rounded-2xl border border-[#E7E0D6] dark:border-white/10 shadow-xs">
                 <div 
                   ref={statTotalRequestsRef}
-                  className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#159B5B] dark:text-[#19AD66] tracking-tight"
+                  className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#F25C38] tracking-tight"
                 >
                   {impact.total_requests.toLocaleString()}
                 </div>
-                <div className="text-xs font-bold text-[#17231E] dark:text-[#FFF9ED]">{t('impact.stat1Label')}</div>
+                <div className="text-xs font-bold text-[#1C1917] dark:text-[#F5F5F0]">{t('impact.stat1Label')}</div>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1 bg-[#FAF7F2] dark:bg-[#1E1E1E] p-5 rounded-2xl border border-[#E7E0D6] dark:border-white/10 shadow-xs">
                 <div 
                   ref={statResourcesRef}
-                  className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#159B5B] dark:text-[#19AD66] tracking-tight"
+                  className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#F25C38] tracking-tight"
                 >
                   {impact.resources_available.toLocaleString()}
                 </div>
-                <div className="text-xs font-bold text-[#17231E] dark:text-[#FFF9ED]">{t('impact.stat2Label')}</div>
+                <div className="text-xs font-bold text-[#1C1917] dark:text-[#F5F5F0]">{t('impact.stat2Label')}</div>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1 bg-[#FAF7F2] dark:bg-[#1E1E1E] p-5 rounded-2xl border border-[#E7E0D6] dark:border-white/10 shadow-xs">
                 <div 
                   ref={statFulfillmentRef}
-                  className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#159B5B] dark:text-[#19AD66] tracking-tight"
+                  className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#F25C38] tracking-tight"
                 >
                   89%
                 </div>
-                <div className="text-xs font-bold text-[#17231E] dark:text-[#FFF9ED]">{t('impact.stat3Label')}</div>
+                <div className="text-xs font-bold text-[#1C1917] dark:text-[#F5F5F0]">{t('impact.stat3Label')}</div>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1 bg-[#FAF7F2] dark:bg-[#1E1E1E] p-5 rounded-2xl border border-[#E7E0D6] dark:border-white/10 shadow-xs">
                 <div 
                   ref={statCompletedRef}
-                  className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#159B5B] dark:text-[#19AD66] tracking-tight"
+                  className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#F25C38] tracking-tight"
                 >
                   {impact.completed_requests.toLocaleString()}
                 </div>
-                <div className="text-xs font-bold text-[#17231E] dark:text-[#FFF9ED]">{t('impact.stat4Label')}</div>
+                <div className="text-xs font-bold text-[#1C1917] dark:text-[#F5F5F0]">{t('impact.stat4Label')}</div>
               </div>
 
             </div>
@@ -1204,19 +1488,18 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. POPULAR RESOURCES SECTION (4-COLUMN REAL-LIKE IMAGE CARDS)             */}
+      {/* 5. POPULAR RESOURCES / FEATURED CAMPAIGNS SECTION                         */}
       {/* ========================================================================= */}
-      <section className="py-20 bg-[#F7EBD2]/30 dark:bg-[#121C18]/30 border-t border-[#EAE3D2] dark:border-[#24332D]">
+      <section className="py-20 bg-[#FAF7F2] dark:bg-[#0D0D0D] border-t border-[#E7E0D6] dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-1">
-              <div className="inline-flex items-center space-x-2 text-[11px] font-black uppercase tracking-widest text-[#159B5B] dark:text-[#19AD66]">
-                <span className="w-1.5 h-3.5 bg-[#159B5B] dark:bg-[#19AD66] rounded-full inline-block" />
-                <span>{t('resources.popularBadge')}</span>
+              <div className="inline-flex items-center space-x-2 text-[11px] font-extrabold uppercase tracking-widest text-[#F25C38]">
+                <span>— FEATURED CAMPAIGNS —</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#17231E] dark:text-white tracking-tight">
-                {t('resources.popularTitle')}
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-medium text-[#1C1917] dark:text-[#F5F5F0] tracking-tight">
+                Support That Reaches People
               </h2>
             </div>
 
@@ -1648,10 +1931,10 @@ export const LandingPage: React.FC = () => {
             <div className="space-y-1">
               <div className="inline-flex items-center space-x-2 text-[11px] font-black uppercase tracking-widest text-[#159B5B] dark:text-[#19AD66]">
                 <span className="w-1.5 h-3.5 bg-[#159B5B] dark:bg-[#19AD66] rounded-full inline-block" />
-                <span>STORIES OF SUPPORT</span>
+                <span>{t('stories.badge')}</span>
               </div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#17231E] dark:text-white tracking-tight">
-                Real people. Real stories.
+                {t('stories.title')}
               </h2>
             </div>
 
@@ -1670,7 +1953,7 @@ export const LandingPage: React.FC = () => {
             {/* Story 1: Lakshmi */}
             <div className="bg-white dark:bg-[#121C18] p-6 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm flex flex-col justify-between space-y-4">
               <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed italic">
-                "The food support we received helped our family during a difficult time. We are grateful for this platform."
+                "{t('stories.lakshmiQuote')}"
               </p>
               <div className="flex items-center space-x-3 pt-2 border-t border-[#EAE3D2] dark:border-[#24332D]">
                 <img 
@@ -1688,7 +1971,7 @@ export const LandingPage: React.FC = () => {
             {/* Story 2: Ramesh */}
             <div className="bg-white dark:bg-[#121C18] p-6 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm flex flex-col justify-between space-y-4">
               <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed italic">
-                "As a volunteer, I've seen how this platform connects people with help quickly. It truly makes a difference."
+                "{t('stories.rameshQuote')}"
               </p>
               <div className="flex items-center space-x-3 pt-2 border-t border-[#EAE3D2] dark:border-[#24332D]">
                 <img 
@@ -1706,7 +1989,7 @@ export const LandingPage: React.FC = () => {
             {/* Story 3: Priya */}
             <div className="bg-white dark:bg-[#121C18] p-6 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm flex flex-col justify-between space-y-4">
               <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed italic">
-                "Our organization has been able to reach more people through this platform. The matching system is excellent."
+                "{t('stories.priyaQuote')}"
               </p>
               <div className="flex items-center space-x-3 pt-2 border-t border-[#EAE3D2] dark:border-[#24332D]">
                 <img 
@@ -1724,7 +2007,7 @@ export const LandingPage: React.FC = () => {
             {/* Story 4: Arjun */}
             <div className="bg-white dark:bg-[#121C18] p-6 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm flex flex-col justify-between space-y-4">
               <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 leading-relaxed italic">
-                "I started donating because I believe in the power of community. This platform makes it easy and transparent."
+                "{t('stories.arjunQuote')}"
               </p>
               <div className="flex items-center space-x-3 pt-2 border-t border-[#EAE3D2] dark:border-[#24332D]">
                 <img 
@@ -1799,7 +2082,7 @@ export const LandingPage: React.FC = () => {
               >
                 <div className="flex items-center space-x-2.5">
                   <Heart className="w-4 h-4 text-[#F2A33A]" />
-                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#FFF9ED]">Donate</span>
+                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#FFF9ED]">{t('nav.donate')}</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-[#17231E]/40 dark:text-stone-500 group-hover:text-[#159B5B] transition-colors" />
               </Link>
@@ -1810,7 +2093,7 @@ export const LandingPage: React.FC = () => {
               >
                 <div className="flex items-center space-x-2.5">
                   <User className="w-4 h-4 text-[#159B5B]" />
-                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#FFF9ED]">Volunteer</span>
+                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#FFF9ED]">{t('auth.roleVolunteer')}</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-[#17231E]/40 dark:text-stone-500 group-hover:text-[#159B5B] transition-colors" />
               </Link>
@@ -1821,7 +2104,7 @@ export const LandingPage: React.FC = () => {
               >
                 <div className="flex items-center space-x-2.5">
                   <Building className="w-4 h-4 text-[#159B5B]" />
-                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#FFF9ED]">Partner with Us</span>
+                  <span className="text-xs font-extrabold text-[#17231E] dark:text-[#FFF9ED]">{t('getInvolved.partnerBtn')}</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-[#17231E]/40 dark:text-stone-500 group-hover:text-[#159B5B] transition-colors" />
               </Link>
@@ -1833,7 +2116,7 @@ export const LandingPage: React.FC = () => {
                 <div className="flex items-center space-x-2.5">
                   <Share2 className="w-4 h-4 text-[#159B5B]" />
                   <span className="text-xs font-extrabold text-[#17231E] dark:text-[#FFF9ED]">
-                    {copiedLink ? 'Link Copied!' : 'Spread Awareness'}
+                    {copiedLink ? t('common.copied') : t('getInvolved.spreadAwareness')}
                   </span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-[#17231E]/40 dark:text-stone-500 group-hover:text-[#159B5B] transition-colors" />
@@ -1845,8 +2128,19 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Mobility & Trust-Route Layer Modal (Phase 3) */}
+      <MobilityLayerModal
+        isOpen={isMobilityModalOpen}
+        onClose={() => setIsMobilityModalOpen(false)}
+        resourceId={selectedMobilityResource?.id}
+        resourceName={selectedMobilityResource?.name}
+        resourceAddress={selectedMobilityResource?.address}
+      />
+
     </div>
   );
 };
+
+
 
 export default LandingPage;

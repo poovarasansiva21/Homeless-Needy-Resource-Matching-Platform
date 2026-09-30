@@ -66,3 +66,16 @@ def role_required(*allowed_roles):
             return f(current_user, *args, **kwargs)
         return decorated
     return decorator
+
+def get_current_user_from_token(req=None):
+    if req is None:
+        req = request
+    auth_header = req.headers.get("Authorization")
+    if auth_header and auth_header.startswith("Bearer "):
+        token = auth_header.split(" ")[1]
+        try:
+            payload = decode_token(token)
+            return User.query.get(payload["user_id"])
+        except Exception:
+            return None
+    return None

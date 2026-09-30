@@ -85,29 +85,100 @@ def get_admin_dashboard(current_user):
 @dashboard_bp.route("/ngo", methods=["GET"])
 @token_required
 def get_ngo_dashboard(current_user):
-    incoming_verified = Request.query.filter_by(status="VERIFIED").order_by(Request.urgency_score.desc()).all()
+    """
+    Phase 4 NGO Dashboard:
+    1. New Requests
+    2. Critical Requests
+    3. Nearby Requests
+    4. Transport Requests
+    5. Active Cases
+    6. Completed Cases
+    """
+    # 1. New Requests
+    new_requests = Request.query.filter(
+        Request.status.in_([
+            "REQUESTED", "AI_ANALYZED", "RESOURCE_MATCHED", 
+            "TRANSPORT_CHECK", "NGO_NOTIFIED", "PENDING_VERIFICATION", "VERIFIED", "REPORTED"
+        ])
+    ).order_by(Request.created_at.desc()).all()
+
+    # 2. Critical Requests
     critical_requests = Request.query.filter(
         Request.urgency_level.in_(["CRITICAL", "HIGH"]),
-        Request.status.in_(["VERIFIED", "PENDING_VERIFICATION", "ACCEPTED"])
+        Request.status.notin_(["COMPLETED", "REJECTED"])
     ).order_by(Request.urgency_score.desc()).all()
-    
-    assigned_to_me = Request.query.filter_by(assigned_ngo_id=current_user.id).order_by(Request.updated_at.desc()).all()
-    completed_by_me = Request.query.filter_by(assigned_ngo_id=current_user.id, status="COMPLETED").all()
-    
-    my_resources = Resource.query.filter(Resource.verified == True).all()
+
+    # 3. Nearby Requests (Top 15 sorted by urgency score)
+    nearby_requests = Request.query.filter(
+        Request.status.notin_(["COMPLETED", "REJECTED"])
+    ).order_by(Request.urgency_score.desc()).limit(15).all()
+
+    # 4. Transport Requests (Requests with transport barrier flagged)
+    transport_requests = Request.query.filter(
+        Request.status.notin_(["COMPLETED", "REJECTED"])
+    ).order_by(Request.created_at.desc()).all()
+
+    # 5. Active Cases (Accepted by NGO or in progress)
+    active_cases = Request.query.filter(
+        Request.status.in_([
+            "NGO_ACCEPTED", "RESPONDER_ASSIGNED", "ON_THE_WAY", 
+            "ASSISTANCE_PROVIDED", "ACCEPTED", "IN_PROGRESS"
+        ])
+    ).order_by(Request.updated_at.desc()).all()
+
+    # 6. Completed Cases
+    completed_cases = Request.query.filter_by(status="COMPLETED").order_by(Request.updated_at.desc()).all()
+
+    my_resources = Resource.query.filter(Resource.verified.is_(True)).all()
 
     return jsonify({
         "metrics": {
-            "verified_incoming_count": len(incoming_verified),
+            "new_requests_count": len(new_requests),
             "critical_cases_count": len(critical_requests),
-            "assigned_active_count": len([r for r in assigned_to_me if r.status != "COMPLETED"]),
-            "completed_count": len(completed_by_me)
+            "nearby_requests_count": len(nearby_requests),
+            "transport_requests_count": len(transport_requests),
+            "active_cases_count": len(active_cases),
+            "completed_cases_count": len(completed_cases)
         },
-        "incoming_verified": [r.to_dict(is_authorized=True) for r in incoming_verified[:10]],
-        "critical_cases": [r.to_dict(is_authorized=True) for r in critical_requests[:6]],
-        "assigned_requests": [r.to_dict(is_authorized=True) for r in assigned_to_me],
+        "new_requests": [r.to_dict(is_authorized=True) for r in new_requests[:12]],
+        "critical_cases": [r.to_dict(is_authorized=True) for r in critical_requests[:10]],
+        "nearby_requests": [r.to_dict(is_authorized=True) for r in nearby_requests],
+        "transport_requests": [r.to_dict(is_authorized=True) for r in transport_requests[:10]],
+        "active_cases": [r.to_dict(is_authorized=True) for r in active_cases],
+        "completed_cases": [r.to_dict(is_authorized=True) for r in completed_cases[:10]],
+        "incoming_verified": [r.to_dict(is_authorized=True) for r in new_requests[:10]],
+        "assigned_requests": [r.to_dict(is_authorized=True) for r in active_cases],
         "available_resources": [res.to_dict() for res in my_resources]
     }), 200
+
+@dashboard_bp.route("/volunteer", methods=["GET"])
+@token_required
+def get_volunteer_dashboard(current_user):
+    """
+    Phase 4 Volunteer Dashboard:
+    Only shows authorized tasks for verified responders.
+    """
+    if current_user.role not in ["volunteer", "ngo", "admin"]:
+        return jsonify({"error": "Only authorized/verified responders can access volunteer tasks."}), 403
+
+    # Tasks assigned specifically to this volunteer or unassigned active responder tasks
+    authorized_tasks = Request.query.filter(
+        Request.status.in_([
+            "NGO_ACCEPTED", "RESPONDER_ASSIGNED", "ON_THE_WAY", "ASSISTANCE_PROVIDED", "ACCEPTED"
+        ])
+    ).order_by(Request.updated_at.desc()).all()
+
+    completed_tasks = Request.query.filter_by(status="COMPLETED").limit(10).all()
+
+    return jsonify({
+        "metrics": {
+            "authorized_tasks_count": len(authorized_tasks),
+            "completed_tasks_count": len(completed_tasks)
+        },
+        "authorized_tasks": [r.to_dict(is_authorized=True) for r in authorized_tasks],
+        "completed_tasks": [r.to_dict(is_authorized=True) for r in completed_tasks]
+    }), 200
+
 
 @dashboard_bp.route("/donor", methods=["GET"])
 @token_required

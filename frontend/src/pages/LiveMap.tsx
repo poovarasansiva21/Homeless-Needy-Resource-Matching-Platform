@@ -15,15 +15,18 @@ import {
   Phone,
   RefreshCw,
   Info,
-  X,
   Navigation,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Bus,
+  X
 } from 'lucide-react';
 import { requestsApi, resourcesApi } from '../services/api';
 import socketService from '../services/socket';
 import { RequestItem, Resource, UrgencyLevel } from '../types';
 import { useLanguage } from '../i18n';
+import { MobilityLayerModal } from '../components/MobilityLayerModal';
+
 
 // Haversine distance calculator
 const calculateDistanceKm = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
@@ -150,6 +153,11 @@ export const LiveMap: React.FC = () => {
   // Mobile responsive view state
   const [mobileTab, setMobileTab] = useState<'map' | 'list'>('map');
 
+  // Mobility Layer state (Phase 3)
+  const [isMobilityModalOpen, setIsMobilityModalOpen] = useState(false);
+  const [selectedMobilityResource, setSelectedMobilityResource] = useState<{ id?: number; name?: string; address?: string } | null>(null);
+
+
   const defaultCenter: [number, number] = [11.0168, 76.9558]; // Coimbatore center
 
   const fetchData = async () => {
@@ -255,6 +263,35 @@ export const LiveMap: React.FC = () => {
       },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
     );
+  };
+
+  // Automatic Get Directions from User Current Location
+  const handleGetDirections = (destLat: number, destLng: number) => {
+    if (userLocation) {
+      const url = `https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${destLat},${destLng}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else if (navigator.geolocation) {
+      setLocationStatus('locating');
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          setUserLocation({ lat, lng });
+          setLocationStatus('success');
+          setFlyCoords([lat, lng]);
+          const url = `https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${destLat},${destLng}`;
+          window.open(url, '_blank', 'noopener,noreferrer');
+        },
+        () => {
+          const url = `https://www.google.com/maps/dir/?api=1&destination=${destLat},${destLng}`;
+          window.open(url, '_blank', 'noopener,noreferrer');
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    } else {
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${destLat},${destLng}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
   };
 
   const handleRadiusChange = async (newRadius: number) => {
@@ -556,6 +593,19 @@ export const LiveMap: React.FC = () => {
                 <span>{req.people_count} people</span>
                 <span className="capitalize font-semibold text-[#159B5B] dark:text-emerald-400">{req.status.replace('_', ' ')}</span>
               </div>
+              
+              {/* Touch Current Location Directions Shortcut */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleGetDirections(req.latitude, req.longitude);
+                }}
+                className="mt-2.5 w-full py-1.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-extrabold text-[11px] flex items-center justify-center space-x-1.5 shadow-sm active:scale-95 transition-all"
+              >
+                <Navigation className="w-3.5 h-3.5 text-white animate-pulse" />
+                <span>🧭 Directions (From My Current Location)</span>
+              </button>
             </div>
           ))}
         </div>
@@ -813,8 +863,8 @@ export const LiveMap: React.FC = () => {
                 <a href={`tel:${selectedResource.phone}`} className="hover:underline">{selectedResource.phone}</a>
               </div>
 
-              {/* Turn-by-Turn Navigation Action */}
-              <div className="pt-2 border-t border-[#EAE3D2] dark:border-[#24332D]">
+              {/* Turn-by-Turn Navigation Action & Mobility Check */}
+              <div className="pt-2 border-t border-[#EAE3D2] dark:border-[#24332D] space-y-2">
                 <a
                   href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation ? `${userLocation.lat},${userLocation.lng}` : ''}&destination=${selectedResource.latitude},${selectedResource.longitude}`}
                   target="_blank"
@@ -824,6 +874,22 @@ export const LiveMap: React.FC = () => {
                   <Navigation className="w-4 h-4" />
                   <span>Start Turn-by-Turn Navigation</span>
                 </a>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedMobilityResource({
+                      id: selectedResource.id,
+                      name: selectedResource.name,
+                      address: selectedResource.address
+                    });
+                    setIsMobilityModalOpen(true);
+                  }}
+                  className="w-full flex items-center justify-center space-x-2 py-3 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-black text-xs uppercase tracking-wider rounded-xl text-center border border-amber-500/30 transition-all hover:scale-[1.02] cursor-pointer"
+                >
+                  <Bus className="w-4 h-4 text-amber-500" />
+                  <span>I CAN'T REACH IT</span>
+                </button>
               </div>
             </div>
           )}
@@ -831,8 +897,18 @@ export const LiveMap: React.FC = () => {
         </div>
       )}
 
+      {/* Mobility & Trust-Route Modal */}
+      <MobilityLayerModal
+        isOpen={isMobilityModalOpen}
+        onClose={() => setIsMobilityModalOpen(false)}
+        resourceId={selectedMobilityResource?.id}
+        resourceName={selectedMobilityResource?.name}
+        resourceAddress={selectedMobilityResource?.address}
+      />
+
     </div>
   );
 };
+
 
 export default LiveMap;

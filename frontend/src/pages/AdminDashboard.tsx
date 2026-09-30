@@ -12,7 +12,13 @@ import {
   Clock,
   Sparkles,
   RefreshCw,
-  Search
+  Search,
+  Building2,
+  Bus,
+  ShieldAlert,
+  Lock,
+  Check,
+  Ban
 } from 'lucide-react';
 import { 
   ResponsiveContainer, 
@@ -28,12 +34,15 @@ import {
   Line, 
   CartesianGrid 
 } from 'recharts';
-import { dashboardApi, adminApi, requestsApi } from '../services/api';
+import { dashboardApi, adminApi, requestsApi, resourcesApi, mobilityApi, trustApi } from '../services/api';
 import socketService from '../services/socket';
-import { RequestItem, User } from '../types';
+import { RequestItem, User, Resource, TransportInfoItem } from '../types';
+import { formatReportDateTime } from '../utils/dateFormatter';
 
 export const AdminDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'queue' | 'duplicates' | 'audit' | 'users'>('overview');
+  const [activeTab, setActiveTab] = useState<
+    'overview' | 'queue' | 'duplicates' | 'resources' | 'transport' | 'reports' | 'audit' | 'users'
+  >('overview');
   
   const [metrics, setMetrics] = useState<any>({
     total_requests: 0,
@@ -56,22 +65,26 @@ export const AdminDashboard: React.FC = () => {
 
   const [pendingRequests, setPendingRequests] = useState<RequestItem[]>([]);
   const [duplicateRequests, setDuplicateRequests] = useState<RequestItem[]>([]);
+  const [resourcesList, setResourcesList] = useState<Resource[]>([]);
+  const [transportsList, setTransportsList] = useState<TransportInfoItem[]>([]);
+  const [trustReportsList, setTrustReportsList] = useState<any[]>([]);
   const [auditLogs, setAuditLogs] = useState<any[]>([]);
   const [usersList, setUsersList] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [actionLoadingId, setActionLoadingId] = useState<number | null>(null);
-
-  const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4'];
+  const [actionLoadingId, setActionLoadingId] = useState<string | number | null>(null);
 
   const fetchAdminData = async () => {
     setIsLoading(true);
     try {
-      const [dashData, allReqs, dupData, logsData, usersData] = await Promise.all([
+      const [dashData, allReqs, dupData, logsData, usersData, resData, transData, reportsData] = await Promise.all([
         dashboardApi.getAdmin(),
         requestsApi.getAll({ status: 'PENDING_VERIFICATION' }),
         adminApi.getDuplicates(),
         adminApi.getAuditLogs(),
         adminApi.getUsers(),
+        resourcesApi.getAll(),
+        mobilityApi.getRoutes(),
+        adminApi.getTrustReports(),
       ]);
 
       setMetrics(dashData.metrics);
@@ -80,6 +93,9 @@ export const AdminDashboard: React.FC = () => {
       setDuplicateRequests(dupData);
       setAuditLogs(logsData);
       setUsersList(usersData);
+      setResourcesList(resData);
+      if (transData?.routes) setTransportsList(transData.routes);
+      setTrustReportsList(reportsData || []);
     } catch (err) {
       console.error('Error fetching admin data:', err);
     } finally {
@@ -103,7 +119,7 @@ export const AdminDashboard: React.FC = () => {
     };
   }, []);
 
-  const handleVerify = async (reqId: number) => {
+  const handleVerifyRequest = async (reqId: number) => {
     setActionLoadingId(reqId);
     try {
       await adminApi.verify(reqId, 'Verified by Central Directorate verification officer.');
@@ -116,7 +132,7 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
-  const handleReject = async (reqId: number) => {
+  const handleRejectRequest = async (reqId: number) => {
     const reason = prompt('Please provide reason for rejection:', 'Does not meet urgent humanitarian assistance criteria.');
     if (!reason) return;
 
@@ -127,6 +143,50 @@ export const AdminDashboard: React.FC = () => {
     } catch (err) {
       console.error(err);
       alert('Failed to reject request.');
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
+  const handleToggleResourceVerification = async (resObj: Resource) => {
+    setActionLoadingId(`res-${resObj.id}`);
+    try {
+      if (resObj.verified) {
+        await adminApi.unverifyResource(resObj.id);
+      } else {
+        await adminApi.verifyResource(resObj.id);
+      }
+      await fetchAdminData();
+    } catch (err) {
+      console.error(err);
+      alert('Failed to update resource verification badge.');
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
+  const handleUpdateTransportStatus = async (tId: number, status: string) => {
+    setActionLoadingId(`trans-${tId}`);
+    try {
+      await adminApi.updateTransportStatus(tId, status);
+      await fetchAdminData();
+    } catch (err) {
+      console.error(err);
+      alert('Failed to update transport trust status.');
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
+  const handleResolveTrustReport = async (reportId: number, status: string) => {
+    const notes = prompt('Enter resolution notes for safety record:', 'Investigated and resolved by safety officer.') || 'Resolved';
+    setActionLoadingId(`report-${reportId}`);
+    try {
+      await adminApi.updateTrustReportStatus(reportId, status, notes);
+      await fetchAdminData();
+    } catch (err) {
+      console.error(err);
+      alert('Failed to update trust report.');
     } finally {
       setActionLoadingId(null);
     }
@@ -144,10 +204,10 @@ export const AdminDashboard: React.FC = () => {
               <span>Sahaayaa Central Directorate</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17231E] dark:text-white tracking-tight">
-              Platform Administration & Verification Hub
+              Platform Trust, Verification & Administration
             </h1>
             <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-1">
-              Verify incoming cases, inspect duplicate alerts, monitor DNN performance, and view system audit logs.
+              Verify NGO/Shelter/Food resources, manage transport trust, resolve safety reports, and inspect security audit logs.
             </p>
           </div>
 
@@ -166,7 +226,10 @@ export const AdminDashboard: React.FC = () => {
         <div className="flex flex-wrap gap-2 border-b border-[#EAE3D2] dark:border-[#24332D] pb-2">
           {[
             { id: 'overview', label: '📊 Overview & Charts' },
-            { id: 'queue', label: `📋 Verification Queue (${pendingRequests.length})` },
+            { id: 'queue', label: `📋 Request Queue (${pendingRequests.length})` },
+            { id: 'resources', label: `🏛️ Resource Verification (${resourcesList.length})` },
+            { id: 'transport', label: `🚌 Transport Trust (${transportsList.length})` },
+            { id: 'reports', label: `⚠️ Trust Reports (${trustReportsList.length})` },
             { id: 'duplicates', label: `⚠️ Duplicate Alerts (${duplicateRequests.length})` },
             { id: 'audit', label: `🔒 Audit Trail (${auditLogs.length})` },
             { id: 'users', label: `👥 User Directory (${usersList.length})` },
@@ -174,7 +237,7 @@ export const AdminDashboard: React.FC = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === tab.id
                   ? 'bg-[#159B5B] dark:bg-[#159B5B] text-white shadow-sm'
                   : 'bg-white dark:bg-[#121C18] text-stone-600 dark:text-stone-300 hover:bg-[#FFF9ED] dark:hover:bg-[#1A2621] border border-[#EAE3D2] dark:border-[#24332D]'
@@ -204,15 +267,19 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               <div className="bg-white dark:bg-[#121C18] p-5 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm">
-                <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">Verified Requests</div>
-                <div className="text-3xl font-black text-[#159B5B] dark:text-emerald-400 mt-2">{metrics.verified_requests}</div>
-                <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">Ready for fulfillment</div>
+                <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">Verified Resources</div>
+                <div className="text-3xl font-black text-[#159B5B] dark:text-emerald-400 mt-2">
+                  {resourcesList.filter(r => r.verified).length} / {resourcesList.length}
+                </div>
+                <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">Badged NGO / Shelter / Food</div>
               </div>
 
               <div className="bg-white dark:bg-[#121C18] p-5 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm">
-                <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">Fulfillment Rate</div>
-                <div className="text-3xl font-black text-blue-600 dark:text-blue-400 mt-2">{metrics.fulfillment_rate}%</div>
-                <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">Cases marked completed</div>
+                <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">Trust Reports</div>
+                <div className="text-3xl font-black text-rose-600 dark:text-rose-400 mt-2">
+                  {trustReportsList.filter(r => r.status === 'PENDING').length}
+                </div>
+                <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">Pending safety reviews</div>
               </div>
             </div>
 
@@ -235,7 +302,7 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Chart 2: Requests by Urgency Level */}
+              {/* Chart 2: Urgency Priorities */}
               <div className="bg-white dark:bg-[#121C18] p-6 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
                 <h3 className="font-bold text-[#17231E] dark:text-[#FFF9ED] text-sm">Urgency Priority Distribution</h3>
                 <div className="h-64 flex items-center justify-center">
@@ -267,22 +334,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Chart 3: Requests Intake Timeline */}
-              <div className="bg-white dark:bg-[#121C18] p-6 rounded-3xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4 lg:col-span-2">
-                <h3 className="font-bold text-[#17231E] dark:text-[#FFF9ED] text-sm">Intake Trend (Past 7 Days)</h3>
-                <div className="h-56">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={charts.timeline}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#24332D" opacity={0.4} />
-                      <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#888' }} />
-                      <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: '#888' }} />
-                      <Tooltip contentStyle={{ backgroundColor: '#121C18', borderColor: '#24332D', color: '#FFF9ED', borderRadius: '12px' }} />
-                      <Line type="monotone" dataKey="requests" stroke="#159B5B" strokeWidth={3} dot={{ r: 4 }} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
             </div>
 
           </div>
@@ -292,8 +343,8 @@ export const AdminDashboard: React.FC = () => {
         {activeTab === 'queue' && (
           <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
             <div>
-              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Pending Verification Queue</h2>
-              <p className="text-xs text-stone-500 dark:text-stone-400">Every request submitted must be verified before public exposure or dispatch.</p>
+              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Pending Request Verification Queue</h2>
+              <p className="text-xs text-stone-500 dark:text-stone-400">Every distress request must be verified before public exposure or volunteer dispatch.</p>
             </div>
 
             {pendingRequests.length === 0 ? (
@@ -314,11 +365,6 @@ export const AdminDashboard: React.FC = () => {
                         }`}>
                           {req.urgency_level}
                         </span>
-                        {req.is_flagged_duplicate && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-950/70 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-800">
-                            Duplicate Alert
-                          </span>
-                        )}
                       </div>
 
                       <p className="text-xs text-[#17231E]/80 dark:text-[#FFF9ED]/80 font-medium">{req.description}</p>
@@ -330,14 +376,14 @@ export const AdminDashboard: React.FC = () => {
 
                     <div className="flex items-center space-x-2 flex-shrink-0">
                       <button
-                        onClick={() => handleReject(req.id)}
+                        onClick={() => handleRejectRequest(req.id)}
                         disabled={actionLoadingId === req.id}
                         className="px-4 py-2 border border-[#EAE3D2] dark:border-[#24332D] hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 text-[#17231E] dark:text-[#FFF9ED] font-bold rounded-xl text-xs transition-colors"
                       >
                         Reject
                       </button>
                       <button
-                        onClick={() => handleVerify(req.id)}
+                        onClick={() => handleVerifyRequest(req.id)}
                         disabled={actionLoadingId === req.id}
                         className="px-5 py-2 bg-[#159B5B] hover:bg-[#12834D] text-white font-bold rounded-xl text-xs transition-colors shadow-sm"
                       >
@@ -351,12 +397,190 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Tab 3: Duplicate Alerts */}
+        {/* Tab 3: Resource Verification (NGO, SHELTER, FOOD) */}
+        {activeTab === 'resources' && (
+          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+            <div>
+              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Resource Verification & Badging</h2>
+              <p className="text-xs text-stone-500 dark:text-stone-400">
+                Grant or revoke official verification badges: ✓ VERIFIED NGO, ✓ VERIFIED SHELTER, ✓ VERIFIED FOOD RESOURCE.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {resourcesList.map((res) => (
+                <div key={res.id} className="p-4 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-[#FFFDF3] dark:bg-[#0B1713] space-y-2">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h4 className="font-extrabold text-sm text-[#18352D] dark:text-[#FFFDF3]">{res.name}</h4>
+                      <span className="text-[10px] text-stone-500 dark:text-stone-400 font-bold">{res.organization_type} • {res.category}</span>
+                    </div>
+                    <span
+                      className={`text-[10px] font-black px-2.5 py-0.5 rounded-full border ${
+                        res.verified
+                          ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300'
+                          : 'bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border-rose-300'
+                      }`}
+                    >
+                      {res.verified ? `✓ ${(res as any).verification_badge || 'VERIFIED NGO'}` : 'UNVERIFIED'}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-stone-600 dark:text-stone-400 line-clamp-2">{res.description}</p>
+                  
+                  <div className="text-[11px] text-stone-500 dark:text-stone-400 pt-1">
+                    📞 {res.phone} • 📍 {res.address}
+                  </div>
+
+                  <div className="pt-2 flex items-center justify-end space-x-2">
+                    <button
+                      onClick={() => handleToggleResourceVerification(res)}
+                      disabled={actionLoadingId === `res-${res.id}`}
+                      className={`px-4 py-1.5 rounded-xl font-extrabold text-xs shadow-sm transition-all ${
+                        res.verified
+                          ? 'bg-rose-600 hover:bg-rose-700 text-white'
+                          : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                      }`}
+                    >
+                      {actionLoadingId === `res-${res.id}`
+                        ? 'Updating...'
+                        : res.verified
+                        ? 'Revoke Verification'
+                        : 'Verify & Grant Badge'}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Tab 4: Transport Trust */}
+        {activeTab === 'transport' && (
+          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+            <div>
+              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Transport Mobility Trust Verification</h2>
+              <p className="text-xs text-stone-500 dark:text-stone-400">
+                Manage verification status of municipal and volunteer transit routes: VERIFIED, NEEDS VERIFICATION, REPORTED.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              {transportsList.map((t) => (
+                <div key={t.id} className="p-4 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-[#FFFDF3] dark:bg-[#0B1713] flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <span className="font-extrabold text-sm text-[#18352D] dark:text-[#FFFDF3]">{t.provider}</span>
+                      <span
+                        className={`text-[10px] font-black px-2.5 py-0.5 rounded-full ${
+                          t.status === 'VERIFIED'
+                            ? 'bg-emerald-600 text-white'
+                            : t.status === 'REPORTED'
+                            ? 'bg-rose-600 text-white'
+                            : 'bg-amber-500 text-white'
+                        }`}
+                      >
+                        {t.status}
+                      </span>
+                    </div>
+                    <div className="text-stone-600 dark:text-stone-400 font-bold">{t.route_name} • Fare: {t.fare_display}</div>
+                    <div className="text-[10px] text-stone-500">{t.eligibility}</div>
+                  </div>
+
+                  <div className="flex items-center space-x-2 shrink-0">
+                    {['VERIFIED', 'NEEDS VERIFICATION', 'REPORTED'].map((st) => (
+                      <button
+                        key={st}
+                        onClick={() => handleUpdateTransportStatus(t.id, st)}
+                        disabled={t.status === st || actionLoadingId === `trans-${t.id}`}
+                        className={`px-3 py-1.5 rounded-xl font-black text-[10px] transition-all ${
+                          t.status === st
+                            ? 'bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-900 cursor-default'
+                            : 'bg-white dark:bg-[#121C18] border border-[#EAE3D2] dark:border-[#24332D] hover:bg-stone-100 text-stone-700 dark:text-stone-300'
+                        }`}
+                      >
+                        {st}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Tab 5: Trust Reports Management */}
+        {activeTab === 'reports' && (
+          <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
+            <div>
+              <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Filed Trust & Safety Reports</h2>
+              <p className="text-xs text-stone-500 dark:text-stone-400">Reports filed by community users or anonymous reporters regarding resources, transport, or requests.</p>
+            </div>
+
+            {trustReportsList.length === 0 ? (
+              <p className="text-xs text-stone-400 py-8 text-center">No trust or safety reports filed.</p>
+            ) : (
+              <div className="space-y-3">
+                {trustReportsList.map((rep) => (
+                  <div key={rep.id} className="p-4 rounded-2xl border border-rose-200 dark:border-rose-950/60 bg-rose-50/40 dark:bg-rose-950/20 space-y-2 text-xs">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <span className="font-black text-rose-700 dark:text-rose-300 text-xs">
+                          [{rep.report_type}] Report #{rep.id} • Target: {rep.target_title}
+                        </span>
+                        <span className="block text-[10px] text-stone-500 font-semibold">
+                          Filed by: {rep.reporter} • {formatReportDateTime(rep.created_at)}
+                        </span>
+                      </div>
+                      <span
+                        className={`text-[10px] font-black px-2.5 py-0.5 rounded-full ${
+                          rep.status === 'RESOLVED'
+                            ? 'bg-emerald-600 text-white'
+                            : rep.status === 'INVESTIGATING'
+                            ? 'bg-amber-500 text-white'
+                            : 'bg-rose-600 text-white'
+                        }`}
+                      >
+                        {rep.status}
+                      </span>
+                    </div>
+
+                    <div className="p-3 bg-white dark:bg-[#121C18] rounded-xl border border-rose-200 dark:border-rose-900/40 text-stone-800 dark:text-stone-200 font-medium">
+                      <strong>Reason:</strong> {rep.reason}<br />
+                      <strong>Details:</strong> {rep.details || 'No additional text provided.'}
+                    </div>
+
+                    {rep.resolution_notes && (
+                      <div className="text-[11px] text-emerald-700 dark:text-emerald-400 font-bold">
+                        ✓ Resolution Notes: {rep.resolution_notes}
+                      </div>
+                    )}
+
+                    <div className="flex justify-end space-x-2 pt-1">
+                      {['INVESTIGATING', 'RESOLVED', 'DISMISSED'].map((st) => (
+                        <button
+                          key={st}
+                          onClick={() => handleResolveTrustReport(rep.id, st)}
+                          disabled={rep.status === st || actionLoadingId === `report-${rep.id}`}
+                          className="px-3 py-1.5 rounded-xl font-bold text-[10px] bg-white dark:bg-[#121C18] border border-[#EAE3D2] dark:border-[#24332D] hover:bg-stone-100 text-stone-800 dark:text-stone-200 shadow-sm"
+                        >
+                          Mark {st}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Tab 6: Duplicate Alerts */}
         {activeTab === 'duplicates' && (
           <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
             <div>
               <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Duplicate Request Alerts</h2>
-              <p className="text-xs text-stone-500 dark:text-stone-400">Flagged by heuristic analysis (phone match, text similarity, proximity). Not auto-rejected.</p>
+              <p className="text-xs text-stone-500 dark:text-stone-400">Flagged by heuristic analysis. Not auto-rejected.</p>
             </div>
 
             {duplicateRequests.length === 0 ? (
@@ -382,13 +606,13 @@ export const AdminDashboard: React.FC = () => {
 
                     <div className="flex justify-end space-x-2 pt-1">
                       <button
-                        onClick={() => handleVerify(d.id)}
+                        onClick={() => handleVerifyRequest(d.id)}
                         className="px-3.5 py-1.5 bg-[#159B5B] hover:bg-[#12834D] text-white font-bold rounded-xl text-xs shadow-sm transition-all"
                       >
                         Override & Verify
                       </button>
                       <button
-                        onClick={() => handleReject(d.id)}
+                        onClick={() => handleRejectRequest(d.id)}
                         className="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs shadow-sm transition-all"
                       >
                         Confirm Duplicate & Reject
@@ -401,12 +625,12 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Tab 4: Audit Logs */}
+        {/* Tab 7: Audit Logs */}
         {activeTab === 'audit' && (
           <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
             <div>
               <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">System Security & Action Audit Trail</h2>
-              <p className="text-xs text-stone-500 dark:text-stone-400">Immutable chronological record of logins, status transitions, and verifications.</p>
+              <p className="text-xs text-stone-500 dark:text-stone-400">Immutable chronological record of logins, status transitions, verifications, and trust reports.</p>
             </div>
 
             <div className="overflow-x-auto">
@@ -423,7 +647,7 @@ export const AdminDashboard: React.FC = () => {
                 <tbody className="divide-y divide-[#EAE3D2] dark:divide-[#24332D]">
                   {auditLogs.map((log, idx) => (
                     <tr key={idx} className="hover:bg-[#FFF9ED]/50 dark:hover:bg-[#1A2621]/50">
-                      <td className="p-3 text-stone-500 dark:text-stone-400 font-mono text-[11px]">{new Date(log.timestamp).toLocaleString()}</td>
+                      <td className="p-3 text-stone-500 dark:text-stone-400 font-mono text-[11px]">{formatReportDateTime(log.timestamp)}</td>
                       <td className="p-3 font-semibold text-[#17231E] dark:text-[#FFF9ED]">{log.user}</td>
                       <td className="p-3">
                         <span className="px-2 py-0.5 rounded-full font-mono font-bold text-[10px] bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 border border-[#159B5B]/30">
@@ -440,12 +664,12 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Tab 5: Registered Users Directory */}
+        {/* Tab 8: Registered Users Directory */}
         {activeTab === 'users' && (
           <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-4">
             <div>
               <h2 className="text-lg font-bold text-[#17231E] dark:text-[#FFF9ED]">Platform User Directory</h2>
-              <p className="text-xs text-stone-500 dark:text-stone-400">All registered Requesters, Donors, NGOs, and Staff members.</p>
+              <p className="text-xs text-stone-500 dark:text-stone-400">All registered Requesters, Donors, Volunteers, NGOs, and Staff members.</p>
             </div>
 
             <div className="overflow-x-auto">
@@ -470,6 +694,7 @@ export const AdminDashboard: React.FC = () => {
                         <span className={`px-2.5 py-0.5 rounded-full font-bold uppercase text-[10px] ${
                           u.role === 'admin' ? 'bg-[#17231E] text-white dark:bg-[#24332D] dark:text-white' :
                           u.role === 'ngo' ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 border border-[#159B5B]/30' :
+                          u.role === 'volunteer' ? 'bg-cyan-100 dark:bg-cyan-950/60 text-cyan-800 dark:text-cyan-300 border border-cyan-300' :
                           u.role === 'donor' ? 'bg-rose-50 dark:bg-rose-950/70 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800' : 'bg-[#FFF9ED] dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] border border-[#EAE3D2] dark:border-[#24332D]'
                         }`}>
                           {u.role}

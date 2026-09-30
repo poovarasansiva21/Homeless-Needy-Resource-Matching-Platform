@@ -12,19 +12,32 @@ import {
   Search,
   ExternalLink,
   Flame,
-  ArrowRight
+  ArrowRight,
+  Camera,
+  FileText,
+  Bus
 } from 'lucide-react';
 import { aiApi } from '../services/api';
-import { AiClassificationResponse } from '../types';
+import { AiClassificationResponse, HumanitarianPipelineResponse } from '../types';
+import { AiDonationScanner } from '../components/AiDonationScanner';
+import { MobilityLayerModal } from '../components/MobilityLayerModal';
+
 
 export const AiDemo: React.FC = () => {
+  const [aiMode, setAiMode] = useState<'text' | 'vision'>('text');
   const [inputText, setInputText] = useState('I have two children and we have not had food since yesterday.');
   const [peopleCount, setPeopleCount] = useState(3);
   const [situation, setSituation] = useState('Living near Gandhipuram railway pavement.');
   const [isLoading, setIsLoading] = useState(false);
   const [analysisStep, setAnalysisStep] = useState<number>(0);
-  const [result, setResult] = useState<AiClassificationResponse | null>(null);
+  const [result, setResult] = useState<HumanitarianPipelineResponse | any | null>(null);
+
   const [error, setError] = useState<string | null>(null);
+
+  // Mobility Layer State (Phase 3)
+  const [isMobilityModalOpen, setIsMobilityModalOpen] = useState(false);
+  const [selectedMobilityResource, setSelectedMobilityResource] = useState<{ id?: number; name?: string; address?: string } | null>(null);
+
 
   const presets = [
     { label: "🍲 Food Crisis (High)", text: "I have two children and we have not had food since yesterday." },
@@ -79,31 +92,68 @@ export const AiDemo: React.FC = () => {
     <div className="min-h-screen bg-[#FFF9ED] dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden transition-colors duration-300">
       <div className="max-w-5xl mx-auto space-y-8">
         
-        {/* Header Banner */}
-        <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 sm:p-10 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
-              <div className="inline-flex items-center space-x-2 bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 text-xs font-black px-3.5 py-1.5 rounded-full border border-[#159B5B]/20 dark:border-[#159B5B]/30 mb-2.5">
-                <Cpu className="w-4 h-4 text-[#159B5B]" />
-                <span>REAL TENSORFLOW / KERAS INFERENCE ENGINE</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-black text-[#17231E] dark:text-white tracking-tight">
-                Live AI Classifier & Smart Matching
-              </h1>
-              <p className="text-xs sm:text-sm text-[#17231E]/70 dark:text-[#FFF9ED]/70 mt-1 max-w-xl font-medium">
-                Enter any unstructured text description. The trained neural network computes probabilistic categories and executes Haversine geo-matching.
-              </p>
-            </div>
-            
-            <div className="bg-[#17231E] text-white rounded-2xl p-4 text-xs border border-[#24332D] shadow-md space-y-1">
-              <div className="font-black text-[#159B5B] dark:text-emerald-400 flex items-center space-x-1.5">
-                <Cpu className="w-3.5 h-3.5" />
-                <span>resource_classifier.keras</span>
-              </div>
-              <div className="text-stone-300 text-[11px]">Input: TextVectorization (vocab=3000)</div>
-              <div className="text-stone-400 text-[10px]">Output: 7-Class Softmax Vector</div>
-            </div>
+        {/* AI Capability Mode Switcher */}
+        <div className="flex rounded-2xl bg-stone-200 dark:bg-[#1A2621] p-1.5 border border-[#EAE3D2] dark:border-[#24332D]">
+          <button
+            onClick={() => setAiMode('text')}
+            className={`flex-1 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-2 transition-all ${
+              aiMode === 'text'
+                ? 'bg-white dark:bg-[#121C18] text-[#159B5B] shadow-sm border border-[#159B5B]/30'
+                : 'text-[#17231E]/70 dark:text-[#FFF9ED]/70 hover:text-[#17231E] dark:hover:text-white'
+            }`}
+          >
+            <FileText className="w-4 h-4" />
+            <span>Text / Voice DNN Classifier</span>
+          </button>
+
+          <button
+            onClick={() => setAiMode('vision')}
+            className={`flex-1 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-2 transition-all ${
+              aiMode === 'vision'
+                ? 'bg-white dark:bg-[#121C18] text-[#159B5B] shadow-sm border border-[#159B5B]/30'
+                : 'text-[#17231E]/70 dark:text-[#FFF9ED]/70 hover:text-[#17231E] dark:hover:text-white'
+            }`}
+          >
+            <Camera className="w-4 h-4" />
+            <span>MobileNetV2 Vision AI Scanner</span>
+          </button>
+        </div>
+
+        {/* Vision AI Tab Content */}
+        {aiMode === 'vision' && (
+          <div className="space-y-6">
+            <AiDonationScanner />
           </div>
+        )}
+
+        {/* Text DNN Tab Content */}
+        {aiMode === 'text' && (
+          <div className="space-y-8">
+            {/* Header Banner */}
+            <div className="bg-white dark:bg-[#121C18] rounded-3xl p-6 sm:p-10 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <div className="inline-flex items-center space-x-2 bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 text-xs font-black px-3.5 py-1.5 rounded-full border border-[#159B5B]/20 dark:border-[#159B5B]/30 mb-2.5">
+                    <Cpu className="w-4 h-4 text-[#159B5B]" />
+                    <span>REAL TENSORFLOW / KERAS INFERENCE ENGINE</span>
+                  </div>
+                  <h1 className="text-3xl sm:text-4xl font-black text-[#17231E] dark:text-white tracking-tight">
+                    Live AI Classifier & Smart Matching
+                  </h1>
+                  <p className="text-xs sm:text-sm text-[#17231E]/70 dark:text-[#FFF9ED]/70 mt-1 max-w-xl font-medium">
+                    Enter any unstructured text description. The trained neural network computes probabilistic categories and executes Haversine geo-matching.
+                  </p>
+                </div>
+                
+                <div className="bg-[#17231E] text-white rounded-2xl p-4 text-xs border border-[#24332D] shadow-md space-y-1">
+                  <div className="font-black text-[#159B5B] dark:text-emerald-400 flex items-center space-x-1.5">
+                    <Cpu className="w-3.5 h-3.5" />
+                    <span>resource_classifier.keras</span>
+                  </div>
+                  <div className="text-stone-300 text-[11px]">Input: TextVectorization (vocab=3000)</div>
+                  <div className="text-stone-400 text-[10px]">Output: 7-Class Softmax Vector</div>
+                </div>
+              </div>
 
           {/* Quick Presets */}
           <div className="mt-8 pt-5 border-t border-[#EAE3D2] dark:border-[#24332D]">
@@ -228,88 +278,130 @@ export const AiDemo: React.FC = () => {
         {result && (
           <div className="space-y-6 animate-in fade-in duration-300">
             
-            {/* Primary Analysis Card */}
-            <div className="bg-white dark:bg-[#121C18] rounded-3xl p-7 border border-[#EAE3D2] dark:border-[#24332D] shadow-sm space-y-6">
+            {/* Phase 2 Advanced Humanitarian Pipeline Result Card */}
+            <div className="bg-white dark:bg-[#121C18] rounded-3xl p-7 border-2 border-[#159B5B]/30 shadow-md space-y-6">
+              
               <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#EAE3D2] dark:border-[#24332D]">
                 <div className="flex items-center space-x-4">
-                  <div className="w-14 h-14 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 flex items-center justify-center font-bold">
-                    <CheckCircle className="w-8 h-8" />
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#159B5B] to-[#12834D] text-white flex items-center justify-center font-bold text-2xl shadow-md">
+                    ⚡
                   </div>
                   <div>
-                    <span className="text-[11px] font-black uppercase tracking-wider text-stone-400 dark:text-stone-500">Classified Need</span>
-                    <h2 className="text-3xl font-black text-[#17231E] dark:text-[#FFF9ED] tracking-tight">{result.category}</h2>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#159B5B] dark:text-emerald-400 block">
+                      HUMANITARIAN PIPELINE • {result.model_version || 'v2.1.0'}
+                    </span>
+                    <h2 className="text-3xl font-black text-[#17231E] dark:text-white tracking-tight">{result.category}</h2>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-4">
                   <div className="text-right">
-                    <span className="text-[11px] font-black uppercase tracking-wider text-stone-400 dark:text-stone-500">DNN Confidence</span>
+                    <span className="text-[10px] font-black uppercase tracking-wider text-stone-400 dark:text-stone-500 block">CONFIDENCE</span>
                     <div className="text-3xl font-black text-[#159B5B] dark:text-emerald-400">{result.confidence_percentage}%</div>
                   </div>
 
                   <div className="text-right">
-                    <span className="text-[11px] font-black uppercase tracking-wider text-stone-400 dark:text-stone-500">Assessed Priority</span>
+                    <span className="text-[10px] font-black uppercase tracking-wider text-stone-400 dark:text-stone-500 block">URGENCY</span>
                     <div className="mt-1">
                       <span className={`inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider border ${getUrgencyBadge(result.urgency)}`}>
-                        {result.urgency} ({result.urgency_score}/100)
+                        {result.urgency}
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Urgency Factors & Safety Disclaimer */}
-              <div className="space-y-3">
-                {result.indicators && result.indicators.length > 0 && (
-                  <div>
-                    <span className="text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider block mb-2">
-                      Detected Urgency Factors:
-                    </span>
-                    <div className="flex flex-wrap gap-2">
-                      {result.indicators.map((ind, i) => (
-                        <span key={i} className="px-3 py-1 bg-[#FFF9ED] dark:bg-[#0C1410] text-[#17231E] dark:text-[#FFF9ED] rounded-full text-xs font-bold border border-[#EAE3D2] dark:border-[#24332D]">
-                          {ind}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+              {/* 8-POINT HUMANITARIAN STRUCTURED TELEMETRY GRID */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                
+                {/* 1. Category */}
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                  <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">1. CATEGORY</span>
+                  <span className="text-sm font-black text-[#159B5B] dark:text-emerald-400 mt-0.5 block">{result.category}</span>
+                </div>
 
-                {result.disclaimer && (
-                  <div className="p-3.5 bg-amber-50 dark:bg-amber-950/40 rounded-2xl border border-amber-200 dark:border-amber-900/50 text-xs text-amber-900 dark:text-amber-200 flex items-start space-x-2.5">
-                    <ShieldAlert className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-                    <span className="font-medium leading-relaxed">{result.disclaimer}</span>
-                  </div>
-                )}
+                {/* 2. Urgency */}
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                  <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">2. URGENCY</span>
+                  <span className="text-sm font-black text-rose-600 dark:text-rose-400 mt-0.5 block">{result.urgency}</span>
+                </div>
+
+                {/* 3. People Affected */}
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                  <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">3. PEOPLE AFFECTED</span>
+                  <span className="text-sm font-black text-indigo-600 dark:text-indigo-400 mt-0.5 block">{result.people || result.people_count || 1} PEOPLE</span>
+                </div>
+
+                {/* 4. Intent */}
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                  <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">4. INTENT</span>
+                  <span className="text-xs font-bold text-[#17231E] dark:text-stone-200 mt-0.5 block truncate">{result.intent || 'SEEK_IMMEDIATE_AID'}</span>
+                </div>
+
+                {/* 5. Transport Barrier */}
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                  <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">5. TRANSPORT BARRIER</span>
+                  <span className="text-sm font-black text-[#17231E] dark:text-stone-200 mt-0.5 block">
+                    {result.transport_barrier ? `TRUE (${result.transport_reason || 'COST'})` : 'FALSE'}
+                  </span>
+                </div>
+
+                {/* 6. Duration of Need */}
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                  <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">6. DURATION</span>
+                  <span className="text-sm font-black text-amber-600 dark:text-amber-400 mt-0.5 block">{result.duration || '1 DAY'}</span>
+                </div>
+
+                {/* 7. Action Decision */}
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                  <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">7. ACTION</span>
+                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400 mt-0.5 block">{result.confidence_action || 'CONTINUE'}</span>
+                </div>
+
+                {/* 8. Confidence */}
+                <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0C1410] border border-[#EAE3D2] dark:border-[#24332D]">
+                  <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">8. CONFIDENCE</span>
+                  <span className="text-sm font-black text-[#159B5B] dark:text-emerald-400 mt-0.5 block">{result.confidence_percentage}%</span>
+                </div>
+
               </div>
 
+              {/* TARGETED AI FOLLOW-UP QUESTIONS (IF GENERATED) */}
+              {result.follow_up_questions && result.follow_up_questions.length > 0 && (
+                <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/50 space-y-2">
+                  <div className="text-xs font-black text-amber-900 dark:text-amber-300 uppercase tracking-wider flex items-center space-x-1.5">
+                    <Sparkles className="w-4 h-4 text-amber-600" />
+                    <span>Targeted AI Follow-up Questions (To resolve ambiguities):</span>
+                  </div>
+                  <ul className="space-y-1 text-xs font-bold text-amber-800 dark:text-amber-200 list-disc list-inside">
+                    {result.follow_up_questions.map((q: string, idx: number) => (
+                      <li key={idx}>"{q}"</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               {/* Full Probability Distribution */}
-              <div className="pt-5 border-t border-[#EAE3D2] dark:border-[#24332D]">
+              <div className="pt-4 border-t border-[#EAE3D2] dark:border-[#24332D]">
                 <span className="text-xs font-black text-stone-400 dark:text-stone-500 uppercase tracking-wider block mb-3">
-                  Softmax Probability Distribution Across All 7 Classes
+                  Softmax Probability Vector Across All 7 Classes
                 </span>
-                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-                  {Object.entries(result.probabilities).map(([cat, prob]) => {
-                    const pct = (prob * 100).toFixed(1);
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5">
+                  {result.probabilities && Object.entries(result.probabilities).map(([cat, prob]: [string, any]) => {
+                    const pct = (Number(prob) * 100).toFixed(1);
                     const isTop = cat === result.category;
                     return (
                       <div 
                         key={cat} 
-                        className={`p-3 rounded-2xl border text-center transition-all ${
+                        className={`p-2.5 rounded-xl border text-center transition-all ${
                           isTop 
-                            ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/50 dark:border-[#159B5B]/40 shadow-sm scale-105' 
+                            ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/50 shadow-sm font-bold' 
                             : 'bg-[#FFF9ED]/50 dark:bg-[#0C1410]/50 border-[#EAE3D2] dark:border-[#24332D]'
                         }`}
                       >
-                        <div className="text-[11px] font-black text-[#17231E] dark:text-[#FFF9ED] truncate">{cat}</div>
-                        <div className={`text-sm font-black mt-1 ${isTop ? 'text-[#159B5B] dark:text-emerald-400' : 'text-stone-400 dark:text-stone-500'}`}>
+                        <div className="text-[10px] font-black text-[#17231E] dark:text-[#FFF9ED] truncate">{cat}</div>
+                        <div className={`text-xs font-black mt-0.5 ${isTop ? 'text-[#159B5B] dark:text-emerald-400' : 'text-stone-400'}`}>
                           {pct}%
-                        </div>
-                        <div className="w-full bg-white dark:bg-[#1A2621] rounded-full h-1.5 mt-2 overflow-hidden border border-[#EAE3D2] dark:border-[#24332D]">
-                          <div 
-                            style={{ width: `${Math.max(5, prob * 100)}%` }}
-                            className={`h-full rounded-full ${isTop ? 'bg-[#159B5B]' : 'bg-stone-300 dark:bg-stone-600'}`}
-                          />
                         </div>
                       </div>
                     );
@@ -332,16 +424,28 @@ export const AiDemo: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {result.matched_resources.map((res) => (
+                {result.matched_resources.map((res: any) => (
+
                   <div 
                     key={res.resource_id}
                     className="p-5 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-[#FFF9ED]/30 dark:bg-[#0C1410]/40 hover:border-[#159B5B] dark:hover:border-[#159B5B] transition-all"
                   >
                     <div className="flex justify-between items-start">
                       <div>
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 border border-[#159B5B]/20 dark:border-[#159B5B]/30">
-                          {res.organization_type}
-                        </span>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 border border-[#159B5B]/20 dark:border-[#159B5B]/30">
+                            {res.organization_type}
+                          </span>
+                          {res.match_level && (
+                            <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                              res.match_level === 'HIGH' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' :
+                              res.match_level === 'MEDIUM' ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300' :
+                              'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'
+                            }`}>
+                              MATCH: {res.match_level}
+                            </span>
+                          )}
+                        </div>
                         <h4 className="font-black text-[#17231E] dark:text-[#FFF9ED] text-base mt-2">{res.resource_name}</h4>
                         <div className="flex items-center text-xs text-[#17231E]/60 dark:text-[#FFF9ED]/60 mt-1">
                           <MapPin className="w-3.5 h-3.5 mr-1 text-stone-400" />
@@ -356,6 +460,36 @@ export const AiDemo: React.FC = () => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Phase 9 Transparent Recommendation Reason Callout */}
+                    {res.recommendation_reason && (
+                      <div className={`mt-3 p-3.5 rounded-xl border text-xs whitespace-pre-line font-medium ${
+                        res.match_score >= 60 && res.breakdown?.availability !== '✗ Currently Unavailable'
+                          ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/50 text-emerald-900 dark:text-emerald-200'
+                          : 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/50 text-rose-900 dark:text-rose-200'
+                      }`}>
+                        <span className="font-black block uppercase tracking-wider text-[10px] opacity-75 mb-1">
+                          RECOMMENDATION EXPLANATION
+                        </span>
+                        {res.recommendation_reason}
+                      </div>
+                    )}
+
+                    {/* 9 Barrier-Aware Criteria Breakdown Matrix */}
+                    {res.barrier_aware_breakdown && (
+                      <div className="mt-3 pt-3 border-t border-[#EAE3D2] dark:border-[#24332D] space-y-1">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-stone-400 dark:text-stone-500 block">
+                          9 Barrier-Aware Humanitarian Criteria
+                        </span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[11px]">
+                          {Object.entries(res.barrier_aware_breakdown).map(([key, item]: [string, any]) => (
+                            <div key={key} className="flex items-center space-x-1 font-semibold truncate text-stone-700 dark:text-stone-300">
+                              <span>{item.text}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     <div className="mt-4 pt-3 border-t border-[#EAE3D2] dark:border-[#24332D] grid grid-cols-2 gap-2 text-xs">
                       <div>
@@ -373,26 +507,53 @@ export const AiDemo: React.FC = () => {
                       <span className="font-semibold text-[#17231E]/80 dark:text-[#FFF9ED]/80">{res.breakdown.capacity}</span>
                     </div>
 
-                    <div className="mt-4 flex items-center justify-between pt-3 border-t border-[#EAE3D2] dark:border-[#24332D] text-xs">
+                    <div className="mt-4 flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-[#EAE3D2] dark:border-[#24332D] text-xs">
                       <span className="flex items-center text-[#17231E] dark:text-[#FFF9ED] font-semibold">
                         <Phone className="w-3.5 h-3.5 mr-1.5 text-[#159B5B]" />
                         {res.phone}
                       </span>
-                      <span className="text-[#159B5B] dark:text-emerald-400 font-black hover:underline cursor-pointer flex items-center space-x-1">
-                        <span>Dispatch Case</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedMobilityResource({
+                              id: res.resource_id,
+                              name: res.resource_name,
+                              address: res.address
+                            });
+                            setIsMobilityModalOpen(true);
+                          }}
+                          className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-xs rounded-xl flex items-center space-x-1 border border-amber-500/30 transition-all cursor-pointer"
+                        >
+                          <Bus className="w-3.5 h-3.5" />
+                          <span>I CAN'T REACH IT</span>
+                        </button>
+                        <span className="text-[#159B5B] dark:text-emerald-400 font-black hover:underline cursor-pointer flex items-center space-x-1">
+                          <span>Dispatch</span>
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </span>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
-
             </div>
-
           </div>
         )}
 
+        {/* Mobility & Trust Route Modal */}
+        <MobilityLayerModal
+          isOpen={isMobilityModalOpen}
+          onClose={() => setIsMobilityModalOpen(false)}
+          resourceId={selectedMobilityResource?.id}
+          resourceName={selectedMobilityResource?.name}
+          resourceAddress={selectedMobilityResource?.address}
+        />
+
+        </div>
+        )}
       </div>
+
     </div>
   );
 };

@@ -5,7 +5,6 @@ COLOR 0A
 echo ======================================================================
 echo                 SAHAAYAA AI PLATFORM LAUNCHER
 echo     AI-Powered Homeless & Needy Resource Matching Platform
-echo  "Connecting the right help to the right person at the right time."
 echo ======================================================================
 echo.
 

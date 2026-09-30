@@ -7,6 +7,7 @@ from services.classifier import classify_text
 from services.urgency import analyze_urgency
 from services.matcher import find_matched_resources
 from services.verification import check_duplicate_request
+from services.rate_limiter import rate_limit
 
 requests_bp = Blueprint("requests", __name__)
 
@@ -19,23 +20,33 @@ def emit_socket_event(event_name, payload):
 
 @requests_bp.route("", methods=["POST"])
 @optional_token
+@rate_limit(max_requests=10, window_seconds=60, bucket_name="create_request")
 def create_request(current_user):
     data = request.get_json() or {}
-    
-    full_name = data.get("full_name", "").strip()
-    phone = data.get("phone", "").strip()
-    description = data.get("description", "").strip()
-    stated_category = data.get("category", "FOOD").strip().upper()
+    is_help_someone = data.get("is_help_someone", False) or bool(data.get("voice_transcript"))
+    full_name = (data.get("full_name") or "").strip()
+    if not full_name:
+        full_name = current_user.full_name if current_user else "Good Samaritan Reporter"
+
+    phone = (data.get("phone") or "").strip()
+    if not phone:
+        phone = current_user.phone if (current_user and current_user.phone) else "+91 90000 00000"
+
+    description = (data.get("description") or "").strip() or (data.get("voice_transcript") or "").strip()
+
+    if not description:
+        return jsonify({"error": "Request description is required."}), 400
+
+    stated_category = (data.get("category") or "FOOD").strip().upper()
     people_count = int(data.get("people_count", 1))
-    current_situation = data.get("current_situation", "").strip()
-    address = data.get("address", "Coimbatore, Tamil Nadu").strip()
+    current_situation = (data.get("current_situation") or "").strip()
+    address = (data.get("address") or "Coimbatore, Tamil Nadu").strip()
     latitude = float(data.get("latitude", 11.0168))
     longitude = float(data.get("longitude", 76.9558))
     contact_method = data.get("contact_method", "Phone")
     photo_url = data.get("photo_url")
-
-    if not full_name or not phone or not description:
-        return jsonify({"error": "Full name, phone, and request description are required."}), 400
+    has_permission = str(data.get("has_permission", "true")).lower() == "true"
+    voice_transcript = (data.get("voice_transcript") or "").strip()
 
     # 1. REAL DNN Classification
     ai_classification = classify_text(description)
@@ -153,6 +164,12 @@ def create_request(current_user):
         "duplicate_detection": dup_check
     }), 201
 
+@requests_bp.route("/help-someone", methods=["POST"])
+@optional_token
+def create_help_someone(current_user):
+    from routes.help_reports import create_help_report
+    return create_help_report(current_user)
+
 @requests_bp.route("", methods=["GET"])
 @optional_token
 def get_requests(current_user):
@@ -215,9 +232,10 @@ def update_status(current_user, req_id):
     notes = data.get("notes", "").strip()
 
     valid_statuses = [
-        "SUBMITTED", "AI_ANALYZED", "PENDING_VERIFICATION", 
-        "VERIFIED", "MATCHING", "MATCHED", "ACCEPTED", 
-        "IN_PROGRESS", "DELIVERED", "COMPLETED", "REJECTED"
+        "REQUESTED", "AI_ANALYZED", "RESOURCE_MATCHED", "TRANSPORT_CHECK", 
+        "NGO_NOTIFIED", "NGO_ACCEPTED", "RESPONDER_ASSIGNED", "ON_THE_WAY", 
+        "ASSISTANCE_PROVIDED", "COMPLETED", "ESCALATED", "REJECTED", "UNABLE_TO_ASSIST",
+        "SUBMITTED", "PENDING_VERIFICATION", "VERIFIED", "MATCHING", "MATCHED", "ACCEPTED", "IN_PROGRESS", "DELIVERED"
     ]
 
     if new_status not in valid_statuses:
@@ -231,7 +249,7 @@ def update_status(current_user, req_id):
     req_obj.status = new_status
     req_obj.updated_at = datetime.utcnow()
 
-    # Record history
+    # Record history for full auditable case trail
     history_entry = RequestStatusHistory(
         request_id=req_obj.id,
         previous_status=prev_status,
@@ -241,18 +259,35 @@ def update_status(current_user, req_id):
     )
     db.session.add(history_entry)
 
-    # Notification to requester / general
+    # Auditable Log
+    audit = AuditLog(
+        user_id=current_user.id,
+        action="STATUS_TRANSITION",
+        details=f"Request #{req_obj.id} transitioned from {prev_status} to {new_status}. {notes}",
+        ip_address=request.remote_addr
+    )
+    db.session.add(audit)
+
+    # Notification text matching Phase 4 specs
+    notif_msg = f"Your request status is now {new_status.replace('_', ' ')}."
+    if new_status in ["NGO_ACCEPTED", "ACCEPTED"]:
+        notif_msg = "Your request has been accepted."
+    elif new_status == "ON_THE_WAY":
+        notif_msg = "A verified responder is on the way to your location."
+    elif new_status == "ASSISTANCE_PROVIDED":
+        notif_msg = "Field assistance has been provided to your request location."
+
     notif = Notification(
         user_id=req_obj.requester_id,
         role_target="requester" if req_obj.requester_id else "all",
         title=f"Request #{req_obj.id} Update",
-        message=f"Request status changed to {new_status}. {notes}",
-        notification_type="success" if new_status in ["VERIFIED", "DELIVERED", "COMPLETED"] else "info"
+        message=notif_msg,
+        notification_type="success" if new_status in ["NGO_ACCEPTED", "ACCEPTED", "ASSISTANCE_PROVIDED", "COMPLETED"] else "info"
     )
     db.session.add(notif)
     db.session.commit()
 
-    # Emit real-time update
+    # Emit real-time update via Socket.IO
     emit_socket_event("request_status_updated", {
         "request_id": req_obj.id,
         "previous_status": prev_status,
@@ -272,29 +307,40 @@ def update_status(current_user, req_id):
 @token_required
 @role_required("ngo", "admin", "volunteer")
 def accept_request(current_user, req_id):
-    req_obj = Request.query.get_or_404(req_id)
+    req_obj = db.session.get(Request, req_id)
+    if not req_obj:
+        return jsonify({"error": f"Request #{req_id} not found."}), 404
     
     if req_obj.status in ["DELIVERED", "COMPLETED", "REJECTED"]:
         return jsonify({"error": f"Cannot accept a request that is already {req_obj.status}"}), 400
 
     prev_status = req_obj.status
-    req_obj.status = "ACCEPTED"
+    req_obj.status = "NGO_ACCEPTED"
     req_obj.assigned_ngo_id = current_user.id
     req_obj.updated_at = datetime.utcnow()
 
     history_entry = RequestStatusHistory(
         request_id=req_obj.id,
         previous_status=prev_status,
-        new_status="ACCEPTED",
+        new_status="NGO_ACCEPTED",
         changed_by_user_id=current_user.id,
         notes=f"Accepted by {current_user.full_name} ({current_user.organization_name or current_user.role})"
     )
     db.session.add(history_entry)
 
+    audit = AuditLog(
+        user_id=current_user.id,
+        action="NGO_ACCEPT_CASE",
+        details=f"Request #{req_obj.id} accepted by NGO {current_user.full_name}.",
+        ip_address=request.remote_addr
+    )
+    db.session.add(audit)
+
+    # Required Phase 4 notification text: "Your request has been accepted."
     notif = Notification(
         user_id=req_obj.requester_id,
         title="Help Is On The Way!",
-        message=f"{current_user.organization_name or current_user.full_name} has accepted your request and is mobilizing resources.",
+        message="Your request has been accepted.",
         notification_type="success"
     )
     db.session.add(notif)
@@ -303,16 +349,46 @@ def accept_request(current_user, req_id):
     emit_socket_event("request_status_updated", {
         "request_id": req_obj.id,
         "previous_status": prev_status,
-        "new_status": "ACCEPTED",
+        "new_status": "NGO_ACCEPTED",
         "assigned_ngo": current_user.full_name,
         "timestamp": datetime.utcnow().isoformat()
     })
     emit_socket_event("notification", notif.to_dict())
 
     return jsonify({
-        "message": "Request accepted successfully",
+        "message": "Your request has been accepted.",
         "request": req_obj.to_dict(is_authorized=True)
     }), 200
+
+@requests_bp.route("/escalate-check", methods=["POST"])
+@optional_token
+def trigger_escalation_check(current_user):
+    """
+    Triggers the automated escalation engine.
+    If a configured response period (e.g. 30 mins) passes without acceptance, notifies secondary NGO / admin.
+    """
+    from services.escalation import run_escalation_check
+    data = request.get_json() or {}
+    timeout = int(data.get("timeout_minutes", 30))
+    res = run_escalation_check(timeout_minutes=timeout)
+    return jsonify(res), 200
+
+@requests_bp.route("/<int:req_id>/history", methods=["GET"])
+@optional_token
+def get_request_history(current_user, req_id):
+    """Returns complete auditable state transition timeline for a request."""
+    req_obj = db.session.get(Request, req_id)
+    if not req_obj:
+        return jsonify({"error": f"Request #{req_id} not found."}), 404
+
+    history = RequestStatusHistory.query.filter_by(request_id=req_id).order_by(RequestStatusHistory.timestamp.asc()).all()
+    return jsonify({
+        "success": True,
+        "request_id": req_id,
+        "current_status": req_obj.status,
+        "timeline": [h.to_dict() for h in history]
+    }), 200
+
 
 @requests_bp.route("/<int:req_id>/donate", methods=["POST"])
 @token_required

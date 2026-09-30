@@ -10,17 +10,24 @@ import {
   Sparkles,
   Search,
   Package,
-  ShieldCheck
+  ShieldCheck,
+  Camera,
+  X
 } from 'lucide-react';
 import { dashboardApi, requestsApi } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import socketService from '../services/socket';
-import { RequestItem, Donation } from '../types';
+import { RequestItem, Donation, DonationVisionScanResponse } from '../types';
 import { useLanguage } from '../i18n';
+import { AiDonationScanner } from '../components/AiDonationScanner';
+import { IntelligentDonationMatcher } from '../components/IntelligentDonationMatcher';
+import { DonationInventoryPanel } from '../components/DonationInventoryPanel';
+import { formatReportDateTime } from '../utils/dateFormatter';
 
 export const DonorDashboard: React.FC = () => {
   const { user } = useAuth();
   const { t } = useLanguage();
+  const [activeMainTab, setActiveMainTab] = useState<'matcher' | 'inventory' | 'requests'>('matcher');
 
   const [metrics, setMetrics] = useState<any>({
     active_verified_needs: 0,
@@ -32,6 +39,8 @@ export const DonorDashboard: React.FC = () => {
   const [verifiedRequests, setVerifiedRequests] = useState<RequestItem[]>([]);
   const [myDonations, setMyDonations] = useState<Donation[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [showScanner, setShowScanner] = useState<boolean>(false);
+  const [scanResultNotice, setScanResultNotice] = useState<string | null>(null);
 
   // Filters
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
@@ -191,12 +200,53 @@ export const DonorDashboard: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={() => setShowScanner(!showScanner)}
+              className="px-4 py-2.5 rounded-2xl bg-[#159B5B] hover:bg-[#12824C] text-white text-xs font-black uppercase tracking-wider flex items-center space-x-2 shadow-md transition-all border border-white/20"
+            >
+              <Camera className="w-4 h-4" />
+              <span>AI Donation Scanner</span>
+            </button>
             <span className="text-xs bg-[#E8F3E9] dark:bg-[#159B5B]/25 text-[#159B5B] dark:text-emerald-300 font-black px-3 py-1.5 rounded-full border border-[#159B5B]/30">
               ● Live Synchronized
             </span>
           </div>
         </div>
+
+        {/* AI Scanner Section / Drawer */}
+        {showScanner && (
+          <div className="animate-fadeIn">
+            <AiDonationScanner 
+              onClose={() => setShowScanner(false)}
+              onCategoryConfirmed={(confirmedCategory, scanData) => {
+                setSelectedCategory(confirmedCategory.toUpperCase());
+                setShowScanner(false);
+                setScanResultNotice(`AI MobileNetV2 detected ${confirmedCategory.toUpperCase()} (${scanData.confidence_percentage}% confidence). Showing matching verified needs below.`);
+                // Find first matching request if any
+                const match = verifiedRequests.find(r => 
+                  (r.dnn_category || r.category || '').toUpperCase() === confirmedCategory.toUpperCase()
+                );
+                if (match) {
+                  handleOpenPledgeModal(match);
+                }
+              }}
+            />
+          </div>
+        )}
+
+        {/* Scan Result Notice Banner */}
+        {scanResultNotice && (
+          <div className="bg-[#E8F3E9] dark:bg-[#159B5B]/20 border border-[#159B5B]/40 text-[#17231E] dark:text-white rounded-2xl p-4 text-xs font-bold flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Sparkles className="w-4 h-4 text-[#159B5B]" />
+              <span>{scanResultNotice}</span>
+            </div>
+            <button onClick={() => setScanResultNotice(null)} className="text-xs underline opacity-70 hover:opacity-100">
+              Dismiss
+            </button>
+          </div>
+        )}
 
         {/* Impact Metric Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -225,39 +275,89 @@ export const DonorDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Filters and Search Bar */}
-        <div className="bg-white dark:bg-[#121C18] p-4 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex items-center space-x-2">
-            <Filter className="w-4 h-4 text-stone-400" />
-            <span className="font-bold text-[#17231E] dark:text-[#FFF9ED]">Filter Needs:</span>
-          </div>
+        {/* Main Tab Switcher */}
+        <div className="flex bg-white dark:bg-[#10251E] p-1.5 rounded-2xl border border-[#EAE3D2] dark:border-[#1F3F34] gap-2 shadow-sm">
+          <button
+            onClick={() => setActiveMainTab('matcher')}
+            className={`flex-1 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
+              activeMainTab === 'matcher' 
+                ? 'bg-[#0B4F3A] dark:bg-[#12B76A] text-white dark:text-[#0B1713] shadow-sm' 
+                : 'text-[#60756D] dark:text-[#A2B5AD] hover:text-[#18352D] dark:hover:text-white hover:bg-[#F7F8ED] dark:hover:bg-[#16322A]'
+            }`}
+          >
+            <Sparkles className="w-4 h-4" />
+            Intelligent Need Matcher
+          </button>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="p-2 border border-[#EAE3D2] dark:border-[#24332D] rounded-xl outline-none bg-white dark:bg-[#17231E] text-[#17231E] dark:text-[#FFF9ED] font-semibold"
-            >
-              <option value="ALL">All Categories</option>
-              <option value="FOOD">Food Supplies</option>
-              <option value="SHELTER">Shelter Needs</option>
-              <option value="CLOTHING">Clothing & Blankets</option>
-              <option value="MEDICAL">Medical & Medicines</option>
-              <option value="EDUCATION">Education Aid</option>
-            </select>
+          <button
+            onClick={() => setActiveMainTab('inventory')}
+            className={`flex-1 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
+              activeMainTab === 'inventory' 
+                ? 'bg-[#0B4F3A] dark:bg-[#12B76A] text-white dark:text-[#0B1713] shadow-sm' 
+                : 'text-[#60756D] dark:text-[#A2B5AD] hover:text-[#18352D] dark:hover:text-white hover:bg-[#F7F8ED] dark:hover:bg-[#16322A]'
+            }`}
+          >
+            <Package className="w-4 h-4" />
+            Inventory & Urgent Needs
+          </button>
 
-            <select
-              value={selectedUrgency}
-              onChange={(e) => setSelectedUrgency(e.target.value)}
-              className="p-2 border border-[#EAE3D2] dark:border-[#24332D] rounded-xl outline-none bg-white dark:bg-[#17231E] text-[#17231E] dark:text-[#FFF9ED] font-semibold"
-            >
-              <option value="ALL">All Urgency</option>
-              <option value="CRITICAL">Critical Priority</option>
-              <option value="HIGH">High Priority</option>
-              <option value="MEDIUM">Medium Priority</option>
-            </select>
-          </div>
+          <button
+            onClick={() => setActiveMainTab('requests')}
+            className={`flex-1 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
+              activeMainTab === 'requests' 
+                ? 'bg-[#0B4F3A] dark:bg-[#12B76A] text-white dark:text-[#0B1713] shadow-sm' 
+                : 'text-[#60756D] dark:text-[#A2B5AD] hover:text-[#18352D] dark:hover:text-white hover:bg-[#F7F8ED] dark:hover:bg-[#16322A]'
+            }`}
+          >
+            <HeartHandshake className="w-4 h-4" />
+            Community Cases ({verifiedRequests.length})
+          </button>
         </div>
+
+        {/* Tab Content */}
+        {activeMainTab === 'matcher' && (
+          <IntelligentDonationMatcher onPledgeSuccess={fetchDonorData} />
+        )}
+
+        {activeMainTab === 'inventory' && (
+          <DonationInventoryPanel />
+        )}
+
+        {activeMainTab === 'requests' && (
+          <div className="space-y-6">
+            {/* Filters and Search Bar */}
+            <div className="bg-white dark:bg-[#121C18] p-4 rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] shadow-sm flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div className="flex items-center space-x-2">
+                <Filter className="w-4 h-4 text-stone-400" />
+                <span className="font-bold text-[#17231E] dark:text-[#FFF9ED]">Filter Needs:</span>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="p-2 border border-[#EAE3D2] dark:border-[#24332D] rounded-xl outline-none bg-white dark:bg-[#17231E] text-[#17231E] dark:text-[#FFF9ED] font-semibold"
+                >
+                  <option value="ALL">All Categories</option>
+                  <option value="FOOD">Food Supplies</option>
+                  <option value="SHELTER">Shelter Needs</option>
+                  <option value="CLOTHING">Clothing & Blankets</option>
+                  <option value="MEDICAL">Medical & Medicines</option>
+                  <option value="EDUCATION">Education Aid</option>
+                </select>
+
+                <select
+                  value={selectedUrgency}
+                  onChange={(e) => setSelectedUrgency(e.target.value)}
+                  className="p-2 border border-[#EAE3D2] dark:border-[#24332D] rounded-xl outline-none bg-white dark:bg-[#17231E] text-[#17231E] dark:text-[#FFF9ED] font-semibold"
+                >
+                  <option value="ALL">All Urgency</option>
+                  <option value="CRITICAL">Critical Priority</option>
+                  <option value="HIGH">High Priority</option>
+                  <option value="MEDIUM">Medium Priority</option>
+                </select>
+              </div>
+            </div>
 
         {/* Verified Requests Feed */}
         <div>
@@ -348,7 +448,7 @@ export const DonorDashboard: React.FC = () => {
                           {d.status}
                         </span>
                       </td>
-                      <td className="p-3 text-stone-400">{d.created_at ? new Date(d.created_at).toLocaleDateString() : 'Today'}</td>
+                      <td className="p-3 text-stone-400">{d.created_at ? formatReportDateTime(d.created_at) : 'Today'}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -356,7 +456,8 @@ export const DonorDashboard: React.FC = () => {
             </div>
           </div>
         )}
-
+          </div>
+        )}
       </div>
 
       {/* "HELP THIS PERSON" Pledge Modal */}

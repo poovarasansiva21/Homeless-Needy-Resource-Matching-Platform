@@ -4,14 +4,16 @@ CRITICAL_KEYWORDS = [
     "bleeding", "unconscious", "heart attack", "chest pain", "seizure", 
     "fire", "trapped", "collapse", "drowning", "assault", "violence", 
     "suicide", "hypothermia", "life threatening", "severe injury", "snake bite",
-    "poison", "critical", "dying", "flood water", "suffocating"
+    "poison", "critical", "dying", "flood water", "suffocating", "not eaten",
+    "haven't eaten", "starving children", "no food since yesterday"
 ]
 
 HIGH_KEYWORDS = [
     "tonight", "starving", "no food", "infant", "newborn", "baby", "children", 
     "pregnant", "insulin", "urgent", "evicted", "homeless", "sleeping outside", 
     "freezing", "in the rain", "elderly", "disabled", "dialysis", "fever", 
-    "pavement", "hungry for days", "stranded", "no water"
+    "pavement", "hungry for days", "stranded", "no water", "cannot afford",
+    "cannot afford the bus"
 ]
 
 MEDIUM_KEYWORDS = [

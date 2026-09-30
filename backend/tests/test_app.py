@@ -70,7 +70,6 @@ class TestSahaayaaBackend(unittest.TestCase):
             "verified": True
         }
         match_res = calculate_match(req, res)
-        print("[TEST Matcher] Match Result:", match_res)
         self.assertGreaterEqual(match_res["match_score"], 80)
         self.assertIn("100%", match_res["breakdown"]["category_compatibility"])
 

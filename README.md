@@ -1,7 +1,5 @@
 # SAHAAYAA AI (AI-Powered Homeless & Needy Resource Matching Platform)
 
-> **"Connecting the right help to the right person at the right time."**
-> 
 > *Full-Stack Deep Neural Network (DNN) + PWA Mobile App + Netlify Production Setup*
 
 ---

@@ -65,10 +65,13 @@ class Request(db.Model):
     contact_method = db.Column(db.String(50), default="Phone")
     photo_url = db.Column(db.String(255), nullable=True)
     status = db.Column(db.String(40), default="PENDING_VERIFICATION")
-    # Status Pipeline: SUBMITTED -> AI_ANALYZED -> PENDING_VERIFICATION -> VERIFIED -> MATCHING -> MATCHED -> ACCEPTED -> IN_PROGRESS -> DELIVERED -> COMPLETED / REJECTED
+    # Status Pipeline: REPORTED -> SUBMITTED -> AI_ANALYZED -> PENDING_VERIFICATION -> VERIFIED -> MATCHING -> MATCHED -> ACCEPTED -> IN_PROGRESS -> ASSISTANCE_STARTED -> DELIVERED -> COMPLETED / REJECTED / UNABLE_TO_ASSIST
     is_flagged_duplicate = db.Column(db.Boolean, default=False)
     duplicate_notes = db.Column(db.Text, nullable=True)
     assigned_ngo_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    is_help_someone = db.Column(db.Boolean, default=True)
+    has_photo_permission = db.Column(db.Boolean, default=True)
+    voice_transcript = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -90,7 +93,7 @@ class Request(db.Model):
             "description": self.description,
             "category": self.category,
             "dnn_category": self.dnn_category,
-            "dnn_confidence": round(self.dnn_confidence, 2),
+            "dnn_confidence": round(self.dnn_confidence, 2) if self.dnn_confidence else 0.0,
             "urgency_level": self.urgency_level,
             "urgency_score": self.urgency_score,
             "people_count": self.people_count,
@@ -101,6 +104,9 @@ class Request(db.Model):
             "is_flagged_duplicate": self.is_flagged_duplicate,
             "duplicate_notes": self.duplicate_notes if is_authorized else None,
             "assigned_ngo_id": self.assigned_ngo_id,
+            "is_help_someone": getattr(self, "is_help_someone", True),
+            "has_photo_permission": getattr(self, "has_photo_permission", True),
+            "voice_transcript": getattr(self, "voice_transcript", None),
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat(),
         }
@@ -117,6 +123,28 @@ class Request(db.Model):
             data["latitude"] = self.approx_latitude
             data["longitude"] = self.approx_longitude
 
+        unified_case = {
+            "case_id": self.id,
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat(),
+            "status": self.status,
+            "category": self.dnn_category or self.category,
+            "stated_category": self.category,
+            "urgency": self.urgency_level,
+            "urgency_score": self.urgency_score,
+            "people_affected": self.people_count,
+            "description": self.description,
+            "ai_confidence": round(self.dnn_confidence, 2) if self.dnn_confidence else 0.0,
+            "location_precision": "EXACT_AUTHORIZED" if is_authorized else "APPROXIMATE_PUBLIC",
+            "location": {
+                "address": data["address"],
+                "latitude": data["latitude"],
+                "longitude": data["longitude"]
+            },
+            "is_flagged_duplicate": self.is_flagged_duplicate,
+            "assigned_ngo_id": self.assigned_ngo_id
+        }
+        data["unified_case"] = unified_case
         return data
 
 
@@ -142,6 +170,17 @@ class Resource(db.Model):
 
     matches = db.relationship("Match", backref="resource", lazy=True)
 
+    def get_verification_badge(self) -> str:
+        if not self.verified:
+            return "UNVERIFIED"
+        cat_upper = (self.category or "").upper()
+        org_upper = (self.organization_type or "").upper()
+        if cat_upper == "SHELTER" or "SHELTER" in org_upper:
+            return "VERIFIED SHELTER"
+        elif cat_upper == "FOOD" or "FOOD" in org_upper or "KITCHEN" in org_upper:
+            return "VERIFIED FOOD RESOURCE"
+        return "VERIFIED NGO"
+
     def to_dict(self):
         return {
             "id": self.id,
@@ -158,9 +197,11 @@ class Resource(db.Model):
             "capacity_total": self.capacity_total,
             "capacity_available": self.capacity_available,
             "verified": self.verified,
+            "verification_badge": self.get_verification_badge(),
             "is_demo": self.is_demo,
             "created_at": self.created_at.isoformat()
         }
+
 
 
 class Match(db.Model):
@@ -188,28 +229,144 @@ class Match(db.Model):
         }
 
 
+class UrgentDonationRequest(db.Model):
+    __tablename__ = "urgent_donation_requests"
+
+    id = db.Column(db.Integer, primary_key=True)
+    resource_id = db.Column(db.Integer, db.ForeignKey("resources.id"), nullable=True)
+    created_by_user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    title = db.Column(db.String(150), nullable=False)
+    item_category = db.Column(db.String(50), nullable=False)  # FOOD, CLOTHING, BLANKETS, HYGIENE, OTHER
+    urgency_level = db.Column(db.String(30), nullable=False, default="HIGH")  # CRITICAL, HIGH, NORMAL
+    required_quantity = db.Column(db.Integer, nullable=False, default=10)
+    fulfilled_quantity = db.Column(db.Integer, default=0)
+    unit = db.Column(db.String(30), default="items")
+    description = db.Column(db.Text, nullable=True)
+    latitude = db.Column(db.Float, nullable=False, default=11.0168)
+    longitude = db.Column(db.Float, nullable=False, default=76.9558)
+    address = db.Column(db.String(255), nullable=False, default="Coimbatore Relief Hub")
+    status = db.Column(db.String(30), nullable=False, default="ACTIVE")  # ACTIVE, FULFILLED, CANCELLED
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    resource = db.relationship("Resource", foreign_keys=[resource_id])
+    created_by = db.relationship("User", foreign_keys=[created_by_user_id])
+    donations = db.relationship("Donation", backref="urgent_request_rel", lazy=True)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "resource_id": self.resource_id,
+            "resource_name": self.resource.name if self.resource else "Community Distribution Center",
+            "title": self.title,
+            "item_category": self.item_category,
+            "urgency_level": self.urgency_level,
+            "required_quantity": self.required_quantity,
+            "fulfilled_quantity": self.fulfilled_quantity,
+            "remaining_quantity": max(0, self.required_quantity - self.fulfilled_quantity),
+            "unit": self.unit,
+            "description": self.description,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "address": self.address,
+            "status": self.status,
+            "created_at": self.created_at.isoformat()
+        }
+
+
+class DonationInventory(db.Model):
+    __tablename__ = "donation_inventories"
+
+    id = db.Column(db.Integer, primary_key=True)
+    resource_id = db.Column(db.Integer, db.ForeignKey("resources.id"), nullable=True)
+    item_category = db.Column(db.String(50), nullable=False)  # FOOD, CLOTHING, BLANKETS, HYGIENE, OTHER
+    item_name = db.Column(db.String(150), nullable=False)
+    total_quantity = db.Column(db.Integer, default=0)
+    allocated_quantity = db.Column(db.Integer, default=0)
+    available_quantity = db.Column(db.Integer, default=0)
+    unit = db.Column(db.String(30), default="items")
+    last_updated = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    resource = db.relationship("Resource", foreign_keys=[resource_id])
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "resource_id": self.resource_id,
+            "resource_name": self.resource.name if self.resource else "Central Warehouse Hub",
+            "item_category": self.item_category,
+            "item_name": self.item_name,
+            "total_quantity": self.total_quantity,
+            "allocated_quantity": self.allocated_quantity,
+            "available_quantity": self.available_quantity,
+            "unit": self.unit,
+            "last_updated": self.last_updated.isoformat()
+        }
+
+
 class Donation(db.Model):
     __tablename__ = "donations"
 
     id = db.Column(db.Integer, primary_key=True)
     donor_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    request_id = db.Column(db.Integer, db.ForeignKey("requests.id"), nullable=False)
-    donation_type = db.Column(db.String(80), nullable=False)  # food_package, clothing, financial_support, volunteer_delivery
-    notes = db.Column(db.Text, nullable=True)
-    status = db.Column(db.String(50), default="pledged")  # pledged, completed, cancelled
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    request_id = db.Column(db.Integer, db.ForeignKey("requests.id"), nullable=True)
+    urgent_request_id = db.Column(db.Integer, db.ForeignKey("urgent_donation_requests.id"), nullable=True)
+    resource_id = db.Column(db.Integer, db.ForeignKey("resources.id"), nullable=True)
 
-    def to_dict(self):
-        return {
+    donation_type = db.Column(db.String(80), nullable=False, default="goods_donation")  # food_package, clothing, blankets, hygiene_supplies, financial_support, volunteer_delivery
+    item_category = db.Column(db.String(50), nullable=False, default="OTHER")  # FOOD, CLOTHING, BLANKETS, HYGIENE, OTHER
+    item_description = db.Column(db.Text, nullable=True)
+    quantity = db.Column(db.Integer, default=1)
+    unit = db.Column(db.String(30), default="items")
+
+    notes = db.Column(db.Text, nullable=True)
+    status = db.Column(db.String(50), default="PLEDGED")  # PLEDGED, ACCEPTED, ASSIGNED, DELIVERED, COMPLETED, CANCELLED
+
+    donor_latitude = db.Column(db.Float, nullable=True, default=11.0168)
+    donor_longitude = db.Column(db.Float, nullable=True, default=76.9558)
+    donor_address = db.Column(db.String(255), nullable=True)
+
+    reallocated_from_id = db.Column(db.Integer, db.ForeignKey("donations.id"), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    urgent_request = db.relationship("UrgentDonationRequest", foreign_keys=[urgent_request_id], overlaps="donations,urgent_request_rel")
+    resource = db.relationship("Resource", foreign_keys=[resource_id])
+    reallocated_from = db.relationship("Donation", remote_side=[id])
+
+    def to_dict(self, is_authorized: bool = False):
+        data = {
             "id": self.id,
             "donor_id": self.donor_id,
-            "donor_name": self.donor.full_name if self.donor else "Anonymous Donor",
+            "donor_name": self.donor.full_name if (self.donor and is_authorized) else "Anonymous Donor",
             "request_id": self.request_id,
+            "urgent_request_id": self.urgent_request_id,
+            "resource_id": self.resource_id,
+            "resource_name": self.resource.name if self.resource else ("Community Hub" if self.request_id else "Distribution Hub"),
             "donation_type": self.donation_type,
+            "item_category": self.item_category,
+            "item_description": self.item_description or f"{self.quantity} {self.item_category.lower()}",
+            "quantity": self.quantity,
+            "unit": self.unit,
             "notes": self.notes,
             "status": self.status,
-            "created_at": self.created_at.isoformat()
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat() if self.updated_at else self.created_at.isoformat()
         }
+
+        if self.urgent_request:
+            data["urgent_request_title"] = self.urgent_request.title
+            data["urgency_level"] = self.urgent_request.urgency_level
+            data["anonymized_location"] = self.urgent_request.address
+        elif self.request:
+            data["urgency_level"] = self.request.urgency_level
+            data["matched_need_category"] = self.request.category
+            data["anonymized_location"] = self.request.address.split(",")[-1].strip() if "," in self.request.address else "Coimbatore Locality"
+
+        if is_authorized:
+            data["donor_phone"] = self.donor.phone if self.donor else None
+            data["donor_address"] = self.donor_address
+
+        return data
 
 
 class RequestStatusHistory(db.Model):
@@ -306,3 +463,216 @@ class AuditLog(db.Model):
             "ip_address": self.ip_address,
             "timestamp": self.timestamp.isoformat()
         }
+
+
+class AIPredictionLog(db.Model):
+    __tablename__ = "ai_prediction_logs"
+
+    id = db.Column(db.Integer, primary_key=True)
+    model_version = db.Column(db.String(50), nullable=False, default="v2.1.0-humanitarian-pipeline")
+    text_hash = db.Column(db.String(64), nullable=False)
+    predicted_category = db.Column(db.String(50), nullable=False)
+    predicted_urgency = db.Column(db.String(30), nullable=False)
+    confidence = db.Column(db.Float, nullable=False)
+    people_count = db.Column(db.Integer, default=1)
+    transport_barrier = db.Column(db.Boolean, default=False)
+    transport_reason = db.Column(db.String(50), default="NONE")
+    duration_of_need = db.Column(db.String(50), default="IMMEDIATE_TONIGHT")
+    confidence_action = db.Column(db.String(40), default="CONTINUE")
+    full_analysis = db.Column(db.JSON, nullable=True)
+
+    # Human correction feedback fields
+    is_corrected = db.Column(db.Boolean, default=False)
+    human_corrected_category = db.Column(db.String(50), nullable=True)
+    human_corrected_urgency = db.Column(db.String(30), nullable=True)
+    corrected_by_user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    correction_notes = db.Column(db.Text, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    corrected_at = db.Column(db.DateTime, nullable=True)
+
+    corrected_by = db.relationship("User", foreign_keys=[corrected_by_user_id])
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "model_version": self.model_version,
+            "text_hash": self.text_hash,
+            "predicted_category": self.predicted_category,
+            "predicted_urgency": self.predicted_urgency,
+            "confidence": self.confidence,
+            "people_count": self.people_count,
+            "transport_barrier": self.transport_barrier,
+            "transport_reason": self.transport_reason,
+            "duration_of_need": self.duration_of_need,
+            "confidence_action": self.confidence_action,
+            "full_analysis": self.full_analysis,
+            "is_corrected": self.is_corrected,
+            "human_corrected_category": self.human_corrected_category,
+            "human_corrected_urgency": self.human_corrected_urgency,
+            "corrected_by": self.corrected_by.full_name if self.corrected_by else None,
+            "correction_notes": self.correction_notes,
+            "created_at": self.created_at.isoformat(),
+            "corrected_at": self.corrected_at.isoformat() if self.corrected_at else None
+        }
+
+
+class TransportInfo(db.Model):
+    __tablename__ = "transport_info"
+
+    id = db.Column(db.Integer, primary_key=True)
+    resource_id = db.Column(db.Integer, db.ForeignKey("resources.id"), nullable=True)
+    provider = db.Column(db.String(120), nullable=False)
+    route_name = db.Column(db.String(150), nullable=False)
+    fare_amount = db.Column(db.Float, nullable=True)
+    fare_display = db.Column(db.String(50), nullable=False, default="₹15.00")
+    is_free_or_concession = db.Column(db.Boolean, default=False)
+    eligibility = db.Column(db.String(255), default="General Public / Senior & PwD Concession Available")
+    source = db.Column(db.String(150), nullable=False, default="Verified Municipal Transit Schedule")
+    last_verified = db.Column(db.DateTime, default=datetime.utcnow)
+    review_expiry_date = db.Column(db.DateTime, nullable=True)
+    status = db.Column(db.String(30), nullable=False, default="VERIFIED")  # VERIFIED 🟢, NEEDS_VERIFICATION 🟡, UNVERIFIED_REPORTED 🔴
+    safety_notice = db.Column(db.String(255), default="Free/concession travel may be available for eligible users. Verify eligibility before travelling.")
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    resource = db.relationship("Resource", foreign_keys=[resource_id])
+    reports = db.relationship("TransportReport", backref="transport_info", lazy=True, cascade="all, delete-orphan")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "resource_id": self.resource_id,
+            "resource_name": self.resource.name if self.resource else "General City Route",
+            "provider": self.provider,
+            "route_name": self.route_name,
+            "fare_amount": self.fare_amount,
+            "fare_display": self.fare_display,
+            "is_free_or_concession": self.is_free_or_concession,
+            "eligibility": self.eligibility,
+            "source": self.source,
+            "last_verified": self.last_verified.strftime("%Y-%m-%d") if self.last_verified else None,
+            "review_expiry_date": self.review_expiry_date.strftime("%Y-%m-%d") if self.review_expiry_date else None,
+            "status": self.status,
+            "safety_notice": self.safety_notice if self.is_free_or_concession else "Free/concession travel may be available for eligible users. Verify eligibility before travelling.",
+            "created_at": self.created_at.isoformat()
+        }
+
+
+class TransportReport(db.Model):
+    __tablename__ = "transport_reports"
+
+    id = db.Column(db.Integer, primary_key=True)
+    transport_info_id = db.Column(db.Integer, db.ForeignKey("transport_info.id"), nullable=True)
+    trip_id = db.Column(db.Integer, db.ForeignKey("transport_assistance_trips.id"), nullable=True)
+    reporter_user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    reason = db.Column(db.String(50), nullable=False)
+    # Reasons: wrong_fare, wrong_route, wrong_timing, fake_driver, fake_volunteer, unexpected_payment, fake_ngo, suspicious_information
+    details = db.Column(db.Text, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    reporter = db.relationship("User", foreign_keys=[reporter_user_id])
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "transport_info_id": self.transport_info_id,
+            "trip_id": self.trip_id,
+            "reason": self.reason,
+            "details": self.details,
+            "reporter": self.reporter.full_name if self.reporter else "Anonymous User",
+            "created_at": self.created_at.isoformat()
+        }
+
+
+class TransportAssistanceTrip(db.Model):
+    __tablename__ = "transport_assistance_trips"
+
+    id = db.Column(db.Integer, primary_key=True)
+    trip_code = db.Column(db.String(20), unique=True, nullable=False, index=True)  # e.g. SAH-2048
+    requester_user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    request_id = db.Column(db.Integer, db.ForeignKey("requests.id"), nullable=True)
+    resource_id = db.Column(db.Integer, db.ForeignKey("resources.id"), nullable=True)
+    barrier_reason = db.Column(db.String(50), nullable=False)  # cannot_afford_transport, too_far, no_transport, with_children, other
+    pickup_address = db.Column(db.String(255), nullable=False)
+    pickup_latitude = db.Column(db.Float, nullable=False, default=11.0168)
+    pickup_longitude = db.Column(db.Float, nullable=False, default=76.9558)
+    destination_address = db.Column(db.String(255), nullable=False)
+    people_count = db.Column(db.Integer, default=1)
+    status = db.Column(db.String(30), nullable=False, default="REQUESTED")
+    # Pipeline: REQUESTED -> ACCEPTED -> RESPONDER_ASSIGNED -> ON_THE_WAY -> PICKUP_CONFIRMED -> DESTINATION_REACHED -> COMPLETED
+    assigned_responder_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    notes = db.Column(db.Text, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    assigned_responder = db.relationship("User", foreign_keys=[assigned_responder_id])
+    request = db.relationship("Request", foreign_keys=[request_id])
+    resource = db.relationship("Resource", foreign_keys=[resource_id])
+    reports = db.relationship("TransportReport", backref="trip", lazy=True, cascade="all, delete-orphan")
+
+    def to_dict(self, is_authorized: bool = False):
+        responder_info = None
+        if self.assigned_responder:
+            name_parts = self.assigned_responder.full_name.split()
+            display_name = f"{name_parts[0]} {name_parts[1][0]}." if len(name_parts) > 1 else self.assigned_responder.full_name
+            responder_info = {
+                "id": self.assigned_responder.id,
+                "display_name": display_name,
+                "role": self.assigned_responder.role.capitalize(),
+                "organization": self.assigned_responder.organization_name or "Verified Volunteer Network",
+                "is_verified_responder": True
+            }
+            if is_authorized:
+                responder_info["phone"] = self.assigned_responder.phone
+                responder_info["full_name"] = self.assigned_responder.full_name
+
+        return {
+            "id": self.id,
+            "trip_code": self.trip_code,
+            "barrier_reason": self.barrier_reason,
+            "pickup_address": self.pickup_address if is_authorized else (self.pickup_address.split(",")[-1].strip() if "," in self.pickup_address else "Coimbatore Locality"),
+            "destination_address": self.destination_address,
+            "resource_id": self.resource_id,
+            "resource_name": self.resource.name if self.resource else "Assistance Destination Center",
+            "people_count": self.people_count,
+            "status": self.status,
+            "assigned_responder": responder_info,
+            "notes": self.notes if is_authorized else None,
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat()
+        }
+
+
+class TrustReport(db.Model):
+    __tablename__ = "trust_reports"
+
+    id = db.Column(db.Integer, primary_key=True)
+    report_type = db.Column(db.String(50), nullable=False)  # RESOURCE, TRANSPORT, REQUEST, SUSPICIOUS_REQUEST
+    target_id = db.Column(db.Integer, nullable=True)
+    target_title = db.Column(db.String(255), nullable=True)
+    reporter_user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    is_anonymous = db.Column(db.Boolean, default=False)
+    reason = db.Column(db.String(100), nullable=False)
+    details = db.Column(db.Text, nullable=True)
+    status = db.Column(db.String(40), default="PENDING")  # PENDING, INVESTIGATING, RESOLVED, DISMISSED
+    resolution_notes = db.Column(db.Text, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    reporter = db.relationship("User", foreign_keys=[reporter_user_id])
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "report_type": self.report_type,
+            "target_id": self.target_id,
+            "target_title": self.target_title,
+            "reporter": "Anonymous Reporter" if (self.is_anonymous or not self.reporter) else self.reporter.full_name,
+            "is_anonymous": self.is_anonymous,
+            "reason": self.reason,
+            "details": self.details,
+            "status": self.status,
+            "resolution_notes": self.resolution_notes,
+            "created_at": self.created_at.isoformat()
+        }
+
+
+

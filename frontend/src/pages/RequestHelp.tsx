@@ -17,6 +17,7 @@ import {
 import { requestsApi, aiApi } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../i18n';
+import { VoiceInputButton } from '../components/VoiceInputButton';
 
 export const RequestHelp: React.FC = () => {
   const { user } = useAuth();
@@ -242,20 +243,23 @@ export const RequestHelp: React.FC = () => {
             </div>
 
             <div>
-              <div className="flex justify-between items-center mb-1.5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                 <label className="block text-xs font-black text-[#17231E] dark:text-[#FFF9ED] uppercase tracking-wider">
                   {t('request.description')}
                 </label>
-                <button
-                  type="button"
-                  onClick={handlePreviewAI}
-                  disabled={isPreviewing || !description.trim()}
-                  className="text-xs text-[#159B5B] dark:text-emerald-400 hover:text-[#12834D] font-bold flex items-center space-x-1"
-                >
-                  <Cpu className="w-3.5 h-3.5" />
-                  <span>{isPreviewing ? t('request.analyzing') : t('request.analyze')}</span>
-                </button>
+                <div className="flex items-center space-x-3">
+                  <button
+                    type="button"
+                    onClick={handlePreviewAI}
+                    disabled={isPreviewing || !description.trim()}
+                    className="text-xs text-[#159B5B] dark:text-emerald-400 hover:text-[#12834D] font-bold flex items-center space-x-1 disabled:opacity-50"
+                  >
+                    <Cpu className="w-3.5 h-3.5" />
+                    <span>{isPreviewing ? t('request.analyzing') : t('request.analyze')}</span>
+                  </button>
+                </div>
               </div>
+
               <textarea
                 required
                 rows={4}
@@ -264,6 +268,15 @@ export const RequestHelp: React.FC = () => {
                 placeholder="Be as detailed as possible. e.g.: 'I have two children and we have not had food since yesterday. Stranded near railway track with no money.'"
                 className="w-full rounded-2xl border border-[#EAE3D2] dark:border-[#24332D] bg-white dark:bg-[#0C1410] p-4 text-[#17231E] dark:text-[#FFF9ED] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] transition-all"
               />
+
+              {/* Multilingual Voice Input Integration */}
+              <div className="mt-2.5">
+                <VoiceInputButton
+                  onSpeechCaptured={(spokenText) => {
+                    setDescription((prev) => (prev ? `${prev} ${spokenText}` : spokenText));
+                  }}
+                />
+              </div>
             </div>
 
             {/* Live AI Preview Badge */}
