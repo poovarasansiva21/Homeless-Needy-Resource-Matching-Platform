@@ -19,9 +19,9 @@ import NgoDashboard from './pages/NgoDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import HumanitarianIntelligence from './pages/HumanitarianIntelligence';
 import HelpReportsDashboard from './pages/HelpReportsDashboard';
-import ProfilePage from './pages/ProfilePage';
 import { LoginPage, RegisterPage } from './pages/AuthPages';
 import { AlertTriangle, Home } from 'lucide-react';
+import CustomCursor from './components/CustomCursor';
 
 const NotFound: React.FC = () => {
   const { t } = useLanguage();
@@ -53,6 +53,7 @@ const MainLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F9F6F0] dark:bg-[#0D0D0D] font-sans text-[#1C1917] dark:text-[#F5F5F0] selection:bg-[#F25C38] selection:text-white transition-colors duration-300">
+      <CustomCursor />
       {!isHelpReportsDashboard && <Navbar />}
       <PwaInstallBanner />
       {isSimpleMode && <SimpleModeView />}
@@ -71,7 +72,6 @@ const MainLayout: React.FC = () => {
           <Route path="/donor/dashboard" element={<DonorDashboard />} />
           <Route path="/ngo/dashboard" element={<NgoDashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<NotFound />} />

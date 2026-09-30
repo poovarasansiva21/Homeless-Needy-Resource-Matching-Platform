@@ -13,7 +13,9 @@ import {
   X, 
   LogOut,
   ArrowRight,
-  Settings
+  Settings,
+  Heart,
+  Sparkles
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
@@ -30,6 +32,7 @@ export const Navbar: React.FC = () => {
 
   const navRef = useRef<HTMLElement>(null);
   const langDropdownRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,10 +40,10 @@ export const Navbar: React.FC = () => {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Passive scroll listener for subtle top vs scrolled navbar visual transition
+  // Passive scroll listener for header transformation
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 15);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -57,14 +60,29 @@ export const Navbar: React.FC = () => {
     }
   }, [showLangMenu]);
 
+  // GSAP staggered entrance for mobile menu items
+  useEffect(() => {
+    if (mobileMenuOpen && mobileMenuRef.current) {
+      const menuItems = mobileMenuRef.current.querySelectorAll('.mobile-menu-item');
+      gsap.fromTo(
+        menuItems,
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.35, stagger: 0.05, ease: 'power3.out' }
+      );
+    }
+  }, [mobileMenuOpen]);
+
   // Determine active navigation route
   const getActiveNav = () => {
     const path = location.pathname;
     const hash = location.hash;
     if (path === '/request-help') return 'request-help';
-    if (path === '/find-help' || (path === '/' && hash === '#resources')) return 'find-help';
+    if (path === '/help-someone') return 'help-someone';
+    if (path === '/find-help' || (path === '/' && hash === '#resources')) return 'resources';
     if (path === '/resources') return 'resources';
     if (path === '/map') return 'map';
+    if (path === '/donor/dashboard') return 'donate';
+    if (path === '/' && hash === '#problem') return 'about';
     if (path === '/') return 'home';
     return '';
   };
@@ -76,7 +94,6 @@ export const Navbar: React.FC = () => {
     
     const isHome = location.pathname === '/' || location.pathname === '/resources' || location.pathname === '/find-help';
 
-    // Dynamic smooth scroll to element on page
     if (hash) {
       if (isHome) {
         const el = document.querySelector(hash);
@@ -108,18 +125,27 @@ export const Navbar: React.FC = () => {
     navigate(targetPath);
   };
 
+  const navLinks = [
+    { key: 'home', label: t('nav.home') || 'Home', path: '/' },
+    { key: 'request-help', label: t('nav.requestHelp') || 'Request Help', path: '/request-help' },
+    { key: 'help-someone', label: 'Help Someone', path: '/help-someone' },
+    { key: 'resources', label: t('nav.resources') || 'Resources', path: '/', hash: '#resources' },
+    { key: 'map', label: t('nav.map') || 'Map', path: '/map' },
+    { key: 'donate', label: 'Donate', path: '/donor/dashboard' },
+    { key: 'about', label: 'About', path: '/', hash: '#problem' },
+  ];
+
   return (
     <nav
       ref={navRef}
       aria-label="Main Navigation"
       className={`fixed top-0 left-0 right-0 z-[1000] w-full pointer-events-auto transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#F9F6F0]/95 dark:bg-[#0D0D0D]/95 backdrop-blur-md border-b border-[#E7E0D6] dark:border-white/10 shadow-sm'
-          : 'bg-[#F9F6F0]/90 dark:bg-[#0D0D0D]/90 backdrop-blur-sm border-b border-[#E7E0D6]/80 dark:border-white/5'
+          ? 'py-2.5 bg-[#FCFAF6]/90 dark:bg-[#171310]/90 backdrop-blur-md border-b border-[#E9DDCC]/80 dark:border-white/10 shadow-md'
+          : 'py-4 bg-[#FCFAF6]/75 dark:bg-[#171310]/75 backdrop-blur-sm border-b border-[#E9DDCC]/40 dark:border-white/5'
       }`}
-      style={{ minHeight: '76px' }}
     >
-      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 h-[76px] lg:h-[82px] flex items-center justify-between">
+      <div className="max-w-[1550px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         
         {/* ========================================================================= */}
         {/* 1. LEFT BRAND LOGO                                                       */}
@@ -127,146 +153,61 @@ export const Navbar: React.FC = () => {
         <Link 
           to="/" 
           onClick={() => setMobileMenuOpen(false)}
-          className="flex items-center space-x-3 group shrink-0 w-[220px] sm:w-[260px]"
+          className="flex items-center space-x-3 group shrink-0"
         >
-          {/* Circular charcoal logo badge with leaf icon */}
-          <div className="w-10 h-10 lg:w-[46px] lg:h-[46px] rounded-full bg-[#1C1917] dark:bg-[#262626] border border-[#333]/10 dark:border-white/10 flex items-center justify-center text-[#F25C38] shadow-sm group-hover:scale-105 transition-transform duration-300 shrink-0">
-            <svg 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2.2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              className="w-5 h-5 lg:w-5 lg:h-5"
-            >
-              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-            </svg>
+          <div className="w-10 h-10 lg:w-[44px] lg:h-[44px] rounded-full bg-[#3B2418] dark:bg-[#D97732] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0">
+            <Heart className="w-5 h-5 fill-current text-[#D97732] dark:text-[#3B2418]" />
           </div>
 
           <div className="flex flex-col justify-center text-left">
-            <span className="font-extrabold text-base sm:text-lg lg:text-xl tracking-tight text-[#1C1917] dark:text-[#F5F5F0] font-sans leading-none block">
-              SAHAAYAA AI
+            <span className="font-extrabold text-lg lg:text-xl tracking-tight text-[#3B2418] dark:text-[#FCFAF6] font-sans leading-none block">
+              SAHAAYAA <span className="text-[#D97732]">AI</span>
             </span>
-            <span className="text-[8px] sm:text-[9px] lg:text-[10px] text-[#78716C] dark:text-[#A8A29E] font-bold tracking-widest mt-1 uppercase leading-none block">
-              AI FOR COMMUNITY CARE
+            <span className="text-[9px] lg:text-[10px] text-[#3B2418]/60 dark:text-[#E9DDCC]/70 font-semibold tracking-widest mt-0.5 uppercase leading-none block">
+              COMMUNITY CARE
             </span>
           </div>
         </Link>
 
         {/* ========================================================================= */}
-        {/* 2. CENTER MAIN NAVIGATION                                                */}
+        {/* 2. CENTER DESKTOP NAVIGATION                                             */}
         {/* ========================================================================= */}
-        <div className="hidden lg:flex items-center justify-center space-x-3 lg:space-x-5 xl:space-x-7 text-sm lg:text-[14px] xl:text-[15px] font-semibold text-[#1C1917] dark:text-[#F5F5F0]/90 mx-2 shrink-0">
-          
-          {/* HOME */}
-          <button
-            onClick={() => handleNavClick('home', '/')}
-            className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-              activeNav === 'home' 
-                ? 'text-[#F25C38] font-bold' 
-                : 'hover:text-[#F25C38]'
-            }`}
-          >
-            <span>{t('nav.home')}</span>
-            {activeNav === 'home' && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
-            )}
-          </button>
-
-          {/* REQUEST HELP */}
-          <button
-            onClick={() => handleNavClick('request-help', '/request-help')}
-            className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-              activeNav === 'request-help' 
-                ? 'text-[#F25C38] font-bold' 
-                : 'hover:text-[#F25C38]'
-            }`}
-          >
-            <span>{t('nav.requestHelp')}</span>
-            {activeNav === 'request-help' && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[38px] h-[2.5px] bg-[#F25C38] rounded-full" />
-            )}
-          </button>
-
-          {/* FIND HELP */}
-          <button
-            onClick={() => handleNavClick('find-help', '/', '#resources')}
-            className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-              activeNav === 'find-help' 
-                ? 'text-[#F25C38] font-bold' 
-                : 'hover:text-[#F25C38]'
-            }`}
-          >
-            <span>{t('nav.findHelp')}</span>
-            {activeNav === 'find-help' && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
-            )}
-          </button>
-
-          {/* RESOURCES */}
-          <button
-            onClick={() => handleNavClick('resources', '/', '#resources')}
-            className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-              activeNav === 'resources' 
-                ? 'text-[#F25C38] font-bold' 
-                : 'hover:text-[#F25C38]'
-            }`}
-          >
-            <span>{t('nav.resources')}</span>
-            {activeNav === 'resources' && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
-            )}
-          </button>
-
-          {/* MAP */}
-          <button
-            onClick={() => handleNavClick('map', '/map')}
-            className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-              activeNav === 'map' 
-                ? 'text-[#F25C38] font-bold' 
-                : 'hover:text-[#F25C38]'
-            }`}
-          >
-            <span>{t('nav.map')}</span>
-            {activeNav === 'map' && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[28px] h-[2.5px] bg-[#F25C38] rounded-full" />
-            )}
-          </button>
-
-          {/* HELP REPORTS DASHBOARD */}
-          <button
-            onClick={() => handleNavClick('help-reports', '/help-reports')}
-            className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-              location.pathname.startsWith('/help-reports') 
-                ? 'text-[#F25C38] font-bold' 
-                : 'hover:text-[#F25C38]'
-            }`}
-          >
-            <span>Help Reports</span>
-            {location.pathname.startsWith('/help-reports') && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
-            )}
-          </button>
-
+        <div className="hidden xl:flex items-center justify-center space-x-1 lg:space-x-2 text-xs lg:text-sm font-bold text-[#3B2418] dark:text-[#FCFAF6]/90 bg-[#F7F1E8]/60 dark:bg-[#171310]/60 p-1.5 rounded-full border border-[#E9DDCC]/60 dark:border-white/10">
+          {navLinks.map((link) => {
+            const isActive = activeNav === link.key;
+            return (
+              <button
+                key={link.key}
+                onClick={() => handleNavClick(link.key, link.path, link.hash)}
+                className={`relative px-4 py-2 rounded-full transition-all duration-200 cursor-pointer whitespace-nowrap ${
+                  isActive
+                    ? 'bg-[#3B2418] dark:bg-[#D97732] text-white shadow-sm font-extrabold'
+                    : 'hover:text-[#D97732] dark:hover:text-[#D97732]'
+                }`}
+                data-cursor="pointer"
+              >
+                <span>{link.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* ========================================================================= */}
         {/* 3. RIGHT ACTION CONTROLS                                                */}
         {/* ========================================================================= */}
-        <div className="hidden lg:flex items-center space-x-2 shrink-0">
+        <div className="hidden lg:flex items-center space-x-2.5 shrink-0">
           
-          {/* Action 1: [🆘 I NEED HELP] Coral Pill Button */}
+          {/* Action 1: [🆘 I NEED HELP] Coral/Orange Pill Button */}
           <button
             type="button"
             onClick={() => setShowOneTapModal(true)}
             aria-label="I need help"
-            className="h-10 px-3.5 sm:px-4 rounded-full bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-1.5 transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shrink-0 min-h-[40px]"
+            className="h-10 px-4 rounded-full bg-[#D97732] hover:bg-[#c06524] text-white font-black text-xs uppercase tracking-wider shadow-md shadow-[#D97732]/25 flex items-center space-x-1.5 transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0"
+            data-cursor="pointer"
             title="Emergency Request Help"
           >
-            <Bell className="w-3.5 h-3.5 fill-current shrink-0" />
-            <span>{t('nav.iNeedHelp')}</span>
+            <Bell className="w-3.5 h-3.5 fill-current shrink-0 animate-pulse" />
+            <span>{t('nav.iNeedHelp') || 'I NEED HELP'}</span>
             <ArrowRight className="w-3.5 h-3.5 ml-0.5 shrink-0" />
           </button>
 
@@ -274,10 +215,11 @@ export const Navbar: React.FC = () => {
           <div className="relative shrink-0">
             <button
               onClick={() => setShowLangMenu(!showLangMenu)}
-              className="h-10 px-3 rounded-full bg-[#FAF7F2] dark:bg-[#161616] text-[#1C1917] dark:text-[#F5F5F0] border border-[#E7E0D6] dark:border-white/10 text-xs font-bold flex items-center space-x-1.5 hover:border-[#F25C38] transition-colors cursor-pointer min-h-[40px]"
+              className="h-10 px-3 rounded-full bg-[#F7F1E8] dark:bg-[#231d18] text-[#3B2418] dark:text-[#FCFAF6] border border-[#E9DDCC] dark:border-white/10 text-xs font-bold flex items-center space-x-1.5 hover:border-[#D97732] transition-colors cursor-pointer"
+              data-cursor="pointer"
               title="Select Language"
             >
-              <Globe className="w-3.5 h-3.5 text-[#F25C38]" />
+              <Globe className="w-3.5 h-3.5 text-[#D97732]" />
               <span className="uppercase">{language}</span>
               <ChevronDown className={`w-3 h-3 opacity-60 transition-transform duration-200 ${showLangMenu ? 'rotate-180' : ''}`} />
             </button>
@@ -285,7 +227,7 @@ export const Navbar: React.FC = () => {
             {showLangMenu && (
               <div 
                 ref={langDropdownRef}
-                className="absolute right-0 mt-2 w-40 bg-[#FAF7F2] dark:bg-[#161616] rounded-2xl shadow-xl border border-[#E7E0D6] dark:border-white/10 p-1.5 z-[1010] text-xs"
+                className="absolute right-0 mt-2 w-44 bg-[#FCFAF6] dark:bg-[#231d18] rounded-2xl shadow-xl border border-[#E9DDCC] dark:border-white/10 p-1.5 z-[1010] text-xs"
               >
                 {supportedLanguages.map((l) => (
                   <button
@@ -293,15 +235,15 @@ export const Navbar: React.FC = () => {
                     onClick={() => { setLanguage(l.id); setShowLangMenu(false); }}
                     className={`w-full text-left px-3 py-2 rounded-xl font-bold flex items-center justify-between transition-colors cursor-pointer ${
                       language === l.id 
-                        ? 'bg-[#F25C38]/10 text-[#F25C38]' 
-                        : 'text-[#1C1917] dark:text-[#F5F5F0] hover:bg-[#F3ECE2] dark:hover:bg-[#222222]'
+                        ? 'bg-[#D97732]/10 text-[#D97732]' 
+                        : 'text-[#3B2418] dark:text-[#FCFAF6] hover:bg-[#F7F1E8] dark:hover:bg-[#2d2520]'
                     }`}
                   >
                     <span className="flex items-center space-x-2">
                       <span>{l.flag}</span>
                       <span>{l.nativeLabel}</span>
                     </span>
-                    {language === l.id && <span className="font-extrabold text-[#F25C38]">✓</span>}
+                    {language === l.id && <span className="font-extrabold text-[#D97732]">✓</span>}
                   </button>
                 ))}
               </div>
@@ -313,24 +255,27 @@ export const Navbar: React.FC = () => {
             onClick={toggleTheme}
             aria-label="Toggle Theme"
             title={isDark ? "Switch to Warm Light Mode" : "Switch to Dark Mode"}
-            className="h-10 w-10 rounded-full bg-[#FAF7F2] dark:bg-[#161616] text-[#1C1917] dark:text-[#F25C38] border border-[#E7E0D6] dark:border-white/10 flex items-center justify-center transition-colors cursor-pointer shrink-0 min-h-[40px]"
+            className="h-10 w-10 rounded-full bg-[#F7F1E8] dark:bg-[#231d18] text-[#3B2418] dark:text-[#D97732] border border-[#E9DDCC] dark:border-white/10 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+            data-cursor="pointer"
           >
-            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-700" />}
+            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-[#3B2418]" />}
           </button>
 
-          {/* Action 4: User Sign In / Dashboard */}
+          {/* Action 4: User Sign In / Profile */}
           {user ? (
             <div className="flex items-center space-x-1 shrink-0">
               <Link
                 to={user.role === 'admin' ? '/admin/dashboard' : user.role === 'ngo' ? '/ngo/dashboard' : user.role === 'donor' ? '/donor/dashboard' : '/map'}
-                className="h-10 px-3.5 rounded-full bg-[#FAF7F2] dark:bg-[#161616] border border-[#E7E0D6] dark:border-white/10 text-[#1C1917] dark:text-[#F5F5F0] text-xs font-semibold flex items-center space-x-1.5 hover:border-[#F25C38] transition-colors min-h-[40px]"
+                className="h-10 px-3.5 rounded-full bg-[#F7F1E8] dark:bg-[#231d18] border border-[#E9DDCC] dark:border-white/10 text-[#3B2418] dark:text-[#FCFAF6] text-xs font-bold flex items-center space-x-1.5 hover:border-[#D97732] transition-colors"
+                data-cursor="pointer"
               >
-                <UserIcon className="w-3.5 h-3.5 text-[#F25C38]" />
+                <UserIcon className="w-3.5 h-3.5 text-[#D97732]" />
                 <span className="max-w-[90px] truncate">{user.full_name.split(' ')[0]}</span>
               </Link>
               <button
                 onClick={logout}
-                className="h-10 w-10 rounded-full border border-[#E7E0D6] dark:border-white/10 text-stone-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors cursor-pointer min-h-[40px]"
+                className="h-10 w-10 rounded-full border border-[#E9DDCC] dark:border-white/10 text-stone-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-colors cursor-pointer"
+                data-cursor="pointer"
                 title="Sign Out"
               >
                 <LogOut className="w-3.5 h-3.5" />
@@ -339,20 +284,22 @@ export const Navbar: React.FC = () => {
           ) : (
             <Link
               to="/login"
-              className="h-10 px-3.5 rounded-full bg-[#FAF7F2] dark:bg-[#161616] border border-[#E7E0D6] dark:border-white/10 text-[#1C1917] dark:text-[#F5F5F0] text-xs font-semibold flex items-center space-x-1.5 hover:border-[#F25C38] transition-colors shrink-0 min-h-[40px]"
+              className="h-10 px-4 rounded-full bg-[#F7F1E8] dark:bg-[#231d18] border border-[#E9DDCC] dark:border-white/10 text-[#3B2418] dark:text-[#FCFAF6] text-xs font-bold flex items-center space-x-1.5 hover:border-[#D97732] transition-colors shrink-0"
+              data-cursor="pointer"
             >
-              <UserIcon className="w-3.5 h-3.5 text-[#F25C38]" />
-              <span>{t('nav.signIn')}</span>
+              <UserIcon className="w-3.5 h-3.5 text-[#D97732]" />
+              <span>{t('nav.signIn') || 'Sign In'}</span>
             </Link>
           )}
 
           {/* Action 5: Donate Button */}
           <Link
             to="/donor/dashboard"
-            className="h-10 px-4 rounded-full bg-[#1C1917] dark:bg-[#262626] hover:bg-[#292524] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-1.5 transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shrink-0 min-h-[40px]"
+            className="h-10 px-4 rounded-full bg-[#3B2418] dark:bg-[#231d18] hover:bg-[#2d1c13] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-1.5 transition-all hover:scale-105 cursor-pointer shrink-0 border border-[#3B2418] dark:border-[#D97732]/40"
+            data-cursor="pointer"
           >
-            <Gift className="w-3.5 h-3.5 text-[#F25C38]" />
-            <span>{t('nav.donate')}</span>
+            <Gift className="w-3.5 h-3.5 text-[#D97732]" />
+            <span>{t('nav.donate') || 'Donate'}</span>
           </Link>
 
         </div>
@@ -362,126 +309,89 @@ export const Navbar: React.FC = () => {
         {/* ========================================================================= */}
         <div className="flex lg:hidden items-center space-x-2 shrink-0">
           
-          {/* Mobile Emergency Button */}
           <button
             type="button"
             onClick={() => setShowOneTapModal(true)}
             aria-label="I need help"
-            className="h-10 px-3.5 rounded-full bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-1.5 transition-all active:scale-95 cursor-pointer shrink-0 min-h-[40px]"
-            title="Emergency Request Help"
+            className="h-10 px-3.5 rounded-full bg-[#D97732] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-1.5 transition-all active:scale-95 cursor-pointer shrink-0"
           >
             <Bell className="w-3.5 h-3.5 fill-current shrink-0" />
-            <span className="inline">{t('nav.iNeedHelp')}</span>
+            <span>{t('nav.iNeedHelp') || 'HELP'}</span>
           </button>
 
           {/* Hamburger Menu Toggle */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="h-10 w-10 rounded-full bg-[#FAF7F2] dark:bg-[#161616] border border-[#E7E0D6] dark:border-white/10 text-[#1C1917] dark:text-[#F5F5F0] flex items-center justify-center focus:outline-none cursor-pointer shrink-0 min-h-[40px] min-w-[40px]"
+            className="h-10 w-10 rounded-full bg-[#F7F1E8] dark:bg-[#231d18] border border-[#E9DDCC] dark:border-white/10 text-[#3B2418] dark:text-[#FCFAF6] flex items-center justify-center focus:outline-none cursor-pointer shrink-0"
             aria-label={mobileMenuOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 text-[#D97732]" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
       </div>
 
       {/* ========================================================================= */}
-      {/* MOBILE MENU DROPDOWN                                                     */}
+      {/* MOBILE FULLSCREEN / EDITORIAL OVERLAY MENU                               */}
       {/* ========================================================================= */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#FAF7F2] dark:bg-[#161616] border-b border-[#E7E0D6] dark:border-white/10 px-5 pt-3 pb-8 space-y-4 rounded-b-3xl shadow-2xl animate-in slide-in-from-top-2 duration-200 z-[1020] pointer-events-auto max-h-[calc(100vh-80px)] overflow-y-auto">
-          
-          <div className="space-y-1 text-base font-bold text-[#1C1917] dark:text-[#F5F5F0]">
-            <button
-              onClick={() => handleNavClick('home', '/')}
-              className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'home' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
-            >
-              {t('nav.home')}
-            </button>
-            <button
-              onClick={() => handleNavClick('request-help', '/request-help')}
-              className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'request-help' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
-            >
-              {t('nav.requestHelp')}
-            </button>
-            <button
-              onClick={() => handleNavClick('find-help', '/', '#resources')}
-              className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'find-help' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
-            >
-              {t('nav.findHelp')}
-            </button>
-            <button
-              onClick={() => handleNavClick('resources', '/', '#resources')}
-              className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'resources' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
-            >
-              {t('nav.resources')}
-            </button>
-            <button
-              onClick={() => handleNavClick('map', '/map')}
-              className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'map' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
-            >
-              {t('nav.map')}
-            </button>
+        <div 
+          ref={mobileMenuRef}
+          className="lg:hidden fixed inset-x-0 top-[68px] bottom-0 bg-[#FCFAF6] dark:bg-[#171310] border-b border-[#E9DDCC] dark:border-white/10 px-6 pt-6 pb-12 flex flex-col justify-between shadow-2xl z-[1020] pointer-events-auto overflow-y-auto"
+        >
+          <div className="space-y-3">
+            <span className="text-[10px] font-black uppercase tracking-widest text-[#D97732] block mb-2">
+              NAVIGATION
+            </span>
+            
+            {navLinks.map((link, idx) => {
+              const isActive = activeNav === link.key;
+              const indexNum = `0${idx + 1}`;
+              return (
+                <div key={link.key} className="mobile-menu-item border-b border-[#E9DDCC]/50 dark:border-white/5 pb-2">
+                  <button
+                    onClick={() => handleNavClick(link.key, link.path, link.hash)}
+                    className={`w-full text-left py-2 text-2xl font-serif font-medium flex items-center justify-between transition-colors ${
+                      isActive ? 'text-[#D97732] font-semibold' : 'text-[#3B2418] dark:text-[#FCFAF6] hover:text-[#D97732]'
+                    }`}
+                  >
+                    <span className="flex items-center space-x-3">
+                      <span className="text-xs font-sans font-bold text-stone-400">{indexNum}</span>
+                      <span>{link.label}</span>
+                    </span>
+                    <ArrowRight className={`w-5 h-5 opacity-40 ${isActive ? 'text-[#D97732] opacity-100' : ''}`} />
+                  </button>
+                </div>
+              );
+            })}
           </div>
 
-          <div className="pt-3 border-t border-[#E7E0D6] dark:border-white/10 space-y-3">
-            {/* Full Width Coral I NEED HELP Button */}
+          <div className="pt-6 border-t border-[#E9DDCC] dark:border-white/10 space-y-3 mt-6">
             <button
               onClick={() => { setMobileMenuOpen(false); setShowOneTapModal(true); }}
-              className="w-full py-3.5 px-4 bg-[#F25C38] hover:bg-[#E04925] text-white font-black text-sm uppercase tracking-wider rounded-2xl flex items-center justify-center space-x-2 shadow-sm cursor-pointer min-h-[48px]"
+              className="w-full py-4 px-4 bg-[#D97732] text-white font-black text-xs uppercase tracking-wider rounded-2xl flex items-center justify-center space-x-2 shadow-md"
             >
-              <Bell className="w-5 h-5 fill-current" />
-              <span>{t('nav.iNeedHelp')}</span>
-              <ArrowRight className="w-5 h-5" />
+              <Bell className="w-4 h-4 fill-current" />
+              <span>{t('nav.iNeedHelp') || 'I NEED HELP NOW'}</span>
             </button>
 
-            {/* Full Width Charcoal Donate Button */}
             <Link
               to="/donor/dashboard"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full py-3.5 px-4 bg-[#1C1917] dark:bg-[#262626] hover:bg-[#292524] text-white font-black text-sm uppercase tracking-wider rounded-2xl flex items-center justify-center space-x-2 shadow-sm min-h-[48px]"
+              className="w-full py-4 px-4 bg-[#3B2418] dark:bg-[#231d18] text-white font-black text-xs uppercase tracking-wider rounded-2xl flex items-center justify-center space-x-2 shadow-sm"
             >
-              <Gift className="w-5 h-5 text-[#F25C38]" />
-              <span>{t('nav.donate')}</span>
+              <Gift className="w-4 h-4 text-[#D97732]" />
+              <span>{t('nav.donate') || 'DONATE NOW'}</span>
             </Link>
 
-            {/* Sign In button */}
-            {user ? (
-              <div className="flex space-x-2">
-                <Link
-                  to="/profile"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex-1 py-3 px-4 bg-[#F25C38]/10 text-[#F25C38] font-bold rounded-2xl text-center text-sm block min-h-[48px] border border-[#F25C38]/30"
-                >
-                  My Profile ({user.full_name.split(' ')[0]})
-                </Link>
-                <button
-                  onClick={() => { logout(); setMobileMenuOpen(false); }}
-                  className="py-3 px-4 bg-rose-50 text-rose-600 font-bold rounded-2xl text-center text-sm min-h-[48px]"
-                >
-                  {t('nav.signOut')}
-                </button>
-              </div>
-            ) : (
-              <Link
-                to="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-3 px-4 bg-white dark:bg-[#262626] border-2 border-[#F25C38] text-[#F25C38] font-bold rounded-2xl text-center text-sm block min-h-[48px]"
-              >
-                {t('nav.signIn')}
-              </Link>
-            )}
-
-            {/* Language & Theme Controls row */}
-            <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center justify-between pt-2 text-xs">
               <div className="flex items-center space-x-2">
                 {supportedLanguages.map((l) => (
                   <button
                     key={l.id}
                     onClick={() => setLanguage(l.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold ${language === l.id ? 'bg-[#F25C38] text-white' : 'bg-stone-100 dark:bg-[#262626] text-stone-700 dark:text-stone-300'}`}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold ${language === l.id ? 'bg-[#3B2418] text-white' : 'bg-[#F7F1E8] text-[#3B2418]'}`}
                   >
                     {l.flag} {l.id.toUpperCase()}
                   </button>
@@ -490,18 +400,10 @@ export const Navbar: React.FC = () => {
 
               <button
                 onClick={toggleTheme}
-                className="px-3.5 py-1.5 rounded-xl bg-stone-100 dark:bg-[#262626] text-xs font-bold text-[#F25C38] flex items-center space-x-1.5 cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl bg-[#F7F1E8] dark:bg-[#231d18] text-xs font-bold text-[#3B2418] dark:text-[#D97732] flex items-center space-x-1.5"
               >
                 {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
                 <span>{isDark ? 'Light' : 'Dark'}</span>
-              </button>
-
-              <button
-                onClick={() => { setMobileMenuOpen(false); setShowSettingsModal(true); }}
-                className="px-3.5 py-1.5 rounded-xl bg-stone-100 dark:bg-[#262626] text-xs font-bold text-[#F25C38] flex items-center space-x-1.5 cursor-pointer"
-              >
-                <Settings className="w-4 h-4 text-[#F25C38]" />
-                <span>Settings</span>
               </button>
             </div>
           </div>
@@ -509,13 +411,13 @@ export const Navbar: React.FC = () => {
         </div>
       )}
 
-      {/* One-Tap Help Modal */}
+      {/* One-Tap Emergency Help Modal */}
       <OneTapHelpModal
         isOpen={showOneTapModal}
         onClose={() => setShowOneTapModal(false)}
       />
 
-      {/* Platform Settings Modal */}
+      {/* Settings Modal */}
       <SettingsModal
         isOpen={showSettingsModal}
         onClose={() => setShowSettingsModal(false)}

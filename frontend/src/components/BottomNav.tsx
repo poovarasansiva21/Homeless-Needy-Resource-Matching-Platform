@@ -14,7 +14,10 @@ export const BottomNav: React.FC = () => {
 
   const getDashboardPath = () => {
     if (!user) return '/login';
-    return '/profile';
+    if (user.role === 'admin') return '/admin/dashboard';
+    if (user.role === 'ngo') return '/ngo/dashboard';
+    if (user.role === 'donor') return '/donor/dashboard';
+    return '/help-reports';
   };
 
   const navItems = [
@@ -64,7 +67,7 @@ export const BottomNav: React.FC = () => {
         type="button"
         onClick={() => setShowOneTapModal(true)}
         aria-label="I Need Help Emergency Action"
-        className="fixed bottom-[calc(4.25rem+env(safe-area-inset-bottom))] right-4 z-40 lg:hidden px-4 py-2.5 bg-[#F25C38] hover:bg-[#E04925] text-white font-black text-xs uppercase tracking-wider rounded-full shadow-lg shadow-[#F25C38]/30 flex items-center space-x-2 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+        className="fixed bottom-[calc(4.25rem+env(safe-area-inset-bottom))] right-4 z-40 lg:hidden px-4 py-2.5 bg-[#C94B3C] dark:bg-[#D96555] hover:bg-[#B33C2E] text-white font-black text-xs uppercase tracking-wider rounded-full shadow-lg shadow-[#C94B3C]/30 flex items-center space-x-2 transition-all hover:scale-105 active:scale-95 cursor-pointer"
       >
         <Bell className="w-4 h-4 fill-current animate-pulse shrink-0" />
         <span>🆘 I NEED HELP</span>
@@ -72,7 +75,7 @@ export const BottomNav: React.FC = () => {
 
       <nav 
         aria-label="Mobile Bottom Navigation"
-        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-[#FFFDF7]/95 dark:bg-[#161616]/95 backdrop-blur-xl border-t border-[#E2DAD0] dark:border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] pb-[env(safe-area-inset-bottom)] transition-colors duration-300 select-none"
+        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-[#FFFDF7]/95 dark:bg-[#161616]/95 backdrop-blur-xl border-t border-[#E2DAD0] dark:border-white/10 shadow-[0_-4px_20px_rgba(7,20,18,0.06)] pb-[env(safe-area-inset-bottom)] transition-colors duration-300 select-none"
       >
         <div className="grid grid-cols-5 h-14 items-center max-w-lg mx-auto px-1">
           {navItems.map((item) => {
@@ -84,14 +87,14 @@ export const BottomNav: React.FC = () => {
                 to={item.path}
                 className={`flex flex-col items-center justify-center h-full py-1 px-1 rounded-xl transition-all duration-200 relative cursor-pointer active:scale-95 ${
                   active 
-                    ? 'text-[#F25C38] dark:text-[#F25C38] font-extrabold' 
-                    : 'text-stone-500 dark:text-stone-400 font-semibold hover:text-[#171514] dark:hover:text-[#F5F0E5]'
+                    ? 'text-[#B88A52] dark:text-[#C5A66A] font-extrabold' 
+                    : 'text-[#5F655F] dark:text-[#A8A29E] font-semibold hover:text-[#17211E] dark:hover:text-[#F5F0E5]'
                 }`}
               >
                 {active && (
-                  <span className="absolute top-1 w-6 h-0.5 rounded-full bg-[#F25C38] dark:bg-[#F25C38] animate-pulse" />
+                  <span className="absolute top-1 w-6 h-0.5 rounded-full bg-[#B88A52] dark:bg-[#C5A66A] animate-pulse" />
                 )}
-                <Icon className={`w-5 h-5 transition-transform ${active ? 'scale-110 text-[#F25C38] dark:text-[#F25C38]' : 'opacity-80'}`} />
+                <Icon className={`w-5 h-5 transition-transform ${active ? 'scale-110 text-[#B88A52] dark:text-[#C5A66A]' : 'opacity-80'}`} />
                 <span className="text-[10px] tracking-tight truncate max-w-[64px] mt-0.5 leading-none">
                   {item.label}
                 </span>
