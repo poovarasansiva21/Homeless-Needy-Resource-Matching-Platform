@@ -54,12 +54,148 @@ export const initLenis = (): Lenis | null => {
 export const getLenis = (): Lenis | null => lenisInstance;
 
 /**
+ * Setup 3D Perspective Tilt Hover & Magnetic Button Physics
+ */
+export const setup3DTiltAndMagneticHover = (scopeElement: HTMLElement | null = null): (() => void) => {
+  if (typeof window === 'undefined' || isReducedMotion() || isMobileViewport()) return () => {};
+
+  const root = scopeElement || document.body;
+  const cleanups: Array<() => void> = [];
+
+  // 1. Interactive 3D Card Tilt
+  const cards = root.querySelectorAll<HTMLElement>('.charity-card, .glass-card, [data-card-tilt]');
+  cards.forEach((card) => {
+    let bounds: DOMRect;
+
+    const handleMouseEnter = () => {
+      bounds = card.getBoundingClientRect();
+      gsap.to(card, {
+        duration: 0.3,
+        scale: 1.015,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      });
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!bounds) bounds = card.getBoundingClientRect();
+      const mouseX = e.clientX - bounds.left;
+      const mouseY = e.clientY - bounds.top;
+      const rotateX = ((mouseY / bounds.height) - 0.5) * -10;
+      const rotateY = ((mouseX / bounds.width) - 0.5) * 10;
+
+      gsap.to(card, {
+        rotateX,
+        rotateY,
+        transformPerspective: 1000,
+        duration: 0.15,
+        ease: 'power1.out',
+        overwrite: 'auto',
+      });
+    };
+
+    const handleMouseLeave = () => {
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        scale: 1,
+        duration: 0.45,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      });
+    };
+
+    card.addEventListener('mouseenter', handleMouseEnter);
+    card.addEventListener('mousemove', handleMouseMove);
+    card.addEventListener('mouseleave', handleMouseLeave);
+
+    cleanups.push(() => {
+      card.removeEventListener('mouseenter', handleMouseEnter);
+      card.removeEventListener('mousemove', handleMouseMove);
+      card.removeEventListener('mouseleave', handleMouseLeave);
+    });
+  });
+
+  // 2. Magnetic Pull Effect for Action Buttons
+  const magButtons = root.querySelectorAll<HTMLElement>('.btn-cinematic, .charity-pill-green');
+  magButtons.forEach((btn) => {
+    let btnBounds: DOMRect;
+
+    const handleBtnMove = (e: MouseEvent) => {
+      btnBounds = btn.getBoundingClientRect();
+      const relX = e.clientX - (btnBounds.left + btnBounds.width / 2);
+      const relY = e.clientY - (btnBounds.top + btnBounds.height / 2);
+
+      gsap.to(btn, {
+        x: relX * 0.14,
+        y: relY * 0.14,
+        duration: 0.2,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      });
+    };
+
+    const handleBtnLeave = () => {
+      gsap.to(btn, {
+        x: 0,
+        y: 0,
+        duration: 0.4,
+        ease: 'elastic.out(1.1, 0.4)',
+        overwrite: 'auto',
+      });
+    };
+
+    btn.addEventListener('mousemove', handleBtnMove);
+    btn.addEventListener('mouseleave', handleBtnLeave);
+
+    cleanups.push(() => {
+      btn.removeEventListener('mousemove', handleBtnMove);
+      btn.removeEventListener('mouseleave', handleBtnLeave);
+    });
+  });
+
+  return () => {
+    cleanups.forEach((fn) => fn());
+  };
+};
+
+/**
+ * Setup continuous organic float animation for decorative hero elements
+ */
+export const setupHeroFloatingMotion = (scopeElement: HTMLElement | null = null): (() => void) => {
+  if (typeof window === 'undefined' || isReducedMotion()) return () => {};
+
+  const root = scopeElement || document.body;
+  const floatingElements = root.querySelectorAll<HTMLElement>('[data-float-element]');
+
+  if (floatingElements.length === 0) return () => {};
+
+  const ctx = gsap.context(() => {
+    floatingElements.forEach((el, idx) => {
+      gsap.to(el, {
+        y: idx % 2 === 0 ? -8 : 8,
+        rotate: idx % 2 === 0 ? 1.5 : -1.5,
+        duration: 2.5 + idx * 0.4,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+      });
+    });
+  }, root);
+
+  return () => ctx.revert();
+};
+
+/**
  * Setup global ScrollTrigger reveal animations for sections, cards, text, map & images
  */
 export const setupScrollReveals = (scopeElement: HTMLElement | null = null): (() => void) => {
   if (typeof window === 'undefined' || isReducedMotion()) return () => {};
 
   const root = scopeElement || document.body;
+
+  const tiltCleanup = setup3DTiltAndMagneticHover(root);
+  const floatCleanup = setupHeroFloatingMotion(root);
 
   const ctx = gsap.context(() => {
     const isMobile = isMobileViewport();
@@ -69,7 +205,6 @@ export const setupScrollReveals = (scopeElement: HTMLElement | null = null): (()
       'section, [data-scroll-reveal]'
     );
     sections.forEach((sec) => {
-      // Don't override hero section load animation
       if (sec.id === 'hero' || sec.closest('[data-hero-container]')) return;
 
       gsap.fromTo(
@@ -133,7 +268,6 @@ export const setupScrollReveals = (scopeElement: HTMLElement | null = null): (()
     if (!isMobile) {
       const parallaxImages = root.querySelectorAll<HTMLElement>('img, [data-parallax]');
       parallaxImages.forEach((img) => {
-        // Exclude small inline icons and logos
         if (
           img.clientWidth < 80 ||
           img.classList.contains('w-3') ||
@@ -210,7 +344,7 @@ export const setupScrollReveals = (scopeElement: HTMLElement | null = null): (()
       );
     });
 
-    // 6. Horizontal Scroll Sections (if present in resource rows or sliders)
+    // 6. Horizontal Scroll Sections
     const horizontalSections = root.querySelectorAll<HTMLElement>('[data-horizontal-scroll]');
     horizontalSections.forEach((hSec) => {
       const track = hSec.querySelector<HTMLElement>('[data-horizontal-track]');
@@ -235,7 +369,11 @@ export const setupScrollReveals = (scopeElement: HTMLElement | null = null): (()
     ScrollTrigger.refresh();
   }, root);
 
-  return () => ctx.revert();
+  return () => {
+    ctx.revert();
+    tiltCleanup();
+    floatCleanup();
+  };
 };
 
 /**

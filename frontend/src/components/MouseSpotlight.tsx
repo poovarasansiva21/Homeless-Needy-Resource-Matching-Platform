@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 
 export const MouseSpotlight: React.FC = () => {
-  const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isEnabled, setIsEnabled] = useState(false);
 
   useEffect(() => {
-    // Check for pointer precision and reduced motion preference
     const mediaFine = window.matchMedia('(hover: hover) and (pointer: fine)');
     const mediaReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -17,16 +17,33 @@ export const MouseSpotlight: React.FC = () => {
     mediaFine.addEventListener('change', updateEligibility);
     mediaReduced.addEventListener('change', updateEligibility);
 
+    if (!mediaFine.matches || mediaReduced.matches) return;
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
     let rafId: number;
+
     const handlePointerMove = (e: PointerEvent) => {
-      if (!isEnabled) return;
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        setPosition({ x: e.clientX, y: e.clientY });
-      });
+      targetX = e.clientX;
+      targetY = e.clientY;
+    };
+
+    const animate = () => {
+      // Smooth lerp (0.15 factor) for fluid organic motion
+      currentX += (targetX - currentX) * 0.15;
+      currentY += (targetY - currentY) * 0.15;
+
+      if (containerRef.current) {
+        containerRef.current.style.background = `radial-gradient(650px circle at ${currentX}px ${currentY}px, rgba(242, 92, 56, 0.07), transparent 75%)`;
+      }
+
+      rafId = requestAnimationFrame(animate);
     };
 
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    rafId = requestAnimationFrame(animate);
 
     return () => {
       cancelAnimationFrame(rafId);
@@ -34,16 +51,14 @@ export const MouseSpotlight: React.FC = () => {
       mediaFine.removeEventListener('change', updateEligibility);
       mediaReduced.removeEventListener('change', updateEligibility);
     };
-  }, [isEnabled]);
+  }, []);
 
-  if (!isEnabled || !position) return null;
+  if (!isEnabled) return null;
 
   return (
     <div
-      className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
-      style={{
-        background: `radial-gradient(650px circle at ${position.x}px ${position.y}px, rgba(25, 173, 102, 0.06), transparent 75%)`,
-      }}
+      ref={containerRef}
+      className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 gpu-accelerated"
       aria-hidden="true"
     />
   );

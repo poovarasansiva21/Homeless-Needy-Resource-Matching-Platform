@@ -23,6 +23,7 @@ import { LoginPage, RegisterPage } from './pages/AuthPages';
 import { AlertTriangle, Home } from 'lucide-react';
 import useCinematicAnimation from './animation/useCinematicAnimation';
 import PageTransition from './animation/PageTransition';
+import ScrollProgressBar from './components/ScrollProgressBar';
 
 const NotFound: React.FC = () => {
   const { t } = useLanguage();
@@ -56,6 +57,7 @@ const MainLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F9F6F0] dark:bg-[#0D0D0D] font-sans text-[#1C1917] dark:text-[#F5F5F0] selection:bg-[#F25C38] selection:text-white transition-colors duration-300">
+      <ScrollProgressBar />
       {!isHelpReportsDashboard && <Navbar />}
       <PwaInstallBanner />
       {isSimpleMode && <SimpleModeView />}
