@@ -532,44 +532,44 @@ export const LandingPage: React.FC = () => {
                 <span className="w-12 h-[1.5px] bg-[#F25C38]/40 inline-block" />
               </div>
 
-              {/* Unique Staggered Editorial Display Headline */}
+              {/* Clean Editorial Display Headline */}
               <h1 
                 ref={heroTitleRef}
-                className="flex flex-col space-y-1 sm:space-y-2 font-serif font-black tracking-tight text-[#1C1917] dark:text-[#F5F5F0] leading-[0.95] select-none my-2"
+                className="flex flex-col space-y-1 font-serif font-black tracking-tight leading-[0.96] select-none my-2 text-4xl sm:text-6xl lg:text-7xl xl:text-[80px]"
               >
                 {language.toLowerCase() === 'ta' ? (
                   <>
-                    <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight block">
+                    <span className="block text-[#1C1917] dark:text-[#F5F5F0]">
                       ஒரு தேவை.
                     </span>
-                    <span className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight block ml-3 sm:ml-8 lg:ml-12 text-[#1C1917] dark:text-[#F5F5F0]">
+                    <span className="block text-[#1C1917] dark:text-[#F5F5F0]">
                       ஒரு இணைப்பு.
                     </span>
-                    <span className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight block ml-6 sm:ml-16 lg:ml-24 text-[#F25C38]">
+                    <span className="block text-[#F25C38]">
                       உண்மையான மாற்றம்.
                     </span>
                   </>
                 ) : language.toLowerCase() === 'hi' ? (
                   <>
-                    <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight block">
+                    <span className="block text-[#1C1917] dark:text-[#F5F5F0]">
                       एक ज़रूरत।
                     </span>
-                    <span className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight block ml-3 sm:ml-8 lg:ml-12 text-[#1C1917] dark:text-[#F5F5F0]">
+                    <span className="block text-[#1C1917] dark:text-[#F5F5F0]">
                       एक जुड़ाव।
                     </span>
-                    <span className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight block ml-6 sm:ml-16 lg:ml-24 text-[#F25C38]">
+                    <span className="block text-[#F25C38]">
                       वास्तविक प्रभाव।
                     </span>
                   </>
                 ) : (
                   <>
-                    <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight block">
+                    <span className="block text-[#1C1917] dark:text-[#F5F5F0]">
                       ONE NEED.
                     </span>
-                    <span className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight block ml-4 sm:ml-10 lg:ml-16 text-[#1C1917] dark:text-[#F5F5F0]">
+                    <span className="block text-[#1C1917] dark:text-[#F5F5F0]">
                       ONE CONNECTION.
                     </span>
-                    <span className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight block ml-8 sm:ml-20 lg:ml-32 text-[#F25C38]">
+                    <span className="block text-[#F25C38]">
                       REAL IMPACT.
                     </span>
                   </>
@@ -578,9 +578,9 @@ export const LandingPage: React.FC = () => {
 
               <p 
                 ref={heroTextRef}
-                className="text-base sm:text-lg text-[#57534E] dark:text-[#A8A29E] max-w-xl leading-relaxed font-sans font-medium"
+                className="text-base sm:text-lg text-[#57534E] dark:text-[#A8A29E] max-w-xl leading-relaxed font-sans font-medium pt-1"
               >
-                {t('hero.subtitle') || "AI-powered matching platform connecting people in need with verified food banks, shelters, medical services, clothing resources and community support."}
+                {t('hero.subtitle') || "AI-powered matching platform uniting verified shelters, food banks, medical clinics, and donors with people in urgent need across Coimbatore."}
               </p>
 
               {/* PROMINENT PRIMARY HOMEPAGE ACTION & SECONDARY ACTIONS */}
@@ -594,11 +594,11 @@ export const LandingPage: React.FC = () => {
                 >
                   <Bell className="w-5 h-5 fill-current shrink-0" />
                   <span>{t('oneTap.btnNeedHelp')}</span>
-                  <span className="text-[11px] bg-white/20 px-2.5 py-0.5 rounded-full font-bold lowercase tracking-normal">1-tap / voice</span>
+                  <span className="text-[11px] bg-white/20 px-2.5 py-0.5 rounded-full font-bold lowercase tracking-normal">1-tap/voice</span>
                   <ArrowRight className="w-5 h-5 ml-1 shrink-0" />
                 </button>
 
-                {/* SECONDARY ACTIONS GRID: FIND HELP | HELP SOMEONE | DONATE | I CAN'T REACH IT */}
+                {/* SECONDARY ACTIONS GRID: FIND HELP | HELP SOMEONE | DONATE */}
                 <div className="flex flex-wrap items-center gap-3 pt-2">
                   
                   {/* Secondary 1: 📍 FIND HELP */}
@@ -610,7 +610,7 @@ export const LandingPage: React.FC = () => {
                     }}
                     className="h-12 px-5 bg-[#FAF7F2] dark:bg-[#161616] hover:bg-[#F3ECE2] dark:hover:bg-[#222222] text-[#1C1917] dark:text-[#F5F5F0] text-xs font-bold tracking-wider uppercase rounded-full border border-[#E7E0D6] dark:border-white/10 shadow-xs transition-all hover:scale-[1.02] active:scale-95 flex items-center space-x-2 cursor-pointer min-h-[44px]"
                   >
-                    <span>📍</span>
+                    <span className="text-[#F25C38]">📍</span>
                     <span>{t('oneTap.btnFindHelp')}</span>
                     <ArrowRight className="w-4 h-4 text-[#F25C38] opacity-80" />
                   </button>
@@ -620,7 +620,7 @@ export const LandingPage: React.FC = () => {
                     to="/help-someone"
                     className="h-12 px-5 bg-[#FAF7F2] dark:bg-[#161616] hover:bg-[#F3ECE2] dark:hover:bg-[#222222] text-[#1C1917] dark:text-[#F5F5F0] text-xs font-bold tracking-wider uppercase rounded-full border border-[#E7E0D6] dark:border-white/10 shadow-xs transition-all hover:scale-[1.02] active:scale-95 flex items-center space-x-2 min-h-[44px]"
                   >
-                    <span>👥</span>
+                    <span className="text-indigo-500">👥</span>
                     <span>{t('oneTap.btnHelpSomeone')}</span>
                     <ArrowRight className="w-4 h-4 text-[#F25C38] opacity-80" />
                   </Link>
@@ -668,9 +668,12 @@ export const LandingPage: React.FC = () => {
 
             {/* Right Column: Authentic Humanitarian Photography with Organic Fluid Continent Mask */}
             <div className="lg:col-span-5 relative flex justify-center lg:justify-end items-center">
-              <div ref={heroImageRef} className="relative w-full max-w-[540px] aspect-[4/3.5] flex items-center justify-center p-2">
+              <div ref={heroImageRef} className="relative w-full max-w-[550px] aspect-[4/3.6] flex items-center justify-center p-3">
                 
-                {/* Background Dotted Matrix Grid Texture (matching reference image) */}
+                {/* Soft Muted Sage Green Background Organic Shape (matching reference image) */}
+                <div className="absolute -top-5 -right-5 w-[106%] h-[106%] rounded-[60%_40%_70%_30%/40%_60%_30%_70%] bg-[#D5E5DA] dark:bg-[#1A3326] opacity-90 transition-all duration-700 pointer-events-none" />
+
+                {/* Background Dotted Matrix Grid Texture */}
                 <div className="absolute inset-0 opacity-25 dark:opacity-35 pointer-events-none flex items-center justify-center">
                   <svg className="w-full h-full text-[#1C1917] dark:text-[#F9F6F0]" fill="currentColor">
                     <pattern id="hero-dots-pattern" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
@@ -681,15 +684,26 @@ export const LandingPage: React.FC = () => {
                   </svg>
                 </div>
 
-                {/* Floating Accent Dots matching reference image */}
-                {/* 1. Coral Top Right Dot */}
-                <div className="absolute top-2 right-6 sm:right-10 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#F25C38] shadow-md z-20 animate-pulse" />
-                {/* 2. Coral Mid Left Dot */}
-                <div className="absolute top-1/2 -left-2 sm:left-2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#F25C38] shadow-md z-20" />
-                {/* 3. Dark Graphite Bottom Center Dot */}
-                <div className="absolute bottom-6 left-1/3 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#1C1917] dark:bg-stone-300 shadow-xs z-20" />
-                {/* 4. Muted Charcoal Bottom Right Dot */}
-                <div className="absolute bottom-10 right-4 sm:right-8 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#57534E] dark:bg-stone-400 shadow-xs z-20" />
+                {/* Floating Accent Orange Dots */}
+                <div className="absolute top-2 right-8 sm:right-12 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#F25C38] shadow-md z-20 animate-pulse" />
+                <div className="absolute top-1/2 -right-3 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#F25C38] shadow-md z-20" />
+                <div className="absolute bottom-6 left-4 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#F25C38] shadow-md z-20" />
+
+                {/* Decorative Green Leaf Vectors Overlay (Top Right & Bottom Left) */}
+                <div className="absolute -top-8 -right-2 z-20 pointer-events-none transform rotate-12">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                    <path d="M12 36C12 36 16 20 36 12C36 12 32 28 12 36Z" fill="#159B5B" />
+                    <path d="M20 32C20 32 28 26 38 24C38 24 30 32 20 32Z" fill="#12834D" />
+                  </svg>
+                </div>
+
+                <div className="absolute -bottom-6 left-2 z-20 pointer-events-none transform -rotate-12">
+                  <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                    <path d="M14 44C14 44 18 24 44 16C44 16 40 36 14 44Z" fill="#159B5B" />
+                    <path d="M22 38C22 38 32 32 46 30C46 30 36 40 22 38Z" fill="#12834D" />
+                    <path d="M28 46C28 46 24 50 18 54" stroke="#F25C38" strokeWidth="2.5" strokeLinecap="round" />
+                  </svg>
+                </div>
 
                 {/* Main Organic Fluid Image Mask */}
                 <div 
@@ -708,13 +722,13 @@ export const LandingPage: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-tr from-[#0D0D0D]/40 via-transparent to-[#F25C38]/10 pointer-events-none" />
 
                   {/* Handwriting overlay top left */}
-                  <div className="absolute top-6 left-8 text-white font-script text-xl sm:text-2xl drop-shadow-lg leading-tight pointer-events-none z-10">
+                  <div className="absolute top-6 left-8 text-white font-script text-2xl sm:text-3xl drop-shadow-lg leading-tight pointer-events-none z-10 select-none">
                     {language.toLowerCase() === 'ta' ? (
                       <>சிறிய ♡ <br />செயல்கள் <br />உருவாக்கும் ♡ <br />பெரிய மாற்றம்</>
                     ) : language.toLowerCase() === 'hi' ? (
                       <>छोटे ♡ <br />प्रयास <br />लाते हैं ♡ <br />बड़ा बदलाव</>
                     ) : (
-                      <>Small ♡ <br />Actions <br />Create ♡ <br />Big Changes</>
+                      <>Better<br />Together ♡</>
                     )}
                   </div>
                 </div>
