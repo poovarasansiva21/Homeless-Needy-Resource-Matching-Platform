@@ -207,7 +207,62 @@ Handled automatically via `frontend/netlify.toml` and `frontend/public/_redirect
 
 ---
 
-## 8. GitHub Repository Security Guidelines
+## 8. Vercel Deployment Setup (Vercel Services Architecture)
+
+### 1. Root Services Schema (`vercel.json`)
+The repository is pre-configured for Vercel Services, allowing both the Flask backend and Vite React frontend to be deployed and routed within a single Vercel project:
+
+```json
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "backend": {
+      "root": "backend",
+      "framework": "flask"
+    },
+    "frontend": {
+      "root": "frontend",
+      "framework": "vite"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "frontend"
+      }
+    }
+  ]
+}
+```
+
+### 2. Environment Variables on Vercel
+Configure the following in **Vercel Project Settings** $\rightarrow$ **Environment Variables**:
+
+| Scope | Variable | Example Value | Description |
+|---|---|---|---|
+| **Backend** | `SECRET_KEY` | `your-production-secret-key` | Flask session secret key |
+| **Backend** | `JWT_SECRET_KEY` | `your-production-jwt-key` | JWT token signature key |
+| **Backend** | `DATABASE_URL` | `postgresql://user:pass@ep-xyz.postgres.database.azure.com/sahaayaa` | Production PostgreSQL connection URL |
+| **Backend** | `CORS_ORIGINS` | `https://sahaayaa.vercel.app,https://yourdomain.com` | Allowed CORS origins |
+| **Frontend** | `VITE_API_URL` | `/api` | Base API route (defaults to `/api` on Vercel) |
+| **Frontend** | `VITE_SOCKET_URL` | `https://sahaayaa-socket.onrender.com` | External Socket.IO server URL (if WebSockets are used) |
+
+### 3. Production Architecture Considerations on Serverless
+- **Persistent Database**: Serverless environments reset filesystem state between invocations. Set `DATABASE_URL` to a cloud database (e.g. Supabase, Neon, AWS RDS PostgreSQL) for persistent user data.
+- **Image & File Storage**: Uploaded files on Vercel's ephemeral filesystem do not persist. Configure an object storage provider (e.g., AWS S3 or Cloudinary) for production upload persistence.
+- **WebSockets / Socket.IO**: Serverless functions execution windows are short-lived. For real-time Socket.IO notifications in production, deploy the Flask-SocketIO backend to a persistent host (e.g. Render, Railway, AWS EC2) and set `VITE_SOCKET_URL`.
+- **TF/Keras ML Model**: TensorFlow model files (`resource_classifier.keras`) are loaded relative to the Python module (`ml/resource_classifier.keras`) and function seamlessly in serverless execution environments.
+
+---
+
+## 9. GitHub Repository Security Guidelines
 
 The repository is configured with strict `.gitignore` rules:
 - **`backend/sahaayaa.db`**: Local database file is excluded from git commits to protect user data and privacy. Fresh database instances automatically seed initial demo data on first run via `seed_data()`.
@@ -216,7 +271,7 @@ The repository is configured with strict `.gitignore` rules:
 
 ---
 
-## 9. Verification & Automated Tests
+## 10. Verification & Automated Tests
 
 To execute the backend ML, matching, and API test suite:
 ```bash
@@ -232,3 +287,4 @@ npm run build
 
 ---
 *Developed for College Social-Impact Demonstration & Advanced Agentic Engineering.*
+

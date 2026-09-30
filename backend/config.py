@@ -11,6 +11,6 @@ class Config:
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
-    MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16 MB max limit
-    CORS_ORIGINS = ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:5000", "http://127.0.0.1:5000"]
+    _cors_env = os.environ.get("CORS_ORIGINS")
+    CORS_ORIGINS = [o.strip() for o in _cors_env.split(",") if o.strip()] if _cors_env else ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:5000", "http://127.0.0.1:5000", "*"]
     ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "pdf", "webp"}
