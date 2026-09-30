@@ -62,6 +62,12 @@ export interface RequestItem {
   is_help_someone?: boolean;
   has_photo_permission?: boolean;
   voice_transcript?: string;
+  is_verified?: boolean;
+  latest_verification?: {
+    verified_by?: string;
+    timestamp?: string;
+    notes?: string;
+  };
   created_at: string;
   updated_at: string;
 }

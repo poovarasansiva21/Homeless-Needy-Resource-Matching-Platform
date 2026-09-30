@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime
 from flask import Blueprint, request, jsonify, current_app
 from werkzeug.utils import secure_filename
-from models import db, Request, Resource, Match, RequestStatusHistory, Notification
+from models import db, Request, Resource, Match, RequestStatusHistory, Notification, Verification
 from services.auth_helper import optional_token, token_required, role_required
 from services.classifier import classify_text
 from services.urgency import analyze_urgency
@@ -377,3 +377,90 @@ def complete_help_report(current_user, report_id):
         "message": "Assistance marked completed successfully",
         "report": rep_obj.to_dict(is_authorized=True)
     }), 200
+
+
+@help_reports_bp.route("/<int:report_id>/precise-location", methods=["GET"])
+@token_required
+@role_required("admin", "ngo", "volunteer")
+def get_precise_location(current_user, report_id):
+    rep_obj = Request.query.get_or_404(report_id)
+    return jsonify({
+        "success": True,
+        "report_id": rep_obj.id,
+        "exact_latitude": rep_obj.latitude,
+        "exact_longitude": rep_obj.longitude,
+        "exact_address": rep_obj.address,
+        "reporter_name": rep_obj.full_name,
+        "contact_phone": rep_obj.phone,
+        "privacy_notice": "Precise location is restricted to authorized responders."
+    }), 200
+
+
+@help_reports_bp.route("/<int:report_id>/verify", methods=["POST"])
+@token_required
+@role_required("admin", "ngo", "volunteer")
+def verify_help_report(current_user, report_id):
+    rep_obj = Request.query.get_or_404(report_id)
+    data = request.get_json() or {}
+    notes = data.get("notes", f"Verified via Help Reports Desk by {current_user.full_name}").strip()
+
+    prev_status = rep_obj.status
+
+    existing_verif = Verification.query.filter_by(request_id=rep_obj.id, status="VERIFIED").first()
+    if existing_verif or rep_obj.status == "VERIFIED":
+        return jsonify({
+            "message": "Report is already verified.",
+            "is_already_verified": True,
+            "verification": existing_verif.to_dict() if existing_verif else {
+                "verified_by": current_user.full_name,
+                "timestamp": rep_obj.updated_at.isoformat(),
+                "status": "VERIFIED"
+            },
+            "report": rep_obj.to_dict(is_authorized=True)
+        }), 200
+
+    rep_obj.status = "VERIFIED"
+    rep_obj.updated_at = datetime.utcnow()
+
+    verif = Verification(
+        request_id=rep_obj.id,
+        verified_by_user_id=current_user.id,
+        status="VERIFIED",
+        notes=notes,
+        timestamp=datetime.utcnow()
+    )
+    db.session.add(verif)
+
+    history = RequestStatusHistory(
+        request_id=rep_obj.id,
+        previous_status=prev_status,
+        new_status="VERIFIED",
+        changed_by_user_id=current_user.id,
+        notes=notes
+    )
+    db.session.add(history)
+
+    notif = Notification(
+        user_id=rep_obj.requester_id,
+        title="Help Report Verified ✓",
+        message=f"Report #{rep_obj.id} has been officially verified by {current_user.full_name}.",
+        notification_type="success"
+    )
+    db.session.add(notif)
+    db.session.commit()
+
+    emit_socket_event("request_status_updated", {
+        "request_id": rep_obj.id,
+        "previous_status": prev_status,
+        "new_status": "VERIFIED",
+        "verified_by": current_user.full_name,
+        "timestamp": datetime.utcnow().isoformat()
+    })
+
+    return jsonify({
+        "success": True,
+        "message": "Report verified successfully",
+        "verification": verif.to_dict(),
+        "report": rep_obj.to_dict(is_authorized=True)
+    }), 200
+

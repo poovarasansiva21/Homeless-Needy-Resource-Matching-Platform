@@ -117,6 +117,19 @@ export const helpReportsApi = {
     const res = await apiClient.post(`/help-reports/${id}/complete`);
     return res.data;
   },
+  verify: async (id: number, notes?: string) => {
+    try {
+      const res = await apiClient.post(`/help-reports/${id}/verify`, { notes });
+      return res.data;
+    } catch (err: any) {
+      const res = await apiClient.post(`/admin/requests/${id}/verify`, { notes });
+      return res.data;
+    }
+  },
+  getPreciseLocation: async (id: number) => {
+    const res = await apiClient.get(`/help-reports/${id}/precise-location`);
+    return res.data;
+  },
 };
 
 export const resourcesApi = {
