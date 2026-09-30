@@ -21,7 +21,8 @@ import HumanitarianIntelligence from './pages/HumanitarianIntelligence';
 import HelpReportsDashboard from './pages/HelpReportsDashboard';
 import { LoginPage, RegisterPage } from './pages/AuthPages';
 import { AlertTriangle, Home } from 'lucide-react';
-import CustomCursor from './components/CustomCursor';
+import useCinematicAnimation from './animation/useCinematicAnimation';
+import PageTransition from './animation/PageTransition';
 
 const NotFound: React.FC = () => {
   const { t } = useLanguage();
@@ -49,16 +50,18 @@ const MainLayout: React.FC = () => {
   const { isSimpleMode } = useSimpleMode();
   const location = useLocation();
 
+  useCinematicAnimation();
+
   const isHelpReportsDashboard = location.pathname.startsWith('/help-reports') || location.pathname.startsWith('/reports');
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F9F6F0] dark:bg-[#0D0D0D] font-sans text-[#1C1917] dark:text-[#F5F5F0] selection:bg-[#F25C38] selection:text-white transition-colors duration-300">
-      <CustomCursor />
       {!isHelpReportsDashboard && <Navbar />}
       <PwaInstallBanner />
       {isSimpleMode && <SimpleModeView />}
       <main className={`flex-1 ${!isHelpReportsDashboard ? 'pt-[76px] lg:pt-[82px] pb-[calc(3.75rem+env(safe-area-inset-bottom))] lg:pb-0' : ''}`}>
-        <Routes>
+        <PageTransition>
+          <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/resources" element={<LandingPage />} />
           <Route path="/find-help" element={<LandingPage />} />
@@ -76,6 +79,7 @@ const MainLayout: React.FC = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </PageTransition>
       </main>
       {!isHelpReportsDashboard && <Footer />}
       {!isHelpReportsDashboard && <BottomNav />}

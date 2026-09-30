@@ -269,6 +269,41 @@ html, body, button, input, textarea, select {
   transform: scale(1.15) translateY(-4px);
 }
 
+/* Lenis Smooth Scroll CSS setup */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* GPU hardware acceleration and button micro-interactions */
+.gpu-accelerated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.btn-cinematic {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, background-color 0.25s ease;
+  will-change: transform;
+}
+.btn-cinematic:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+.btn-cinematic:active {
+  transform: translateY(0px) scale(0.98);
+}
+
 /* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
