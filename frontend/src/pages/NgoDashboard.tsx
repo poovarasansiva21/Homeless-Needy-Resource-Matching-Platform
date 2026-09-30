@@ -173,7 +173,7 @@ export const NgoDashboard: React.FC = () => {
       case 'MEDIUM':
         return 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border-yellow-500/30';
       default:
-        return 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30';
+        return 'bg-emerald-500/10 text-emerald-600 dark:text-orange-400 border-emerald-500/30 dark:border-orange-500/30';
     }
   };
 
@@ -183,10 +183,10 @@ export const NgoDashboard: React.FC = () => {
         
         {/* Real-time Socket.IO Toast Banner */}
         {socketToast && (
-          <div className="fixed top-20 right-5 z-50 bg-slate-900 text-white p-4 rounded-2xl border border-emerald-500/40 shadow-2xl flex items-center gap-3 animate-slide-in">
-            <Sparkles className="w-5 h-5 text-emerald-400 shrink-0" />
+          <div className="fixed top-20 right-5 z-50 bg-slate-900 text-white p-4 rounded-2xl border border-emerald-500/40 dark:border-orange-500/40 shadow-2xl flex items-center gap-3 animate-slide-in">
+            <Sparkles className="w-5 h-5 text-emerald-400 dark:text-orange-400 shrink-0" />
             <div>
-              <div className="font-bold text-xs text-emerald-300">{socketToast.title}</div>
+              <div className="font-bold text-xs text-emerald-300 dark:text-orange-300">{socketToast.title}</div>
               <div className="text-xs text-slate-200">{socketToast.message}</div>
             </div>
           </div>
@@ -195,7 +195,7 @@ export const NgoDashboard: React.FC = () => {
         {/* NGO Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#EAE3D2] dark:border-white/10">
           <div>
-            <div className="flex items-center space-x-2 text-xs font-black uppercase tracking-wider text-[#159B5B]">
+            <div className="flex items-center space-x-2 text-xs font-black uppercase tracking-wider text-[#159B5B] dark:text-orange-400">
               <Building2 className="w-4 h-4" />
               <span>Phase 4 Humanitarian Rescue Chain</span>
             </div>
@@ -216,7 +216,7 @@ export const NgoDashboard: React.FC = () => {
             </button>
             <button
               onClick={fetchNgoData}
-              className="px-4 py-2.5 bg-[#159B5B] hover:bg-[#12834D] text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5"
+              className="px-4 py-2.5 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5"
             >
               <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} /> Refresh
             </button>
@@ -228,10 +228,10 @@ export const NgoDashboard: React.FC = () => {
           {[
             { id: 'NEW', label: 'New Requests', count: metrics.new_requests_count || newRequests.length, icon: '📥', color: 'border-blue-500/30 text-blue-500' },
             { id: 'CRITICAL', label: 'Critical Requests', count: metrics.critical_cases_count || criticalCases.length, icon: '🚨', color: 'border-rose-500/30 text-rose-500' },
-            { id: 'NEARBY', label: 'Nearby Requests', count: metrics.nearby_requests_count || nearbyRequests.length, icon: '📍', color: 'border-emerald-500/30 text-emerald-500' },
+            { id: 'NEARBY', label: 'Nearby Requests', count: metrics.nearby_requests_count || nearbyRequests.length, icon: '📍', color: 'border-emerald-500/30 text-emerald-500 dark:text-orange-400' },
             { id: 'TRANSPORT', label: 'Transport Requests', count: metrics.transport_requests_count || transportRequests.length, icon: '🚌', color: 'border-amber-500/30 text-amber-500' },
             { id: 'ACTIVE', label: 'Active Cases', count: metrics.active_cases_count || activeCases.length, icon: '⚡', color: 'border-indigo-500/30 text-indigo-500' },
-            { id: 'COMPLETED', label: 'Completed Cases', count: metrics.completed_cases_count || completedCases.length, icon: '✅', color: 'border-emerald-500/30 text-emerald-400' },
+            { id: 'COMPLETED', label: 'Completed Cases', count: metrics.completed_cases_count || completedCases.length, icon: '✅', color: 'border-emerald-500/30 text-emerald-400 dark:text-orange-400' },
             { id: 'INVENTORY', label: 'Stock & Reallocation', count: '📦', icon: '📦', color: 'border-indigo-500/30 text-indigo-400' },
           ].map((tab) => (
             <button
@@ -239,8 +239,8 @@ export const NgoDashboard: React.FC = () => {
               onClick={() => setActiveTab(tab.id as any)}
               className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
                 activeTab === tab.id
-                  ? 'bg-white dark:bg-[#161616] border-[#159B5B] shadow-md scale-105'
-                  : 'bg-white/60 dark:bg-[#161616]/60 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B]'
+                  ? 'bg-white dark:bg-[#161616] border-[#159B5B] dark:border-[#F25C38] shadow-md scale-105'
+                  : 'bg-white/60 dark:bg-[#161616]/60 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#F25C38]'
               }`}
             >
               <div className="flex items-center justify-between">
@@ -280,7 +280,7 @@ export const NgoDashboard: React.FC = () => {
               {getActiveTabList().map((req) => (
                 <div 
                   key={req.id}
-                  className="p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-[#FFF9ED]/30 dark:bg-[#0D0D0D]/40 space-y-4 hover:border-[#159B5B] transition-all"
+                  className="p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-[#FFF9ED]/30 dark:bg-[#0D0D0D]/40 space-y-4 hover:border-[#159B5B] dark:hover:border-[#F25C38] transition-all"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
@@ -288,7 +288,7 @@ export const NgoDashboard: React.FC = () => {
                         {req.urgency_level} PRIORITY
                       </span>
                       <span className="text-xs font-bold text-slate-400 font-mono">#{req.id}</span>
-                      <span className="text-xs font-bold text-emerald-500 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+                      <span className="text-xs font-bold text-emerald-500 dark:text-orange-400 bg-emerald-500/10 dark:bg-orange-950/40 px-2.5 py-0.5 rounded-full border border-emerald-500/20 dark:border-orange-500/30">
                         {req.status.replace(/_/g, ' ')}
                       </span>
                     </div>
@@ -321,11 +321,11 @@ export const NgoDashboard: React.FC = () => {
                     </div>
                     <div>
                       <span className="text-stone-400 font-bold block">Contact Phone:</span>
-                      <span className="font-mono text-emerald-600 dark:text-emerald-400">{req.phone}</span>
+                      <span className="font-mono text-emerald-600 dark:text-orange-400">{req.phone}</span>
                     </div>
                     <div>
                       <span className="text-stone-400 font-bold block">AI Category:</span>
-                      <span className="font-bold text-[#159B5B] uppercase">{req.dnn_category || req.category}</span>
+                      <span className="font-bold text-[#159B5B] dark:text-orange-400 uppercase">{req.dnn_category || req.category}</span>
                     </div>
                   </div>
 
@@ -335,7 +335,7 @@ export const NgoDashboard: React.FC = () => {
                       <button
                         onClick={() => handleAcceptRequest(req.id)}
                         disabled={actionLoadingId === req.id}
-                        className="px-4 py-2 bg-gradient-to-r from-[#159B5B] to-[#12834D] text-white font-bold text-xs rounded-xl shadow-sm hover:scale-105 transition-all flex items-center gap-1.5"
+                        className="px-4 py-2 bg-gradient-to-r from-[#159B5B] to-[#12834D] dark:from-[#F25C38] dark:to-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-sm hover:scale-105 transition-all flex items-center gap-1.5"
                       >
                         <CheckCircle className="w-3.5 h-3.5" /> Accept Case
                       </button>
@@ -365,7 +365,7 @@ export const NgoDashboard: React.FC = () => {
                       <button
                         onClick={() => handleUpdateStatus(req.id, 'ASSISTANCE_PROVIDED', 'Relief food/shelter delivered at location')}
                         disabled={actionLoadingId === req.id}
-                        className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+                        className="px-4 py-2 bg-emerald-600 dark:bg-[#F25C38] hover:bg-emerald-500 dark:hover:bg-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
                       >
                         <CheckCheck className="w-3.5 h-3.5" /> Mark Assistance Provided
                       </button>
@@ -375,7 +375,7 @@ export const NgoDashboard: React.FC = () => {
                       <button
                         onClick={() => handleUpdateStatus(req.id, 'COMPLETED', 'Case verified and completed')}
                         disabled={actionLoadingId === req.id}
-                        className="px-4 py-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+                        className="px-4 py-2 bg-emerald-700 dark:bg-[#F25C38] hover:bg-emerald-600 dark:hover:bg-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
                       >
                         <CheckCheck className="w-3.5 h-3.5" /> Finalize & Complete Case
                       </button>

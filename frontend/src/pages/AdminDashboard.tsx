@@ -199,7 +199,7 @@ export const AdminDashboard: React.FC = () => {
         {/* Header */}
         <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-white/10 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center space-x-1.5 bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 text-xs font-bold px-3 py-1 rounded-full border border-[#159B5B]/20 dark:border-[#159B5B]/30 mb-2">
+            <div className="inline-flex items-center space-x-1.5 bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-400 text-xs font-bold px-3 py-1 rounded-full border border-[#159B5B]/20 dark:border-orange-500/40 mb-2">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Sahaayaa Central Directorate</span>
             </div>
@@ -239,7 +239,7 @@ export const AdminDashboard: React.FC = () => {
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === tab.id
-                  ? 'bg-[#159B5B] dark:bg-[#159B5B] text-white shadow-sm'
+                  ? 'bg-[#159B5B] dark:bg-[#F25C38] text-white shadow-sm'
                   : 'bg-white dark:bg-[#161616] text-stone-600 dark:text-stone-300 hover:bg-[#FFF9ED] dark:hover:bg-[#262626] border border-[#EAE3D2] dark:border-white/10'
               }`}
             >
@@ -257,7 +257,7 @@ export const AdminDashboard: React.FC = () => {
               <div className="bg-white dark:bg-[#161616] p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 shadow-sm">
                 <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">Total Requests</div>
                 <div className="text-3xl font-black text-[#17231E] dark:text-white mt-2">{metrics.total_requests}</div>
-                <div className="text-[11px] text-[#159B5B] dark:text-emerald-400 font-semibold mt-1">Processed through DNN</div>
+                <div className="text-[11px] text-[#159B5B] dark:text-orange-400 font-semibold mt-1">Processed through DNN</div>
               </div>
 
               <div className="bg-white dark:bg-[#161616] p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 shadow-sm">
@@ -268,7 +268,7 @@ export const AdminDashboard: React.FC = () => {
 
               <div className="bg-white dark:bg-[#161616] p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 shadow-sm">
                 <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">Verified Resources</div>
-                <div className="text-3xl font-black text-[#159B5B] dark:text-emerald-400 mt-2">
+                <div className="text-3xl font-black text-[#159B5B] dark:text-orange-400 mt-2">
                   {resourcesList.filter(r => r.verified).length} / {resourcesList.length}
                 </div>
                 <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">Badged NGO / Shelter / Food</div>
@@ -356,12 +356,12 @@ export const AdminDashboard: React.FC = () => {
                     <div className="space-y-1">
                       <div className="flex items-center space-x-2">
                         <span className="font-bold text-sm text-[#17231E] dark:text-white">Request #{req.id}</span>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 border border-[#159B5B]/30">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-400 border border-[#159B5B]/30 dark:border-orange-500/40">
                           {req.dnn_category || req.category} ({(req.dnn_confidence || 1) * 100}%)
                         </span>
                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded text-white ${
                           req.urgency_level === 'CRITICAL' ? 'bg-rose-500' :
-                          req.urgency_level === 'HIGH' ? 'bg-[#F2A33A]' : 'bg-[#159B5B]'
+                          req.urgency_level === 'HIGH' ? 'bg-[#F2A33A]' : 'bg-[#159B5B] dark:bg-emerald-600'
                         }`}>
                           {req.urgency_level}
                         </span>
@@ -385,7 +385,7 @@ export const AdminDashboard: React.FC = () => {
                       <button
                         onClick={() => handleVerifyRequest(req.id)}
                         disabled={actionLoadingId === req.id}
-                        className="px-5 py-2 bg-[#159B5B] hover:bg-[#12834D] text-white font-bold rounded-xl text-xs transition-colors shadow-sm"
+                        className="px-5 py-2 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white font-bold rounded-xl text-xs transition-colors shadow-sm"
                       >
                         {actionLoadingId === req.id ? 'Verifying...' : 'VERIFY REQUEST'}
                       </button>
@@ -418,7 +418,7 @@ export const AdminDashboard: React.FC = () => {
                     <span
                       className={`text-[10px] font-black px-2.5 py-0.5 rounded-full border ${
                         res.verified
-                          ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300'
+                          ? 'bg-emerald-100 dark:bg-orange-950/60 text-emerald-800 dark:text-orange-300 border-emerald-300 dark:border-orange-500/40'
                           : 'bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border-rose-300'
                       }`}
                     >
@@ -439,7 +439,7 @@ export const AdminDashboard: React.FC = () => {
                       className={`px-4 py-1.5 rounded-xl font-extrabold text-xs shadow-sm transition-all ${
                         res.verified
                           ? 'bg-rose-600 hover:bg-rose-700 text-white'
-                          : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                          : 'bg-emerald-600 hover:bg-emerald-700 dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white'
                       }`}
                     >
                       {actionLoadingId === `res-${res.id}`
@@ -650,7 +650,7 @@ export const AdminDashboard: React.FC = () => {
                       <td className="p-3 text-stone-500 dark:text-stone-400 font-mono text-[11px]">{formatReportDateTime(log.timestamp)}</td>
                       <td className="p-3 font-semibold text-[#17231E] dark:text-[#F5F5F0]">{log.user}</td>
                       <td className="p-3">
-                        <span className="px-2 py-0.5 rounded-full font-mono font-bold text-[10px] bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 border border-[#159B5B]/30">
+                        <span className="px-2 py-0.5 rounded-full font-mono font-bold text-[10px] bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-400 border border-[#159B5B]/30 dark:border-orange-500/30">
                           {log.action}
                         </span>
                       </td>
@@ -693,7 +693,7 @@ export const AdminDashboard: React.FC = () => {
                       <td className="p-3">
                         <span className={`px-2.5 py-0.5 rounded-full font-bold uppercase text-[10px] ${
                           u.role === 'admin' ? 'bg-[#17231E] text-white dark:bg-[#262626] dark:text-white' :
-                          u.role === 'ngo' ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 border border-[#159B5B]/30' :
+                          u.role === 'ngo' ? 'bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-400 border border-[#159B5B]/30 dark:border-orange-500/30' :
                           u.role === 'volunteer' ? 'bg-cyan-100 dark:bg-cyan-950/60 text-cyan-800 dark:text-cyan-300 border border-cyan-300' :
                           u.role === 'donor' ? 'bg-rose-50 dark:bg-rose-950/70 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800' : 'bg-[#FFF9ED] dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] border border-[#EAE3D2] dark:border-white/10'
                         }`}>

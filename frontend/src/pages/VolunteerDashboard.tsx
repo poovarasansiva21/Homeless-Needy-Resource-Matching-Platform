@@ -76,7 +76,7 @@ export const VolunteerDashboard: React.FC = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#EAE3D2] dark:border-white/10">
           <div>
-            <div className="flex items-center space-x-2 text-xs font-black uppercase tracking-wider text-emerald-500">
+            <div className="flex items-center space-x-2 text-xs font-black uppercase tracking-wider text-emerald-500 dark:text-orange-400">
               <ShieldCheck className="w-4 h-4" />
               <span>Authorized Field Responder Center</span>
             </div>
@@ -90,7 +90,7 @@ export const VolunteerDashboard: React.FC = () => {
 
           <button
             onClick={fetchVolunteerData}
-            className="px-4 py-2.5 bg-[#159B5B] hover:bg-[#12834D] text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 self-start md:self-auto"
+            className="px-4 py-2.5 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 self-start md:self-auto"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} /> Refresh Tasks
           </button>
@@ -106,12 +106,12 @@ export const VolunteerDashboard: React.FC = () => {
             <UserCheck className="w-10 h-10 text-amber-400/80" />
           </div>
 
-          <div className="p-5 rounded-2xl bg-white dark:bg-[#161616] border border-emerald-500/30 flex items-center justify-between">
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#161616] border border-emerald-500/30 dark:border-orange-500/30 flex items-center justify-between">
             <div>
               <span className="text-xs font-bold text-stone-400 block">Completed Relief Dispatches</span>
-              <span className="text-3xl font-black text-emerald-500">{metrics.completed_tasks_count || completedTasks.length}</span>
+              <span className="text-3xl font-black text-emerald-500 dark:text-orange-400">{metrics.completed_tasks_count || completedTasks.length}</span>
             </div>
-            <CheckCheck className="w-10 h-10 text-emerald-400/80" />
+            <CheckCheck className="w-10 h-10 text-emerald-400/80 dark:text-orange-400/80" />
           </div>
         </div>
 
@@ -169,7 +169,7 @@ export const VolunteerDashboard: React.FC = () => {
                     </div>
                     <div>
                       <span className="text-stone-400 font-bold block">Contact Phone:</span>
-                      <span className="font-mono text-emerald-600 dark:text-emerald-400">{task.phone}</span>
+                      <span className="font-mono text-emerald-600 dark:text-orange-400">{task.phone}</span>
                     </div>
                   </div>
 
@@ -189,7 +189,7 @@ export const VolunteerDashboard: React.FC = () => {
                       <button
                         onClick={() => handleUpdateStatus(task.id, 'ASSISTANCE_PROVIDED', 'Relief assistance delivered at site')}
                         disabled={actionLoadingId === task.id}
-                        className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+                        className="px-4 py-2 bg-emerald-600 dark:bg-[#F25C38] hover:bg-emerald-500 dark:hover:bg-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
                       >
                         <CheckCheck className="w-3.5 h-3.5" /> Mark Assistance Provided
                       </button>
@@ -199,7 +199,7 @@ export const VolunteerDashboard: React.FC = () => {
                       <button
                         onClick={() => handleUpdateStatus(task.id, 'COMPLETED', 'Volunteer verified case completion')}
                         disabled={actionLoadingId === task.id}
-                        className="px-4 py-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+                        className="px-4 py-2 bg-emerald-700 dark:bg-[#F25C38] hover:bg-emerald-600 dark:hover:bg-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
                       >
                         <CheckCheck className="w-3.5 h-3.5" /> Complete Field Mission
                       </button>

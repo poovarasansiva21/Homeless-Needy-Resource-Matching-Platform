@@ -188,8 +188,8 @@ export const DonorDashboard: React.FC = () => {
         {/* Header Banner */}
         <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-white/10 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center space-x-1.5 bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 text-xs font-black px-3.5 py-1 rounded-full border border-[#159B5B]/30 mb-2">
-              <Gift className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center space-x-1.5 bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 text-xs font-black px-3.5 py-1 rounded-full border border-[#159B5B]/30 dark:border-orange-500/30 mb-2">
+              <Gift className="w-3.5 h-3.5 text-[#159B5B] dark:text-orange-400" />
               <span>{t('dashboards.donorTitle')}</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-[#17231E] dark:text-[#F5F5F0] tracking-tight">
@@ -203,12 +203,12 @@ export const DonorDashboard: React.FC = () => {
           <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => setShowScanner(!showScanner)}
-              className="px-4 py-2.5 rounded-2xl bg-[#159B5B] hover:bg-[#12824C] text-white text-xs font-black uppercase tracking-wider flex items-center space-x-2 shadow-md transition-all border border-white/20"
+              className="px-4 py-2.5 rounded-2xl bg-[#159B5B] hover:bg-[#12824C] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white text-xs font-black uppercase tracking-wider flex items-center space-x-2 shadow-md transition-all border border-white/20"
             >
               <Camera className="w-4 h-4" />
               <span>AI Donation Scanner</span>
             </button>
-            <span className="text-xs bg-[#E8F3E9] dark:bg-[#159B5B]/25 text-[#159B5B] dark:text-emerald-300 font-black px-3 py-1.5 rounded-full border border-[#159B5B]/30">
+            <span className="text-xs bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 font-black px-3 py-1.5 rounded-full border border-[#159B5B]/30 dark:border-orange-500/30">
               ● Live Synchronized
             </span>
           </div>
@@ -253,18 +253,18 @@ export const DonorDashboard: React.FC = () => {
           <div className="bg-white dark:bg-[#161616] p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 shadow-sm">
             <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">{t('dashboards.requests')}</div>
             <div className="text-3xl font-black text-[#17231E] dark:text-[#F5F5F0] mt-2">{metrics.active_verified_needs}</div>
-            <div className="text-[11px] text-[#159B5B] dark:text-emerald-400 font-semibold mt-1">Awaiting direct community help</div>
+            <div className="text-[11px] text-[#159B5B] dark:text-orange-400 font-semibold mt-1">Awaiting direct community help</div>
           </div>
 
           <div className="bg-white dark:bg-[#161616] p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 shadow-sm">
             <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">{t('dashboards.donations')}</div>
-            <div className="text-3xl font-black text-[#159B5B] dark:text-emerald-400 mt-2">{metrics.my_total_donations}</div>
+            <div className="text-3xl font-black text-[#159B5B] dark:text-orange-400 mt-2">{metrics.my_total_donations}</div>
             <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">Relief packages pledged</div>
           </div>
 
           <div className="bg-white dark:bg-[#161616] p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 shadow-sm">
             <div className="text-xs font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider">{t('dashboards.completed')}</div>
-            <div className="text-3xl font-black text-[#159B5B] dark:text-emerald-400 mt-2">{metrics.completed_assistance}</div>
+            <div className="text-3xl font-black text-[#159B5B] dark:text-orange-400 mt-2">{metrics.completed_assistance}</div>
             <div className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">Confirmed handovers</div>
           </div>
 
@@ -281,8 +281,8 @@ export const DonorDashboard: React.FC = () => {
             onClick={() => setActiveMainTab('matcher')}
             className={`flex-1 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
               activeMainTab === 'matcher' 
-                ? 'bg-[#0B4F3A] dark:bg-[#12B76A] text-white dark:text-white shadow-sm' 
-                : 'text-[#60756D] dark:text-[#A8A29E] hover:text-[#18352D] dark:hover:text-white hover:bg-[#F7F8ED] dark:hover:bg-[#16322A]'
+                ? 'bg-[#0B4F3A] dark:bg-[#F25C38] text-white dark:text-white shadow-sm' 
+                : 'text-[#60756D] dark:text-[#A8A29E] hover:text-[#18352D] dark:hover:text-white hover:bg-[#F7F8ED] dark:hover:bg-[#262626]'
             }`}
           >
             <Sparkles className="w-4 h-4" />
@@ -293,8 +293,8 @@ export const DonorDashboard: React.FC = () => {
             onClick={() => setActiveMainTab('inventory')}
             className={`flex-1 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
               activeMainTab === 'inventory' 
-                ? 'bg-[#0B4F3A] dark:bg-[#12B76A] text-white dark:text-white shadow-sm' 
-                : 'text-[#60756D] dark:text-[#A8A29E] hover:text-[#18352D] dark:hover:text-white hover:bg-[#F7F8ED] dark:hover:bg-[#16322A]'
+                ? 'bg-[#0B4F3A] dark:bg-[#F25C38] text-white dark:text-white shadow-sm' 
+                : 'text-[#60756D] dark:text-[#A8A29E] hover:text-[#18352D] dark:hover:text-white hover:bg-[#F7F8ED] dark:hover:bg-[#262626]'
             }`}
           >
             <Package className="w-4 h-4" />
@@ -305,8 +305,8 @@ export const DonorDashboard: React.FC = () => {
             onClick={() => setActiveMainTab('requests')}
             className={`flex-1 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
               activeMainTab === 'requests' 
-                ? 'bg-[#0B4F3A] dark:bg-[#12B76A] text-white dark:text-white shadow-sm' 
-                : 'text-[#60756D] dark:text-[#A8A29E] hover:text-[#18352D] dark:hover:text-white hover:bg-[#F7F8ED] dark:hover:bg-[#16322A]'
+                ? 'bg-[#0B4F3A] dark:bg-[#F25C38] text-white dark:text-white shadow-sm' 
+                : 'text-[#60756D] dark:text-[#A8A29E] hover:text-[#18352D] dark:hover:text-white hover:bg-[#F7F8ED] dark:hover:bg-[#262626]'
             }`}
           >
             <HeartHandshake className="w-4 h-4" />
@@ -381,7 +381,7 @@ export const DonorDashboard: React.FC = () => {
                     </span>
                     <span className={`text-[10px] font-black px-2.5 py-0.5 rounded-full text-white ${
                       req.urgency_level === 'CRITICAL' ? 'bg-rose-600' :
-                      req.urgency_level === 'HIGH' ? 'bg-[#F2A33A]' : 'bg-[#159B5B]'
+                      req.urgency_level === 'HIGH' ? 'bg-[#F2A33A]' : 'bg-[#159B5B] dark:bg-[#F25C38]'
                     }`}>
                       {req.urgency_level}
                     </span>
@@ -397,10 +397,10 @@ export const DonorDashboard: React.FC = () => {
 
                   <div className="mt-4 pt-3 border-t border-[#EAE3D2]/60 dark:border-white/10 flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
                     <span className="flex items-center">
-                      <MapPin className="w-3.5 h-3.5 mr-1 text-[#159B5B]" />
+                      <MapPin className="w-3.5 h-3.5 mr-1 text-[#159B5B] dark:text-orange-400" />
                       {req.address}
                     </span>
-                    <span className="font-bold text-[#159B5B] dark:text-emerald-400">
+                    <span className="font-bold text-[#159B5B] dark:text-orange-400">
                       {req.status.replace('_', ' ')}
                     </span>
                   </div>
@@ -409,7 +409,7 @@ export const DonorDashboard: React.FC = () => {
                 <div className="mt-5">
                   <button
                     onClick={() => handleOpenPledgeModal(req)}
-                    className="w-full py-2.5 bg-[#159B5B] hover:bg-[#12834D] text-white font-bold rounded-xl text-xs shadow-md shadow-[#159B5B]/20 hover:scale-[1.02] transition-all flex items-center justify-center space-x-2"
+                    className="w-full py-2.5 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white font-bold rounded-xl text-xs shadow-md shadow-[#159B5B]/20 dark:shadow-orange-950/30 hover:scale-[1.02] transition-all flex items-center justify-center space-x-2"
                   >
                     <HeartHandshake className="w-4 h-4" />
                     <span>HELP THIS PERSON</span>
@@ -440,11 +440,11 @@ export const DonorDashboard: React.FC = () => {
                   {myDonations.map((d) => (
                     <tr key={d.id} className="hover:bg-[#FFF9ED]/60 dark:hover:bg-[#17231E]/50">
                       <td className="p-3 font-semibold text-[#17231E] dark:text-[#F5F5F0]">#{d.id}</td>
-                      <td className="p-3 font-bold text-[#159B5B]">Request #{d.request_id}</td>
+                      <td className="p-3 font-bold text-[#159B5B] dark:text-orange-400">Request #{d.request_id}</td>
                       <td className="p-3 capitalize font-medium text-[#17231E] dark:text-[#F5F5F0]">{d.donation_type.replace('_', ' ')}</td>
                       <td className="p-3 text-stone-500 dark:text-stone-400">{d.notes || '—'}</td>
                       <td className="p-3">
-                        <span className="px-2 py-0.5 bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] rounded font-bold uppercase text-[10px]">
+                        <span className="px-2 py-0.5 bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 rounded font-bold uppercase text-[10px]">
                           {d.status}
                         </span>
                       </td>
@@ -467,7 +467,7 @@ export const DonorDashboard: React.FC = () => {
             
             <div className="flex justify-between items-start pb-3 border-b border-[#EAE3D2] dark:border-white/10">
               <div>
-                <span className="text-[10px] font-black text-[#159B5B] uppercase tracking-wider">Direct Assistance</span>
+                <span className="text-[10px] font-black text-[#159B5B] dark:text-orange-400 uppercase tracking-wider">Direct Assistance</span>
                 <h3 className="font-extrabold text-lg text-[#17231E] dark:text-[#F5F5F0]">
                   Pledge Support for Request #{activeDonationModalReq.id}
                 </h3>
@@ -491,8 +491,8 @@ export const DonorDashboard: React.FC = () => {
             )}
 
             {pledgeSuccessMsg ? (
-              <div className="p-5 bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 rounded-2xl text-xs text-center font-bold flex flex-col items-center space-y-2 border border-[#159B5B]/30">
-                <CheckCircle className="w-10 h-10 text-[#159B5B]" />
+              <div className="p-5 bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 rounded-2xl text-xs text-center font-bold flex flex-col items-center space-y-2 border border-[#159B5B]/30 dark:border-orange-500/40">
+                <CheckCircle className="w-10 h-10 text-[#159B5B] dark:text-orange-400" />
                 <span className="text-sm font-black">{pledgeSuccessMsg}</span>
               </div>
             ) : (
@@ -501,7 +501,7 @@ export const DonorDashboard: React.FC = () => {
                 <div className="p-3.5 bg-[#FFF9ED] dark:bg-[#1C1917] rounded-2xl border border-[#EAE3D2] dark:border-white/10">
                   <div className="flex items-center justify-between text-[10px] font-bold text-stone-500 uppercase tracking-wider mb-1">
                     <span>Beneficiary Need</span>
-                    <span className="px-2 py-0.5 rounded bg-[#E8F3E9] text-[#159B5B] font-black">
+                    <span className="px-2 py-0.5 rounded bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 font-black">
                       {activeDonationModalReq.dnn_category || activeDonationModalReq.category}
                     </span>
                   </div>
@@ -509,7 +509,7 @@ export const DonorDashboard: React.FC = () => {
                     {activeDonationModalReq.description}
                   </p>
                   <div className="mt-2 text-[11px] text-stone-500 dark:text-stone-400 flex items-center">
-                    <MapPin className="w-3 h-3 mr-1 text-[#159B5B]" />
+                    <MapPin className="w-3 h-3 mr-1 text-[#159B5B] dark:text-orange-400" />
                     <span>{activeDonationModalReq.address}</span>
                   </div>
                 </div>
@@ -526,8 +526,8 @@ export const DonorDashboard: React.FC = () => {
                         onClick={() => setDonationType(t.id)}
                         className={`p-3 rounded-xl border text-left font-semibold transition-all ${
                           donationType === t.id 
-                            ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/25 border-[#159B5B] text-[#159B5B] dark:text-emerald-300 shadow-sm' 
-                            : 'bg-white dark:bg-[#1C1917] border-[#EAE3D2] dark:border-white/10 text-[#17231E] dark:text-[#F5F5F0] hover:border-[#159B5B]'
+                            ? 'bg-[#E8F3E9] dark:bg-orange-950/40 border-[#159B5B] dark:border-orange-500/40 text-[#159B5B] dark:text-orange-300 shadow-sm' 
+                            : 'bg-white dark:bg-[#1C1917] border-[#EAE3D2] dark:border-white/10 text-[#17231E] dark:text-[#F5F5F0] hover:border-[#159B5B] dark:hover:border-[#F25C38]'
                         }`}
                       >
                         {t.label}

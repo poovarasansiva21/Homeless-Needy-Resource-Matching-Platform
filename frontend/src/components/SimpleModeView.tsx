@@ -204,38 +204,38 @@ export const SimpleModeView: React.FC = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <button
             onClick={() => handleOpenNeedHelp('FOOD')}
-            className="p-4 rounded-3xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] text-center space-y-2 transition-all cursor-pointer group"
+            className="p-4 rounded-3xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#F25C38] text-center space-y-2 transition-all cursor-pointer group"
           >
             <div className="text-4xl group-hover:scale-110 transition-transform">🍱</div>
             <div className="font-black text-sm text-[#18352D] dark:text-white">FOOD</div>
-            <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">✓ Verified Food Banks</div>
+            <div className="text-[10px] text-emerald-600 dark:text-orange-400 font-bold">✓ Verified Food Banks</div>
           </button>
 
           <button
             onClick={() => handleOpenNeedHelp('SHELTER')}
-            className="p-4 rounded-3xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] text-center space-y-2 transition-all cursor-pointer group"
+            className="p-4 rounded-3xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#F25C38] text-center space-y-2 transition-all cursor-pointer group"
           >
             <div className="text-4xl group-hover:scale-110 transition-transform">⛺</div>
             <div className="font-black text-sm text-[#18352D] dark:text-white">SHELTER</div>
-            <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">✓ Verified Night Lodging</div>
+            <div className="text-[10px] text-emerald-600 dark:text-orange-400 font-bold">✓ Verified Night Lodging</div>
           </button>
 
           <button
             onClick={() => handleOpenNeedHelp('MEDICAL')}
-            className="p-4 rounded-3xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] text-center space-y-2 transition-all cursor-pointer group"
+            className="p-4 rounded-3xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#F25C38] text-center space-y-2 transition-all cursor-pointer group"
           >
             <div className="text-4xl group-hover:scale-110 transition-transform">🚑</div>
             <div className="font-black text-sm text-[#18352D] dark:text-white">MEDICAL</div>
-            <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">✓ Free Dispensaries</div>
+            <div className="text-[10px] text-emerald-600 dark:text-orange-400 font-bold">✓ Free Dispensaries</div>
           </button>
 
           <button
             onClick={() => handleOpenNeedHelp('CLOTHING')}
-            className="p-4 rounded-3xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] text-center space-y-2 transition-all cursor-pointer group"
+            className="p-4 rounded-3xl bg-white dark:bg-[#161616] border-2 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#F25C38] text-center space-y-2 transition-all cursor-pointer group"
           >
             <div className="text-4xl group-hover:scale-110 transition-transform">👕</div>
             <div className="font-black text-sm text-[#18352D] dark:text-white">CLOTHES</div>
-            <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">✓ Warm Blankets</div>
+            <div className="text-[10px] text-emerald-600 dark:text-orange-400 font-bold">✓ Warm Blankets</div>
           </button>
         </div>
       </div>

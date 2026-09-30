@@ -128,8 +128,8 @@ export const ReportModal: React.FC<ReportModalProps> = ({
           )}
 
           {successMsg ? (
-            <div className="p-6 text-center space-y-2 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-300 rounded-2xl border border-emerald-200">
-              <CheckCircle2 className="w-10 h-10 mx-auto text-emerald-600" />
+            <div className="p-6 text-center space-y-2 bg-emerald-50 dark:bg-orange-950/40 text-emerald-800 dark:text-orange-300 rounded-2xl border border-emerald-200 dark:border-orange-500/40">
+              <CheckCircle2 className="w-10 h-10 mx-auto text-emerald-600 dark:text-orange-400" />
               <h4 className="font-extrabold text-sm">{successMsg}</h4>
               <p className="text-xs">Our verification officers have been notified.</p>
             </div>
@@ -153,7 +153,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                       key={r.id}
                       className={`flex items-center space-x-2.5 p-2.5 rounded-xl border text-xs font-bold cursor-pointer transition-all ${
                         reason === r.id
-                          ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B] text-[#0B4F3A] dark:text-emerald-300'
+                          ? 'bg-[#E8F3E9] dark:bg-orange-950/40 border-[#159B5B] dark:border-orange-500/40 text-[#0B4F3A] dark:text-orange-300'
                           : 'bg-white dark:bg-[#0D0D0D] border-[#E2E8E4] dark:border-white/10 hover:bg-stone-50 dark:hover:bg-stone-800/50'
                       }`}
                     >
@@ -163,7 +163,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                         value={r.id}
                         checked={reason === r.id}
                         onChange={(e) => setReason(e.target.value)}
-                        className="accent-[#159B5B]"
+                        className="accent-[#159B5B] dark:accent-[#F25C38]"
                       />
                       <span>{r.label}</span>
                     </label>
@@ -181,7 +181,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                   onChange={(e) => setDetails(e.target.value)}
                   placeholder="Provide any relevant context to assist our safety officers..."
                   rows={3}
-                  className="w-full p-3 bg-white dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 rounded-2xl text-xs text-[#18352D] dark:text-white outline-none focus:border-[#159B5B]"
+                  className="w-full p-3 bg-white dark:bg-[#0D0D0D] border border-[#E2E8E4] dark:border-white/10 rounded-2xl text-xs text-[#18352D] dark:text-white outline-none focus:border-[#159B5B] dark:focus:border-[#F25C38]"
                 />
               </div>
 
@@ -192,11 +192,11 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                     type="checkbox"
                     checked={isAnonymous}
                     onChange={(e) => setIsAnonymous(e.target.checked)}
-                    className="rounded accent-[#159B5B] w-4 h-4"
+                    className="rounded accent-[#159B5B] dark:accent-[#F25C38] w-4 h-4"
                   />
                   <div className="text-xs">
                     <span className="font-extrabold text-[#18352D] dark:text-white flex items-center space-x-1">
-                      <Lock className="w-3.5 h-3.5 text-[#159B5B]" />
+                      <Lock className="w-3.5 h-3.5 text-[#159B5B] dark:text-orange-400" />
                       <span>Anonymous Reporting Protection</span>
                     </span>
                     <span className="text-[10px] text-stone-500 block">Your user identity will not be attached to this trust report.</span>

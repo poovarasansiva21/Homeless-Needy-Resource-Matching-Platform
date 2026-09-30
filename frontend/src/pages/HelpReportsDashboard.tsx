@@ -547,11 +547,11 @@ export const HelpReportsDashboard: React.FC = () => {
       <section className="bg-[#FAF7F2] dark:bg-[#181818] border-b border-[#E7E0D6] dark:border-white/10 px-4 sm:px-6 lg:px-8 py-2.5">
         <div className="max-w-7xl mx-auto flex items-center justify-between text-xs text-stone-600 dark:text-stone-300 font-medium">
           <div className="flex items-center space-x-2">
-            <Lock className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+            <Lock className="w-3.5 h-3.5 text-emerald-600 dark:text-orange-400 shrink-0" />
             <span>
               Role: <strong className="capitalize text-[#1C1917] dark:text-white font-bold">{userRole}</strong> • 
               {isAuthorizedResponder ? (
-                <span className="text-emerald-700 dark:text-emerald-400 font-bold ml-1">
+                <span className="text-emerald-700 dark:text-orange-400 font-bold ml-1">
                   Full Authorized Responder Access
                 </span>
               ) : (
@@ -950,7 +950,7 @@ export const HelpReportsDashboard: React.FC = () => {
                       </span>
                       {selectedReport.status === 'VERIFIED' || selectedReport.is_verified ? (
                         <div className="space-y-1">
-                          <span className="inline-flex items-center space-x-1 text-xs font-extrabold text-emerald-700 dark:text-emerald-400">
+                          <span className="inline-flex items-center space-x-1 text-xs font-extrabold text-emerald-700 dark:text-orange-400">
                             <CheckCircle2 className="w-3.5 h-3.5" />
                             <span>✓ VERIFIED</span>
                           </span>
@@ -1062,7 +1062,7 @@ export const HelpReportsDashboard: React.FC = () => {
                     <button
                       onClick={() => handleAcceptReport(selectedReport.id)}
                       disabled={isProcessingAction}
-                      className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl cursor-pointer shadow-2xs"
+                      className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white font-bold text-xs rounded-xl cursor-pointer shadow-2xs"
                     >
                       ASSIGN HELP
                     </button>
@@ -1095,7 +1095,7 @@ export const HelpReportsDashboard: React.FC = () => {
                       disabled={isProcessingAction || selectedReport.status === 'VERIFIED' || selectedReport.is_verified}
                       className={`px-4 py-2 font-bold text-xs rounded-xl cursor-pointer transition-colors ${
                         selectedReport.status === 'VERIFIED' || selectedReport.is_verified
-                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-950 dark:text-emerald-300 cursor-not-allowed'
+                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-orange-950 dark:text-orange-300 dark:border-orange-500/40 cursor-not-allowed'
                           : 'bg-stone-800 text-white dark:bg-stone-200 dark:text-stone-900 hover:bg-black'
                       }`}
                     >

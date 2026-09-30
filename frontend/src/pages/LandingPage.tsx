@@ -749,13 +749,13 @@ export const LandingPage: React.FC = () => {
           {locationStatus === 'idle' && (
             <div className="p-4 sm:p-5 rounded-3xl bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center space-x-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-[#159B5B] dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-sm border border-[#159B5B]/20">
+                <div className="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-400 flex items-center justify-center shrink-0 shadow-sm border border-[#159B5B]/20 dark:border-orange-500/30">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
                   <h3 className="text-sm font-black text-[#17231E] dark:text-[#F5F5F0] flex items-center space-x-1.5">
                     <span>{t('location.idleTitle')}</span>
-                    <span className="w-2 h-2 rounded-full bg-[#159B5B] animate-pulse inline-block" />
+                    <span className="w-2 h-2 rounded-full bg-[#159B5B] dark:bg-orange-500 animate-pulse inline-block" />
                   </h3>
                   <p className="text-xs text-[#17231E]/70 dark:text-stone-400 mt-0.5">
                     {t('location.idleDesc')}
@@ -765,7 +765,7 @@ export const LandingPage: React.FC = () => {
               <button
                 type="button"
                 onClick={handleUseCurrentLocation}
-                className="w-full sm:w-auto px-6 py-3 bg-[#159B5B] hover:bg-[#12834D] text-white text-xs font-black uppercase tracking-wider rounded-full shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 shrink-0 hover:scale-105 active:scale-95"
+                className="w-full sm:w-auto px-6 py-3 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white text-xs font-black uppercase tracking-wider rounded-full shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 shrink-0 hover:scale-105 active:scale-95"
               >
                 <Navigation className="w-4 h-4" />
                 <span>{t('location.useCurrentLocation')}</span>
@@ -784,16 +784,16 @@ export const LandingPage: React.FC = () => {
           )}
 
           {locationStatus === 'success' && (
-            <div className="p-4 sm:p-5 rounded-3xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-3.5 shadow-sm">
+            <div className="p-4 sm:p-5 rounded-3xl bg-emerald-50 dark:bg-orange-950/40 border border-emerald-200 dark:border-orange-500/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-3.5 shadow-sm">
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-full bg-emerald-500 dark:bg-[#F25C38] text-white flex items-center justify-center shrink-0">
                   <CheckCircle2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-black text-emerald-900 dark:text-emerald-300 uppercase tracking-wide">
+                  <div className="text-xs font-black text-emerald-900 dark:text-orange-300 uppercase tracking-wide">
                     ✓ Location detected • Showing verified resources near you
                   </div>
-                  <div className="text-[11px] text-emerald-800/80 dark:text-emerald-400 font-medium">
+                  <div className="text-[11px] text-emerald-800/80 dark:text-orange-400 font-medium">
                     Sorted by proximity. Select your search radius below:
                   </div>
                 </div>
@@ -1470,31 +1470,31 @@ export const LandingPage: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-2.5 left-2.5 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-bold flex items-center space-x-1">
-                    <Utensils className="w-3 h-3 text-emerald-400" />
+                    <Utensils className="w-3 h-3 text-emerald-400 dark:text-orange-400" />
                     <span>{t('resources.foodBankTag')}</span>
                   </div>
                   {userLocation && (
-                    <div className="absolute top-2.5 right-2.5 bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[10px] font-extrabold flex items-center space-x-1 shadow-md animate-pulse">
+                    <div className="absolute top-2.5 right-2.5 bg-emerald-600 dark:bg-[#F25C38] text-white px-2 py-0.5 rounded-full text-[10px] font-extrabold flex items-center space-x-1 shadow-md animate-pulse">
                       <span>📍 {getCategoryDistance('FOOD', '2.1 km')}</span>
                     </div>
                   )}
                 </div>
                 <div className="p-5 space-y-2.5">
                   <div className="flex items-center space-x-1.5 text-xs font-black text-[#17231E] dark:text-[#F5F5F0]">
-                    <Utensils className="w-4 h-4 text-[#159B5B]" />
+                    <Utensils className="w-4 h-4 text-[#159B5B] dark:text-orange-400" />
                     <span>{t('resources.foodBankTitle')}</span>
                   </div>
                   <div className="text-[11px] text-[#17231E]/60 dark:text-[#F5F5F0]/60 font-medium flex items-center space-x-1">
-                    <Clock className="w-3 h-3 text-[#159B5B] dark:text-emerald-400 shrink-0" />
+                    <Clock className="w-3 h-3 text-[#159B5B] dark:text-orange-400 shrink-0" />
                     <span>{getCategoryDistance('FOOD', '2.1 km')} • 9 AM – 6 PM</span>
                   </div>
                   <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed line-clamp-2">
                     {t('resources.foodBankDesc')}
                   </p>
                   <div className="pt-1 flex items-center space-x-2 text-[10px] font-bold">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300">{t('categories.food')}</span>
-                    <span className="text-[#159B5B] font-bold flex items-center space-x-0.5">
-                      <CheckCircle2 className="w-3 h-3 text-[#159B5B]" />
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 border dark:border-orange-500/30">{t('categories.food')}</span>
+                    <span className="text-[#159B5B] dark:text-orange-400 font-bold flex items-center space-x-0.5">
+                      <CheckCircle2 className="w-3 h-3 text-[#159B5B] dark:text-orange-400" />
                       <span>{t('common.verified')}</span>
                     </span>
                   </div>
@@ -1505,7 +1505,7 @@ export const LandingPage: React.FC = () => {
               <div className="p-5 pt-0 grid grid-cols-2 gap-2 mt-auto">
                 <button
                   onClick={() => handleFindNearMeForCategory('Food')}
-                  className="w-full py-2.5 px-2 bg-[#159B5B] hover:bg-[#12834D] text-white rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 shadow-sm hover:shadow-emerald-500/20 transition-all hover:scale-[1.02] cursor-pointer"
+                  className="w-full py-2.5 px-2 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 shadow-sm hover:shadow-orange-500/20 transition-all hover:scale-[1.02] cursor-pointer"
                   title="Find Food Banks near your location"
                 >
                   <MapPin className="w-3.5 h-3.5" />
@@ -1532,31 +1532,31 @@ export const LandingPage: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-2.5 left-2.5 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-bold flex items-center space-x-1">
-                    <HomeIcon className="w-3 h-3 text-emerald-400" />
+                    <HomeIcon className="w-3 h-3 text-emerald-400 dark:text-orange-400" />
                     <span>{t('resources.shelterHomeTag')}</span>
                   </div>
                   {userLocation && (
-                    <div className="absolute top-2.5 right-2.5 bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[10px] font-extrabold flex items-center space-x-1 shadow-md animate-pulse">
+                    <div className="absolute top-2.5 right-2.5 bg-emerald-600 dark:bg-[#F25C38] text-white px-2 py-0.5 rounded-full text-[10px] font-extrabold flex items-center space-x-1 shadow-md animate-pulse">
                       <span>📍 {getCategoryDistance('SHELTER', '3.6 km')}</span>
                     </div>
                   )}
                 </div>
                 <div className="p-5 space-y-2.5">
                   <div className="flex items-center space-x-1.5 text-xs font-black text-[#17231E] dark:text-[#F5F5F0]">
-                    <HomeIcon className="w-4 h-4 text-[#159B5B]" />
+                    <HomeIcon className="w-4 h-4 text-[#159B5B] dark:text-orange-400" />
                     <span>{t('resources.shelterHomeTitle')}</span>
                   </div>
                   <div className="text-[11px] text-[#17231E]/60 dark:text-[#F5F5F0]/60 font-medium flex items-center space-x-1">
-                    <Clock className="w-3 h-3 text-[#159B5B] dark:text-emerald-400 shrink-0" />
+                    <Clock className="w-3 h-3 text-[#159B5B] dark:text-orange-400 shrink-0" />
                     <span>{getCategoryDistance('SHELTER', '3.6 km')} • 24/7</span>
                   </div>
                   <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed line-clamp-2">
                     {t('resources.shelterHomeDesc')}
                   </p>
                   <div className="pt-1 flex items-center space-x-2 text-[10px] font-bold">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300">{t('categories.shelter')}</span>
-                    <span className="text-[#159B5B] font-bold flex items-center space-x-0.5">
-                      <CheckCircle2 className="w-3 h-3 text-[#159B5B]" />
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 border dark:border-orange-500/30">{t('categories.shelter')}</span>
+                    <span className="text-[#159B5B] dark:text-orange-400 font-bold flex items-center space-x-0.5">
+                      <CheckCircle2 className="w-3 h-3 text-[#159B5B] dark:text-orange-400" />
                       <span>{t('common.verified')}</span>
                     </span>
                   </div>
@@ -1567,7 +1567,7 @@ export const LandingPage: React.FC = () => {
               <div className="p-5 pt-0 grid grid-cols-2 gap-2 mt-auto">
                 <button
                   onClick={() => handleFindNearMeForCategory('Shelter')}
-                  className="w-full py-2.5 px-2 bg-[#159B5B] hover:bg-[#12834D] text-white rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 shadow-sm hover:shadow-emerald-500/20 transition-all hover:scale-[1.02] cursor-pointer"
+                  className="w-full py-2.5 px-2 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 shadow-sm hover:shadow-orange-500/20 transition-all hover:scale-[1.02] cursor-pointer"
                   title="Find Shelters near your location"
                 >
                   <MapPin className="w-3.5 h-3.5" />
@@ -1578,7 +1578,7 @@ export const LandingPage: React.FC = () => {
                   className="w-full py-2.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-[#262626] dark:hover:bg-[#292929] text-[#17231E] dark:text-[#F5F5F0] border border-[#EAE3D2] dark:border-white/10 rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 transition-all hover:scale-[1.02] cursor-pointer"
                   title="Navigate / Get directions to nearest Shelter"
                 >
-                  <Navigation className="w-3.5 h-3.5 text-[#159B5B]" />
+                  <Navigation className="w-3.5 h-3.5 text-[#159B5B] dark:text-orange-400" />
                   <span>{t('resources.directions')}</span>
                 </button>
               </div>
@@ -1594,31 +1594,31 @@ export const LandingPage: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-2.5 left-2.5 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-bold flex items-center space-x-1">
-                    <Cross className="w-3 h-3 text-emerald-400" />
+                    <Cross className="w-3 h-3 text-emerald-400 dark:text-orange-400" />
                     <span>{t('resources.medicalClinicTag')}</span>
                   </div>
                   {userLocation && (
-                    <div className="absolute top-2.5 right-2.5 bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[10px] font-extrabold flex items-center space-x-1 shadow-md animate-pulse">
+                    <div className="absolute top-2.5 right-2.5 bg-emerald-600 dark:bg-[#F25C38] text-white px-2 py-0.5 rounded-full text-[10px] font-extrabold flex items-center space-x-1 shadow-md animate-pulse">
                       <span>📍 {getCategoryDistance('MEDICAL', '4.2 km')}</span>
                     </div>
                   )}
                 </div>
                 <div className="p-5 space-y-2.5">
                   <div className="flex items-center space-x-1.5 text-xs font-black text-[#17231E] dark:text-[#F5F5F0]">
-                    <Cross className="w-4 h-4 text-[#159B5B]" />
+                    <Cross className="w-4 h-4 text-[#159B5B] dark:text-orange-400" />
                     <span>{t('resources.medicalClinicTitle')}</span>
                   </div>
                   <div className="text-[11px] text-[#17231E]/60 dark:text-[#F5F5F0]/60 font-medium flex items-center space-x-1">
-                    <Clock className="w-3 h-3 text-[#159B5B] dark:text-emerald-400 shrink-0" />
+                    <Clock className="w-3 h-3 text-[#159B5B] dark:text-orange-400 shrink-0" />
                     <span>{getCategoryDistance('MEDICAL', '4.2 km')} • 8 AM – 8 PM</span>
                   </div>
                   <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed line-clamp-2">
                     {t('resources.medicalClinicDesc')}
                   </p>
                   <div className="pt-1 flex items-center space-x-2 text-[10px] font-bold">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300">{t('categories.medical')}</span>
-                    <span className="text-[#159B5B] font-bold flex items-center space-x-0.5">
-                      <CheckCircle2 className="w-3 h-3 text-[#159B5B]" />
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 border dark:border-orange-500/30">{t('categories.medical')}</span>
+                    <span className="text-[#159B5B] dark:text-orange-400 font-bold flex items-center space-x-0.5">
+                      <CheckCircle2 className="w-3 h-3 text-[#159B5B] dark:text-orange-400" />
                       <span>{t('common.verified')}</span>
                     </span>
                   </div>
@@ -1629,7 +1629,7 @@ export const LandingPage: React.FC = () => {
               <div className="p-5 pt-0 grid grid-cols-2 gap-2 mt-auto">
                 <button
                   onClick={() => handleFindNearMeForCategory('Medical')}
-                  className="w-full py-2.5 px-2 bg-[#159B5B] hover:bg-[#12834D] text-white rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 shadow-sm hover:shadow-emerald-500/20 transition-all hover:scale-[1.02] cursor-pointer"
+                  className="w-full py-2.5 px-2 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 shadow-sm hover:shadow-orange-500/20 transition-all hover:scale-[1.02] cursor-pointer"
                   title="Find Medical Clinics near your location"
                 >
                   <MapPin className="w-3.5 h-3.5" />
@@ -1640,7 +1640,7 @@ export const LandingPage: React.FC = () => {
                   className="w-full py-2.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-[#262626] dark:hover:bg-[#292929] text-[#17231E] dark:text-[#F5F5F0] border border-[#EAE3D2] dark:border-white/10 rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 transition-all hover:scale-[1.02] cursor-pointer"
                   title="Navigate / Get directions to nearest Medical Clinic"
                 >
-                  <Navigation className="w-3.5 h-3.5 text-[#159B5B]" />
+                  <Navigation className="w-3.5 h-3.5 text-[#159B5B] dark:text-orange-400" />
                   <span>{t('resources.directions')}</span>
                 </button>
               </div>
@@ -1656,31 +1656,31 @@ export const LandingPage: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-2.5 left-2.5 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-bold flex items-center space-x-1">
-                    <Shirt className="w-3 h-3 text-emerald-400" />
+                    <Shirt className="w-3 h-3 text-emerald-400 dark:text-orange-400" />
                     <span>{t('resources.clothingCenterTag')}</span>
                   </div>
                   {userLocation && (
-                    <div className="absolute top-2.5 right-2.5 bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[10px] font-extrabold flex items-center space-x-1 shadow-md animate-pulse">
+                    <div className="absolute top-2.5 right-2.5 bg-emerald-600 dark:bg-[#F25C38] text-white px-2 py-0.5 rounded-full text-[10px] font-extrabold flex items-center space-x-1 shadow-md animate-pulse">
                       <span>📍 {getCategoryDistance('CLOTHING', '5.6 km')}</span>
                     </div>
                   )}
                 </div>
                 <div className="p-5 space-y-2.5">
                   <div className="flex items-center space-x-1.5 text-xs font-black text-[#17231E] dark:text-[#F5F5F0]">
-                    <Shirt className="w-4 h-4 text-[#159B5B]" />
+                    <Shirt className="w-4 h-4 text-[#159B5B] dark:text-orange-400" />
                     <span>{t('resources.clothingCenterTitle')}</span>
                   </div>
                   <div className="text-[11px] text-[#17231E]/60 dark:text-[#F5F5F0]/60 font-medium flex items-center space-x-1">
-                    <Clock className="w-3 h-3 text-[#159B5B] dark:text-emerald-400 shrink-0" />
+                    <Clock className="w-3 h-3 text-[#159B5B] dark:text-orange-400 shrink-0" />
                     <span>{getCategoryDistance('CLOTHING', '5.6 km')} • 10 AM – 4 PM</span>
                   </div>
                   <p className="text-xs text-[#17231E]/80 dark:text-[#F5F5F0]/80 leading-relaxed line-clamp-2">
                     {t('resources.clothingCenterDesc')}
                   </p>
                   <div className="pt-1 flex items-center space-x-2 text-[10px] font-bold">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300">{t('categories.clothing')}</span>
-                    <span className="text-[#159B5B] font-bold flex items-center space-x-0.5">
-                      <CheckCircle2 className="w-3 h-3 text-[#159B5B]" />
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 border dark:border-orange-500/30">{t('categories.clothing')}</span>
+                    <span className="text-[#159B5B] dark:text-orange-400 font-bold flex items-center space-x-0.5">
+                      <CheckCircle2 className="w-3 h-3 text-[#159B5B] dark:text-orange-400" />
                       <span>{t('common.verified')}</span>
                     </span>
                   </div>
@@ -1691,7 +1691,7 @@ export const LandingPage: React.FC = () => {
               <div className="p-5 pt-0 grid grid-cols-2 gap-2 mt-auto">
                 <button
                   onClick={() => handleFindNearMeForCategory('Clothing')}
-                  className="w-full py-2.5 px-2 bg-[#159B5B] hover:bg-[#12834D] text-white rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 shadow-sm hover:shadow-emerald-500/20 transition-all hover:scale-[1.02] cursor-pointer"
+                  className="w-full py-2.5 px-2 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 shadow-sm hover:shadow-orange-500/20 transition-all hover:scale-[1.02] cursor-pointer"
                   title="Find Clothing Centers near your location"
                 >
                   <MapPin className="w-3.5 h-3.5" />
@@ -1702,7 +1702,7 @@ export const LandingPage: React.FC = () => {
                   className="w-full py-2.5 px-2 bg-stone-100 hover:bg-stone-200 dark:bg-[#262626] dark:hover:bg-[#292929] text-[#17231E] dark:text-[#F5F5F0] border border-[#EAE3D2] dark:border-white/10 rounded-xl text-[11px] font-extrabold flex items-center justify-center space-x-1 transition-all hover:scale-[1.02] cursor-pointer"
                   title="Navigate / Get directions to nearest Clothing Center"
                 >
-                  <Navigation className="w-3.5 h-3.5 text-[#159B5B]" />
+                  <Navigation className="w-3.5 h-3.5 text-[#159B5B] dark:text-orange-400" />
                   <span>{t('resources.directions')}</span>
                 </button>
               </div>
@@ -1785,7 +1785,7 @@ export const LandingPage: React.FC = () => {
                     <button
                       onClick={handleAnalyzeAI}
                       disabled={isAiLoading || !aiInputText.trim()}
-                      className="w-full py-2.5 bg-[#159B5B] hover:bg-[#12834D] disabled:opacity-50 text-white font-black text-xs uppercase tracking-wider rounded-full shadow-sm transition-all hover:scale-[1.02]"
+                      className="w-full py-2.5 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] disabled:opacity-50 text-white font-black text-xs uppercase tracking-wider rounded-full shadow-sm transition-all hover:scale-[1.02]"
                     >
                       {isAiLoading ? t('aiMatching.analyzingBtn') : t('aiMatching.analyzeBtn')}
                     </button>
@@ -1797,7 +1797,7 @@ export const LandingPage: React.FC = () => {
                       <span className="text-[10px] font-black uppercase tracking-wider text-[#17231E]/60 dark:text-[#F5F5F0]/60">
                         {t('aiMatching.resultsTitle')}
                       </span>
-                      <span className="text-[10px] font-bold text-[#159B5B] dark:text-emerald-400">
+                      <span className="text-[10px] font-bold text-[#159B5B] dark:text-orange-400">
                         Live TensorFlow DNN
                       </span>
                     </div>
@@ -1805,7 +1805,7 @@ export const LandingPage: React.FC = () => {
                     <div className="grid grid-cols-3 gap-2 text-center">
                       <div className="p-2 bg-[#FFF9ED] dark:bg-[#161616] rounded-xl">
                         <span className="text-[10px] font-bold text-[#17231E]/50 dark:text-[#F5F5F0]/50 block">{t('common.category')}</span>
-                        <div className="text-xs font-black text-[#159B5B] dark:text-emerald-400 mt-0.5">
+                        <div className="text-xs font-black text-[#159B5B] dark:text-orange-400 mt-0.5">
                           {aiResult ? aiResult.category : 'FOOD'}
                         </div>
                       </div>

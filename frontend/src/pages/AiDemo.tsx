@@ -78,7 +78,7 @@ export const AiDemo: React.FC = () => {
       case 'MEDIUM':
         return 'bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-900/60';
       default:
-        return 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 border-[#159B5B]/30';
+        return 'bg-[#E8F3E9] dark:bg-orange-950/60 text-[#159B5B] dark:text-orange-300 border-[#159B5B]/30 dark:border-orange-500/40';
     }
   };
 
@@ -92,7 +92,7 @@ export const AiDemo: React.FC = () => {
             onClick={() => setAiMode('text')}
             className={`flex-1 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-2 transition-all ${
               aiMode === 'text'
-                ? 'bg-white dark:bg-[#161616] text-[#159B5B] shadow-sm border border-[#159B5B]/30'
+                ? 'bg-white dark:bg-[#161616] text-[#159B5B] dark:text-orange-400 shadow-sm border border-[#159B5B]/30 dark:border-orange-500/40'
                 : 'text-[#17231E]/70 dark:text-[#F5F5F0]/70 hover:text-[#17231E] dark:hover:text-white'
             }`}
           >
@@ -104,7 +104,7 @@ export const AiDemo: React.FC = () => {
             onClick={() => setAiMode('vision')}
             className={`flex-1 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center space-x-2 transition-all ${
               aiMode === 'vision'
-                ? 'bg-white dark:bg-[#161616] text-[#159B5B] shadow-sm border border-[#159B5B]/30'
+                ? 'bg-white dark:bg-[#161616] text-[#159B5B] dark:text-orange-400 shadow-sm border border-[#159B5B]/30 dark:border-orange-500/40'
                 : 'text-[#17231E]/70 dark:text-[#F5F5F0]/70 hover:text-[#17231E] dark:hover:text-white'
             }`}
           >
@@ -127,8 +127,8 @@ export const AiDemo: React.FC = () => {
             <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-10 border border-[#EAE3D2] dark:border-white/10 shadow-sm">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <div className="inline-flex items-center space-x-2 bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 text-xs font-black px-3.5 py-1.5 rounded-full border border-[#159B5B]/20 dark:border-[#159B5B]/30 mb-2.5">
-                    <Cpu className="w-4 h-4 text-[#159B5B]" />
+                  <div className="inline-flex items-center space-x-2 bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 text-xs font-black px-3.5 py-1.5 rounded-full border border-[#159B5B]/20 dark:border-orange-500/30 mb-2.5">
+                    <Cpu className="w-4 h-4 text-[#159B5B] dark:text-orange-400" />
                     <span>REAL TENSORFLOW / KERAS INFERENCE ENGINE</span>
                   </div>
                   <h1 className="text-3xl sm:text-4xl font-black text-[#17231E] dark:text-white tracking-tight">
@@ -140,7 +140,7 @@ export const AiDemo: React.FC = () => {
                 </div>
                 
                 <div className="bg-[#17231E] text-white rounded-2xl p-4 text-xs border border-[#24332D] shadow-md space-y-1">
-                  <div className="font-black text-[#159B5B] dark:text-emerald-400 flex items-center space-x-1.5">
+                  <div className="font-black text-[#159B5B] dark:text-orange-400 flex items-center space-x-1.5">
                     <Cpu className="w-3.5 h-3.5" />
                     <span>resource_classifier.keras</span>
                   </div>
@@ -178,7 +178,7 @@ export const AiDemo: React.FC = () => {
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 placeholder="Describe your immediate need in plain words..."
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-4 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm font-medium focus:border-[#159B5B] dark:focus:border-[#159B5B] outline-none shadow-sm transition-all"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-4 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm font-medium focus:border-[#159B5B] dark:focus:border-[#F25C38] outline-none shadow-sm transition-all"
               />
             </div>
 
@@ -193,7 +193,7 @@ export const AiDemo: React.FC = () => {
                   max={50}
                   value={peopleCount}
                   onChange={(e) => setPeopleCount(Number(e.target.value))}
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-3 text-[#17231E] dark:text-[#F5F5F0] text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-3 text-[#17231E] dark:text-[#F5F5F0] text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#F25C38]"
                 />
               </div>
               <div>
@@ -205,7 +205,7 @@ export const AiDemo: React.FC = () => {
                   value={situation}
                   onChange={(e) => setSituation(e.target.value)}
                   placeholder="e.g. Living near Gandhipuram railway pavement."
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-3 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm font-medium outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-3 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm font-medium outline-none focus:border-[#159B5B] dark:focus:border-[#F25C38]"
                 />
               </div>
             </div>
@@ -214,7 +214,7 @@ export const AiDemo: React.FC = () => {
               <button
                 onClick={handleAnalyze}
                 disabled={isLoading || !inputText.trim()}
-                className="w-full sm:w-auto px-10 py-3.5 bg-[#159B5B] hover:bg-[#12834D] disabled:opacity-50 text-white font-black rounded-full shadow-md shadow-[#159B5B]/20 transition-all flex items-center justify-center space-x-2 text-xs uppercase tracking-wider"
+                className="w-full sm:w-auto px-10 py-3.5 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] disabled:opacity-50 text-white font-black rounded-full shadow-md shadow-[#159B5B]/20 dark:shadow-orange-950/30 transition-all flex items-center justify-center space-x-2 text-xs uppercase tracking-wider"
               >
                 {isLoading ? (
                   <>
@@ -236,23 +236,23 @@ export const AiDemo: React.FC = () => {
         {isLoading && (
           <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 border border-[#EAE3D2] dark:border-white/10 shadow-sm animate-in fade-in">
             <h3 className="text-xs font-black text-[#17231E] dark:text-[#F5F5F0] uppercase tracking-wider mb-4 flex items-center space-x-2">
-              <Activity className="w-4 h-4 text-[#159B5B] animate-pulse" />
+              <Activity className="w-4 h-4 text-[#159B5B] dark:text-orange-400 animate-pulse" />
               <span>Real-Time Inference Pipeline</span>
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 1 ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/40 text-[#159B5B] dark:text-emerald-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10 text-stone-400 dark:text-stone-500'}`}>
+              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 1 ? 'bg-[#E8F3E9] dark:bg-orange-950/40 border-[#159B5B]/40 dark:border-orange-500/40 text-[#159B5B] dark:text-orange-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10 text-stone-400 dark:text-stone-500'}`}>
                 <div className="text-xs font-black">1. Vectorization</div>
                 <div className="text-[11px] mt-1">Tokenizing input sequence</div>
               </div>
-              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 2 ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/40 text-[#159B5B] dark:text-emerald-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10 text-stone-400 dark:text-stone-500'}`}>
+              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 2 ? 'bg-[#E8F3E9] dark:bg-orange-950/40 border-[#159B5B]/40 dark:border-orange-500/40 text-[#159B5B] dark:text-orange-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10 text-stone-400 dark:text-stone-500'}`}>
                 <div className="text-xs font-black">2. DNN Forward Pass</div>
                 <div className="text-[11px] mt-1">Embedding & Dense Layers</div>
               </div>
               <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 3 ? 'bg-[#FEF6EA] dark:bg-amber-950/40 border-[#F2A33A]/40 dark:border-amber-900/40 text-[#F2A33A] dark:text-amber-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10 text-stone-400 dark:text-stone-500'}`}>
                 <div className="text-xs font-black">3. Urgency Scoring</div>
                 <div className="text-[11px] mt-1">Detecting trauma flags</div>
-              </div>
-              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 4 ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/40 text-[#159B5B] dark:text-emerald-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10 text-stone-400 dark:text-stone-500'}`}>
+                </div>
+              <div className={`p-4 rounded-2xl border transition-all ${analysisStep >= 4 ? 'bg-[#E8F3E9] dark:bg-orange-950/40 border-[#159B5B]/40 dark:border-orange-500/40 text-[#159B5B] dark:text-orange-300 shadow-sm' : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10 text-stone-400 dark:text-stone-500'}`}>
                 <div className="text-xs font-black">4. Geo-Matcher</div>
                 <div className="text-[11px] mt-1">Haversine distance ranking</div>
               </div>
@@ -281,7 +281,7 @@ export const AiDemo: React.FC = () => {
                     ⚡
                   </div>
                   <div>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-[#159B5B] dark:text-emerald-400 block">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#159B5B] dark:text-orange-400 block">
                       HUMANITARIAN PIPELINE • {result.model_version || 'v2.1.0'}
                     </span>
                     <h2 className="text-3xl font-black text-[#17231E] dark:text-white tracking-tight">{result.category}</h2>
@@ -291,7 +291,7 @@ export const AiDemo: React.FC = () => {
                 <div className="flex items-center space-x-4">
                   <div className="text-right">
                     <span className="text-[10px] font-black uppercase tracking-wider text-stone-400 dark:text-stone-500 block">CONFIDENCE</span>
-                    <div className="text-3xl font-black text-[#159B5B] dark:text-emerald-400">{result.confidence_percentage}%</div>
+                    <div className="text-3xl font-black text-[#159B5B] dark:text-orange-400">{result.confidence_percentage}%</div>
                   </div>
 
                   <div className="text-right">
@@ -311,7 +311,7 @@ export const AiDemo: React.FC = () => {
                 {/* 1. Category */}
                 <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0D0D0D] border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">1. CATEGORY</span>
-                  <span className="text-sm font-black text-[#159B5B] dark:text-emerald-400 mt-0.5 block">{result.category}</span>
+                  <span className="text-sm font-black text-[#159B5B] dark:text-orange-400 mt-0.5 block">{result.category}</span>
                 </div>
 
                 {/* 2. Urgency */}
@@ -349,13 +349,13 @@ export const AiDemo: React.FC = () => {
                 {/* 7. Action Decision */}
                 <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0D0D0D] border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">7. ACTION</span>
-                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400 mt-0.5 block">{result.confidence_action || 'CONTINUE'}</span>
+                  <span className="text-xs font-black text-emerald-600 dark:text-orange-400 mt-0.5 block">{result.confidence_action || 'CONTINUE'}</span>
                 </div>
 
                 {/* 8. Confidence */}
                 <div className="p-3.5 rounded-2xl bg-[#FFF9ED] dark:bg-[#0D0D0D] border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-[10px] font-black uppercase text-stone-400 dark:text-stone-500 block">8. CONFIDENCE</span>
-                  <span className="text-sm font-black text-[#159B5B] dark:text-emerald-400 mt-0.5 block">{result.confidence_percentage}%</span>
+                  <span className="text-sm font-black text-[#159B5B] dark:text-orange-400 mt-0.5 block">{result.confidence_percentage}%</span>
                 </div>
 
               </div>
@@ -389,12 +389,12 @@ export const AiDemo: React.FC = () => {
                         key={cat} 
                         className={`p-2.5 rounded-xl border text-center transition-all ${
                           isTop 
-                            ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B]/50 shadow-sm font-bold' 
+                            ? 'bg-[#E8F3E9] dark:bg-orange-950/40 border-[#159B5B]/50 dark:border-orange-500/40 shadow-sm font-bold' 
                             : 'bg-[#FFF9ED]/50 dark:bg-[#0D0D0D]/50 border-[#EAE3D2] dark:border-white/10'
                         }`}
                       >
                         <div className="text-[10px] font-black text-[#17231E] dark:text-[#F5F5F0] truncate">{cat}</div>
-                        <div className={`text-xs font-black mt-0.5 ${isTop ? 'text-[#159B5B] dark:text-emerald-400' : 'text-stone-400'}`}>
+                        <div className={`text-xs font-black mt-0.5 ${isTop ? 'text-[#159B5B] dark:text-orange-400' : 'text-stone-400'}`}>
                           {pct}%
                         </div>
                       </div>
@@ -412,7 +412,7 @@ export const AiDemo: React.FC = () => {
                   <h3 className="font-black text-[#17231E] dark:text-[#F5F5F0] text-xl tracking-tight">Matched Nearby Community Resources</h3>
                   <p className="text-xs text-[#17231E]/60 dark:text-[#F5F5F0]/60">Ranked using spherical distance (Haversine), category compatibility, and live capacity.</p>
                 </div>
-                <span className="text-xs font-bold bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 px-3.5 py-1 rounded-full border border-[#159B5B]/20 dark:border-[#159B5B]/30">
+                <span className="text-xs font-bold bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 px-3.5 py-1 rounded-full border border-[#159B5B]/20 dark:border-orange-500/30">
                   {result.matched_resources.length} Candidates Found
                 </span>
               </div>
@@ -422,17 +422,17 @@ export const AiDemo: React.FC = () => {
 
                   <div 
                     key={res.resource_id}
-                    className="p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-[#FFF9ED]/30 dark:bg-[#0D0D0D]/40 hover:border-[#159B5B] dark:hover:border-[#159B5B] transition-all"
+                    className="p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-[#FFF9ED]/30 dark:bg-[#0D0D0D]/40 hover:border-[#159B5B] dark:hover:border-[#F25C38] transition-all"
                   >
                     <div className="flex justify-between items-start">
                       <div>
                         <div className="flex items-center space-x-2">
-                          <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 border border-[#159B5B]/20 dark:border-[#159B5B]/30">
+                          <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 border border-[#159B5B]/20 dark:border-orange-500/30">
                             {res.organization_type}
                           </span>
                           {res.match_level && (
                             <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${
-                              res.match_level === 'HIGH' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' :
+                              res.match_level === 'HIGH' ? 'bg-emerald-100 text-emerald-800 dark:bg-orange-950 dark:text-orange-300 dark:border dark:border-orange-500/40' :
                               res.match_level === 'MEDIUM' ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300' :
                               'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'
                             }`}>
@@ -449,7 +449,7 @@ export const AiDemo: React.FC = () => {
                       
                       <div className="text-right">
                         <div className="text-[10px] font-black text-stone-400 dark:text-stone-500 uppercase">Match Score</div>
-                        <div className="text-2xl font-black text-[#159B5B] dark:text-emerald-400">
+                        <div className="text-2xl font-black text-[#159B5B] dark:text-orange-400">
                           {res.match_score}%
                         </div>
                       </div>
@@ -459,7 +459,7 @@ export const AiDemo: React.FC = () => {
                     {res.recommendation_reason && (
                       <div className={`mt-3 p-3.5 rounded-xl border text-xs whitespace-pre-line font-medium ${
                         res.match_score >= 60 && res.breakdown?.availability !== '✗ Currently Unavailable'
-                          ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/50 text-emerald-900 dark:text-emerald-200'
+                          ? 'bg-emerald-50 dark:bg-orange-950/40 border-emerald-200 dark:border-orange-500/40 text-emerald-900 dark:text-orange-200'
                           : 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/50 text-rose-900 dark:text-rose-200'
                       }`}>
                         <span className="font-black block uppercase tracking-wider text-[10px] opacity-75 mb-1">
@@ -492,7 +492,7 @@ export const AiDemo: React.FC = () => {
                       </div>
                       <div>
                         <span className="text-stone-400 dark:text-stone-500 text-[10px] uppercase font-bold block">Availability</span>
-                        <span className="font-bold text-[#159B5B] dark:text-emerald-400">{res.breakdown.availability}</span>
+                        <span className="font-bold text-[#159B5B] dark:text-orange-400">{res.breakdown.availability}</span>
                       </div>
                     </div>
 
@@ -503,11 +503,11 @@ export const AiDemo: React.FC = () => {
 
                     <div className="mt-4 flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-[#EAE3D2] dark:border-white/10 text-xs">
                       <span className="flex items-center text-[#17231E] dark:text-[#F5F5F0] font-semibold">
-                        <Phone className="w-3.5 h-3.5 mr-1.5 text-[#159B5B]" />
+                        <Phone className="w-3.5 h-3.5 mr-1.5 text-[#159B5B] dark:text-orange-400" />
                         {res.phone}
                       </span>
                       <div className="flex items-center gap-2">
-                        <span className="text-[#159B5B] dark:text-emerald-400 font-black hover:underline cursor-pointer flex items-center space-x-1">
+                        <span className="text-[#159B5B] dark:text-orange-400 font-black hover:underline cursor-pointer flex items-center space-x-1">
                           <span>Dispatch</span>
                           <ExternalLink className="w-3.5 h-3.5" />
                         </span>

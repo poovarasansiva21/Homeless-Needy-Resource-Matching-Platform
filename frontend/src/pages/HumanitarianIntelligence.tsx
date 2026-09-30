@@ -436,7 +436,7 @@ export const HumanitarianIntelligence: React.FC = () => {
                       </div>
                       <div>
                         <span className="text-[10px] text-stone-500 dark:text-stone-400 block font-bold">CAPACITY</span>
-                        <span className="font-extrabold text-emerald-600 dark:text-emerald-400">{gap.available_capacity}</span>
+                        <span className="font-extrabold text-emerald-600 dark:text-orange-400">{gap.available_capacity}</span>
                       </div>
                       <div>
                         <span className="text-[10px] text-stone-500 dark:text-stone-400 block font-bold">GAP</span>
@@ -687,7 +687,7 @@ export const HumanitarianIntelligence: React.FC = () => {
               </div>
 
               {shortage_alerts.alerts.length === 0 ? (
-                <div className="p-8 text-center bg-emerald-50 dark:bg-emerald-950/20 rounded-3xl border border-emerald-200 text-emerald-800 dark:text-emerald-300 font-bold text-sm">
+                <div className="p-8 text-center bg-emerald-50 dark:bg-orange-950/20 rounded-3xl border border-emerald-200 dark:border-orange-500/30 text-emerald-800 dark:text-orange-300 font-bold text-sm">
                   ✓ No critical resource shortages detected. Available resources currently cover all area demand.
                 </div>
               ) : (
@@ -781,14 +781,14 @@ export const HumanitarianIntelligence: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="p-5 rounded-3xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/40 space-y-1">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400 block">
+                <div className="p-5 rounded-3xl bg-emerald-50/70 dark:bg-orange-950/30 border border-emerald-200 dark:border-orange-500/40 space-y-1">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 dark:text-orange-400 block">
                     Confidence Level
                   </span>
-                  <span className="text-3xl font-black text-emerald-900 dark:text-emerald-200">
+                  <span className="text-3xl font-black text-emerald-900 dark:text-orange-200">
                     {demand_forecast.forecast_summary.confidence}
                   </span>
-                  <span className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 block mt-1">
+                  <span className="text-[11px] font-bold text-emerald-700 dark:text-orange-400 block mt-1">
                     Based on {demand_forecast.forecast_summary.historical_sample_size} real DB records
                   </span>
                 </div>
@@ -835,7 +835,7 @@ export const HumanitarianIntelligence: React.FC = () => {
                   </h3>
                 </div>
                 {/* Required compliance notice */}
-                <div className="p-3 bg-[#E8F3E9] dark:bg-[#159B5B]/20 border border-[#159B5B]/40 rounded-2xl text-[#0B4F3A] dark:text-emerald-300 text-xs font-black flex items-center space-x-2">
+                <div className="p-3 bg-[#E8F3E9] dark:bg-orange-950/40 border border-[#159B5B]/40 dark:border-orange-500/40 rounded-2xl text-[#0B4F3A] dark:text-orange-300 text-xs font-black flex items-center space-x-2">
                   <CheckCircle2 className="w-4 h-4 text-[#159B5B] shrink-0" />
                   <span>Notice: {ngo_planning.usage_notice}</span>
                 </div>

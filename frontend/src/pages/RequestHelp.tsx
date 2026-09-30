@@ -99,8 +99,8 @@ export const RequestHelp: React.FC = () => {
         
         {/* Editorial Charity Header */}
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center space-x-2 text-[11px] font-black uppercase tracking-widest text-[#159B5B] dark:text-emerald-400">
-            <span className="w-1.5 h-3.5 bg-[#159B5B] rounded-full inline-block" />
+          <div className="inline-flex items-center space-x-2 text-[11px] font-black uppercase tracking-widest text-[#159B5B] dark:text-orange-400">
+            <span className="w-1.5 h-3.5 bg-[#159B5B] dark:bg-orange-500 rounded-full inline-block" />
             <span>AI FOR COMMUNITY CARE</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black text-[#17231E] dark:text-white tracking-tight">
@@ -114,12 +114,12 @@ export const RequestHelp: React.FC = () => {
         {/* Successful Submission State */}
         {submissionResult ? (
           <div className="bg-white dark:bg-[#161616] rounded-3xl p-8 sm:p-10 border border-[#EAE3D2] dark:border-white/10 shadow-lg space-y-6 animate-in zoom-in-95 duration-300">
-            <div className="w-16 h-16 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 flex items-center justify-center mx-auto">
+            <div className="w-16 h-16 rounded-full bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-400 flex items-center justify-center mx-auto border dark:border-orange-500/30">
               <CheckCircle2 className="w-9 h-9" />
             </div>
 
             <div className="text-center space-y-1.5">
-              <span className="text-[11px] font-black uppercase tracking-wider text-[#159B5B] dark:text-emerald-400">
+              <span className="text-[11px] font-black uppercase tracking-wider text-[#159B5B] dark:text-orange-400">
                 AI Analysis Completed & Registered
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-[#17231E] dark:text-white">
@@ -134,7 +134,7 @@ export const RequestHelp: React.FC = () => {
             <div className="bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl p-5 border border-[#EAE3D2] dark:border-white/10 grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
               <div>
                 <span className="text-[10px] font-black text-stone-400 dark:text-stone-500 uppercase tracking-wider">AI Category</span>
-                <div className="text-lg font-black text-[#159B5B] dark:text-emerald-400 mt-0.5">
+                <div className="text-lg font-black text-[#159B5B] dark:text-orange-400 mt-0.5">
                   {submissionResult.ai_analysis.dnn_category}
                 </div>
               </div>
@@ -172,7 +172,7 @@ export const RequestHelp: React.FC = () => {
                       <div className="text-stone-500 dark:text-stone-400 text-[11px] mt-0.5">{res.organization_type} • {res.distance_km} km away</div>
                     </div>
                     <div className="text-right">
-                      <span className="font-black text-[#159B5B] dark:text-emerald-400 bg-[#E8F3E9] dark:bg-[#159B5B]/20 px-2.5 py-1 rounded-full text-[11px]">
+                      <span className="font-black text-[#159B5B] dark:text-orange-400 bg-[#E8F3E9] dark:bg-orange-950/40 border dark:border-orange-500/30 px-2.5 py-1 rounded-full text-[11px]">
                         {res.match_score}% Match
                       </span>
                     </div>
@@ -184,7 +184,7 @@ export const RequestHelp: React.FC = () => {
             <div className="pt-4 border-t border-[#EAE3D2] dark:border-white/10 flex flex-col sm:flex-row items-center justify-center gap-3">
               <button
                 onClick={() => navigate('/map')}
-                className="w-full sm:w-auto px-7 py-3 bg-[#159B5B] hover:bg-[#12834D] text-white font-black rounded-full text-xs uppercase tracking-wider transition-all hover:scale-105"
+                className="w-full sm:w-auto px-7 py-3 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white font-black rounded-full text-xs uppercase tracking-wider transition-all hover:scale-105"
               >
                 Track on Live Map
               </button>
@@ -222,7 +222,7 @@ export const RequestHelp: React.FC = () => {
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="e.g. Murugan S."
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-3.5 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] transition-all"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-3.5 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#F25C38] transition-all"
                 />
               </div>
 
@@ -236,7 +236,7 @@ export const RequestHelp: React.FC = () => {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="e.g. +91 91234 44004"
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-3.5 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] transition-all"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-3.5 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#F25C38] transition-all"
                 />
                 <span className="text-[10px] text-stone-400 dark:text-stone-500 mt-1 block">{t('request.privateContact')}</span>
               </div>
@@ -252,7 +252,7 @@ export const RequestHelp: React.FC = () => {
                     type="button"
                     onClick={handlePreviewAI}
                     disabled={isPreviewing || !description.trim()}
-                    className="text-xs text-[#159B5B] dark:text-emerald-400 hover:text-[#12834D] font-bold flex items-center space-x-1 disabled:opacity-50"
+                    className="text-xs text-[#159B5B] dark:text-orange-400 hover:text-[#12834D] dark:hover:text-orange-300 font-bold flex items-center space-x-1 disabled:opacity-50"
                   >
                     <Cpu className="w-3.5 h-3.5" />
                     <span>{isPreviewing ? t('request.analyzing') : t('request.analyze')}</span>
@@ -266,7 +266,7 @@ export const RequestHelp: React.FC = () => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Be as detailed as possible. e.g.: 'I have two children and we have not had food since yesterday. Stranded near railway track with no money.'"
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-4 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] transition-all"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-4 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#F25C38] transition-all"
               />
 
               {/* Multilingual Voice Input Integration */}
@@ -281,8 +281,8 @@ export const RequestHelp: React.FC = () => {
 
             {/* Live AI Preview Badge */}
             {previewData && (
-              <div className="p-4 bg-[#E8F3E9] dark:bg-[#159B5B]/20 border border-[#159B5B]/30 dark:border-[#159B5B]/40 rounded-2xl text-xs space-y-1.5 animate-in fade-in">
-                <div className="font-extrabold text-[#159B5B] dark:text-emerald-400 flex items-center space-x-1">
+              <div className="p-4 bg-[#E8F3E9] dark:bg-orange-950/40 border border-[#159B5B]/30 dark:border-orange-500/40 rounded-2xl text-xs space-y-1.5 animate-in fade-in">
+                <div className="font-extrabold text-[#159B5B] dark:text-orange-400 flex items-center space-x-1">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>AI Neural Preview:</span>
                 </div>
@@ -302,7 +302,7 @@ export const RequestHelp: React.FC = () => {
                 <select
                   value={statedCategory}
                   onChange={(e) => setStatedCategory(e.target.value)}
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 p-3 text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 p-3 text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#F25C38] bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0]"
                 >
                   {categories.map((c) => (
                     <option key={c} value={c}>{c}</option>
@@ -320,7 +320,7 @@ export const RequestHelp: React.FC = () => {
                   max={50}
                   value={peopleCount}
                   onChange={(e) => setPeopleCount(Number(e.target.value))}
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] p-3 text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] p-3 text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#F25C38]"
                 />
               </div>
 
@@ -331,7 +331,7 @@ export const RequestHelp: React.FC = () => {
                 <select
                   value={contactMethod}
                   onChange={(e) => setContactMethod(e.target.value)}
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 p-3 text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B] bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 p-3 text-sm font-semibold outline-none focus:border-[#159B5B] dark:focus:border-[#F25C38] bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0]"
                 >
                   <option value="Phone">Phone Call</option>
                   <option value="SMS">SMS / WhatsApp</option>
@@ -350,7 +350,7 @@ export const RequestHelp: React.FC = () => {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="e.g. Gandhipuram, Coimbatore"
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 p-3.5 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 p-3.5 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#F25C38]"
                 />
               </div>
 
@@ -363,21 +363,21 @@ export const RequestHelp: React.FC = () => {
                   value={situation}
                   onChange={(e) => setSituation(e.target.value)}
                   placeholder="e.g. Homeless on street, rain leaking"
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 p-3.5 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#159B5B]"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 p-3.5 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#F25C38]"
                 />
               </div>
             </div>
 
             {/* Privacy notice banner */}
             <div className="p-4 bg-[#FFF9ED] dark:bg-[#0D0D0D]/60 border border-[#EAE3D2] dark:border-white/10 rounded-2xl text-[11px] text-stone-500 dark:text-stone-400 flex items-start space-x-2.5">
-              <ShieldCheck className="w-4 h-4 text-[#159B5B] dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+              <ShieldCheck className="w-4 h-4 text-[#159B5B] dark:text-orange-400 flex-shrink-0 mt-0.5" />
               <span>Public and donor views only display approximate generalized coordinates to protect vulnerable individuals. Exact address is restricted to verified NGOs and Admins.</span>
             </div>
 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-4 bg-[#159B5B] hover:bg-[#12834D] disabled:opacity-50 text-white font-black rounded-full shadow-md shadow-[#159B5B]/20 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center space-x-2 text-xs uppercase tracking-wider"
+              className="w-full py-4 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] disabled:opacity-50 text-white font-black rounded-full shadow-md shadow-[#159B5B]/20 dark:shadow-orange-950/30 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center space-x-2 text-xs uppercase tracking-wider"
             >
               <Send className="w-4 h-4" />
               <span>{isSubmitting ? t('request.submitting') : t('request.submit')}</span>

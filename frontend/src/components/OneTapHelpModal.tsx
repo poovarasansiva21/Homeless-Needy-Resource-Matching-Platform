@@ -302,7 +302,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                     <span className="text-lg">📍</span>
                     <span>{t('oneTap.nearbyHelpFound')} ({result.matched_resources?.length || 0})</span>
                   </div>
-                  <span className="text-[10px] font-bold text-[#159B5B] bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-full border border-[#159B5B]/20">
+                  <span className="text-[10px] font-bold text-[#159B5B] dark:text-orange-300 bg-emerald-50 dark:bg-orange-950/60 px-2.5 py-1 rounded-full border border-[#159B5B]/20 dark:border-orange-500/40">
                     AI Matched & Verified
                   </span>
                 </div>
@@ -316,7 +316,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                       <div className="space-y-1">
                         <div className="font-extrabold text-[#17231E] dark:text-white text-sm flex items-center space-x-2">
                           <span>{res.resource_name}</span>
-                          <span className="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-[#159B5B] dark:text-emerald-300 text-[10px] font-black">
+                          <span className="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-orange-950/60 text-[#159B5B] dark:text-orange-300 text-[10px] font-black border dark:border-orange-500/30">
                             {res.match_score}% Match
                           </span>
                         </div>
@@ -334,7 +334,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                         {res.phone && (
                           <a
                             href={`tel:${res.phone}`}
-                            className="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl flex items-center space-x-1.5 shadow-sm"
+                            className="px-3 py-2 bg-emerald-600 dark:bg-[#F25C38] hover:bg-emerald-700 dark:hover:bg-[#d94e2b] text-white font-bold text-xs rounded-xl flex items-center space-x-1.5 shadow-sm"
                           >
                             <Phone className="w-3.5 h-3.5" />
                             <span>Call</span>
@@ -346,7 +346,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                           rel="noreferrer"
                           className="px-3 py-2 bg-stone-100 dark:bg-[#262626] hover:bg-stone-200 dark:hover:bg-[#333333] text-[#17231E] dark:text-white font-bold text-xs rounded-xl flex items-center space-x-1 border border-stone-300 dark:border-stone-700"
                         >
-                          <Navigation className="w-3.5 h-3.5 text-[#159B5B]" />
+                          <Navigation className="w-3.5 h-3.5 text-[#159B5B] dark:text-orange-400" />
                           <span>Map</span>
                         </a>
                       </div>
@@ -435,7 +435,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                   <button
                     type="button"
                     onClick={() => handleApplyPreset('Need a safe shelter to stay tonight', 'SHELTER')}
-                    className="p-3 rounded-2xl bg-white dark:bg-[#161616] hover:bg-emerald-50 dark:hover:bg-emerald-950/30 border border-[#EAE3D2] dark:border-white/10 text-left text-xs font-extrabold text-[#17231E] dark:text-white flex items-center space-x-2 transition-all"
+                    className="p-3 rounded-2xl bg-white dark:bg-[#161616] hover:bg-emerald-50 dark:hover:bg-orange-950/40 border border-[#EAE3D2] dark:border-white/10 text-left text-xs font-extrabold text-[#17231E] dark:text-white flex items-center space-x-2 transition-all"
                   >
                     <span className="text-xl">⛺</span>
                     <span className="line-clamp-1">{t('oneTap.presetShelter')}</span>
@@ -469,7 +469,7 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Tap microphone below to speak, or type here..."
-                  className="w-full rounded-2xl border-2 border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-4 text-[#17231E] dark:text-white placeholder-stone-400 text-sm outline-none focus:border-[#159B5B]"
+                  className="w-full rounded-2xl border-2 border-[#EAE3D2] dark:border-white/10 bg-white dark:bg-[#0D0D0D] p-4 text-[#17231E] dark:text-white placeholder-stone-400 text-sm outline-none focus:border-[#159B5B] dark:focus:border-[#F25C38]"
                 />
 
                 {/* REAL Voice Recognition Integration */}
@@ -482,14 +482,14 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                   
                   {/* Optional Image Picker */}
                   <label className="cursor-pointer px-3.5 py-2 rounded-2xl bg-stone-100 hover:bg-stone-200 dark:bg-[#262626] dark:hover:bg-[#292929] text-stone-700 dark:text-stone-300 text-xs font-bold flex items-center space-x-1.5 border border-stone-300 dark:border-stone-700">
-                    <Camera className="w-4 h-4 text-[#159B5B]" />
+                    <Camera className="w-4 h-4 text-[#159B5B] dark:text-orange-400" />
                     <span>{photo ? t('oneTap.photoSelected') : t('oneTap.optionalPhoto')}</span>
                     <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
                   </label>
                 </div>
 
                 {photoPreview && (
-                  <div className="relative w-20 h-20 rounded-xl overflow-hidden border-2 border-[#159B5B] mt-2">
+                  <div className="relative w-20 h-20 rounded-xl overflow-hidden border-2 border-[#159B5B] dark:border-[#F25C38] mt-2">
                     <img src={photoPreview} alt="Attached" className="w-full h-full object-cover" />
                     <button
                       type="button"
@@ -515,8 +515,8 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                       onClick={() => setPeopleCount(count)}
                       className={`h-12 rounded-2xl font-black text-sm flex items-center justify-center space-x-1 transition-all cursor-pointer border ${
                         peopleCount === count
-                          ? 'bg-[#159B5B] text-white border-[#159B5B] shadow-md scale-105'
-                          : 'bg-white dark:bg-[#161616] text-[#17231E] dark:text-white border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B]'
+                          ? 'bg-[#159B5B] dark:bg-[#F25C38] text-white border-[#159B5B] dark:border-[#F25C38] shadow-md scale-105'
+                          : 'bg-white dark:bg-[#161616] text-[#17231E] dark:text-white border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#F25C38]'
                       }`}
                     >
                       <span>{count === 5 ? '👨‍👩‍👧‍👦 5+' : count === 1 ? '👤 1' : count === 2 ? '👫 2' : count === 3 ? '👨‍👩‍👧 3' : '👨‍👩‍👧‍👦 4'}</span>
@@ -545,8 +545,8 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                     disabled={locationStatus === 'locating'}
                     className={`h-12 px-5 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center justify-center space-x-2 transition-all shadow-md shrink-0 ${
                       locationStatus === 'success'
-                        ? 'bg-emerald-600 text-white shadow-emerald-600/30'
-                        : 'bg-gradient-to-r from-[#159B5B] to-[#12834D] hover:from-[#12834D] hover:to-[#0F6C3F] text-white shadow-[#159B5B]/30 hover:scale-105 active:scale-95'
+                        ? 'bg-emerald-600 dark:bg-[#F25C38] text-white shadow-emerald-600/30 dark:shadow-orange-950/30'
+                        : 'bg-gradient-to-r from-[#159B5B] to-[#12834D] dark:from-[#F25C38] dark:to-[#d94e2b] hover:from-[#12834D] hover:to-[#0F6C3F] dark:hover:from-[#d94e2b] dark:hover:to-[#c43e1c] text-white shadow-[#159B5B]/30 dark:shadow-orange-950/30 hover:scale-105 active:scale-95'
                     }`}
                   >
                     {locationStatus === 'locating' ? (

@@ -409,7 +409,7 @@ export const LiveMap: React.FC = () => {
         <div className="p-4 border-b border-[#EAE3D2] dark:border-white/10 space-y-3 shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-[#E8F3E9] dark:bg-[#159B5B]/20 flex items-center justify-center text-[#159B5B] dark:text-emerald-400">
+              <div className="w-8 h-8 rounded-full bg-[#E8F3E9] dark:bg-orange-950/40 flex items-center justify-center text-[#159B5B] dark:text-orange-400 border dark:border-orange-500/30">
                 <MapPin className="w-4 h-4" />
               </div>
               <div>
@@ -431,7 +431,7 @@ export const LiveMap: React.FC = () => {
             <button
               type="button"
               onClick={handleUseCurrentLocation}
-              className="w-full py-2.5 px-4 bg-[#159B5B] hover:bg-[#12834D] text-white text-xs font-black uppercase tracking-wider rounded-xl shadow-sm hover:shadow transition-all flex items-center justify-center space-x-2 hover:scale-[1.01] active:scale-[0.99]"
+              className="w-full py-2.5 px-4 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white text-xs font-black uppercase tracking-wider rounded-xl shadow-sm hover:shadow transition-all flex items-center justify-center space-x-2 hover:scale-[1.01] active:scale-[0.99]"
             >
               <Navigation className="w-3.5 h-3.5" />
               <span>{t('map.currentLocation')}</span>
@@ -446,15 +446,15 @@ export const LiveMap: React.FC = () => {
           )}
 
           {locationStatus === 'success' && (
-            <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/40 text-xs">
-              <div className="flex items-center justify-between text-emerald-800 dark:text-emerald-300 font-bold mb-1.5">
+            <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-orange-950/40 border border-emerald-200 dark:border-orange-500/40 text-xs">
+              <div className="flex items-center justify-between text-emerald-800 dark:text-orange-300 font-bold mb-1.5">
                 <span className="flex items-center space-x-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-orange-400" />
                     <span>✓ {t('map.active')}</span>
                 </span>
                 <button 
                   onClick={handleUseCurrentLocation}
-                  className="text-[10px] text-emerald-600 dark:text-emerald-400 hover:underline flex items-center space-x-0.5"
+                  className="text-[10px] text-emerald-600 dark:text-orange-400 hover:underline flex items-center space-x-0.5"
                 >
                   <RefreshCw className="w-3 h-3 mr-0.5" />
                   <span>{t('common.update')}</span>
@@ -469,7 +469,7 @@ export const LiveMap: React.FC = () => {
                       onClick={() => handleRadiusChange(r)}
                       className={`px-2 py-0.5 rounded-full text-[10px] font-black transition-all ${
                         radiusKm === r
-                          ? 'bg-[#159B5B] text-white'
+                          ? 'bg-[#159B5B] dark:bg-[#F25C38] text-white'
                           : 'bg-white dark:bg-[#161616] border border-[#EAE3D2] dark:border-white/10 text-stone-600 dark:text-stone-300'
                       }`}
                     >
@@ -558,8 +558,8 @@ export const LiveMap: React.FC = () => {
               }}
               className={`p-3.5 rounded-2xl border cursor-pointer transition-all ${
                 selectedRequest?.id === req.id 
-                  ? 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 border-[#159B5B] shadow-sm' 
-                  : 'bg-white dark:bg-[#161616] border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#159B5B]'
+                  ? 'bg-[#E8F3E9] dark:bg-orange-950/40 border-[#159B5B] dark:border-orange-500/40 shadow-sm' 
+                  : 'bg-white dark:bg-[#161616] border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B] dark:hover:border-[#F25C38]'
               }`}
             >
               <div className="flex justify-between items-start">
@@ -591,7 +591,7 @@ export const LiveMap: React.FC = () => {
 
               <div className="mt-2.5 pt-2 border-t border-[#EAE3D2]/60 dark:border-white/10 flex items-center justify-between text-[10px] text-stone-500 dark:text-stone-400">
                 <span>{req.people_count} people</span>
-                <span className="capitalize font-semibold text-[#159B5B] dark:text-emerald-400">{req.status.replace('_', ' ')}</span>
+                <span className="capitalize font-semibold text-[#159B5B] dark:text-orange-400">{req.status.replace('_', ' ')}</span>
               </div>
               
               {/* Touch Current Location Directions Shortcut */}
@@ -601,7 +601,7 @@ export const LiveMap: React.FC = () => {
                   e.stopPropagation();
                   handleGetDirections(req.latitude, req.longitude);
                 }}
-                className="mt-2.5 w-full py-1.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-extrabold text-[11px] flex items-center justify-center space-x-1.5 shadow-sm active:scale-95 transition-all"
+                className="mt-2.5 w-full py-1.5 px-3 bg-emerald-600 dark:bg-[#F25C38] hover:bg-emerald-700 dark:hover:bg-[#d94e2b] text-white rounded-xl font-extrabold text-[11px] flex items-center justify-center space-x-1.5 shadow-sm active:scale-95 transition-all"
               >
                 <Navigation className="w-3.5 h-3.5 text-white animate-pulse" />
                 <span>🧭 Directions (From My Current Location)</span>
@@ -739,7 +739,7 @@ export const LiveMap: React.FC = () => {
             className="absolute bottom-5 right-5 z-[400] px-3.5 py-2 bg-white dark:bg-[#161616] hover:bg-[#FFF9ED] dark:hover:bg-[#262626] text-[#17231E] dark:text-[#F5F5F0] rounded-full shadow-lg border border-[#EAE3D2] dark:border-white/10 font-bold text-xs flex items-center space-x-1.5 transition-transform hover:scale-105"
             title="Recenter Map View"
           >
-            <Navigation className="w-3.5 h-3.5 text-[#159B5B]" />
+            <Navigation className="w-3.5 h-3.5 text-[#159B5B] dark:text-orange-400" />
             <span>{userLocation ? 'My Location' : 'Coimbatore Center'}</span>
           </button>
 
@@ -805,7 +805,7 @@ export const LiveMap: React.FC = () => {
                 </div>
                 <div className="p-3 bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-stone-400 dark:text-stone-500 text-[10px] uppercase font-black block">Status</span>
-                  <span className="font-bold text-[#159B5B] dark:text-emerald-400 text-sm">{selectedRequest.status.replace('_', ' ')}</span>
+                  <span className="font-bold text-[#159B5B] dark:text-orange-400 text-sm">{selectedRequest.status.replace('_', ' ')}</span>
                 </div>
               </div>
 
@@ -817,7 +817,7 @@ export const LiveMap: React.FC = () => {
               <div className="pt-3 border-t border-[#EAE3D2] dark:border-white/10 space-y-2">
                 <a
                   href={`/donor/dashboard`}
-                  className="w-full block py-3 bg-[#159B5B] hover:bg-[#12834D] text-white font-black text-xs uppercase tracking-wider rounded-full text-center shadow-sm transition-all"
+                  className="w-full block py-3 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white font-black text-xs uppercase tracking-wider rounded-full text-center shadow-sm transition-all"
                 >
                   Pledge Donation / Assistance
                 </a>
@@ -833,7 +833,7 @@ export const LiveMap: React.FC = () => {
 
           {selectedResource && (
             <div className="mt-4 space-y-4 text-xs">
-              <div className="p-2.5 bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-300 rounded-2xl border border-[#159B5B]/20 dark:border-[#159B5B]/30 font-bold flex items-center justify-between">
+              <div className="p-2.5 bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 rounded-2xl border border-[#159B5B]/20 dark:border-orange-500/30 font-bold flex items-center justify-between">
                 <span>{selectedResource.organization_type} • {selectedResource.category}</span>
                 {selectedResource.distance_km !== undefined && (
                   <span className="text-cyan-700 dark:text-cyan-300">📍 {selectedResource.distance_km} km</span>
@@ -845,7 +845,7 @@ export const LiveMap: React.FC = () => {
               <div className="grid grid-cols-2 gap-2">
                 <div className="p-3 bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-stone-400 dark:text-stone-500 text-[10px] uppercase font-black block">Available Capacity</span>
-                  <span className="font-bold text-[#159B5B] dark:text-emerald-400 text-sm">{selectedResource.capacity_available} / {selectedResource.capacity_total}</span>
+                  <span className="font-bold text-[#159B5B] dark:text-orange-400 text-sm">{selectedResource.capacity_available} / {selectedResource.capacity_total}</span>
                 </div>
                 <div className="p-3 bg-[#FFF9ED] dark:bg-[#0D0D0D] rounded-2xl border border-[#EAE3D2] dark:border-white/10">
                   <span className="text-stone-400 dark:text-stone-500 text-[10px] uppercase font-black block">Status</span>
@@ -859,7 +859,7 @@ export const LiveMap: React.FC = () => {
               </div>
 
               <div className="flex items-center text-[#17231E] dark:text-[#F5F5F0] font-semibold">
-                <Phone className="w-3.5 h-3.5 mr-1.5 text-[#159B5B] dark:text-emerald-400" />
+                <Phone className="w-3.5 h-3.5 mr-1.5 text-[#159B5B] dark:text-orange-400" />
                 <a href={`tel:${selectedResource.phone}`} className="hover:underline">{selectedResource.phone}</a>
               </div>
 
@@ -869,7 +869,7 @@ export const LiveMap: React.FC = () => {
                   href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation ? `${userLocation.lat},${userLocation.lng}` : ''}&destination=${selectedResource.latitude},${selectedResource.longitude}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center space-x-2 py-3 bg-[#159B5B] hover:bg-[#12834D] text-white font-black text-xs uppercase tracking-wider rounded-xl text-center shadow-sm shadow-emerald-500/20 transition-all hover:scale-[1.02] cursor-pointer"
+                  className="w-full flex items-center justify-center space-x-2 py-3 bg-[#159B5B] hover:bg-[#12834D] dark:bg-[#F25C38] dark:hover:bg-[#d94e2b] text-white font-black text-xs uppercase tracking-wider rounded-xl text-center shadow-sm shadow-orange-500/20 transition-all hover:scale-[1.02] cursor-pointer"
                 >
                   <Navigation className="w-4 h-4" />
                   <span>Start Turn-by-Turn Navigation</span>

@@ -52,7 +52,7 @@ export const VoiceInputButton: React.FC<VoiceInputButtonProps> = ({
           className={`relative min-w-[44px] min-h-[44px] px-3.5 py-2 rounded-2xl font-bold text-xs flex items-center justify-center space-x-2 transition-all duration-200 border shadow-sm ${
             isListening
               ? 'bg-rose-600 hover:bg-rose-700 text-white border-rose-500 shadow-rose-500/30 animate-pulse ring-4 ring-rose-400/20'
-              : 'bg-[#E8F3E9] dark:bg-[#159B5B]/20 text-[#159B5B] dark:text-emerald-400 border-[#159B5B]/30 hover:bg-[#159B5B] hover:text-white dark:hover:bg-[#159B5B] dark:hover:text-white'
+              : 'bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-400 border-[#159B5B]/30 dark:border-orange-500/40 hover:bg-[#159B5B] hover:text-white dark:hover:bg-[#F25C38] dark:hover:text-white'
           } ${className}`}
         >
           {isListening ? (

@@ -137,14 +137,14 @@ const AuthSceneLayout: React.FC<{
 
         {/* Subtle AR Resource Telemetry Badges in screen perimeter (desktop) */}
         {/* Top-Left: Food Supply Node */}
-        <div className="hidden lg:flex items-center space-x-2.5 absolute top-20 left-10 xl:left-24 px-4 py-2 rounded-2xl bg-white/80 dark:bg-[#0D0D0D]/85 backdrop-blur-md border border-emerald-500/30 dark:border-emerald-500/40 shadow-lg text-[11px] font-bold text-[#17231E] dark:text-[#F5F5F0] animate-float">
-          <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+        <div className="hidden lg:flex items-center space-x-2.5 absolute top-20 left-10 xl:left-24 px-4 py-2 rounded-2xl bg-white/80 dark:bg-[#0D0D0D]/85 backdrop-blur-md border border-emerald-500/30 dark:border-orange-500/40 shadow-lg text-[11px] font-bold text-[#17231E] dark:text-[#F5F5F0] animate-float">
+          <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-orange-400 flex items-center justify-center">
             <Utensils className="w-3 h-3" />
           </div>
           <div>
             <div className="flex items-center space-x-1.5 leading-none">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-              <span className="text-emerald-700 dark:text-emerald-400 font-extrabold">Food Distribution Hub</span>
+              <span className="text-emerald-700 dark:text-orange-400 font-extrabold">Food Distribution Hub</span>
             </div>
             <span className="text-[10px] text-stone-500 dark:text-stone-400 font-normal">0.6 km • 140 Fresh Meals Ready</span>
           </div>
@@ -193,15 +193,15 @@ const AuthSceneLayout: React.FC<{
         </div>
 
         {/* Subtle AI Matching HUD overlay telemetry stamp */}
-        <div className="hidden md:flex items-center space-x-3 absolute bottom-6 left-8 text-[10px] font-mono font-medium text-emerald-900/60 dark:text-emerald-400/60 tracking-wider">
+        <div className="hidden md:flex items-center space-x-3 absolute bottom-6 left-8 text-[10px] font-mono font-medium text-emerald-900/60 dark:text-orange-400/60 tracking-wider">
           <span className="inline-flex items-center space-x-1">
-            <Radio className="w-3 h-3 animate-pulse text-emerald-600 dark:text-emerald-400" />
+            <Radio className="w-3 h-3 animate-pulse text-emerald-600 dark:text-orange-400" />
             <span>GEO MATCH GRID: COIMBATORE TAMIL NADU</span>
           </span>
           <span>•</span>
           <span>DNN LATENCY: 38ms</span>
           <span>•</span>
-          <span className="text-emerald-600 dark:text-emerald-400 font-bold">100% SECURE TLS</span>
+          <span className="text-emerald-600 dark:text-orange-400 font-bold">100% SECURE TLS</span>
         </div>
 
       </div>
@@ -217,9 +217,9 @@ const AuthSceneLayout: React.FC<{
             bg-white/90 dark:bg-[#0D0D0D]/90 
             backdrop-blur-md sm:backdrop-blur-xl
             rounded-[2rem] sm:rounded-[2.25rem] 
-            border border-white/80 dark:border-emerald-500/25 
+            border border-white/80 dark:border-orange-500/25 
             shadow-[0_15px_45px_-10px_rgba(5,150,105,0.18),inset_0_1px_1px_rgba(255,255,255,0.85)] 
-            dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(16,185,129,0.25)] 
+            dark:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(242,92,56,0.25)] 
             p-4 sm:p-8 lg:p-10 
             transition-all duration-300
           "
@@ -228,8 +228,8 @@ const AuthSceneLayout: React.FC<{
           <div className="text-center space-y-2 mb-6">
             
             {/* Top Chip */}
-            <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-500/25 text-emerald-700 dark:text-emerald-300 text-[10px] font-black uppercase tracking-widest backdrop-blur-sm">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 animate-pulse" />
+            <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 dark:bg-orange-950/40 border border-emerald-500/25 dark:border-orange-500/30 text-emerald-700 dark:text-orange-300 text-[10px] font-black uppercase tracking-widest backdrop-blur-sm">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-orange-400 animate-pulse" />
               <span>{badgeText}</span>
             </div>
 
@@ -319,10 +319,10 @@ export const LoginPage: React.FC = () => {
         <div className="space-y-2.5">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-black text-stone-500 dark:text-stone-400 uppercase tracking-wider flex items-center space-x-1.5">
-              <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+              <Sparkles className="w-3 h-3 text-emerald-600 dark:text-orange-400" />
               <span>1-Click Academic Demo Logins:</span>
             </span>
-            <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold uppercase tracking-wider">
+            <span className="text-[10px] text-emerald-700 dark:text-orange-400 font-bold uppercase tracking-wider">
               Instant Access
             </span>
           </div>
@@ -331,9 +331,9 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleQuickLogin('admin')}
-              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/70 dark:bg-[#0D0D0D]/70 hover:bg-emerald-50/80 dark:hover:bg-[#0F261F] hover:border-emerald-500/40 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold text-left transition-all shadow-sm group"
+              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/70 dark:bg-[#0D0D0D]/70 hover:bg-emerald-50/80 dark:hover:bg-[#25150F] hover:border-emerald-500/40 dark:hover:border-orange-500/40 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold text-left transition-all shadow-sm group"
             >
-              <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-emerald-300 font-extrabold group-hover:text-emerald-600 transition-colors">
+              <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-orange-300 font-extrabold group-hover:text-emerald-600 dark:group-hover:text-orange-400 transition-colors">
                 <span>👑</span>
                 <span>Admin Portal</span>
               </div>
@@ -345,9 +345,9 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleQuickLogin('ngo')}
-              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/70 dark:bg-[#0D0D0D]/70 hover:bg-emerald-50/80 dark:hover:bg-[#0F261F] hover:border-emerald-500/40 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold text-left transition-all shadow-sm group"
+              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/70 dark:bg-[#0D0D0D]/70 hover:bg-emerald-50/80 dark:hover:bg-[#25150F] hover:border-emerald-500/40 dark:hover:border-orange-500/40 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold text-left transition-all shadow-sm group"
             >
-              <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-emerald-300 font-extrabold group-hover:text-emerald-600 transition-colors">
+              <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-orange-300 font-extrabold group-hover:text-emerald-600 dark:group-hover:text-orange-400 transition-colors">
                 <span>🏛️</span>
                 <span>NGO Coordinator</span>
               </div>
@@ -359,9 +359,9 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleQuickLogin('donor')}
-              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/70 dark:bg-[#0D0D0D]/70 hover:bg-emerald-50/80 dark:hover:bg-[#0F261F] hover:border-emerald-500/40 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold text-left transition-all shadow-sm group"
+              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/70 dark:bg-[#0D0D0D]/70 hover:bg-emerald-50/80 dark:hover:bg-[#25150F] hover:border-emerald-500/40 dark:hover:border-orange-500/40 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold text-left transition-all shadow-sm group"
             >
-              <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-emerald-300 font-extrabold group-hover:text-emerald-600 transition-colors">
+              <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-orange-300 font-extrabold group-hover:text-emerald-600 dark:group-hover:text-orange-400 transition-colors">
                 <span>❤️</span>
                 <span>Donor / Volunteer</span>
               </div>
@@ -373,9 +373,9 @@ export const LoginPage: React.FC = () => {
             <button
               type="button"
               onClick={() => handleQuickLogin('requester')}
-              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/70 dark:bg-[#0D0D0D]/70 hover:bg-emerald-50/80 dark:hover:bg-[#0F261F] hover:border-emerald-500/40 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold text-left transition-all shadow-sm group"
+              className="p-3 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/70 dark:bg-[#0D0D0D]/70 hover:bg-emerald-50/80 dark:hover:bg-[#25150F] hover:border-emerald-500/40 dark:hover:border-orange-500/40 text-[#17231E] dark:text-[#F5F5F0] text-xs font-bold text-left transition-all shadow-sm group"
             >
-              <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-emerald-300 font-extrabold group-hover:text-emerald-600 transition-colors">
+              <div className="flex items-center space-x-1.5 text-emerald-800 dark:text-orange-300 font-extrabold group-hover:text-emerald-600 dark:group-hover:text-orange-400 transition-colors">
                 <span>👤</span>
                 <span>Needy Requester</span>
               </div>
@@ -408,7 +408,7 @@ export const LoginPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="e.g. admin@sahaayaa.org"
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-3 pl-11 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-3 pl-11 pr-4 outline-none focus:border-emerald-500 dark:focus:border-[#F25C38] focus:ring-2 focus:ring-emerald-500/20 dark:focus:ring-orange-500/20 transition-all font-medium"
               />
               <Mail className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-4 top-1/2 -translate-y-1/2" />
             </div>
@@ -425,7 +425,7 @@ export const LoginPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-3 pl-11 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-3 pl-11 pr-4 outline-none focus:border-emerald-500 dark:focus:border-[#F25C38] focus:ring-2 focus:ring-emerald-500/20 dark:focus:ring-orange-500/20 transition-all font-medium"
               />
               <Lock className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-4 top-1/2 -translate-y-1/2" />
             </div>
@@ -434,7 +434,7 @@ export const LoginPage: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3.5 bg-gradient-to-r from-[#159B5B] via-emerald-600 to-[#12834D] hover:from-emerald-500 hover:to-teal-600 text-white font-black rounded-full shadow-lg shadow-emerald-600/25 hover:shadow-xl transition-all hover:scale-[1.01] active:scale-[0.99] text-xs uppercase tracking-wider flex items-center justify-center space-x-2"
+            className="w-full py-3.5 bg-gradient-to-r from-[#159B5B] via-emerald-600 to-[#12834D] hover:from-emerald-500 hover:to-teal-600 dark:from-[#F25C38] dark:to-[#d94e2b] dark:hover:from-[#d94e2b] dark:hover:to-[#c43e1c] text-white font-black rounded-full shadow-lg shadow-emerald-600/25 dark:shadow-orange-950/30 hover:shadow-xl transition-all hover:scale-[1.01] active:scale-[0.99] text-xs uppercase tracking-wider flex items-center justify-center space-x-2"
           >
             {isLoading ? (
               <span>Authenticating Securely...</span>
@@ -449,7 +449,7 @@ export const LoginPage: React.FC = () => {
 
         <div className="text-center text-xs text-stone-500 dark:text-stone-400 pt-1">
           Don't have an account yet?{' '}
-          <Link to="/register" className="font-extrabold text-[#159B5B] dark:text-emerald-400 hover:underline">
+          <Link to="/register" className="font-extrabold text-[#159B5B] dark:text-orange-400 hover:underline">
             Register New Account
           </Link>
         </div>
@@ -524,7 +524,7 @@ export const RegisterPage: React.FC = () => {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="e.g. Ramesh Kumar"
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-[#F25C38] focus:ring-2 focus:ring-emerald-500/20 dark:focus:ring-orange-500/20 transition-all font-medium"
               />
               <User className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
             </div>
@@ -541,7 +541,7 @@ export const RegisterPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="e.g. ramesh@gmail.com"
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-[#F25C38] focus:ring-2 focus:ring-emerald-500/20 dark:focus:ring-orange-500/20 transition-all font-medium"
               />
               <Mail className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
             </div>
@@ -558,7 +558,7 @@ export const RegisterPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20 transition-all font-medium"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-[#F25C38] focus:ring-2 focus:ring-emerald-500/20 dark:focus:ring-orange-500/20 transition-all font-medium"
               />
               <Lock className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
             </div>
@@ -572,7 +572,7 @@ export const RegisterPage: React.FC = () => {
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value as UserRole)}
-                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] py-2.5 px-3 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 font-semibold"
+                className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] py-2.5 px-3 outline-none focus:border-emerald-500 dark:focus:border-[#F25C38] font-semibold"
               >
                 <option value="requester">Needy Requester</option>
                 <option value="donor">Donor / Volunteer</option>
@@ -590,7 +590,7 @@ export const RegisterPage: React.FC = () => {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+91 94444 11223"
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-9 pr-3 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 font-medium"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-9 pr-3 outline-none focus:border-emerald-500 dark:focus:border-[#F25C38] font-medium"
                 />
                 <Phone className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
               </div>
@@ -609,7 +609,7 @@ export const RegisterPage: React.FC = () => {
                   value={orgName}
                   onChange={(e) => setOrgName(e.target.value)}
                   placeholder="e.g. Coimbatore Seva Trust"
-                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-emerald-400 font-medium"
+                  className="w-full rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-white/80 dark:bg-[#0D0D0D]/80 text-[#17231E] dark:text-[#F5F5F0] placeholder-stone-400 dark:placeholder-stone-500 py-2.5 pl-10 pr-4 outline-none focus:border-emerald-500 dark:focus:border-[#F25C38] font-medium"
                 />
                 <Building className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
               </div>
@@ -619,7 +619,7 @@ export const RegisterPage: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3.5 bg-gradient-to-r from-[#159B5B] via-emerald-600 to-[#12834D] hover:from-emerald-500 hover:to-teal-600 text-white font-black rounded-full shadow-lg shadow-emerald-600/25 transition-all hover:scale-[1.01] active:scale-[0.99] text-xs uppercase tracking-wider flex items-center justify-center space-x-2 mt-2"
+            className="w-full py-3.5 bg-gradient-to-r from-[#159B5B] via-emerald-600 to-[#12834D] hover:from-emerald-500 hover:to-teal-600 dark:from-[#F25C38] dark:to-[#d94e2b] dark:hover:from-[#d94e2b] dark:hover:to-[#c43e1c] text-white font-black rounded-full shadow-lg shadow-emerald-600/25 dark:shadow-orange-950/30 transition-all hover:scale-[1.01] active:scale-[0.99] text-xs uppercase tracking-wider flex items-center justify-center space-x-2 mt-2"
           >
             {isLoading ? (
               <span>Creating Account...</span>
@@ -634,7 +634,7 @@ export const RegisterPage: React.FC = () => {
 
         <div className="text-center text-xs text-stone-500 dark:text-stone-400 pt-2">
           Already registered?{' '}
-          <Link to="/login" className="font-extrabold text-[#159B5B] dark:text-emerald-400 hover:underline">
+          <Link to="/login" className="font-extrabold text-[#159B5B] dark:text-orange-400 hover:underline">
             Sign In Here
           </Link>
         </div>
