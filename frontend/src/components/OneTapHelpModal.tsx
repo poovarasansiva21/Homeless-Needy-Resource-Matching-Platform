@@ -81,8 +81,17 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
   useEffect(() => {
     if (isOpen) {
       setError(null);
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') onClose();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
     }
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -187,8 +196,11 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
     return '🟢';
   };
 
-  return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-4 bg-[#0D0D0D]/80 backdrop-blur-md animate-modal-backdrop overflow-y-auto">
+  return createPortal(
+    <div 
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-4 bg-[#0D0D0D]/80 backdrop-blur-md animate-modal-backdrop overflow-y-auto"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
       <div className={`bg-[#FAF7F2] dark:bg-[#161616] w-full max-w-2xl rounded-[32px] border border-[#E7E0D6] dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] animate-modal-content ${lowBandwidth ? '' : 'transition-all duration-300'}`}>
         
         {/* Header Bar */}
@@ -597,9 +609,10 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
 
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
-
 export default OneTapHelpModal;
+

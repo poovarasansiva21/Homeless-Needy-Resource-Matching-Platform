@@ -1,26 +1,29 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "services": {
-    "frontend": {
-      "root": "frontend",
-      "framework": "vite"
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
     },
-    "backend": {
-      "root": "backend"
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
     }
-  },
-  "rewrites": [
+  ],
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": {
-        "service": "backend"
-      }
+      "src": "/api/(.*)",
+      "dest": "api/index.py"
     },
     {
-      "source": "/(.*)",
-      "destination": {
-        "service": "frontend"
-      }
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }

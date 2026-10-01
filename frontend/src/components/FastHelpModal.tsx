@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { 
   Flame, 
@@ -42,8 +43,17 @@ export const FastHelpModal: React.FC<FastHelpModalProps> = ({
     if (isOpen) {
       setCategory(defaultCategory);
       fetchFastMatches(defaultCategory);
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') onClose();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
     }
-  }, [isOpen, defaultCategory]);
+  }, [isOpen, defaultCategory, onClose]);
 
   const fetchFastMatches = async (cat: 'MEDICAL' | 'FOOD' | 'SHELTER' | 'CLOTHING') => {
     setIsLoading(true);
@@ -79,8 +89,11 @@ export const FastHelpModal: React.FC<FastHelpModalProps> = ({
     { id: 'CLOTHING', label: t('modal.clothing'), icon: <Shirt className="w-4 h-4" /> },
   ] as const;
 
-  return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-[#17231E]/75 dark:bg-black/80 backdrop-blur-md animate-modal-backdrop">
+  return createPortal(
+    <div 
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-[#17231E]/75 dark:bg-black/80 backdrop-blur-md animate-modal-backdrop"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
       <div className="bg-white dark:bg-[#161616] w-full max-w-2xl rounded-3xl border border-[#EAE3D2] dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-modal-content">
         
         {/* Header */}
@@ -245,7 +258,8 @@ export const FastHelpModal: React.FC<FastHelpModalProps> = ({
         </div>
 
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

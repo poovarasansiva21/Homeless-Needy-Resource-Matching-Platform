@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { ShieldAlert, X, CheckCircle2, Lock, AlertTriangle, Send } from 'lucide-react';
 import { trustApi } from '../services/api';
 
@@ -23,6 +24,20 @@ export const ReportModal: React.FC<ReportModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') onClose();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -92,8 +107,11 @@ export const ReportModal: React.FC<ReportModalProps> = ({
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-modal-backdrop">
+  return createPortal(
+    <div 
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-modal-backdrop"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
       <div className="w-full max-w-lg bg-white dark:bg-[#161616] rounded-3xl border border-[#E2E8E4] dark:border-white/10 shadow-2xl overflow-hidden text-[#18352D] dark:text-white transition-all animate-modal-content">
         
         {/* Modal Header */}
@@ -227,7 +245,8 @@ export const ReportModal: React.FC<ReportModalProps> = ({
 
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

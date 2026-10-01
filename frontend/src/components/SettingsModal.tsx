@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   Settings, 
   X, 
@@ -44,10 +45,27 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
     localStorage.setItem('sahaayaa_approx_location', String(approxLocation));
   }, [approxLocation]);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') onClose();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-modal-backdrop">
+  return createPortal(
+    <div 
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-modal-backdrop"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
       <div 
         className="bg-[#FFFDF3] dark:bg-[#0D0D0D] w-full max-w-lg rounded-3xl border border-[#EAE3D2] dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-modal-content"
         onClick={(e) => e.stopPropagation()}
@@ -270,7 +288,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
         </div>
 
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
