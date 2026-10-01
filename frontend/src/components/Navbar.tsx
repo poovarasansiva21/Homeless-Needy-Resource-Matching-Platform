@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { 
-  Bell, 
   Globe, 
   Sun, 
   Moon, 
@@ -12,7 +11,6 @@ import {
   Menu, 
   X, 
   LogOut,
-  ArrowRight,
   Settings
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -269,21 +267,6 @@ export const Navbar: React.FC = () => {
                 )}
               </button>
 
-              {/* RESOURCES */}
-              <button
-                onClick={() => handleNavClick('resources', '/', '#resources')}
-                className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-                  activeNav === 'resources' 
-                    ? 'text-[#F25C38] font-bold' 
-                    : 'hover:text-[#F25C38]'
-                }`}
-              >
-                <span>{t('nav.resources')}</span>
-                {activeNav === 'resources' && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
-                )}
-              </button>
-
               {/* MAP */}
               <button
                 onClick={() => handleNavClick('map', '/map')}
@@ -298,21 +281,6 @@ export const Navbar: React.FC = () => {
                   <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[28px] h-[2.5px] bg-[#F25C38] rounded-full" />
                 )}
               </button>
-
-              {/* HELP REPORTS DASHBOARD */}
-              <button
-                onClick={() => handleNavClick('help-reports', '/help-reports')}
-                className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-                  location.pathname.startsWith('/help-reports') 
-                    ? 'text-[#F25C38] font-bold' 
-                    : 'hover:text-[#F25C38]'
-                }`}
-              >
-                <span>Help Reports</span>
-                {location.pathname.startsWith('/help-reports') && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
-                )}
-              </button>
             </>
           )}
 
@@ -323,20 +291,7 @@ export const Navbar: React.FC = () => {
         {/* ========================================================================= */}
         <div className="hidden lg:flex items-center space-x-2 shrink-0">
           
-          {/* Action 1: [🆘 I NEED HELP] Coral Pill Button */}
-          <button
-            type="button"
-            onClick={() => setShowOneTapModal(true)}
-            aria-label="I need help"
-            className="h-10 px-3.5 sm:px-4 rounded-full bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-1.5 transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shrink-0 min-h-[40px]"
-            title="Emergency Request Help"
-          >
-            <Bell className="w-3.5 h-3.5 fill-current shrink-0" />
-            <span>{t('nav.iNeedHelp')}</span>
-            <ArrowRight className="w-3.5 h-3.5 ml-0.5 shrink-0" />
-          </button>
-
-          {/* Action 2: Language Selector */}
+          {/* Action 1: Language Selector */}
           <div className="relative shrink-0">
             <button
               onClick={() => setShowLangMenu(!showLangMenu)}
@@ -374,7 +329,7 @@ export const Navbar: React.FC = () => {
             )}
           </div>
 
-          {/* Action 3: Theme Toggle Button */}
+          {/* Action 2: Theme Toggle Button */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle Theme"
@@ -384,7 +339,7 @@ export const Navbar: React.FC = () => {
             {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-700" />}
           </button>
 
-          {/* Action 4: User Sign In / Dashboard */}
+          {/* Action 3: User Sign In / Dashboard */}
           {user ? (
             <div className="flex items-center space-x-1 shrink-0">
               <Link
@@ -412,7 +367,7 @@ export const Navbar: React.FC = () => {
             </Link>
           )}
 
-          {/* Action 5: Donate Button */}
+          {/* Action 4: Donate Button */}
           <Link
             to="/donor/dashboard"
             className="h-10 px-4 rounded-full bg-[#1C1917] dark:bg-[#262626] hover:bg-[#292524] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-1.5 transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shrink-0 min-h-[40px]"
@@ -428,18 +383,6 @@ export const Navbar: React.FC = () => {
         {/* ========================================================================= */}
         <div className="flex lg:hidden items-center space-x-2 shrink-0">
           
-          {/* Mobile Emergency Button */}
-          <button
-            type="button"
-            onClick={() => setShowOneTapModal(true)}
-            aria-label="I need help"
-            className="h-10 px-3.5 rounded-full bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-1.5 transition-all active:scale-95 cursor-pointer shrink-0 min-h-[40px]"
-            title="Emergency Request Help"
-          >
-            <Bell className="w-3.5 h-3.5 fill-current shrink-0" />
-            <span className="inline">{t('nav.iNeedHelp')}</span>
-          </button>
-
           {/* Hamburger Menu Toggle */}
           <button
             type="button"
@@ -460,49 +403,64 @@ export const Navbar: React.FC = () => {
         <div className="lg:hidden bg-[#FAF7F2] dark:bg-[#161616] border-b border-[#E7E0D6] dark:border-white/10 px-5 pt-3 pb-8 space-y-4 rounded-b-3xl shadow-2xl animate-in slide-in-from-top-2 duration-200 z-[1020] pointer-events-auto max-h-[calc(100vh-80px)] overflow-y-auto">
           
           <div className="space-y-1 text-base font-bold text-[#1C1917] dark:text-[#F5F5F0]">
-            <button
-              onClick={() => handleNavClick('home', '/')}
-              className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'home' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
-            >
-              {t('nav.home')}
-            </button>
-            <button
-              onClick={() => handleNavClick('request-help', '/request-help')}
-              className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'request-help' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
-            >
-              {t('nav.requestHelp')}
-            </button>
-            <button
-              onClick={() => handleNavClick('find-help', '/', '#resources')}
-              className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'find-help' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
-            >
-              {t('nav.findHelp')}
-            </button>
-            <button
-              onClick={() => handleNavClick('resources', '/', '#resources')}
-              className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'resources' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
-            >
-              {t('nav.resources')}
-            </button>
-            <button
-              onClick={() => handleNavClick('map', '/map')}
-              className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'map' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
-            >
-              {t('nav.map')}
-            </button>
+            {user?.role === 'admin' ? (
+              <>
+                <button
+                  onClick={() => handleNavClick('admin-dashboard', '/admin/dashboard')}
+                  className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${location.pathname.startsWith('/admin') ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
+                >
+                  Command Center
+                </button>
+                <button
+                  onClick={() => handleNavClick('help-reports', '/help-reports')}
+                  className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${location.pathname.startsWith('/help-reports') ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
+                >
+                  Help Reports
+                </button>
+                <button
+                  onClick={() => handleNavClick('map', '/map')}
+                  className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'map' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
+                >
+                  Live Map
+                </button>
+                <button
+                  onClick={() => handleNavClick('intelligence', '/intelligence')}
+                  className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${location.pathname.startsWith('/intelligence') ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
+                >
+                  Intelligence
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => handleNavClick('home', '/')}
+                  className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'home' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
+                >
+                  {t('nav.home')}
+                </button>
+                <button
+                  onClick={() => handleNavClick('request-help', '/request-help')}
+                  className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'request-help' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
+                >
+                  {t('nav.requestHelp')}
+                </button>
+                <button
+                  onClick={() => handleNavClick('find-help', '/', '#resources')}
+                  className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'find-help' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
+                >
+                  {t('nav.findHelp')}
+                </button>
+                <button
+                  onClick={() => handleNavClick('map', '/map')}
+                  className={`block w-full text-left py-3 px-4 rounded-2xl transition-colors ${activeNav === 'map' ? 'bg-[#F25C38]/10 text-[#F25C38] font-black' : 'hover:bg-stone-100 dark:hover:bg-[#222222]'}`}
+                >
+                  {t('nav.map')}
+                </button>
+              </>
+            )}
           </div>
 
           <div className="pt-3 border-t border-[#E7E0D6] dark:border-white/10 space-y-3">
-            {/* Full Width Coral I NEED HELP Button */}
-            <button
-              onClick={() => { setMobileMenuOpen(false); setShowOneTapModal(true); }}
-              className="w-full py-3.5 px-4 bg-[#F25C38] hover:bg-[#E04925] text-white font-black text-sm uppercase tracking-wider rounded-2xl flex items-center justify-center space-x-2 shadow-sm cursor-pointer min-h-[48px]"
-            >
-              <Bell className="w-5 h-5 fill-current" />
-              <span>{t('nav.iNeedHelp')}</span>
-              <ArrowRight className="w-5 h-5" />
-            </button>
-
             {/* Full Width Charcoal Donate Button */}
             <Link
               to="/donor/dashboard"
