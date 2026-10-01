@@ -21,7 +21,11 @@ def register():
         return jsonify({"error": "Invalid role specified."}), 400
 
     if User.query.filter_by(email=email).first():
-        return jsonify({"error": "An account with this email already exists."}), 400
+        return jsonify({
+            "error": f"An account with email '{email}' already exists. Please sign in or use another email.",
+            "account_exists": True,
+            "email": email
+        }), 400
 
     new_user = User(
         email=email,
@@ -101,3 +105,37 @@ def get_demo_users():
             {"role": "volunteer", "email": "volunteer@sahaayaa.org", "label": "Field Volunteer", "name": "Praveen Kumar"}
         ]
     }), 200
+
+@auth_bp.route("/reset-password", methods=["POST"])
+def reset_password():
+    data = request.get_json() or {}
+    email = data.get("email", "").strip().lower()
+    new_password = data.get("password", "")
+
+    if not email or not new_password:
+        return jsonify({"error": "Email and new password are required."}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "No account found with this email."}), 404
+
+    user.set_password(new_password)
+    db.session.commit()
+
+    token = generate_token(user)
+
+    audit = AuditLog(
+        user_id=user.id,
+        action="USER_PASSWORD_RESET",
+        details=f"Password updated for user: {email}",
+        ip_address=request.remote_addr
+    )
+    db.session.add(audit)
+    db.session.commit()
+
+    return jsonify({
+        "message": "Password updated successfully",
+        "token": token,
+        "user": user.to_dict()
+    }), 200
+

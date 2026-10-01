@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { 
   Sparkles, 
   AlertCircle, 
@@ -266,8 +266,9 @@ export const LoginPage: React.FC = () => {
   const { login, loginAsDemoRole } = useAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState((location.state as any)?.email || '');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -471,11 +472,13 @@ export const RegisterPage: React.FC = () => {
   const [phone, setPhone] = useState('');
   const [orgName, setOrgName] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [isAccountExists, setIsAccountExists] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setIsAccountExists(false);
     setIsLoading(true);
 
     try {
@@ -491,7 +494,25 @@ export const RegisterPage: React.FC = () => {
       login(res.token, res.user);
       navigate('/');
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Registration failed.');
+      const errMsg = err.response?.data?.error || 'Registration failed.';
+      setError(errMsg);
+      if (err.response?.data?.account_exists || errMsg.toLowerCase().includes('already exists')) {
+        setIsAccountExists(true);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleForceUpdatePassword = async () => {
+    if (!email || !password) return;
+    setIsLoading(true);
+    try {
+      const res = await authApi.resetPassword(email, password);
+      login(res.token, res.user);
+      navigate('/');
+    } catch (err: any) {
+      setError(err.response?.data?.error || 'Failed to update password.');
     } finally {
       setIsLoading(false);
     }
@@ -506,9 +527,29 @@ export const RegisterPage: React.FC = () => {
       <div className="space-y-4">
         
         {error && (
-          <div className="p-3.5 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 text-rose-700 dark:text-rose-300 rounded-2xl text-xs flex items-center space-x-2.5 shadow-sm">
-            <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-600 dark:text-rose-400" />
-            <span className="font-semibold">{error}</span>
+          <div className="p-3.5 bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 text-rose-700 dark:text-rose-300 rounded-2xl text-xs space-y-2.5 shadow-sm">
+            <div className="flex items-center space-x-2.5">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 text-rose-600 dark:text-rose-400" />
+              <span className="font-semibold">{error}</span>
+            </div>
+            {isAccountExists && (
+              <div className="pt-2 border-t border-rose-200/60 dark:border-rose-900/60 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => navigate('/login', { state: { email } })}
+                  className="px-3 py-1.5 bg-rose-600 text-white font-bold rounded-xl text-[11px] hover:bg-rose-700 transition-colors shadow-xs"
+                >
+                  Sign In with {email}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleForceUpdatePassword}
+                  className="px-3 py-1.5 bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-900 font-bold rounded-xl text-[11px] hover:opacity-90 transition-opacity shadow-xs"
+                >
+                  Update Password & Sign In
+                </button>
+              </div>
+            )}
           </div>
         )}
 
