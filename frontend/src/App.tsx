@@ -20,10 +20,62 @@ import AdminDashboard from './pages/AdminDashboard';
 import HumanitarianIntelligence from './pages/HumanitarianIntelligence';
 import HelpReportsDashboard from './pages/HelpReportsDashboard';
 import { LoginPage, RegisterPage } from './pages/AuthPages';
-import { AlertTriangle, Home } from 'lucide-react';
+import { AlertTriangle, Home, ShieldAlert, RefreshCw } from 'lucide-react';
 import useCinematicAnimation from './animation/useCinematicAnimation';
 import PageTransition from './animation/PageTransition';
 import ScrollProgressBar from './components/ScrollProgressBar';
+import { useAuth } from './context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
+const AdminProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { user, isLoading } = useAuth();
+  const navigate = useNavigate();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center space-y-3">
+        <RefreshCw className="w-8 h-8 animate-spin text-[#F25C38]" />
+        <span className="text-xs font-bold text-stone-500">Verifying Admin Authorization...</span>
+      </div>
+    );
+  }
+
+  if (!user || user.role !== 'admin') {
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center text-center p-6 space-y-4">
+        <div className="w-16 h-16 rounded-3xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 flex items-center justify-center border border-rose-200 dark:border-rose-900/40 shadow-xs">
+          <ShieldAlert className="w-8 h-8" />
+        </div>
+        <h1 className="text-2xl font-black text-[#1C1917] dark:text-[#F5F5F0]">Access Denied</h1>
+        <p className="text-stone-500 dark:text-stone-400 text-sm max-w-md">
+          You are currently logged in as {user ? `a ${user.role.toUpperCase()}` : 'a Guest'}. Access to the Sahaayaa AI Admin Command Center is restricted to authorized administrators.
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+          {user?.role === 'ngo' && (
+            <button onClick={() => navigate('/ngo/dashboard')} className="px-6 py-2.5 bg-[#F25C38] text-white font-bold rounded-xl text-xs hover:bg-[#E04925] shadow-md transition-all">
+              Go to NGO Dashboard
+            </button>
+          )}
+          {user?.role === 'donor' && (
+            <button onClick={() => navigate('/donor/dashboard')} className="px-6 py-2.5 bg-[#F25C38] text-white font-bold rounded-xl text-xs hover:bg-[#E04925] shadow-md transition-all">
+              Go to Donor Dashboard
+            </button>
+          )}
+          {!user && (
+            <button onClick={() => navigate('/login')} className="px-6 py-2.5 bg-[#F25C38] text-white font-bold rounded-xl text-xs hover:bg-[#E04925] shadow-md transition-all">
+              Sign In as Administrator
+            </button>
+          )}
+          <button onClick={() => navigate('/')} className="px-6 py-2.5 bg-[#FAF7F2] dark:bg-[#161616] border border-[#E7E0D6] dark:border-white/10 font-bold rounded-xl text-xs hover:bg-[#F3ECE2] dark:hover:bg-[#222222] transition-all">
+            Return to Homepage
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return <>{children}</>;
+};
 
 const NotFound: React.FC = () => {
   const { t } = useLanguage();
@@ -76,7 +128,8 @@ const MainLayout: React.FC = () => {
           <Route path="/intelligence" element={<HumanitarianIntelligence />} />
           <Route path="/donor/dashboard" element={<DonorDashboard />} />
           <Route path="/ngo/dashboard" element={<NgoDashboard />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin" element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
+          <Route path="/admin/dashboard" element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<NotFound />} />

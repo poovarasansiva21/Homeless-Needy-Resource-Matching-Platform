@@ -160,95 +160,161 @@ export const Navbar: React.FC = () => {
         {/* ========================================================================= */}
         <div className="hidden lg:flex items-center justify-center space-x-3 lg:space-x-5 xl:space-x-7 text-sm lg:text-[14px] xl:text-[15px] font-semibold text-[#1C1917] dark:text-[#F5F5F0]/90 mx-2 shrink-0">
           
-          {/* HOME */}
-          <button
-            onClick={() => handleNavClick('home', '/')}
-            className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-              activeNav === 'home' 
-                ? 'text-[#F25C38] font-bold' 
-                : 'hover:text-[#F25C38]'
-            }`}
-          >
-            <span>{t('nav.home')}</span>
-            {activeNav === 'home' && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
-            )}
-          </button>
+          {user?.role === 'admin' ? (
+            <>
+              {/* ADMIN COMMAND CENTER */}
+              <button
+                onClick={() => handleNavClick('admin-dashboard', '/admin/dashboard')}
+                className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  location.pathname.startsWith('/admin') 
+                    ? 'text-[#F25C38] font-bold' 
+                    : 'hover:text-[#F25C38]'
+                }`}
+              >
+                <span>Command Center</span>
+                {location.pathname.startsWith('/admin') && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
+                )}
+              </button>
 
-          {/* REQUEST HELP */}
-          <button
-            onClick={() => handleNavClick('request-help', '/request-help')}
-            className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-              activeNav === 'request-help' 
-                ? 'text-[#F25C38] font-bold' 
-                : 'hover:text-[#F25C38]'
-            }`}
-          >
-            <span>{t('nav.requestHelp')}</span>
-            {activeNav === 'request-help' && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[38px] h-[2.5px] bg-[#F25C38] rounded-full" />
-            )}
-          </button>
+              {/* HELP REPORTS */}
+              <button
+                onClick={() => handleNavClick('help-reports', '/help-reports')}
+                className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  location.pathname.startsWith('/help-reports') 
+                    ? 'text-[#F25C38] font-bold' 
+                    : 'hover:text-[#F25C38]'
+                }`}
+              >
+                <span>Help Reports</span>
+                {location.pathname.startsWith('/help-reports') && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
+                )}
+              </button>
 
-          {/* FIND HELP */}
-          <button
-            onClick={() => handleNavClick('find-help', '/', '#resources')}
-            className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-              activeNav === 'find-help' 
-                ? 'text-[#F25C38] font-bold' 
-                : 'hover:text-[#F25C38]'
-            }`}
-          >
-            <span>{t('nav.findHelp')}</span>
-            {activeNav === 'find-help' && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
-            )}
-          </button>
+              {/* LIVE MAP */}
+              <button
+                onClick={() => handleNavClick('map', '/map')}
+                className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeNav === 'map' 
+                    ? 'text-[#F25C38] font-bold' 
+                    : 'hover:text-[#F25C38]'
+                }`}
+              >
+                <span>Live Map</span>
+                {activeNav === 'map' && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[28px] h-[2.5px] bg-[#F25C38] rounded-full" />
+                )}
+              </button>
 
-          {/* RESOURCES */}
-          <button
-            onClick={() => handleNavClick('resources', '/', '#resources')}
-            className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-              activeNav === 'resources' 
-                ? 'text-[#F25C38] font-bold' 
-                : 'hover:text-[#F25C38]'
-            }`}
-          >
-            <span>{t('nav.resources')}</span>
-            {activeNav === 'resources' && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
-            )}
-          </button>
+              {/* INTELLIGENCE */}
+              <button
+                onClick={() => handleNavClick('intelligence', '/intelligence')}
+                className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  location.pathname.startsWith('/intelligence') 
+                    ? 'text-[#F25C38] font-bold' 
+                    : 'hover:text-[#F25C38]'
+                }`}
+              >
+                <span>Intelligence</span>
+                {location.pathname.startsWith('/intelligence') && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
+                )}
+              </button>
+            </>
+          ) : (
+            <>
+              {/* HOME */}
+              <button
+                onClick={() => handleNavClick('home', '/')}
+                className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeNav === 'home' 
+                    ? 'text-[#F25C38] font-bold' 
+                    : 'hover:text-[#F25C38]'
+                }`}
+              >
+                <span>{t('nav.home')}</span>
+                {activeNav === 'home' && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
+                )}
+              </button>
 
-          {/* MAP */}
-          <button
-            onClick={() => handleNavClick('map', '/map')}
-            className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-              activeNav === 'map' 
-                ? 'text-[#F25C38] font-bold' 
-                : 'hover:text-[#F25C38]'
-            }`}
-          >
-            <span>{t('nav.map')}</span>
-            {activeNav === 'map' && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[28px] h-[2.5px] bg-[#F25C38] rounded-full" />
-            )}
-          </button>
+              {/* REQUEST HELP */}
+              <button
+                onClick={() => handleNavClick('request-help', '/request-help')}
+                className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeNav === 'request-help' 
+                    ? 'text-[#F25C38] font-bold' 
+                    : 'hover:text-[#F25C38]'
+                }`}
+              >
+                <span>{t('nav.requestHelp')}</span>
+                {activeNav === 'request-help' && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[38px] h-[2.5px] bg-[#F25C38] rounded-full" />
+                )}
+              </button>
 
-          {/* HELP REPORTS DASHBOARD */}
-          <button
-            onClick={() => handleNavClick('help-reports', '/help-reports')}
-            className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
-              location.pathname.startsWith('/help-reports') 
-                ? 'text-[#F25C38] font-bold' 
-                : 'hover:text-[#F25C38]'
-            }`}
-          >
-            <span>Help Reports</span>
-            {location.pathname.startsWith('/help-reports') && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
-            )}
-          </button>
+              {/* FIND HELP */}
+              <button
+                onClick={() => handleNavClick('find-help', '/', '#resources')}
+                className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeNav === 'find-help' 
+                    ? 'text-[#F25C38] font-bold' 
+                    : 'hover:text-[#F25C38]'
+                }`}
+              >
+                <span>{t('nav.findHelp')}</span>
+                {activeNav === 'find-help' && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
+                )}
+              </button>
+
+              {/* RESOURCES */}
+              <button
+                onClick={() => handleNavClick('resources', '/', '#resources')}
+                className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeNav === 'resources' 
+                    ? 'text-[#F25C38] font-bold' 
+                    : 'hover:text-[#F25C38]'
+                }`}
+              >
+                <span>{t('nav.resources')}</span>
+                {activeNav === 'resources' && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
+                )}
+              </button>
+
+              {/* MAP */}
+              <button
+                onClick={() => handleNavClick('map', '/map')}
+                className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  activeNav === 'map' 
+                    ? 'text-[#F25C38] font-bold' 
+                    : 'hover:text-[#F25C38]'
+                }`}
+              >
+                <span>{t('nav.map')}</span>
+                {activeNav === 'map' && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[28px] h-[2.5px] bg-[#F25C38] rounded-full" />
+                )}
+              </button>
+
+              {/* HELP REPORTS DASHBOARD */}
+              <button
+                onClick={() => handleNavClick('help-reports', '/help-reports')}
+                className={`relative py-2 transition-colors cursor-pointer whitespace-nowrap ${
+                  location.pathname.startsWith('/help-reports') 
+                    ? 'text-[#F25C38] font-bold' 
+                    : 'hover:text-[#F25C38]'
+                }`}
+              >
+                <span>Help Reports</span>
+                {location.pathname.startsWith('/help-reports') && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[34px] h-[2.5px] bg-[#F25C38] rounded-full" />
+                )}
+              </button>
+            </>
+          )}
 
         </div>
 
