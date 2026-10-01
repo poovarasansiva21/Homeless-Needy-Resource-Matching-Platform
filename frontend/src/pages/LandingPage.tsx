@@ -1079,56 +1079,6 @@ export const LandingPage: React.FC = () => {
                       ))}
                     </MapContainer>
 
-                    {/* Floating Info Card (e.g. Community Kitchen preview card from visual reference) */}
-                    {selectedPinResource && (
-                      <div className="absolute top-4 left-4 z-[400] max-w-xs bg-white rounded-2xl p-3.5 border border-[#EAE3D2] shadow-xl animate-in fade-in slide-in-from-top-2">
-                        <div className="flex items-start space-x-3">
-                          <img 
-                            src="/images/food-bank.jpg" 
-                            alt={selectedPinResource.name} 
-                            className="w-14 h-14 rounded-xl object-cover border border-[#EAE3D2] flex-shrink-0"
-                          />
-                          <div className="flex-1 min-w-0">
-                            <h4 className="font-extrabold text-xs text-[#17231E] truncate">
-                              {selectedPinResource.name.replace('[DEMO] ', '')}
-                            </h4>
-                            <div className="flex items-center space-x-1 text-[11px] text-[#159B5B] font-bold mt-0.5">
-                              <span>●</span>
-                              <span>{selectedPinResource.category}</span>
-                            </div>
-                            <div className="text-[10px] text-[#17231E]/60 mt-0.5">
-                              {selectedPinResource.distance_km !== undefined ? (<span>{selectedPinResource.distance_km} km away</span>) : (<span>Nearby facility</span>)} • <span>Open 8 AM – 8 PM</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="mt-3 pt-2.5 border-t border-[#EAE3D2] flex items-center justify-between gap-1.5">
-                          <span className="text-[10px] font-extrabold text-[#159B5B] bg-[#E8F3E9] px-2 py-0.5 rounded-full">
-                            Verified ✓
-                          </span>
-                          <div className="flex flex-wrap items-center gap-1.5">
-                            <a
-                              href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation ? `${userLocation.lat},${userLocation.lng}` : ''}&destination=${selectedPinResource.latitude},${selectedPinResource.longitude}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-2.5 py-1 bg-[#17231E] hover:bg-stone-800 text-white font-bold text-[10px] rounded-full transition-colors flex items-center space-x-1"
-                              title="Turn-by-turn directions"
-                            >
-                              <Navigation className="w-2.5 h-2.5 text-emerald-400" />
-                              <span>Directions</span>
-                            </a>
-                            <Link
-                              to={`/map?category=${selectedPinResource.category}&id=${selectedPinResource.id}`}
-                              className="px-2.5 py-1 bg-[#159B5B] hover:bg-[#12834D] text-white font-bold text-[10px] rounded-full transition-colors"
-                            >
-                              Live Map
-                            </Link>
-                          </div>
-
-                        </div>
-                      </div>
-                    )}
-
                     {/* Recenter / Locate Button */}
                     <button
                       onClick={() => setMapCenter([11.0168, 76.9558])}
