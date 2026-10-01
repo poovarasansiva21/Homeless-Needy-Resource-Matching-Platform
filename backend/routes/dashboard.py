@@ -27,13 +27,23 @@ def get_public_impact():
 @token_required
 def get_admin_dashboard(current_user):
     total_requests = Request.query.count()
-    verified_requests = Request.query.filter_by(status="VERIFIED").count()
-    pending_verification = Request.query.filter_by(status="PENDING_VERIFICATION").count()
-    critical_requests = Request.query.filter(Request.urgency_level.in_(["CRITICAL", "HIGH"])).count()
+    verified_requests = Request.query.filter(
+        Request.status.in_(["VERIFIED", "NGO_ACCEPTED", "RESPONDER_ASSIGNED", "ON_THE_WAY", "ASSISTANCE_PROVIDED", "COMPLETED"])
+    ).count()
+    pending_verification = Request.query.filter(
+        Request.status.in_(["PENDING_VERIFICATION", "REQUESTED", "SUBMITTED", "REPORTED", "AI_ANALYZED", "RESOURCE_MATCHED"])
+    ).count()
+    critical_requests = Request.query.filter(
+        Request.urgency_level.in_(["CRITICAL", "HIGH"]),
+        Request.status.notin_(["COMPLETED", "REJECTED"])
+    ).count()
     active_matches = Match.query.filter_by(status="suggested").count()
     completed_requests = Request.query.filter_by(status="COMPLETED").count()
     registered_ngos = User.query.filter_by(role="ngo").count()
+    registered_volunteers = User.query.filter_by(role="volunteer").count()
     registered_donors = User.query.filter_by(role="donor").count()
+    available_resources = Resource.query.filter_by(verified=True).count()
+    pending_donations = Donation.query.filter_by(status="pending").count()
 
     fulfillment_rate = round((completed_requests / total_requests * 100), 1) if total_requests > 0 else 0.0
 
@@ -71,7 +81,10 @@ def get_admin_dashboard(current_user):
             "active_matches": active_matches,
             "completed_requests": completed_requests,
             "registered_ngos": registered_ngos,
+            "registered_volunteers": registered_volunteers,
             "registered_donors": registered_donors,
+            "available_resources": available_resources,
+            "pending_donations": pending_donations,
             "fulfillment_rate": fulfillment_rate
         },
         "charts": {

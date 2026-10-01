@@ -254,8 +254,21 @@ def get_help_report_by_id(current_user, report_id):
 def accept_help_report(current_user, report_id):
     rep_obj = Request.query.get_or_404(report_id)
 
-    if rep_obj.status in ["COMPLETED", "REJECTED", "UNABLE_TO_ASSIST"]:
-        return jsonify({"error": f"Cannot accept report already in {rep_obj.status} state"}), 400
+    if rep_obj.assigned_ngo_id and rep_obj.assigned_ngo_id != current_user.id:
+        claimed_name = (rep_obj.assigned_ngo.organization_name or rep_obj.assigned_ngo.full_name) if rep_obj.assigned_ngo else f"NGO #{rep_obj.assigned_ngo_id}"
+        return jsonify({
+            "error": f"Report #{report_id} has already been accepted and claimed by {claimed_name}. Remaining NGOs cannot claim this report.",
+            "already_claimed": True,
+            "claimed_by": claimed_name
+        }), 400
+
+    if rep_obj.status in ["COMPLETED", "REJECTED", "UNABLE_TO_ASSIST", "NGO_ACCEPTED", "ACCEPTED"]:
+        if rep_obj.assigned_ngo_id and rep_obj.assigned_ngo_id != current_user.id:
+            claimed_name = (rep_obj.assigned_ngo.organization_name or rep_obj.assigned_ngo.full_name) if rep_obj.assigned_ngo else f"NGO #{rep_obj.assigned_ngo_id}"
+            return jsonify({
+                "error": f"Report #{report_id} has already been accepted by {claimed_name}.",
+                "already_claimed": True
+            }), 400
 
     prev_status = rep_obj.status
     rep_obj.status = "ACCEPTED"
@@ -280,10 +293,14 @@ def accept_help_report(current_user, report_id):
     db.session.add(notif)
     db.session.commit()
 
+    ngo_name = current_user.organization_name or current_user.full_name
+
     emit_socket_event("request_status_updated", {
         "request_id": rep_obj.id,
         "previous_status": prev_status,
         "new_status": "ACCEPTED",
+        "assigned_ngo_id": current_user.id,
+        "assigned_ngo_name": ngo_name,
         "assigned_ngo": current_user.full_name,
         "timestamp": datetime.utcnow().isoformat()
     })

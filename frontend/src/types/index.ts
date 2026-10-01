@@ -59,6 +59,7 @@ export interface RequestItem {
   is_flagged_duplicate?: boolean;
   duplicate_notes?: string;
   assigned_ngo_id?: number;
+  assigned_ngo_name?: string | null;
   is_help_someone?: boolean;
   has_photo_permission?: boolean;
   voice_transcript?: string;

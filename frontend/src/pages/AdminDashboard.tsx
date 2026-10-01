@@ -243,13 +243,23 @@ export const AdminDashboard: React.FC = () => {
     const handleRealtimeUpdate = () => fetchAdminData();
 
     socketService.on('new_request', handleRealtimeUpdate);
+    socketService.on('new_help_report', handleRealtimeUpdate);
     socketService.on('request_status_updated', handleRealtimeUpdate);
     socketService.on('donation_pledged', handleRealtimeUpdate);
+    socketService.on('resource_updated', handleRealtimeUpdate);
+    socketService.on('stats_updated', handleRealtimeUpdate);
+
+    // Auto-refresh real-time telemetry every 4 seconds
+    const interval = setInterval(fetchAdminData, 4000);
 
     return () => {
+      clearInterval(interval);
       socketService.off('new_request', handleRealtimeUpdate);
+      socketService.off('new_help_report', handleRealtimeUpdate);
       socketService.off('request_status_updated', handleRealtimeUpdate);
       socketService.off('donation_pledged', handleRealtimeUpdate);
+      socketService.off('resource_updated', handleRealtimeUpdate);
+      socketService.off('stats_updated', handleRealtimeUpdate);
     };
   }, []);
 
@@ -320,7 +330,8 @@ export const AdminDashboard: React.FC = () => {
       await requestsApi.updateStatus(
         assignTargetReport.id,
         'RESPONDER_ASSIGNED',
-        `Assigned to responder/NGO (ID: ${assignNgoId || 'Auto'}). ${assignNotes}`
+        `Assigned to responder/NGO (ID: ${assignNgoId || 'Auto'}). ${assignNotes}`,
+        assignNgoId ? parseInt(assignNgoId, 10) : undefined
       );
       setIsAssignModalOpen(false);
       setAssignTargetReport(null);

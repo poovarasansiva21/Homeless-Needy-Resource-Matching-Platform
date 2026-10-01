@@ -75,6 +75,7 @@ class Request(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    assigned_ngo = db.relationship("User", foreign_keys=[assigned_ngo_id], lazy="joined")
     status_history = db.relationship("RequestStatusHistory", backref="request", lazy=True, cascade="all, delete-orphan")
     matches = db.relationship("Match", backref="request", lazy=True, cascade="all, delete-orphan")
     donations = db.relationship("Donation", backref="request", lazy=True)
@@ -86,6 +87,10 @@ class Request(db.Model):
         return phone[:3] + " *** ** " + phone[-2:]
 
     def to_dict(self, is_authorized: bool = False):
+        ngo_name = None
+        if self.assigned_ngo:
+            ngo_name = self.assigned_ngo.organization_name or self.assigned_ngo.full_name
+
         data = {
             "id": self.id,
             "requester_id": self.requester_id,
@@ -104,6 +109,7 @@ class Request(db.Model):
             "is_flagged_duplicate": self.is_flagged_duplicate,
             "duplicate_notes": self.duplicate_notes if is_authorized else None,
             "assigned_ngo_id": self.assigned_ngo_id,
+            "assigned_ngo_name": ngo_name,
             "is_help_someone": getattr(self, "is_help_someone", True),
             "has_photo_permission": getattr(self, "has_photo_permission", True),
             "voice_transcript": getattr(self, "voice_transcript", None),
@@ -142,7 +148,8 @@ class Request(db.Model):
                 "longitude": data["longitude"]
             },
             "is_flagged_duplicate": self.is_flagged_duplicate,
-            "assigned_ngo_id": self.assigned_ngo_id
+            "assigned_ngo_id": self.assigned_ngo_id,
+            "assigned_ngo_name": ngo_name
         }
         data["unified_case"] = unified_case
         return data

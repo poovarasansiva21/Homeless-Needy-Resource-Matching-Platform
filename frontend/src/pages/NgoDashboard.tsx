@@ -80,12 +80,10 @@ export const NgoDashboard: React.FC = () => {
     fetchNgoData();
 
     // Socket.IO real-time event handlers
-    const handleRefresh = () => fetchNgoData();
-
     const handleNewRequest = (data: any) => {
       setSocketToast({
-        title: "🚨 New Critical Request Nearby",
-        message: data.message || `New ${data.category || 'humanitarian'} request registered in Coimbatore.`
+        title: "🚨 New Request Registered",
+        message: data.message || `New ${data.category || 'humanitarian'} request registered.`
       });
       fetchNgoData();
       setTimeout(() => setSocketToast(null), 5000);
@@ -94,20 +92,28 @@ export const NgoDashboard: React.FC = () => {
     const handleStatusUpdated = (data: any) => {
       setSocketToast({
         title: `Request #${data.request_id} Updated`,
-        message: `Status: ${data.new_status} by ${data.changed_by || 'System'}`
+        message: `Status: ${data.new_status} ${data.assigned_ngo_name ? `(Claimed by ${data.assigned_ngo_name})` : ''}`
       });
       fetchNgoData();
       setTimeout(() => setSocketToast(null), 5000);
     };
 
     socketService.on('new_request', handleNewRequest);
+    socketService.on('new_help_report', handleNewRequest);
     socketService.on('request_status_updated', handleStatusUpdated);
     socketService.on('request_escalated', handleNewRequest);
+    socketService.on('stats_updated', handleNewRequest);
+
+    // Auto-refresh real-time data every 4 seconds
+    const interval = setInterval(fetchNgoData, 4000);
 
     return () => {
+      clearInterval(interval);
       socketService.off('new_request', handleNewRequest);
+      socketService.off('new_help_report', handleNewRequest);
       socketService.off('request_status_updated', handleStatusUpdated);
       socketService.off('request_escalated', handleNewRequest);
+      socketService.off('stats_updated', handleNewRequest);
     };
   }, []);
 
@@ -121,9 +127,11 @@ export const NgoDashboard: React.FC = () => {
         message: "Your request has been accepted."
       });
       setTimeout(() => setSocketToast(null), 4000);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert('Failed to accept request.');
+      const errMsg = err.response?.data?.error || 'Failed to accept request or case already claimed by another NGO.';
+      alert(`⚠️ ${errMsg}`);
+      await fetchNgoData();
     } finally {
       setActionLoadingId(null);
     }
@@ -134,9 +142,10 @@ export const NgoDashboard: React.FC = () => {
     try {
       await requestsApi.updateStatus(reqId, nextStatus, notes);
       await fetchNgoData();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert(`Failed to update status to ${nextStatus}.`);
+      const errMsg = err.response?.data?.error || `Failed to update status to ${nextStatus}.`;
+      alert(`⚠️ ${errMsg}`);
     } finally {
       setActionLoadingId(null);
     }
@@ -277,21 +286,44 @@ export const NgoDashboard: React.FC = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              {getActiveTabList().map((req) => (
-                <div 
-                  key={req.id}
-                  className="p-5 rounded-2xl border border-[#EAE3D2] dark:border-white/10 bg-[#FFF9ED]/30 dark:bg-[#0D0D0D]/40 space-y-4 hover:border-[#159B5B] dark:hover:border-[#F25C38] transition-all"
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <span className={`text-xs font-black px-3 py-1 rounded-full border ${getUrgencyBadge(req.urgency_level)}`}>
-                        {req.urgency_level} PRIORITY
-                      </span>
-                      <span className="text-xs font-bold text-slate-400 font-mono">#{req.id}</span>
-                      <span className="text-xs font-bold text-emerald-500 dark:text-orange-400 bg-emerald-500/10 dark:bg-orange-950/40 px-2.5 py-0.5 rounded-full border border-emerald-500/20 dark:border-orange-500/30">
-                        {req.status.replace(/_/g, ' ')}
-                      </span>
-                    </div>
+              {getActiveTabList().map((req) => {
+                const isClaimedByOther = Boolean(req.assigned_ngo_id && req.assigned_ngo_id !== user?.id);
+                const isClaimedByMe = Boolean(req.assigned_ngo_id && req.assigned_ngo_id === user?.id);
+
+                return (
+                  <div 
+                    key={req.id}
+                    className={`p-5 rounded-2xl border space-y-4 transition-all ${
+                      isClaimedByOther 
+                        ? 'bg-amber-500/5 border-amber-500/20 opacity-90' 
+                        : isClaimedByMe 
+                          ? 'bg-emerald-500/5 border-emerald-500/30' 
+                          : 'bg-[#FFF9ED]/30 dark:bg-[#0D0D0D]/40 border-[#EAE3D2] dark:border-white/10 hover:border-[#159B5B]'
+                    }`}
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className={`text-xs font-black px-3 py-1 rounded-full border ${getUrgencyBadge(req.urgency_level)}`}>
+                          {req.urgency_level} PRIORITY
+                        </span>
+                        <span className="text-xs font-bold text-slate-400 font-mono">#{req.id}</span>
+                        <span className="text-xs font-bold text-emerald-500 dark:text-orange-400 bg-emerald-500/10 dark:bg-orange-950/40 px-2.5 py-0.5 rounded-full border border-emerald-500/20 dark:border-orange-500/30">
+                          {req.status.replace(/_/g, ' ')}
+                        </span>
+
+                        {/* Lock / Assignment Status Badge */}
+                        {isClaimedByOther && (
+                          <span className="px-3 py-1 bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 font-extrabold text-xs rounded-full border border-amber-300 dark:border-amber-700/60 flex items-center gap-1 shadow-xs">
+                            🔒 Claimed by {req.assigned_ngo_name || `NGO #${req.assigned_ngo_id}`}
+                          </span>
+                        )}
+
+                        {isClaimedByMe && (
+                          <span className="px-3 py-1 bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 font-extrabold text-xs rounded-full border border-emerald-300 dark:border-emerald-700/60 flex items-center gap-1 shadow-xs">
+                            ✓ Claimed by You ({user?.organization_name || 'Your NGO'})
+                          </span>
+                        )}
+                      </div>
 
                     <div className="flex items-center gap-2">
                       <button
@@ -329,53 +361,63 @@ export const NgoDashboard: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* State Progression Action Buttons */}
+                  {/* State Progression Action Buttons with NGO Locking */}
                   <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#EAE3D2] dark:border-white/10">
-                    {req.status !== 'NGO_ACCEPTED' && req.status !== 'COMPLETED' && (
+                    
+                    {/* Only show Accept button if NOT claimed by another NGO */}
+                    {!req.assigned_ngo_id && req.status !== 'COMPLETED' && req.status !== 'REJECTED' && (
                       <button
                         onClick={() => handleAcceptRequest(req.id)}
                         disabled={actionLoadingId === req.id}
-                        className="px-4 py-2 bg-gradient-to-r from-[#159B5B] to-[#12834D] dark:from-[#F25C38] dark:to-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-sm hover:scale-105 transition-all flex items-center gap-1.5"
+                        className="px-4 py-2 bg-gradient-to-r from-[#159B5B] to-[#12834D] dark:from-[#F25C38] dark:to-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-sm hover:scale-105 transition-all flex items-center gap-1.5 cursor-pointer"
                       >
                         <CheckCircle className="w-3.5 h-3.5" /> Accept Case
                       </button>
                     )}
 
-                    {req.status === 'NGO_ACCEPTED' && (
+                    {/* If claimed by another NGO, show locked message */}
+                    {isClaimedByOther && (
+                      <div className="text-xs text-amber-700 dark:text-amber-400 font-bold italic py-1">
+                        🔒 Case already claimed by {req.assigned_ngo_name || `NGO #${req.assigned_ngo_id}`}. Remaining NGOs cannot claim it.
+                      </div>
+                    )}
+
+                    {/* If claimed by current user or assigned to current user, allow progressing status */}
+                    {(isClaimedByMe || (!req.assigned_ngo_id && req.status === 'NGO_ACCEPTED')) && req.status === 'NGO_ACCEPTED' && (
                       <button
                         onClick={() => handleUpdateStatus(req.id, 'RESPONDER_ASSIGNED', 'Assigned field volunteer unit')}
                         disabled={actionLoadingId === req.id}
-                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
                       >
                         <UserCheck className="w-3.5 h-3.5" /> Assign Responder
                       </button>
                     )}
 
-                    {req.status === 'RESPONDER_ASSIGNED' && (
+                    {(isClaimedByMe || !isClaimedByOther) && req.status === 'RESPONDER_ASSIGNED' && (
                       <button
                         onClick={() => handleUpdateStatus(req.id, 'ON_THE_WAY', 'Field responder departed with relief vehicle')}
                         disabled={actionLoadingId === req.id}
-                        className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+                        className="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
                       >
                         <Truck className="w-3.5 h-3.5" /> Dispatch / On The Way
                       </button>
                     )}
 
-                    {req.status === 'ON_THE_WAY' && (
+                    {(isClaimedByMe || !isClaimedByOther) && req.status === 'ON_THE_WAY' && (
                       <button
                         onClick={() => handleUpdateStatus(req.id, 'ASSISTANCE_PROVIDED', 'Relief food/shelter delivered at location')}
                         disabled={actionLoadingId === req.id}
-                        className="px-4 py-2 bg-emerald-600 dark:bg-[#F25C38] hover:bg-emerald-500 dark:hover:bg-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+                        className="px-4 py-2 bg-emerald-600 dark:bg-[#F25C38] hover:bg-emerald-500 dark:hover:bg-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
                       >
                         <CheckCheck className="w-3.5 h-3.5" /> Mark Assistance Provided
                       </button>
                     )}
 
-                    {req.status === 'ASSISTANCE_PROVIDED' && (
+                    {(isClaimedByMe || !isClaimedByOther) && req.status === 'ASSISTANCE_PROVIDED' && (
                       <button
                         onClick={() => handleUpdateStatus(req.id, 'COMPLETED', 'Case verified and completed')}
                         disabled={actionLoadingId === req.id}
-                        className="px-4 py-2 bg-emerald-700 dark:bg-[#F25C38] hover:bg-emerald-600 dark:hover:bg-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+                        className="px-4 py-2 bg-emerald-700 dark:bg-[#F25C38] hover:bg-emerald-600 dark:hover:bg-[#d94e2b] text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
                       >
                         <CheckCheck className="w-3.5 h-3.5" /> Finalize & Complete Case
                       </button>
@@ -383,7 +425,8 @@ export const NgoDashboard: React.FC = () => {
                   </div>
 
                 </div>
-              ))}
+              );
+            })}
             </div>
           )}
         </div>

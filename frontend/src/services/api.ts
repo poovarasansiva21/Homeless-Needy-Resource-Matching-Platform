@@ -60,8 +60,8 @@ export const requestsApi = {
     const res = await apiClient.get(`/requests/${id}`);
     return res.data;
   },
-  updateStatus: async (id: number, status: string, notes?: string) => {
-    const res = await apiClient.put(`/requests/${id}/status`, { status, notes });
+  updateStatus: async (id: number, status: string, notes?: string, assigned_ngo_id?: number | string) => {
+    const res = await apiClient.put(`/requests/${id}/status`, { status, notes, assigned_ngo_id });
     return res.data;
   },
   accept: async (id: number) => {

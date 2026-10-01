@@ -230,6 +230,7 @@ def update_status(current_user, req_id):
     data = request.get_json() or {}
     new_status = data.get("status", "").upper().strip()
     notes = data.get("notes", "").strip()
+    explicit_ngo_id = data.get("assigned_ngo_id")
 
     valid_statuses = [
         "REQUESTED", "AI_ANALYZED", "RESOURCE_MATCHED", "TRANSPORT_CHECK", 
@@ -245,9 +246,26 @@ def update_status(current_user, req_id):
     if current_user.role not in ["admin", "ngo", "volunteer"]:
         return jsonify({"error": "Unauthorized to modify request status"}), 403
 
+    # Assignment locking: If an NGO tries to modify a case claimed by another NGO
+    if current_user.role == "ngo" and req_obj.assigned_ngo_id and req_obj.assigned_ngo_id != current_user.id:
+        claimed_name = (req_obj.assigned_ngo.organization_name or req_obj.assigned_ngo.full_name) if req_obj.assigned_ngo else f"NGO #{req_obj.assigned_ngo_id}"
+        return jsonify({
+            "error": f"Case #{req_id} has already been accepted and claimed by {claimed_name}. Remaining NGOs cannot modify this case.",
+            "already_claimed": True
+        }), 400
+
     prev_status = req_obj.status
     req_obj.status = new_status
     req_obj.updated_at = datetime.utcnow()
+
+    # Update assigned NGO if passed or auto-assign to current NGO/volunteer when accepting
+    if explicit_ngo_id:
+        try:
+            req_obj.assigned_ngo_id = int(explicit_ngo_id)
+        except (ValueError, TypeError):
+            pass
+    elif current_user.role in ["ngo", "volunteer"] and not req_obj.assigned_ngo_id:
+        req_obj.assigned_ngo_id = current_user.id
 
     # Record history for full auditable case trail
     history_entry = RequestStatusHistory(
@@ -287,11 +305,15 @@ def update_status(current_user, req_id):
     db.session.add(notif)
     db.session.commit()
 
+    ngo_name = (req_obj.assigned_ngo.organization_name or req_obj.assigned_ngo.full_name) if req_obj.assigned_ngo else None
+
     # Emit real-time update via Socket.IO
     emit_socket_event("request_status_updated", {
         "request_id": req_obj.id,
         "previous_status": prev_status,
         "new_status": new_status,
+        "assigned_ngo_id": req_obj.assigned_ngo_id,
+        "assigned_ngo_name": ngo_name,
         "changed_by": current_user.full_name,
         "notes": notes,
         "timestamp": datetime.utcnow().isoformat()
@@ -311,8 +333,22 @@ def accept_request(current_user, req_id):
     if not req_obj:
         return jsonify({"error": f"Request #{req_id} not found."}), 404
     
-    if req_obj.status in ["DELIVERED", "COMPLETED", "REJECTED"]:
-        return jsonify({"error": f"Cannot accept a request that is already {req_obj.status}"}), 400
+    # Assignment Locking Check: If case is already claimed by another NGO
+    if req_obj.assigned_ngo_id and req_obj.assigned_ngo_id != current_user.id:
+        claimed_name = (req_obj.assigned_ngo.organization_name or req_obj.assigned_ngo.full_name) if req_obj.assigned_ngo else f"NGO #{req_obj.assigned_ngo_id}"
+        return jsonify({
+            "error": f"Case #{req_id} has already been accepted and claimed by {claimed_name}. Remaining NGOs cannot claim this case.",
+            "already_claimed": True,
+            "claimed_by": claimed_name
+        }), 400
+
+    if req_obj.status in ["NGO_ACCEPTED", "RESPONDER_ASSIGNED", "ON_THE_WAY", "ASSISTANCE_PROVIDED", "DELIVERED", "COMPLETED", "REJECTED"]:
+        if req_obj.assigned_ngo_id and req_obj.assigned_ngo_id != current_user.id:
+            claimed_name = (req_obj.assigned_ngo.organization_name or req_obj.assigned_ngo.full_name) if req_obj.assigned_ngo else f"NGO #{req_obj.assigned_ngo_id}"
+            return jsonify({
+                "error": f"Case #{req_id} is already in state {req_obj.status} and claimed by {claimed_name}.",
+                "already_claimed": True
+            }), 400
 
     prev_status = req_obj.status
     req_obj.status = "NGO_ACCEPTED"
@@ -346,10 +382,14 @@ def accept_request(current_user, req_id):
     db.session.add(notif)
     db.session.commit()
 
+    ngo_name = current_user.organization_name or current_user.full_name
+
     emit_socket_event("request_status_updated", {
         "request_id": req_obj.id,
         "previous_status": prev_status,
         "new_status": "NGO_ACCEPTED",
+        "assigned_ngo_id": current_user.id,
+        "assigned_ngo_name": ngo_name,
         "assigned_ngo": current_user.full_name,
         "timestamp": datetime.utcnow().isoformat()
     })
