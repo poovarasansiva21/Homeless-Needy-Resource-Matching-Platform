@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { 
+  Bell,
   Globe, 
   Sun, 
   Moon, 
@@ -11,6 +12,7 @@ import {
   Menu, 
   X, 
   LogOut,
+  ArrowRight,
   Settings
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -291,7 +293,20 @@ export const Navbar: React.FC = () => {
         {/* ========================================================================= */}
         <div className="hidden lg:flex items-center space-x-2 shrink-0">
           
-          {/* Action 1: Language Selector */}
+          {/* Action 1: [🆘 Urgent Help] Coral Pill Button for Needy People */}
+          <button
+            type="button"
+            onClick={() => setShowOneTapModal(true)}
+            aria-label="Urgent Help Request"
+            className="h-10 px-3.5 sm:px-4 rounded-full bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-1.5 transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shrink-0 min-h-[40px]"
+            title="Emergency Request Help"
+          >
+            <Bell className="w-3.5 h-3.5 fill-current shrink-0 animate-bounce" />
+            <span>{t('nav.iNeedHelp')}</span>
+            <ArrowRight className="w-3.5 h-3.5 ml-0.5 shrink-0" />
+          </button>
+
+          {/* Action 2: Language Selector */}
           <div className="relative shrink-0">
             <button
               onClick={() => setShowLangMenu(!showLangMenu)}
@@ -329,7 +344,7 @@ export const Navbar: React.FC = () => {
             )}
           </div>
 
-          {/* Action 2: Theme Toggle Button */}
+          {/* Action 3: Theme Toggle Button */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle Theme"
@@ -339,7 +354,7 @@ export const Navbar: React.FC = () => {
             {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-stone-700" />}
           </button>
 
-          {/* Action 3: User Sign In / Dashboard */}
+          {/* Action 4: User Sign In / Dashboard */}
           {user ? (
             <div className="flex items-center space-x-1 shrink-0">
               <Link
@@ -367,7 +382,7 @@ export const Navbar: React.FC = () => {
             </Link>
           )}
 
-          {/* Action 4: Donate Button */}
+          {/* Action 5: Donate Button */}
           <Link
             to="/donor/dashboard"
             className="h-10 px-4 rounded-full bg-[#1C1917] dark:bg-[#262626] hover:bg-[#292524] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-1.5 transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shrink-0 min-h-[40px]"
@@ -383,6 +398,18 @@ export const Navbar: React.FC = () => {
         {/* ========================================================================= */}
         <div className="flex lg:hidden items-center space-x-2 shrink-0">
           
+          {/* Mobile Urgent Help Button */}
+          <button
+            type="button"
+            onClick={() => setShowOneTapModal(true)}
+            aria-label="Urgent Help"
+            className="h-10 px-3 rounded-full bg-[#F25C38] hover:bg-[#E04925] text-white font-bold text-xs uppercase tracking-wider shadow-sm flex items-center space-x-1 transition-all active:scale-95 cursor-pointer shrink-0 min-h-[40px]"
+            title="Emergency Request Help"
+          >
+            <Bell className="w-3.5 h-3.5 fill-current shrink-0" />
+            <span className="text-[11px] font-bold">{t('nav.iNeedHelp')}</span>
+          </button>
+
           {/* Hamburger Menu Toggle */}
           <button
             type="button"
@@ -461,6 +488,15 @@ export const Navbar: React.FC = () => {
           </div>
 
           <div className="pt-3 border-t border-[#E7E0D6] dark:border-white/10 space-y-3">
+            {/* Full Width Coral Urgent Help Button */}
+            <button
+              onClick={() => { setMobileMenuOpen(false); setShowOneTapModal(true); }}
+              className="w-full py-3.5 px-4 bg-[#F25C38] hover:bg-[#E04925] text-white font-black text-sm uppercase tracking-wider rounded-2xl flex items-center justify-center space-x-2 shadow-sm cursor-pointer min-h-[48px]"
+            >
+              <Bell className="w-5 h-5 fill-current animate-bounce" />
+              <span>{t('nav.iNeedHelp')}</span>
+              <ArrowRight className="w-5 h-5" />
+            </button>
             {/* Full Width Charcoal Donate Button */}
             <Link
               to="/donor/dashboard"
