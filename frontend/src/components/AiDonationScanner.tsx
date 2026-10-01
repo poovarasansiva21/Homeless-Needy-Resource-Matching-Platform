@@ -17,6 +17,7 @@ import {
 import { aiApi } from '../services/api';
 import { DonationVisionScanResponse } from '../types';
 import { useLanguage } from '../i18n';
+import { PhotoUploader } from './PhotoUploader';
 
 interface AiDonationScannerProps {
   onCategoryConfirmed?: (category: string, scanData: DonationVisionScanResponse) => void;
@@ -270,77 +271,29 @@ export const AiDonationScanner: React.FC<AiDonationScannerProps> = ({
           </div>
         )}
 
-        {/* Camera Viewport / Image Preview */}
-        <div className="relative w-full aspect-video sm:aspect-[4/3] max-h-[360px] rounded-2xl overflow-hidden bg-black/90 border border-black/10 dark:border-white/10 flex items-center justify-center">
-          
-          {/* Live Camera Stream Video (Always present in DOM to retain ref) */}
-          <video 
-            ref={videoRef} 
-            autoPlay 
-            playsInline 
-            muted 
-            className={`w-full h-full object-cover ${isCameraActive ? 'block' : 'hidden'}`}
+        <div className="relative">
+          <PhotoUploader
+            compact={compact}
+            label={t('donationScanner.title') || "Item Photo Scanner"}
+            subtitle={t('donationScanner.subtitle') || "Take or upload a photo of the item for AI classification"}
+            onPhotoSelect={(file, dataUrl) => {
+              if (file) {
+                setSelectedFile(file);
+                setImagePreview(dataUrl || null);
+                handleAnalyzeImage(file);
+              } else {
+                setSelectedFile(null);
+                setImagePreview(null);
+                setResult(null);
+              }
+            }}
+            initialPreview={imagePreview}
+            showPrivacyNote={false}
           />
-
-          {/* Captured / Uploaded Image Preview */}
-          {!isCameraActive && imagePreview && (
-            <img 
-              src={imagePreview} 
-              alt="Donation preview" 
-              className="w-full h-full object-contain bg-black"
-            />
-          )}
-
-          {/* Placeholder state when idle */}
-          {!isCameraActive && !imagePreview && (
-            <div className="text-center p-6 space-y-3">
-              <div className="w-14 h-14 rounded-full bg-white/10 text-white/70 mx-auto flex items-center justify-center border border-white/20">
-                <Camera className="w-7 h-7" />
-              </div>
-              <p className="text-xs text-white/80 max-w-xs mx-auto font-medium">
-                Point your camera at a donation item or upload an image to analyze with AI.
-              </p>
-            </div>
-          )}
-
-          {/* Hidden Canvas for Frame Capture */}
-          <canvas ref={canvasRef} className="hidden" />
-
-          {/* Camera Controls Overlay */}
-          {isCameraActive && (
-            <div className="absolute bottom-4 inset-x-4 flex items-center justify-between">
-              <button
-                type="button"
-                onClick={switchCameraFacing}
-                className="p-3 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20 hover:bg-black/80 transition-colors"
-                title={t('donationScanner.switchCamera') || 'Switch Camera'}
-              >
-                <RotateCcw className="w-5 h-5" />
-              </button>
-
-              <button
-                type="button"
-                onClick={captureFrame}
-                className="px-6 py-3 rounded-full bg-[#159B5B] hover:bg-[#12824C] text-white font-black text-xs uppercase tracking-wider flex items-center space-x-2 shadow-lg transition-transform transform active:scale-95 border border-white/30"
-              >
-                <Camera className="w-4 h-4" />
-                <span>{t('donationScanner.capture') || 'Capture'}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={stopCamera}
-                className="p-3 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20 hover:bg-black/80 transition-colors"
-                title={t('donationScanner.closeCamera') || 'Close Camera'}
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-          )}
 
           {/* Analyzing Spinner Overlay */}
           {isAnalyzing && (
-            <div className="absolute inset-0 bg-black/75 backdrop-blur-sm flex flex-col items-center justify-center text-white space-y-3 p-4">
+            <div className="absolute inset-0 bg-black/75 backdrop-blur-sm rounded-3xl z-30 flex flex-col items-center justify-center text-white space-y-3 p-4">
               <RefreshCw className="w-8 h-8 text-[#159B5B] animate-spin" />
               <p className="text-sm font-bold tracking-wide animate-pulse">
                 {t('donationScanner.analyzing') || 'Analyzing donation image...'}
@@ -348,26 +301,6 @@ export const AiDonationScanner: React.FC<AiDonationScannerProps> = ({
               <span className="text-[11px] text-white/60">Executing MobileNetV2 Tensor Inference</span>
             </div>
           )}
-        </div>
-
-        {/* Action Button: Upload Image */}
-        <div className="w-full">
-          <input
-            type="file"
-            ref={fileInputRef}
-            accept="image/png, image/jpeg, image/jpg, image/webp"
-            onChange={handleFileSelect}
-            className="hidden"
-          />
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            disabled={isAnalyzing}
-            className="w-full py-3.5 px-4 rounded-2xl bg-[#E8F3E9] dark:bg-[#159B5B]/15 text-[#159B5B] dark:text-emerald-300 hover:bg-[#d8eada] dark:hover:bg-[#159B5B]/25 text-sm font-bold flex items-center justify-center space-x-2 border border-[#159B5B]/30 transition-all disabled:opacity-50 min-h-[48px] cursor-pointer shadow-xs"
-          >
-            <Upload className="w-5 h-5" />
-            <span>{t('donationScanner.uploadImage') || 'Upload Image'}</span>
-          </button>
         </div>
 
         {/* AI Results Display */}

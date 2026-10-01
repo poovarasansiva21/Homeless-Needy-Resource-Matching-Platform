@@ -27,6 +27,7 @@ import { requestsApi } from '../services/api';
 import { useLanguage, Language } from '../i18n';
 import VoiceInputButton from './VoiceInputButton';
 import { MobilityLayerModal } from './MobilityLayerModal';
+import { PhotoUploader } from './PhotoUploader';
 
 
 interface OneTapHelpModalProps {
@@ -479,27 +480,22 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
                       setDescription((prev) => (prev ? `${prev} ${spoken}` : spoken));
                     }}
                   />
-                  
-                  {/* Optional Image Picker */}
-                  <label className="cursor-pointer px-3.5 py-2 rounded-2xl bg-stone-100 hover:bg-stone-200 dark:bg-[#262626] dark:hover:bg-[#292929] text-stone-700 dark:text-stone-300 text-xs font-bold flex items-center space-x-1.5 border border-stone-300 dark:border-stone-700">
-                    <Camera className="w-4 h-4 text-[#159B5B] dark:text-orange-400" />
-                    <span>{photo ? t('oneTap.photoSelected') : t('oneTap.optionalPhoto')}</span>
-                    <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
-                  </label>
                 </div>
 
-                {photoPreview && (
-                  <div className="relative w-20 h-20 rounded-xl overflow-hidden border-2 border-[#159B5B] dark:border-[#F25C38] mt-2">
-                    <img src={photoPreview} alt="Attached" className="w-full h-full object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => { setPhoto(null); setPhotoPreview(null); }}
-                      className="absolute top-1 right-1 bg-black/70 text-white rounded-full p-0.5"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
-                )}
+                {/* Global Photo / Camera Input System */}
+                <div className="pt-2">
+                  <PhotoUploader
+                    compact={true}
+                    label={t('oneTap.optionalPhoto') || "Add Photo (Optional)"}
+                    subtitle="Capture or upload photo proof to help responders locate you."
+                    onPhotoSelect={(file, dataUrl) => {
+                      setPhoto(file as File | null);
+                      setPhotoPreview(dataUrl || null);
+                    }}
+                    initialPreview={photoPreview}
+                    showPrivacyNote={false}
+                  />
+                </div>
               </div>
 
               {/* People Affected Pill Selector (1-Tap Large Touch Targets) */}

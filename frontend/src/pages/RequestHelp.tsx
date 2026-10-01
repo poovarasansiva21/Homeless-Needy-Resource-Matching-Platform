@@ -18,6 +18,7 @@ import { requestsApi, aiApi } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../i18n';
 import { VoiceInputButton } from '../components/VoiceInputButton';
+import { PhotoUploader } from '../components/PhotoUploader';
 
 export const RequestHelp: React.FC = () => {
   const { user } = useAuth();
@@ -34,6 +35,9 @@ export const RequestHelp: React.FC = () => {
   const [latitude, setLatitude] = useState(11.0183);
   const [longitude, setLongitude] = useState(76.9634);
   const [contactMethod, setContactMethod] = useState('Phone');
+  
+  const [photoBlob, setPhotoBlob] = useState<Blob | File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionResult, setSubmissionResult] = useState<any | null>(null);
@@ -71,7 +75,7 @@ export const RequestHelp: React.FC = () => {
     setError(null);
 
     try {
-      const response = await requestsApi.create({
+      const payload: Record<string, any> = {
         full_name: fullName,
         phone,
         description,
@@ -82,7 +86,17 @@ export const RequestHelp: React.FC = () => {
         latitude,
         longitude,
         contact_method: contactMethod,
-      });
+      };
+
+      let requestData: any = payload;
+      if (photoBlob) {
+        const formData = new FormData();
+        Object.keys(payload).forEach((k) => formData.append(k, payload[k]));
+        formData.append('photo', photoBlob);
+        requestData = formData;
+      }
+
+      const response = await requestsApi.create(requestData);
 
       setSubmissionResult(response);
     } catch (err: any) {
@@ -367,6 +381,19 @@ export const RequestHelp: React.FC = () => {
                 />
               </div>
             </div>
+
+            {/* Photo / Camera Evidence Uploader (Optional) */}
+            <PhotoUploader
+              compact={true}
+              label="Attach Photo / Evidence (Optional)"
+              subtitle="Take or upload a photo to provide visual context for NGO responders."
+              onPhotoSelect={(file, dataUrl) => {
+                setPhotoBlob(file);
+                setPhotoPreview(dataUrl || null);
+              }}
+              initialPreview={photoPreview}
+              showPrivacyNote={false}
+            />
 
             {/* Privacy notice banner */}
             <div className="p-4 bg-[#FFF9ED] dark:bg-[#0D0D0D]/60 border border-[#EAE3D2] dark:border-white/10 rounded-2xl text-[11px] text-stone-500 dark:text-stone-400 flex items-start space-x-2.5">

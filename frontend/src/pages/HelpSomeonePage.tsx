@@ -29,6 +29,7 @@ import { aiApi, helpReportsApi, matchingApi } from '../services/api';
 import { useLanguage } from '../i18n';
 import { RequestItem, MatchedResource, AiClassificationResponse } from '../types';
 import socketService from '../services/socket';
+import { PhotoUploader } from '../components/PhotoUploader';
 
 const createReportMarker = () => {
   return L.divIcon({
@@ -536,147 +537,17 @@ export const HelpSomeonePage: React.FC = () => {
 
             {/* SECTION 1 — PHOTO (OPTIONAL) */}
             <div className="bg-white dark:bg-[#161616] rounded-3xl p-6 sm:p-8 border border-[#EAE3D2] dark:border-white/10 shadow-sm space-y-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-xl font-black text-[#17231E] dark:text-white flex items-center gap-2">
-                    <Camera className="w-5 h-5 text-[#159B5B] dark:text-orange-400" />
-                    <span>SECTION 1 — Add a Photo (Optional)</span>
-                  </h2>
-                  <p className="text-xs text-[#17231E]/70 dark:text-[#F5F5F0]/70 font-medium">
-                    Take or upload a photo to provide visual context for NGO field responders.
-                  </p>
-                </div>
-                <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300">
-                  Optional
-                </span>
-              </div>
-
-              {/* Privacy Notice Banner */}
-              <div className="bg-emerald-50 dark:bg-orange-950/40 border border-emerald-200 dark:border-orange-500/40 rounded-2xl p-4 text-xs space-y-1">
-                <div className="font-bold text-emerald-900 dark:text-orange-300 flex items-center space-x-1.5">
-                  <Lock className="w-4 h-4 text-emerald-600 dark:text-orange-400" />
-                  <span>🔐 Privacy Protected Guarantee</span>
-                </div>
-                <p className="text-[#17231E]/80 dark:text-stone-300 leading-relaxed font-medium">
-                  Photos and exact location details are encrypted and shared ONLY with verified, authorized NGOs and emergency responders involved in providing assistance.
-                </p>
-              </div>
-
-              {/* Photo Viewport */}
-              <div className="relative w-full aspect-video sm:aspect-[16/9] max-h-[300px] rounded-2xl overflow-hidden bg-black/90 border border-black/10 flex items-center justify-center">
-                
-                {/* Live Camera Feed */}
-                <video 
-                  ref={videoRef} 
-                  autoPlay 
-                  playsInline 
-                  muted 
-                  className={`w-full h-full object-cover ${isCameraActive ? 'block' : 'hidden'}`}
-                />
-
-                {/* Photo Preview */}
-                {!isCameraActive && photoPreview && (
-                  <img src={photoPreview} alt="Report preview" className="w-full h-full object-contain bg-black" />
-                )}
-
-                {/* Idle Placeholder */}
-                {!isCameraActive && !photoPreview && (
-                  <div className="text-center p-6 space-y-2">
-                    <Camera className="w-8 h-8 text-white/50 mx-auto" />
-                    <p className="text-xs text-white/70 font-medium">
-                      No photo captured yet. Photo is not mandatory to submit help report.
-                    </p>
-                  </div>
-                )}
-
-                <canvas ref={canvasRef} className="hidden" />
-
-                {/* Camera Control Overlay */}
-                {isCameraActive && (
-                  <div className="absolute bottom-4 inset-x-4 flex items-center justify-between">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const next = facingMode === 'environment' ? 'user' : 'environment';
-                        setFacingMode(next);
-                        startCamera(next);
-                      }}
-                      className="p-3 rounded-full bg-black/60 text-white border border-white/20"
-                    >
-                      <RotateCcw className="w-5 h-5" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={captureCameraFrame}
-                      className="px-6 py-3 rounded-full bg-[#159B5B] dark:bg-[#F25C38] text-white font-black text-xs uppercase tracking-wider flex items-center space-x-2"
-                    >
-                      <Camera className="w-4 h-4" />
-                      <span>Capture Frame</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={stopCamera}
-                      className="p-3 rounded-full bg-black/60 text-white border border-white/20"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Photo Actions */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {!isCameraActive ? (
-                  <button
-                    type="button"
-                    onClick={() => startCamera()}
-                    className="py-3 px-4 rounded-2xl bg-[#17231E] dark:bg-[#262626] hover:bg-black text-white text-xs font-bold flex items-center justify-center space-x-2 border border-[#24332D] dark:border-white/10"
-                  >
-                    <Camera className="w-4 h-4 text-[#159B5B] dark:text-orange-400" />
-                    <span>Take Photo</span>
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={stopCamera}
-                    className="py-3 px-4 rounded-2xl bg-rose-600 text-white text-xs font-bold flex items-center justify-center space-x-2"
-                  >
-                    <X className="w-4 h-4" />
-                    <span>Close Camera</span>
-                  </button>
-                )}
-
-                <div>
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    accept="image/*"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="w-full py-3 px-4 rounded-2xl bg-[#E8F3E9] dark:bg-orange-950/40 text-[#159B5B] dark:text-orange-300 hover:bg-[#d8eada] dark:hover:bg-orange-900/50 text-xs font-bold flex items-center justify-center space-x-2 border border-[#159B5B]/30 dark:border-orange-500/40"
-                  >
-                    <Upload className="w-4 h-4" />
-                    <span>Upload Photo</span>
-                  </button>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    stopCamera();
-                    setPhotoPreview(null);
-                    setPhotoBlob(null);
-                  }}
-                  className="py-3 px-4 rounded-2xl bg-stone-100 dark:bg-[#262626] text-stone-600 dark:text-stone-300 hover:bg-stone-200 text-xs font-bold flex items-center justify-center space-x-2 border border-stone-200 dark:border-white/10"
-                >
-                  <X className="w-4 h-4" />
-                  <span>Skip / Remove Photo</span>
-                </button>
-              </div>
+              <PhotoUploader
+                onPhotoSelect={(file, dataUrl) => {
+                  setPhotoBlob(file);
+                  if (dataUrl) setPhotoPreview(dataUrl);
+                  else setPhotoPreview(null);
+                }}
+                initialPreview={photoPreview}
+                label="SECTION 1 — Add a Photo (Optional)"
+                subtitle="Take or upload a photo to provide visual context for NGO field responders."
+                showPrivacyNote={true}
+              />
 
               {/* Consent Toggle Checkbox */}
               <label className="flex items-center space-x-3 text-xs font-medium text-[#17231E] dark:text-stone-300 cursor-pointer pt-2">
