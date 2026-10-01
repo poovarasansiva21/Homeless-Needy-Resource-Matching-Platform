@@ -70,6 +70,7 @@ import socketService from '../services/socket';
 import { useAuth } from '../context/AuthContext';
 import { RequestItem, User, Resource, TransportInfoItem, Donation } from '../types';
 import { formatReportDateTime } from '../utils/dateFormatter';
+import AnimatedCounter from '../components/AnimatedCounter';
 
 type AdminTab = 
   | 'dashboard' 
@@ -615,7 +616,7 @@ export const AdminDashboard: React.FC = () => {
                 <div className="bg-white dark:bg-[#161616] p-5 rounded-3xl border border-[#E7E0D6] dark:border-white/10 shadow-xs">
                   <div className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">TOTAL HELP REPORTS</div>
                   <div className="text-2xl sm:text-3xl font-black text-[#1C1917] dark:text-white mt-1">
-                    {metrics.total_requests || allReports.length}
+                    <AnimatedCounter value={metrics.total_requests || allReports.length} />
                   </div>
                   <div className="text-[11px] text-[#F25C38] font-bold mt-1">DNN Classified</div>
                 </div>
@@ -623,7 +624,7 @@ export const AdminDashboard: React.FC = () => {
                 <div className="bg-white dark:bg-[#161616] p-5 rounded-3xl border border-[#E7E0D6] dark:border-white/10 shadow-xs">
                   <div className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">ACTIVE CASES</div>
                   <div className="text-2xl sm:text-3xl font-black text-amber-500 mt-1">
-                    {(metrics.pending_verification || 0) + (metrics.active_matches || 0)}
+                    <AnimatedCounter value={(metrics.pending_verification || 0) + (metrics.active_matches || 0)} />
                   </div>
                   <div className="text-[11px] text-amber-500 font-bold mt-1">Pending / Matched</div>
                 </div>
@@ -631,7 +632,7 @@ export const AdminDashboard: React.FC = () => {
                 <div className="bg-white dark:bg-[#161616] p-5 rounded-3xl border border-[#E7E0D6] dark:border-white/10 shadow-xs">
                   <div className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">URGENT CASES</div>
                   <div className="text-2xl sm:text-3xl font-black text-rose-600 mt-1">
-                    {metrics.critical_requests || urgentCases.length}
+                    <AnimatedCounter value={metrics.critical_requests || urgentCases.length} />
                   </div>
                   <div className="text-[11px] text-rose-600 font-bold mt-1">High Priority</div>
                 </div>
@@ -639,7 +640,7 @@ export const AdminDashboard: React.FC = () => {
                 <div className="bg-white dark:bg-[#161616] p-5 rounded-3xl border border-[#E7E0D6] dark:border-white/10 shadow-xs">
                   <div className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">RESOLVED CASES</div>
                   <div className="text-2xl sm:text-3xl font-black text-emerald-600 mt-1">
-                    {metrics.completed_requests || 0}
+                    <AnimatedCounter value={metrics.completed_requests || 0} />
                   </div>
                   <div className="text-[11px] text-emerald-600 font-bold mt-1">Completed Aid</div>
                 </div>
@@ -647,7 +648,7 @@ export const AdminDashboard: React.FC = () => {
                 <div className="bg-white dark:bg-[#161616] p-5 rounded-3xl border border-[#E7E0D6] dark:border-white/10 shadow-xs">
                   <div className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">REGISTERED NGOS</div>
                   <div className="text-2xl sm:text-3xl font-black text-[#1C1917] dark:text-white mt-1">
-                    {metrics.registered_ngos || ngoUsers.length}
+                    <AnimatedCounter value={metrics.registered_ngos || ngoUsers.length} />
                   </div>
                   <div className="text-[11px] text-stone-500 font-bold mt-1">Verified Partners</div>
                 </div>
@@ -655,7 +656,7 @@ export const AdminDashboard: React.FC = () => {
                 <div className="bg-white dark:bg-[#161616] p-5 rounded-3xl border border-[#E7E0D6] dark:border-white/10 shadow-xs">
                   <div className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">ACTIVE VOLUNTEERS</div>
                   <div className="text-2xl sm:text-3xl font-black text-[#1C1917] dark:text-white mt-1">
-                    {volunteerUsers.length || metrics.registered_donors || 0}
+                    <AnimatedCounter value={volunteerUsers.length || metrics.registered_donors || 0} />
                   </div>
                   <div className="text-[11px] text-stone-500 font-bold mt-1">Field Responders</div>
                 </div>
@@ -663,7 +664,7 @@ export const AdminDashboard: React.FC = () => {
                 <div className="bg-white dark:bg-[#161616] p-5 rounded-3xl border border-[#E7E0D6] dark:border-white/10 shadow-xs">
                   <div className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">AVAILABLE RESOURCES</div>
                   <div className="text-2xl sm:text-3xl font-black text-[#F25C38] mt-1">
-                    {resourcesList.length}
+                    <AnimatedCounter value={resourcesList.length} />
                   </div>
                   <div className="text-[11px] text-[#F25C38] font-bold mt-1">Food/Shelter/Medical</div>
                 </div>
@@ -671,7 +672,7 @@ export const AdminDashboard: React.FC = () => {
                 <div className="bg-white dark:bg-[#161616] p-5 rounded-3xl border border-[#E7E0D6] dark:border-white/10 shadow-xs">
                   <div className="text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">PENDING DONATIONS</div>
                   <div className="text-2xl sm:text-3xl font-black text-emerald-600 mt-1">
-                    {donationsList.filter(d => d.status === 'pending').length}
+                    <AnimatedCounter value={donationsList.filter(d => d.status === 'pending').length} />
                   </div>
                   <div className="text-[11px] text-emerald-600 font-bold mt-1">Pledges Awaiting</div>
                 </div>

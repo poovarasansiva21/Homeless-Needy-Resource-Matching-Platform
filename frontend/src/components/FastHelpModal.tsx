@@ -80,8 +80,8 @@ export const FastHelpModal: React.FC<FastHelpModalProps> = ({
   ] as const;
 
   return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-[#17231E]/75 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-[#161616] w-full max-w-2xl rounded-3xl border border-[#EAE3D2] dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-[#17231E]/75 dark:bg-black/80 backdrop-blur-md animate-modal-backdrop">
+      <div className="bg-white dark:bg-[#161616] w-full max-w-2xl rounded-3xl border border-[#EAE3D2] dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-modal-content">
         
         {/* Header */}
         <div className="p-6 border-b border-[#EAE3D2] dark:border-white/10 flex items-start justify-between bg-[#FFF9ED] dark:bg-[#1C1917]/60">

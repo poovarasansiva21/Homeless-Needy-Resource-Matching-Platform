@@ -187,8 +187,8 @@ export const OneTapHelpModal: React.FC<OneTapHelpModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-4 bg-[#0D0D0D]/80 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
-      <div className={`bg-[#FAF7F2] dark:bg-[#161616] w-full max-w-2xl rounded-[32px] border border-[#E7E0D6] dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] ${lowBandwidth ? '' : 'transition-all duration-300'}`}>
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-4 bg-[#0D0D0D]/80 backdrop-blur-md animate-modal-backdrop overflow-y-auto">
+      <div className={`bg-[#FAF7F2] dark:bg-[#161616] w-full max-w-2xl rounded-[32px] border border-[#E7E0D6] dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] animate-modal-content ${lowBandwidth ? '' : 'transition-all duration-300'}`}>
         
         {/* Header Bar */}
         <div className="p-4 sm:p-6 border-b border-[#E7E0D6] dark:border-white/10 bg-[#F3ECE2]/60 dark:bg-[#1E1E1E] flex items-center justify-between gap-3">

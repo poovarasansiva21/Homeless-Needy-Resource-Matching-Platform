@@ -4,11 +4,23 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+:root, [data-theme="light"] {
   --sat: env(safe-area-inset-top, 0px);
   --sab: env(safe-area-inset-bottom, 0px);
   --sal: env(safe-area-inset-left, 0px);
   --sar: env(safe-area-inset-right, 0px);
+
+  /* Centralized CSS Variables for Baseline Light Theme */
+  --background: #F9F6F0;
+  --surface: #FAF7F2;
+  --surface-secondary: #F3ECE2;
+  --text-primary: #1C1917;
+  --text-secondary: #57534E;
+  --border: #E7E0D6;
+  --accent: #F25C38;
+  --accent-hover: #E04925;
+  --shadow: 0 10px 30px -5px rgba(28, 25, 23, 0.05);
+
   --bg-base: #F9F6F0;
   --bg-surface: #FAF7F2;
   --bg-muted: #F3ECE2;
@@ -25,45 +37,18 @@
   --glass-shadow: 0 10px 30px -5px rgba(28, 25, 23, 0.05);
 }
 
-html {
-  overflow-x: hidden;
-  -webkit-tap-highlight-color: transparent;
-}
+.dark, [data-theme="dark"] {
+  /* Centralized CSS Variables for Premium Dark Theme */
+  --background: #0D0D0D;
+  --surface: #161616;
+  --surface-secondary: #1E1E1E;
+  --text-primary: #F5F5F0;
+  --text-secondary: #A8A29E;
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #F25C38;
+  --accent-hover: #E04925;
+  --shadow: 0 14px 40px -8px rgba(0, 0, 0, 0.6);
 
-body {
-  overflow-x: hidden;
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.sahaayaa-organic-bg {
-  background-color: #F9F6F0;
-  background-image: 
-    radial-gradient(circle at 8% 12%, rgba(242, 92, 56, 0.04) 0%, transparent 35%),
-    radial-gradient(circle at 92% 18%, rgba(242, 92, 56, 0.05) 0%, transparent 32%),
-    radial-gradient(circle at 80% 55%, rgba(217, 119, 6, 0.04) 0%, transparent 40%),
-    radial-gradient(circle at 12% 85%, rgba(242, 92, 56, 0.04) 0%, transparent 45%);
-}
-
-.dark .sahaayaa-organic-bg {
-  background-color: #0D0D0D;
-  background-image: 
-    radial-gradient(circle at 8% 12%, rgba(242, 92, 56, 0.06) 0%, transparent 35%),
-    radial-gradient(circle at 92% 18%, rgba(242, 92, 56, 0.07) 0%, transparent 32%),
-    radial-gradient(circle at 80% 55%, rgba(217, 119, 6, 0.05) 0%, transparent 40%);
-}
-
-html, body, button, input, textarea, select {
-  font-family: "Plus Jakarta Sans", "Manrope", "Noto Sans Tamil", "Noto Sans Devanagari", sans-serif;
-  touch-action: manipulation;
-}
-
-.font-serif {
-  font-family: "Playfair Display", "Cormorant Garamond", "Georgia", serif;
-}
-
-.dark {
   --bg-base: #0D0D0D;
   --bg-surface: #161616;
   --bg-muted: #1E1E1E;
@@ -75,6 +60,34 @@ html, body, button, input, textarea, select {
   --glass-bg: rgba(22, 22, 22, 0.92);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-shadow: 0 14px 40px -8px rgba(0, 0, 0, 0.6);
+}
+
+html {
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+/* Global Theme Transition helper */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition: background-color 300ms ease-in-out,
+              color 300ms ease-in-out,
+              border-color 300ms ease-in-out,
+              box-shadow 300ms ease-in-out,
+              fill 300ms ease-in-out,
+              stroke 300ms ease-in-out !important;
+  transition-delay: 0s !important;
 }
 
 @layer components {
@@ -364,6 +377,50 @@ html.lenis, html.lenis body {
 }
 .btn-cinematic:active {
   transform: translateY(0px) scale(0.98);
+}
+
+/* Modal & Backdrop Entrance Animations */
+@keyframes modal-backdrop-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modal-content-enter {
+  from { opacity: 0; transform: scale(0.96) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-modal-backdrop {
+  animation: modal-backdrop-fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-modal-content {
+  animation: modal-content-enter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Toast Slide Entrance */
+@keyframes toast-slide-down {
+  from { opacity: 0; transform: translateY(-16px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-toast {
+  animation: toast-slide-down 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Input Micro-Interactions */
+input:not([type="checkbox"]):not([type="radio"]), textarea, select {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+input:not([type="checkbox"]):not([type="radio"]):focus, textarea:focus, select:focus {
+  border-color: #F25C38 !important;
+  box-shadow: 0 0 0 3px rgba(242, 92, 56, 0.2) !important;
+}
+
+/* Smooth Image Loading Fade-in */
+img {
+  transition: opacity 0.35s ease-in-out;
+}
+
+/* Smooth Progress Bar Fill */
+.progress-fill-smooth {
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Reduced motion accessibility */

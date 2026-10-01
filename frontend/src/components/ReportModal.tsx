@@ -93,8 +93,8 @@ export const ReportModal: React.FC<ReportModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-lg bg-white dark:bg-[#161616] rounded-3xl border border-[#E2E8E4] dark:border-white/10 shadow-2xl overflow-hidden text-[#18352D] dark:text-white transition-all">
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-modal-backdrop">
+      <div className="w-full max-w-lg bg-white dark:bg-[#161616] rounded-3xl border border-[#E2E8E4] dark:border-white/10 shadow-2xl overflow-hidden text-[#18352D] dark:text-white transition-all animate-modal-content">
         
         {/* Modal Header */}
         <div className="p-5 sm:p-6 bg-gradient-to-r from-[#0B4F3A] to-[#159B5B] text-white flex justify-between items-center">
