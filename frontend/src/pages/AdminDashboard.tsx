@@ -97,6 +97,16 @@ export const AdminDashboard: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [currentTimeStr, setCurrentTimeStr] = useState<string>('');
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   // Metrics & Charts
   const [metrics, setMetrics] = useState<any>({
     total_requests: 0,
@@ -480,6 +490,13 @@ export const AdminDashboard: React.FC = () => {
         {/* ========================================================================= */}
         {/* 2. DESKTOP COMMAND CENTER SIDEBAR & MOBILE DRAWER                         */}
         {/* ========================================================================= */}
+        {mobileMenuOpen && (
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs z-25 lg:hidden animate-in fade-in duration-200"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
+
         <aside
           className={`fixed lg:static inset-y-0 left-0 z-30 w-64 bg-white dark:bg-[#161616] border-r border-[#E7E0D6] dark:border-white/10 flex flex-col transition-transform duration-300 ease-in-out ${
             mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'

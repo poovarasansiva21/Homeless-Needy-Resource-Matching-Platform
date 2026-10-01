@@ -413,9 +413,40 @@ input:not([type="checkbox"]):not([type="radio"]):focus, textarea:focus, select:f
   box-shadow: 0 0 0 3px rgba(242, 92, 56, 0.2) !important;
 }
 
+/* Prevent iOS input auto-zoom on mobile devices */
+@media (max-width: 767px) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Touch Target Minimum Standard (44px+) */
+.touch-target, button, input[type="submit"], input[type="button"] {
+  min-height: 44px;
+}
+
+/* Responsive Table Wrapper */
+.table-responsive-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Safe Area Inset Helpers */
+.safe-pb {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+.safe-pt {
+  padding-top: max(1rem, env(safe-area-inset-top));
+}
+
 /* Smooth Image Loading Fade-in */
 img {
   transition: opacity 0.35s ease-in-out;
+  max-width: 100%;
+  height: auto;
 }
 
 /* Smooth Progress Bar Fill */

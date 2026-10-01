@@ -46,6 +46,18 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Listen for Escape key to close mobile drawer & language menu
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+        setShowLangMenu(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   // GSAP animation for language dropdown menu
   useEffect(() => {
     if (showLangMenu && langDropdownRef.current) {
@@ -424,10 +436,15 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* MOBILE MENU DROPDOWN                                                     */}
+      {/* MOBILE MENU DROPDOWN & BACKDROP OVERLAY                                   */}
       {/* ========================================================================= */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#FAF7F2] dark:bg-[#161616] border-b border-[#E7E0D6] dark:border-white/10 px-5 pt-3 pb-8 space-y-4 rounded-b-3xl shadow-2xl animate-in slide-in-from-top-2 duration-200 z-[1020] pointer-events-auto max-h-[calc(100vh-80px)] overflow-y-auto">
+        <>
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs z-[1010] lg:hidden animate-in fade-in duration-200"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <div className="relative z-[1020] lg:hidden bg-[#FAF7F2] dark:bg-[#161616] border-b border-[#E7E0D6] dark:border-white/10 px-5 pt-3 pb-8 space-y-4 rounded-b-3xl shadow-2xl animate-in slide-in-from-top-2 duration-200 pointer-events-auto max-h-[calc(100vh-80px)] overflow-y-auto">
           
           <div className="space-y-1 text-base font-bold text-[#1C1917] dark:text-[#F5F5F0]">
             {user?.role === 'admin' ? (
@@ -558,6 +575,7 @@ export const Navbar: React.FC = () => {
           </div>
 
         </div>
+        </>
       )}
 
       {/* One-Tap Help Modal */}
