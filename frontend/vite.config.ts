@@ -3,7 +3,9 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
+  base: process.env.GITHUB_PAGES === 'true' || process.env.GITHUB_ACTIONS === 'true'
+    ? '/Homeless-Needy-Resource-Matching-Platform/'
+    : '/',
   plugins: [react()],
   server: {
     port: 5173,
